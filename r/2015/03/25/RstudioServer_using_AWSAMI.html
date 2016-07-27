@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="R에서 `try()` 함수 소개" />
-        <meta name="keywords" content="R에서 `try()` 함수 소개, , R" />
+        <meta name="description" content="Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축" />
+        <meta name="keywords" content="Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축, , R" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="R에서 `try()` 함수 소개" property="og:title">
+          <meta content="Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/02/11/try_function.html" property="og:url">
+          <meta content="https://lovetoken.github.io/r/2015/03/25/RstudioServer_using_AWSAMI.html" property="og:url">
         
         
-          <meta content="2016-02-11T00:00:00+09:00" property="article:published_time">
+          <meta content="2015-03-25T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="R에서 `try()` 함수 소개">
+          <meta name="twitter:title" content="Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/02/11/try_function.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2015/03/25/RstudioServer_using_AWSAMI.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,8 +126,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>R에서 `try()` 함수 소개</h1>
-<span class="time">11 Feb 2016</span>
+                <h1>Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축</h1>
+<span class="time">25 Mar 2015</span>
 
 <span class="categories">
     &raquo; <a href="/category/R">R</a>
@@ -136,54 +136,34 @@
 
 <div class="content">
     <div class="post"><hr />
-<p>이전에 나는 특정 코드들이 있을 때, 이 코드를 수행하면 에러가 나는지, 나지 않는지 여부를 boolean 값으로 반환하는 그러한 함수를 찾고 있었다. (그보단 이러한 함수를 만들 수 있도록 리소스를 찾아보고 있었다.)<br />
-그러던 중 우연히 알게 된 <code>try()</code> 함수에 대해 알아보고자 한다.</p>
-<p>아래 코드는 <code>bsid</code> 라는 environment 객체가 없기 때문에 아래의 코드는 에러를 내어 본 파일의 rmarkdown 랜더링을 막게 될 것이다.<br />
-우선 랜더링(컴파일링)마저 막는 상황을 피하기 위해 코드청크를 <code>eval=F</code> 로 설정했다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>(<span class="dt">envir=</span>bsdi)</code></pre></div>
-<p>실제로 <code>bsid</code> 라는 environment 객체가 없는 상황에 위 코드를 실행시키면</p>
-<pre><code>&gt; ls(envir=bsdi)
-Error in ls(envir = bsdi) : object &#39;bsdi&#39; not found</code></pre>
-<p>의 에러메세지가 출력된다.</p>
-<h2 id="try-function"><code>try()</code> function</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="dt">expr=</span>{
-  <span class="kw">ls</span>(<span class="dt">envir=</span>bsdi)
-})</code></pre></div>
-<p><code>try()</code> 함수 안에는 표현식이 들어가는데 이전 예제 코드의 <code>ls(envir=bsdi)</code> 를 입력하였다.<br />
-<code>ls(envir=bsdi)</code> 코드는 역시 에러가 반환된다.<br />
-하지만 차이점은 에러를 반환하고도 이후 코드를 계속적으로 수행한다는 차이점을 가지고 있다.<br />
-무슨소리인지 잘 모르겠다면 아래코드를 보면 된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="dt">expr=</span>{
-  <span class="kw">ls</span>(<span class="dt">envir=</span>bsdi)
-})
-
-<span class="kw">print</span>(<span class="st">&quot;Hello R&quot;</span>)</code></pre></div>
-<pre><code>## [1] &quot;Hello R&quot;</code></pre>
-<p><code>try()</code> 함수를 쓴 코드 이후의 코드인 <code>print(&quot;Hello R&quot;)</code> 은 정상적으로 실행되 수행된 것을 볼 수 있다.<br />
-유의할 것은 실제로 위 코드청크에 <code>eval=F</code> 설정을 주지 않고도 렌더링이 막히지 않았는다는 것이다.<br />
-따라서 에러를 뿜는 코드이더라 하더라도, 그것이 <code>try()</code> 함수로 감싸지면 계속적으로 수행된다는 것이다.</p>
-<h3 id="silent-인자"><code>silent</code> 인자</h3>
-<p><code>try()</code> 함수의 <code>silent</code> 인자로 command 에 에러가 반환되는 메세지 조차 침묵시킬 수 있다.<br />
-이 인자의 값을 <code>TRUE</code> 로 설정하면 에러는 silent 시킨다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="dt">expr=</span>{
-  <span class="kw">ls</span>(<span class="dt">envir=</span>bsdi)
-}, <span class="dt">silent=</span>T)</code></pre></div>
-<p>차이점을 체감하기 위해선 직접 R command 를 수행해볼 필요가 있다.</p>
-<h3 id="두-줄-의-코드를-try-하되-한줄은-정상-한줄은-에러를-내는-코드로-수정하면">두 줄 의 코드를 try 하되 한줄은 정상, 한줄은 에러를 내는 코드로 수정하면?</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="dt">expr=</span>{
-  <span class="kw">print</span>(<span class="st">&quot;Hello R&quot;</span>)   <span class="co"># normal code</span>
-  <span class="kw">ls</span>(<span class="dt">envir=</span>bsdi)     <span class="co"># error code</span>
-}, <span class="dt">silent=</span>T)</code></pre></div>
-<pre><code>## [1] &quot;Hello R&quot;</code></pre>
-<p>첫번째 코드는 정상적으로 문자열 &quot;Hello R&quot; 을 출력시킨다.<br />
-그리고 에러반환 코드 2번째 코드는 반응이 없다.</p>
-<p>순서를 바꾸어 보면?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="dt">expr=</span>{
-  <span class="kw">ls</span>(<span class="dt">envir=</span>bsdi)     <span class="co"># error code</span>
-  <span class="kw">print</span>(<span class="st">&quot;Hello R&quot;</span>)   <span class="co"># normal code</span>
-}, <span class="dt">silent=</span>T)</code></pre></div>
-<p>헛.. 첫번째 코드가 에러를 뿜기 때문에 그 이후 코드인 <code>print(&quot;Hello R&quot;)</code>는 수행되지 않는것을 볼 수 있다.</p>
+<p>Amazon Web Service (AWS) 를 이용하여 미리 구축된 Rstudio Server AMI <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> 를 배포해주는 <a href="http://www.louisaslett.com/">사이트</a>가 있다.</p>
+<p><a href="http://www.louisaslett.com" class="uri">http://www.louisaslett.com</a></p>
+<p>이 AMI를 이용해 직접 여러대의 Rstudio Server 를 손쉽게 구축시킬 수 있다.</p>
+<p>관련된 정보는 <a href="https://www.youtube.com/watch?v=NQu3ugUkYTk">아래링크</a>를 통해 참고하여 알게 되었고 튜토리얼 형태로 이용할 수 있는 방법에 대한 영상까지 있다.</p>
+<p><a href="https://www.youtube.com/watch?v=NQu3ugUkYTk">Brief guide about Rstudio Server's Web interface on AWS : https://www.youtube.com/watch?v=NQu3ugUkYTk</a></p>
+<iframe width="100%" height="400" src="https://www.youtube.com/embed/NQu3ugUkYTk" frameborder="0" allowfullscreen>
+</iframe>
+<p>AWS 를 프리티어로 공짜로 이용하던 이전시절 이영상을 보고 그대로 따라하여 Rstudio Server 를 구축 시켜 봤었다.<br />
+등록되는 도메인을 통해 들어간 후</p>
+<p><em>ID : rstudio</em><br />
+<em>P.W : rstudio</em></p>
+<p>로 로그인하여 자유자재로 웹에서 사용할 수 있게 된다.<br />
+물론 초기 로그인시 아이디와 패스워드는 저렇지만 추후에 다른 패스워드로, 그리고 다른 아이디를 만들어 사용할 수도 있겠다.</p>
+<figure>
+<img src="/assets/AWSAMI-1.png" />
+</figure>
+<p>실질적으로 사용하고자 한다면 AWS EC2 사용 과금을 고려해야하며,<br />
+AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴스를 활성화 시킨다면<br />
+성능, 속도측면에서 기대하지 않는것이 좋을것이다.</p>
+<p>하지만 간편하게 원격으로 R 을 실행할 수도 있고, 소셜코딩이 가능할 수도 있겠으며 간편한 서버증설 등등의<br />
+유용하게 사용할 수 있는 방법은 무궁무진 할 것으로 생각된다.</p>
 <hr />
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Amazon Machine Image 의 약어로 어떤 소프트웨어나 환경설정을 이미지화 하여 그대로 재활용할 수 있는 템플릿이다.<a href="#fnref1">↩</a></p></li>
+</ol>
+</section>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -197,7 +177,7 @@ Error in ls(envir = bsdi) : object &#39;bsdi&#39; not found</code></pre>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/02/11/try_function.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2015/03/25/RstudioServer_using_AWSAMI.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -394,10 +374,8 @@ Error in ls(envir = bsdi) : object &#39;bsdi&#39; not found</code></pre>
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/r/2016/02/08/system_function.html">&laquo; R에서 Shell command 를 실행하기위한 대안 : `system()` 함수</a>
   
-  
-    <a class="next" href="/r/2016/02/19/replicate_function.html">R에서 `replicate()` 함수 소개 &raquo;</a>
+    <a class="next" href="/diary/2015/12/07/Imitation_game.html">Imitation game &raquo;</a>
   
 </div>
 
@@ -408,8 +386,8 @@ Error in ls(envir = bsdi) : object &#39;bsdi&#39; not found</code></pre>
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 `try()` 함수 소개";
-        var disqus_title = "R에서 `try()` 함수 소개";
+        var disqus_identifier = "https://lovetoken.github.io_Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축";
+        var disqus_title = "Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

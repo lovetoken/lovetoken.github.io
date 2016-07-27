@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 27 Jul 2016 15:23:00 +0900</pubDate>
-    <lastBuildDate>Wed, 27 Jul 2016 15:23:00 +0900</lastBuildDate>
+    <pubDate>Wed, 27 Jul 2016 20:11:41 +0900</pubDate>
+    <lastBuildDate>Wed, 27 Jul 2016 20:11:41 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -1075,67 +1075,6 @@ res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </item>
     
       <item>
-        <title>R에서 `try()` 함수 소개</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;이전에 나는 특정 코드들이 있을 때, 이 코드를 수행하면 에러가 나는지, 나지 않는지 여부를 boolean 값으로 반환하는 그러한 함수를 찾고 있었다. (그보단 이러한 함수를 만들 수 있도록 리소스를 찾아보고 있었다.)&lt;br /&gt;
-그러던 중 우연히 알게 된 &lt;code&gt;try()&lt;/code&gt; 함수에 대해 알아보고자 한다.&lt;/p&gt;
-&lt;p&gt;아래 코드는 &lt;code&gt;bsid&lt;/code&gt; 라는 environment 객체가 없기 때문에 아래의 코드는 에러를 내어 본 파일의 rmarkdown 랜더링을 막게 될 것이다.&lt;br /&gt;
-우선 랜더링(컴파일링)마저 막는 상황을 피하기 위해 코드청크를 &lt;code&gt;eval=F&lt;/code&gt; 로 설정했다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir=&lt;/span&gt;bsdi)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;실제로 &lt;code&gt;bsid&lt;/code&gt; 라는 environment 객체가 없는 상황에 위 코드를 실행시키면&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; ls(envir=bsdi)
-Error in ls(envir = bsdi) : object &amp;#39;bsdi&amp;#39; not found&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;의 에러메세지가 출력된다.&lt;/p&gt;
-&lt;h2 id=&quot;try-function&quot;&gt;&lt;code&gt;try()&lt;/code&gt; function&lt;/h2&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
-  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir=&lt;/span&gt;bsdi)
-})&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;try()&lt;/code&gt; 함수 안에는 표현식이 들어가는데 이전 예제 코드의 &lt;code&gt;ls(envir=bsdi)&lt;/code&gt; 를 입력하였다.&lt;br /&gt;
-&lt;code&gt;ls(envir=bsdi)&lt;/code&gt; 코드는 역시 에러가 반환된다.&lt;br /&gt;
-하지만 차이점은 에러를 반환하고도 이후 코드를 계속적으로 수행한다는 차이점을 가지고 있다.&lt;br /&gt;
-무슨소리인지 잘 모르겠다면 아래코드를 보면 된다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
-  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir=&lt;/span&gt;bsdi)
-})
-
-&lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Hello R&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Hello R&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;try()&lt;/code&gt; 함수를 쓴 코드 이후의 코드인 &lt;code&gt;print(&amp;quot;Hello R&amp;quot;)&lt;/code&gt; 은 정상적으로 실행되 수행된 것을 볼 수 있다.&lt;br /&gt;
-유의할 것은 실제로 위 코드청크에 &lt;code&gt;eval=F&lt;/code&gt; 설정을 주지 않고도 렌더링이 막히지 않았는다는 것이다.&lt;br /&gt;
-따라서 에러를 뿜는 코드이더라 하더라도, 그것이 &lt;code&gt;try()&lt;/code&gt; 함수로 감싸지면 계속적으로 수행된다는 것이다.&lt;/p&gt;
-&lt;h3 id=&quot;silent-인자&quot;&gt;&lt;code&gt;silent&lt;/code&gt; 인자&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;try()&lt;/code&gt; 함수의 &lt;code&gt;silent&lt;/code&gt; 인자로 command 에 에러가 반환되는 메세지 조차 침묵시킬 수 있다.&lt;br /&gt;
-이 인자의 값을 &lt;code&gt;TRUE&lt;/code&gt; 로 설정하면 에러는 silent 시킨다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
-  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir=&lt;/span&gt;bsdi)
-}, &lt;span class=&quot;dt&quot;&gt;silent=&lt;/span&gt;T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;차이점을 체감하기 위해선 직접 R command 를 수행해볼 필요가 있다.&lt;/p&gt;
-&lt;h3 id=&quot;두-줄-의-코드를-try-하되-한줄은-정상-한줄은-에러를-내는-코드로-수정하면&quot;&gt;두 줄 의 코드를 try 하되 한줄은 정상, 한줄은 에러를 내는 코드로 수정하면?&lt;/h3&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
-  &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Hello R&amp;quot;&lt;/span&gt;)   &lt;span class=&quot;co&quot;&gt;# normal code&lt;/span&gt;
-  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir=&lt;/span&gt;bsdi)     &lt;span class=&quot;co&quot;&gt;# error code&lt;/span&gt;
-}, &lt;span class=&quot;dt&quot;&gt;silent=&lt;/span&gt;T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Hello R&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;첫번째 코드는 정상적으로 문자열 &amp;quot;Hello R&amp;quot; 을 출력시킨다.&lt;br /&gt;
-그리고 에러반환 코드 2번째 코드는 반응이 없다.&lt;/p&gt;
-&lt;p&gt;순서를 바꾸어 보면?&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
-  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir=&lt;/span&gt;bsdi)     &lt;span class=&quot;co&quot;&gt;# error code&lt;/span&gt;
-  &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Hello R&amp;quot;&lt;/span&gt;)   &lt;span class=&quot;co&quot;&gt;# normal code&lt;/span&gt;
-}, &lt;span class=&quot;dt&quot;&gt;silent=&lt;/span&gt;T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;헛.. 첫번째 코드가 에러를 뿜기 때문에 그 이후 코드인 &lt;code&gt;print(&amp;quot;Hello R&amp;quot;)&lt;/code&gt;는 수행되지 않는것을 볼 수 있다.&lt;/p&gt;
-&lt;hr /&gt;
-</description>
-        <pubDate>Thu, 11 Feb 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2016/02/11/try_function.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/02/11/try_function.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
         <title>R에서 Shell command 를 실행하기위한 대안 : `system()` 함수</title>
         <description>&lt;hr /&gt;
 &lt;p&gt;(본 글은 Linux, Mac 을 기준으로 작성한 글입니다.)&lt;/p&gt;
@@ -1456,6 +1395,47 @@ step_fit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class
         
         
         <category>Diary</category>
+        
+      </item>
+    
+      <item>
+        <title>Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축</title>
+        <description>&lt;hr /&gt;
+&lt;p&gt;Amazon Web Service (AWS) 를 이용하여 미리 구축된 Rstudio Server AMI &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; 를 배포해주는 &lt;a href=&quot;http://www.louisaslett.com/&quot;&gt;사이트&lt;/a&gt;가 있다.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.louisaslett.com&quot; class=&quot;uri&quot;&gt;http://www.louisaslett.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;이 AMI를 이용해 직접 여러대의 Rstudio Server 를 손쉽게 구축시킬 수 있다.&lt;/p&gt;
+&lt;p&gt;관련된 정보는 &lt;a href=&quot;https://www.youtube.com/watch?v=NQu3ugUkYTk&quot;&gt;아래링크&lt;/a&gt;를 통해 참고하여 알게 되었고 튜토리얼 형태로 이용할 수 있는 방법에 대한 영상까지 있다.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=NQu3ugUkYTk&quot;&gt;Brief guide about Rstudio Server&#39;s Web interface on AWS : https://www.youtube.com/watch?v=NQu3ugUkYTk&lt;/a&gt;&lt;/p&gt;
+&lt;iframe width=&quot;100%&quot; height=&quot;400&quot; src=&quot;https://www.youtube.com/embed/NQu3ugUkYTk&quot; frameborder=&quot;0&quot; allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;p&gt;AWS 를 프리티어로 공짜로 이용하던 이전시절 이영상을 보고 그대로 따라하여 Rstudio Server 를 구축 시켜 봤었다.&lt;br /&gt;
+등록되는 도메인을 통해 들어간 후&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;ID : rstudio&lt;/em&gt;&lt;br /&gt;
+&lt;em&gt;P.W : rstudio&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;로 로그인하여 자유자재로 웹에서 사용할 수 있게 된다.&lt;br /&gt;
+물론 초기 로그인시 아이디와 패스워드는 저렇지만 추후에 다른 패스워드로, 그리고 다른 아이디를 만들어 사용할 수도 있겠다.&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&quot;/assets/AWSAMI-1.png&quot; /&gt;
+&lt;/figure&gt;
+&lt;p&gt;실질적으로 사용하고자 한다면 AWS EC2 사용 과금을 고려해야하며,&lt;br /&gt;
+AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴스를 활성화 시킨다면&lt;br /&gt;
+성능, 속도측면에서 기대하지 않는것이 좋을것이다.&lt;/p&gt;
+&lt;p&gt;하지만 간편하게 원격으로 R 을 실행할 수도 있고, 소셜코딩이 가능할 수도 있겠으며 간편한 서버증설 등등의&lt;br /&gt;
+유용하게 사용할 수 있는 방법은 무궁무진 할 것으로 생각된다.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;Amazon Machine Image 의 약어로 어떤 소프트웨어나 환경설정을 이미지화 하여 그대로 재활용할 수 있는 템플릿이다.&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Wed, 25 Mar 2015 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2015/03/25/RstudioServer_using_AWSAMI.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2015/03/25/RstudioServer_using_AWSAMI.html</guid>
+        
+        
+        <category>R</category>
         
       </item>
     
