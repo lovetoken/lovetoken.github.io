@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>lovetoken</title>
+        <meta name="author" content="Lovetoken" />
+        <meta name="description" content="R에서 구분구적법 적분과정 시뮬레이션 및 `integrate()` 함수 알아보기" />
+        <meta name="keywords" content="R에서 구분구적법 적분과정 시뮬레이션 및 `integrate()` 함수 알아보기, , R" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="" property="fb:app_id">
+        <meta content="" property="og:site_name">
+        
+          <meta content="R에서 구분구적법 적분과정 시뮬레이션 및 `integrate()` 함수 알아보기" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="" property="og:description">
+        
+        
+          <meta content="https://lovetoken.github.io/r/2016/06/06/integate_function.html" property="og:url">
+        
+        
+          <meta content="2016-06-06T00:00:00+09:00" property="article:published_time">
+          <meta content="https://lovetoken.github.io/about/" property="article:author">
+        
+        
+          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="R" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:creator" content="@">
+        
+          <meta name="twitter:title" content="R에서 구분구적법 적분과정 시뮬레이션 및 `integrate()` 함수 알아보기">
+        
+        
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/06/06/integate_function.html">
+        
+        
+          <meta name="twitter:description" content="">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', '', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+        <!-- mathjax config similar to math.stackexchange -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">Lovetoken</h1>
+                
+                <div id="about">
+                    저는 개발 취향을 가진 데이터 분석가 Jr. 입니다.  R, Git, Markdown, Shiny, Sublime text 등의 스킬들을 즐깁니다.
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://twitter.com/LT_Lovetoken" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/lovetoken/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>Navigation</strong><br />
+                    &nbsp;&raquo; <a href="/">Home</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">About Me</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/lovetoken">Github</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>R에서 구분구적법 적분과정 시뮬레이션 및 `integrate()` 함수 알아보기</h1>
+<span class="time">06 Jun 2016</span>
+
+<span class="categories">
+    &raquo; <a href="/category/R">R</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><hr />
+
+<p>내가 고등학교 이과생으로써 지낸 2학년 기억을 돌이켜 보면 적분의 방법은 이렇게 배웠던 것 같다.<br />
+넓이계산이 용이한 사각형을 함수와 x축 사이에 강제로 끼워 맞춤으로써 넓이를 근사시키는 과정을 취하였고,<br />
+특히 x축 기준 사각형을 등간격으로 잘게잘게 쪼개는 과정을 무한대로 취함으로써 적분값을 완벽히 근사시키는 법으로 적분값을 구한다 라고 말이다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">fun</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="m">3</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">7</span><span class="o">*</span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">13</span><span class="o">*</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">12</span><span class="w">
+</span><span class="n">fun_forarea</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="w">
+	</span><span class="n">res</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">
+	</span><span class="n">res</span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="o">&lt;</span><span class="m">0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">x</span><span class="o">&gt;</span><span class="m">5</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NA</span><span class="w">
+	</span><span class="nf">return</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="n">P</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ggplot</span><span class="p">(</span><span class="n">data.frame</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">)),</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+	</span><span class="n">stat_function</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">fun</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+	</span><span class="n">stat_function</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">fun_forarea</span><span class="p">,</span><span class="w"> </span><span class="n">geom</span><span class="o">=</span><span class="s2">"area"</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="s2">"#3E5CFF"</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="o">=</span><span class="m">.2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+	</span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+	</span><span class="n">theme_bw</span><span class="p">()</span><span class="w">
+
+</span><span class="n">P</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/assets/integrate-1.png" alt="" /></p>
+
+<video controls="" loop=""><source src="/assets/integrate_ani-.webm" /><p>video of chunk integrate_ani</p></video>
+
+<p>이러한 형태로 넓이를 구하기 힘든 곡선모형의 넓이를 구하기 위해<br />
+충분히 작은 n개의 기본도형으로 나누어 끼워맞춘 후 넓이를 구한것을 <script type="math/tex">S_n</script> 이라 할 때<br />
+기본도형을 더 작은단위로 하여 <script type="math/tex">n</script> 을 극한으로 보냄으로써 넓이를 근사시키는 것을 <strong>구분구적법</strong>이라 한다.<br />
+즉 구분구적법은 <script type="math/tex">\lim_{n \rightarrow \infty} S_n</script> 을 계산하는 과정이다.</p>
+
+<p>컴퓨터는 미분이든 적분이든 사람이 손으로 풀듯이 드라마틱하게 계산할 수 있는 능력이 없을것이다.  <br />
+구분구적법에 기반한 프로그래밍적인 계산을 통해 적분값을 계산하게 될 것인데 <br />
+R에서는 <code class="highlighter-rouge">intergrate()</code> 함수를 이용하여 적분값을 계산할 수 있다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">integrate</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## 87.08333 with absolute error &lt; 9.7e-13
+</code></pre>
+</div>
+
+<p>구분구적법은 기본도형을 최대한 잘게 쪼개는 과정이 필요한데<br />
+이를 무한히 반복하는것을 컴퓨터에게 시킨다면<br />
+stop 조건이 없을 경우 멈추지 않을것이다.<br />
+그렇다고 n을 무한으로 보내지 못하고 중간에 stop 하게 되면 적분값의 오차는 반드시 생길수 밖에 없을것이다.<br />
+추정컨데 <code class="highlighter-rouge">integrate()</code> 함수를 실행시키고 출력되는 “absolute error” 문구가 출력된 이유가 이것때문일 것이라 생각된다.</p>
+
+<p><code class="highlighter-rouge">integrate()</code> 함수 사용방법은 간편하다.<br />
+계산을 하고싶은 함수를 첫번째 인자에 넘겨주고,<br />
+폐구간에 대한 정보를 <code class="highlighter-rouge">lower</code>, <code class="highlighter-rouge">upper</code> 인자에 넘겨주기만 하면 적분값을 계산해 준다.</p>
+
+<hr />
+
+</div>
+    <div class="share-page">
+    <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/06/06/integate_function.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/07/23/Crawling_image.html">R에서 특정 웹페이지의 이미지 파일 Crawling 하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html">R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/12/S3.html">R에서 S3 최소재현예제</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/05/26/CLT.html">R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html">R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/04/16/using_clipboard.html">R에서 클립보드의 내용물을 끌어오기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/r/2016/05/26/CLT.html">&laquo; R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기</a>
+  
+  
+    <a class="next" href="/r/2016/06/12/S3.html">R에서 S3 최소재현예제 &raquo;</a>
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+
+        var disqus_shortname = "lovetoken";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 구분구적법 적분과정 시뮬레이션 및 `integrate()` 함수 알아보기";
+        var disqus_title = "R에서 구분구적법 적분과정 시뮬레이션 및 `integrate()` 함수 알아보기";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    /* ]]> */
+    </script>
+</div>
+
+                <footer>
+                    &copy; Lovetoken
+                     
+                    - <a href="https://github.com/lovetoken">https://github.com/lovetoken</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>                    
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>

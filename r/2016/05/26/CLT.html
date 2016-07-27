@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>lovetoken</title>
+        <meta name="author" content="Lovetoken" />
+        <meta name="description" content="R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기" />
+        <meta name="keywords" content="R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기, , R" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="" property="fb:app_id">
+        <meta content="" property="og:site_name">
+        
+          <meta content="R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="" property="og:description">
+        
+        
+          <meta content="https://lovetoken.github.io/r/2016/05/26/CLT.html" property="og:url">
+        
+        
+          <meta content="2016-05-26T00:00:00+09:00" property="article:published_time">
+          <meta content="https://lovetoken.github.io/about/" property="article:author">
+        
+        
+          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="R" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:creator" content="@">
+        
+          <meta name="twitter:title" content="R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기">
+        
+        
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/05/26/CLT.html">
+        
+        
+          <meta name="twitter:description" content="">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', '', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+        <!-- mathjax config similar to math.stackexchange -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">Lovetoken</h1>
+                
+                <div id="about">
+                    저는 개발 취향을 가진 데이터 분석가 Jr. 입니다.  R, Git, Markdown, Shiny, Sublime text 등의 스킬들을 즐깁니다.
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://twitter.com/LT_Lovetoken" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/lovetoken/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>Navigation</strong><br />
+                    &nbsp;&raquo; <a href="/">Home</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">About Me</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/lovetoken">Github</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기</h1>
+<span class="time">26 May 2016</span>
+
+<span class="categories">
+    &raquo; <a href="/category/R">R</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><hr />
+
+<p>통계 비전공자에게 중심극한의 정리를 설명해야 했던 적이 있었는데,<br />
+심오한 이론들을 증명하며 설명하느니 한번 보여주는 것이 더 큰 공감을 얻게될 것 같아 animation plot 을 준비한적이 있다.<br />
+본 포스팅 글은 R markdown 포맷에서 코드청크옵션 <code class="highlighter-rouge">fig.show="animate"</code> 을 통해 animation plot 을 준비하는 것이 가능하다는 것을 소개하고 그 예시로 중심극한정리 시뮬레이션을 통해 설명할 것이다.</p>
+
+<h1 id="a--central-limit-theorem--">A) 중심극한정리 (Central Limit Theorem) 에 대해서</h1>
+
+<p>중심극한정리는 표본의 크기가 커짐에 따라 표본평균의 분포가 점점 정규분포로 근사(닮아) 짐을 의미하는 이론이다.<br />
+그리고 표본은 어떠한 분포 타입에 나온 것이더라 하더라도 상관없이 중심극한정리에 해당되는것을 특징으로 한다.<br />
+여기서 헷갈리는 것이 있을 수 있는데, 표본평균은 단하나의 값으로 분포가 될 수 있느냐 라는 질문이 생길 수 있다.<br />
+이 궁금증은 표본 자체가 확률변수라는 것으로써 이해할 수 있다.<br />
+표본 자체가 확률변수이므로 이를 종합하여 평균한 값 하나일지라도 분명 확률변수이며 이는 분포로써 설명이 가능하다.<br />
+하지만 시뮬레이션에서 사용할 표본평균은 단 한 개 가지고는 분포를 시각적으로 볼 수 없다. <br />
+따라서 표본평균들을 여러 개 발생시킬 것이다.</p>
+
+<p>정리하면 시뮬레이션 시 특정 분포에 대해 많은 표본을 뽑은 후 표본평균계산 후 이를 반복해서 다양한 표본평균들을 준비해 히스토그램으로 분포를 확인할 것이다. <br />
+또한 표본의 크기가 커짐에 따라 정규분포로 닮아진다는 것을 보여주는 것과 동시에 점근적으로 보여주는 것이 시뮬레이션의 큰 의미라고 볼 수 있다.</p>
+
+<p>우선 현 시뮬레이션에선</p>
+
+<ul>
+  <li>특정분포를 포아송분포 <script type="math/tex">X \sim Poisson(\lambda=10)</script> 으로</li>
+  <li>표본개수는 n=500 으로 통일하고</li>
+  <li>표본평균들을 1,000개 준비하기 위해 위 과정을 1000번 반복</li>
+</ul>
+
+<p>할 것이다.</p>
+
+<h1 id="b--">B) 단편 시뮬레이션</h1>
+
+<p>위에서 설명한 시뮬레이션은 아래코드를 통해 확인 가능하다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">res</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">replicate</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span><span class="o">=</span><span class="p">{</span><span class="w">
+	</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">500</span><span class="w">
+	</span><span class="n">sample</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rpois</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">lambda</span><span class="o">=</span><span class="m">10</span><span class="p">)</span><span class="w">
+	</span><span class="n">mean</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span><span class="w">
+</span><span class="p">})</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>위 코드를 통해 1000개의 표본평균들이 <code class="highlighter-rouge">res</code> 객체에 담겨있게된다.<br />
+정규분포로 근사되었는지 분포를 확인하는건 2가지 방법을 통해 해보고자 한다.</p>
+
+<ol>
+  <li>히스토그램과 밀도추정선을 덧그린 plot</li>
+  <li>Quantile-Quantile Plots</li>
+</ol>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">hist</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="w"> </span><span class="n">freq</span><span class="o">=</span><span class="nb">F</span><span class="p">);</span><span class="w"> </span><span class="n">lines</span><span class="p">(</span><span class="n">density</span><span class="p">(</span><span class="n">res</span><span class="p">),</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/assets/CLT1-1.png" alt="" /></p>
+
+<p>1번에 해당되는 히스토그램이다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">qqnorm</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/assets/CLT2-1.png" alt="" /></p>
+
+<p>2번에 해당하는 소위 QQplot 이다.</p>
+
+<p>분명 결과물을 통해선 포아송분포에서 뽑은 표본들의 평균의 분포가 정규분포에 근사하는 것을 체감할 수는 있다.  <br />
+하지만 나는 이것보다 분포의 개수가 많으면 많아질수록 정규분포의 닮아짐이 높아진다는 점근적근사를 시각적으로 보여주고 싶은 것이었다.</p>
+
+<h1 id="c-rmarkdown---figshowanimate--">C) Rmarkdown 의 코드청크옵션 <code class="highlighter-rouge">fig.show="animate"</code> 에 대해서</h1>
+
+<p>필자는 Rmarkdown 포맷을 자주 사용하여 내 지식을 전달하는 편인데 데이터분석과 융화된 글을 쓰기에 거리낌 없는 도구로 굉장한 공감을 얻었기 때문이다.<br />
+특히 <code class="highlighter-rouge">fig.show="animate"</code> 와 같은 코드청크 옵션은 데이터의 변질에 따른 plot output 의 변화를 보여주기에 간편한 기능을 제공해서 적극적으로 애용 중이다.</p>
+
+<p>위의 예시를 이어서 설명하자면 단편적인 시뮬레이션을 통해 정규분포에 근사하는 것을 체감시켰지만,<br />
+이보다 더 중요한 것을 설명하기 위해 표본개수 즉 표본평균을 계산한 반복회수가 증가함으로써 일어나는 정규근사 정도를 animation ploting 통해 보여줄 것이다.</p>
+
+<p>아래처럼 말이다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span><span class="w"> </span><span class="c1"># for fibonacci function
+</span><span class="n">ani_N</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">();</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">5</span><span class="o">:</span><span class="m">30</span><span class="p">)</span><span class="w"> </span><span class="n">ani_N</span><span class="p">[</span><span class="n">i</span><span class="m">-4</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">fibonacci</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w">
+</span><span class="n">ani_N</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##  [1]      5      8     13     21     34     55     89    144    233    377
+## [11]    610    987   1597   2584   4181   6765  10946  17711  28657  46368
+## [21]  75025 121393 196418 317811 514229 832040
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="k">for</span><span class="p">(</span><span class="n">N</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ani_N</span><span class="p">){</span><span class="w">
+	</span><span class="n">res</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">replicate</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span><span class="o">=</span><span class="p">{</span><span class="w">
+		</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">500</span><span class="w">
+		</span><span class="n">sample</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rpois</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">lambda</span><span class="o">=</span><span class="m">10</span><span class="p">)</span><span class="w">
+		</span><span class="n">mean</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span><span class="w">
+	</span><span class="p">})</span><span class="w">
+	</span><span class="n">hist</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="w"> </span><span class="n">freq</span><span class="o">=</span><span class="nb">F</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="p">));</span><span class="w"> </span><span class="n">lines</span><span class="p">(</span><span class="n">density</span><span class="p">(</span><span class="n">res</span><span class="p">),</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<video controls="" loop=""><source src="/assets/CLT1_ani-.webm" /><p>video of chunk CLT1_ani</p></video>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="k">for</span><span class="p">(</span><span class="n">N</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ani_N</span><span class="p">){</span><span class="w">
+	</span><span class="n">res</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">replicate</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span><span class="o">=</span><span class="p">{</span><span class="w">
+		</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">500</span><span class="w">
+		</span><span class="n">sample</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rpois</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">lambda</span><span class="o">=</span><span class="m">10</span><span class="p">)</span><span class="w">
+		</span><span class="n">mean</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span><span class="w">
+	</span><span class="p">})</span><span class="w">
+	</span><span class="n">qqnorm</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="p">))</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<video controls="" loop=""><source src="/assets/CLT2_ani-.webm" /><p>video of chunk CLT2_ani</p></video>
+
+<p>위의 B장에서 수행했던 코드의 본체는 부수적인 차이만 존재할 뿐 거의 흡사하다.<br />
+차이점은 시뮬레이션 본체코드를 for 문을 통해 <code class="highlighter-rouge">ani_N</code> 의 피보나치수열로 반복회수를 조정한것이며, <br />
+시각화 코드인 <code class="highlighter-rouge">hist()</code>, <code class="highlighter-rouge">qqnorm()</code> 함수에 <code class="highlighter-rouge">xlim</code>, <code class="highlighter-rouge">ylim</code> 인자값들을 부여해 범위를 고정시켰다는 차이가 있다.<br />
+그리고 본장에서 설명하고자 차이점은 사실 R코드가 아닌 Rmarkdown 코드청크옵션에 내막이 있다.  <br />
+verbatim 모드로 Rmarkdown 코드청크 전체를 보여주면 아래와 같다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="c1"># ```{r fig.show="animate", interval=.4}
+# for(N in ani_N){
+# 	res &lt;- replicate(N, expr={
+# 		n &lt;- 500
+# 		sample &lt;- rpois(n, lambda=10)
+# 		mean(sample)
+# 	})
+# 	hist(res, freq=F, ylim=c(0, 7), xlim=c(9, 11)); lines(density(res), lty=2, col="blue")
+# }
+# ```
+</span></code></pre>
+</div>
+
+<p>사실 코드청크에 <code class="highlighter-rouge">fig.show="animate", interval=.4</code> 와 같은 옵션이 존재하지 않는다면<br />
+<code class="highlighter-rouge">ani_N</code> 의 마지막 값에 대한 중심극한 시뮬레이션 histogram 결과만 나올것이다.<br />
+실제 수행된 코드는 <code class="highlighter-rouge">ani_N</code> 에 담겨있는 수열들의 값대로 히스토그램을 그리겠지만 결국 출력되는건 마지막 값에 해당되는 단편 시뮬레이션 plot output 이다.</p>
+
+<p>하지만 코드청크에 <code class="highlighter-rouge">fig.show="animate"</code> 를 부여하면 중간중간에 출력되는 plot output 을 임시로 모두 저장하게된다.<br />
+이후 코드청크의 <code class="highlighter-rouge">interval</code> 옵션값만큼의 간격으로 저장된 plot output 프레임들을 순차적으로 인코딩하여 영상을 만든다! <br />
+지금은 interval 값을 0.4초로 지정했는데 프레임 넘김을 더 빠르게 하고싶은 경우 이값을 작게 조정하여 희망하는 속도로 맞출 수 있다.   <br />
+그리하여 피보나치수열 대로 표본이 증가하면 증가할수록 정규분포로 근사되는것을 시각적으로 볼 수 있게 되는 것이다.</p>
+
+<p>QQplot animation 도 마찬가지 형태이다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="c1"># ```{r fig.show="animate", interval=.4}
+# for(N in ani_N){
+# 	res &lt;- replicate(N, expr={
+# 		n &lt;- 500
+# 		sample &lt;- rpois(n, lambda=10)
+# 		mean(sample)
+# 	})
+# 	qqnorm(res, xlim=c(-4, 4), ylim=c(9, 11))
+# }
+# ```
+</span></code></pre>
+</div>
+
+<h1 id="d-">D) 요구사항</h1>
+
+<p>단 이렇게 영상으로 인코딩하는 작업을 하기 위해서 운영체계별로 요구하는 플러그인이 다를 수 있다.<br />
+필자는 OSX 에서 이 글을 작성한 것이며 <a href="https://www.ffmpeg.org/">ffmpeg</a> 설치가 요구되었었다.</p>
+
+<p>그리고 이것이 요구사항일지는 모르겠지만 코드수행시간이란 비용 이외에 animation plot 영상을 인코딩하는 시간 역시 필요하다. <br />
+위의 예제처럼 간단한 수준의 짧은 영상을 만드는 것은 인코딩시간이 조금 걸리지만,<br />
+그렇지 않으면 많은 인내심이 요구될 수 있다.</p>
+
+<hr />
+
+</div>
+    <div class="share-page">
+    <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/05/26/CLT.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/07/23/Crawling_image.html">R에서 특정 웹페이지의 이미지 파일 Crawling 하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html">R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/12/S3.html">R에서 S3 최소재현예제</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/06/integate_function.html">R에서 구분구적법 적분과정 시뮬레이션 및 `integrate()` 함수 알아보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html">R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/04/16/using_clipboard.html">R에서 클립보드의 내용물을 끌어오기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/r/2016/05/18/lag_diff_function.html">&laquo; R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기</a>
+  
+  
+    <a class="next" href="/r/2016/06/06/integate_function.html">R에서 구분구적법 적분과정 시뮬레이션 및 `integrate()` 함수 알아보기 &raquo;</a>
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+
+        var disqus_shortname = "lovetoken";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기";
+        var disqus_title = "R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    /* ]]> */
+    </script>
+</div>
+
+                <footer>
+                    &copy; Lovetoken
+                     
+                    - <a href="https://github.com/lovetoken">https://github.com/lovetoken</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>                    
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>

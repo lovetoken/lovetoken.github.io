@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>lovetoken</title>
+        <meta name="author" content="Lovetoken" />
+        <meta name="description" content="R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹" />
+        <meta name="keywords" content="R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹, , R" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="" property="fb:app_id">
+        <meta content="" property="og:site_name">
+        
+          <meta content="R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="" property="og:description">
+        
+        
+          <meta content="https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html" property="og:url">
+        
+        
+          <meta content="2016-06-27T00:00:00+09:00" property="article:published_time">
+          <meta content="https://lovetoken.github.io/about/" property="article:author">
+        
+        
+          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="R" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:creator" content="@">
+        
+          <meta name="twitter:title" content="R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹">
+        
+        
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html">
+        
+        
+          <meta name="twitter:description" content="">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', '', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+        <!-- mathjax config similar to math.stackexchange -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">Lovetoken</h1>
+                
+                <div id="about">
+                    저는 개발 취향을 가진 데이터 분석가 Jr. 입니다.  R, Git, Markdown, Shiny, Sublime text 등의 스킬들을 즐깁니다.
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://twitter.com/LT_Lovetoken" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/lovetoken/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>Navigation</strong><br />
+                    &nbsp;&raquo; <a href="/">Home</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">About Me</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/lovetoken">Github</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹</h1>
+<span class="time">27 Jun 2016</span>
+
+<span class="categories">
+    &raquo; <a href="/category/R">R</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><hr />
+
+<p>최근에 많이 하는 작업이 있습니다.<br />
+바로 data.frame 기반으로 데이터를 인아웃풋 한 코드들을 모두 data.table 로 코드 스위칭하는 작업인데요.<br />
+data.table 의 빠른처리속도는 이전부터 명성이 자자했지만 게으름으로 인해 고집스럽게 쓰지 않았었습니다.<br />
+하지만 인내심의 한계에 다다르고 빠른 속도를 직접 체감하고 나서 뒤늦게 도입하기 시작한 것 같습니다.</p>
+
+<p>구글링을 통해서도 다양한 data.table 의 showcase 들이 있고, 퍼포먼스를 확인할 수 있는 예제코드를 구하기 쉬운데요<br />
+저도 그러한 예제코드를 만들어 보았고 공유해 보고자 합니다.<br />
+저는 data.frame 과 data.table 에 대해서 join 작업을 이용해 벤치마킹 하는 코드 프로그램을 아래와 같이 작성해 보았습니다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">data.table</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">rbenchmark</span><span class="p">)</span><span class="w">
+
+</span><span class="n">N</span><span class="o">=</span><span class="m">10</span><span class="o">^</span><span class="m">6</span><span class="w">
+
+</span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w">
+	</span><span class="n">ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="w">
+	</span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">LETTERS</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">sample</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="nb">T</span><span class="p">),</span><span class="w">
+	</span><span class="n">Var1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="w">
+	</span><span class="n">Var2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rpois</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="w">
+	</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">tbl_df</span><span class="w">
+</span><span class="n">df2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w">
+	</span><span class="n">ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">rev</span><span class="p">,</span><span class="w">
+	</span><span class="n">Var3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="m">-10</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">2</span><span class="p">)</span><span class="w">
+	</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">sample_n</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="m">.9</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">tbl_df</span><span class="w">
+
+</span><span class="n">dt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.table</span><span class="p">(</span><span class="n">df</span><span class="p">);</span><span class="w"> </span><span class="n">setkey</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span><span class="w"> </span><span class="n">ID</span><span class="p">)</span><span class="w">
+</span><span class="n">dt2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.table</span><span class="p">(</span><span class="n">df2</span><span class="p">);</span><span class="w"> </span><span class="n">setkey</span><span class="p">(</span><span class="n">dt2</span><span class="p">,</span><span class="w"> </span><span class="n">ID</span><span class="p">)</span><span class="w">
+
+</span><span class="n">benchmark</span><span class="p">(</span><span class="w">
+	</span><span class="n">join_res_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">left_join</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">df2</span><span class="p">),</span><span class="w">
+	</span><span class="n">join_res_dt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">left_join</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span><span class="w"> </span><span class="n">dt2</span><span class="p">),</span><span class="w"> </span><span class="n">replications</span><span class="o">=</span><span class="m">20</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>위의 코드를 간략히 설명해 보겠습니다.</p>
+
+<h1 id="a---dataframe-datatable--">A) 예제로 사용할 data.frame, data.table 객체 만들기</h1>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">data.table</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">rbenchmark</span><span class="p">)</span><span class="w">
+
+</span><span class="n">N</span><span class="o">=</span><span class="m">10</span><span class="o">^</span><span class="m">6</span><span class="w">
+
+</span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w">
+	</span><span class="n">ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="w">
+	</span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">LETTERS</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">sample</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="nb">T</span><span class="p">),</span><span class="w">
+	</span><span class="n">Var1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="w">
+	</span><span class="n">Var2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rpois</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="w">
+	</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">tbl_df</span><span class="w">
+</span><span class="n">df2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w">
+	</span><span class="n">ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">rev</span><span class="p">,</span><span class="w">
+	</span><span class="n">Var3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="m">-10</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="o">^</span><span class="m">2</span><span class="p">)</span><span class="w">
+	</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">sample_n</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="m">.9</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">tbl_df</span><span class="w">
+
+</span><span class="n">dt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.table</span><span class="p">(</span><span class="n">df</span><span class="p">);</span><span class="w"> </span><span class="n">setkey</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span><span class="w"> </span><span class="n">ID</span><span class="p">)</span><span class="w">
+</span><span class="n">dt2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.table</span><span class="p">(</span><span class="n">df2</span><span class="p">);</span><span class="w"> </span><span class="n">setkey</span><span class="p">(</span><span class="n">dt2</span><span class="p">,</span><span class="w"> </span><span class="n">ID</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>1,000,000 개의 데이터셋과 이중에서 90\% 인 900,000 개의 새로운 변수를 가진 데이터셋을 서로 join 하기 위해 (의미가 별로 없는) 데이터프레임 <code class="highlighter-rouge">df</code>, <code class="highlighter-rouge">df2</code> 객체를 만드는 코드입니다.<br />
+join 으로 붙여져야 하는 대상은 “Var3” 으로 명칭된 변수 -10 을 평균으로 하는 정규분포 난수이게 됩니다.</p>
+
+<p>이후 class 만 data.table 로 바꾼 <code class="highlighter-rouge">dt</code>, <code class="highlighter-rouge">dt2</code> 동일내용의 객체를 준비합니다.<br />
+data.table 에선 key variable 를 사전에 지정할 수 있는데 바로 data.table 의 <code class="highlighter-rouge">setkey()</code> 함수를 통해 가능합니다.<br />
+key 변수는 공통의 “ID” 변수를 선택하게 됩니다.<br />
+<code class="highlighter-rouge">setkey()</code> 함수를 이용한 이와같은 key 변수 지정은 추후 join 작업의 편의성을 증대시켜주고 처리속도의 작은 개선을 기대할 수 있게 해줍니다.<br />
+무엇보다 현업시 key variable 에 대한 상기를 지속적으로 해야하는 상황에서 이렇게 명시해 줄 수 있는 도구가 있는것은 긍정적이죠.<br />
+key variable 세팅이 제대로 되었는지가 궁금하다면 <code class="highlighter-rouge">tables()</code> 함수를 통해 눈으로 확인 할 수 있습니다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">tables</span><span class="p">()</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##      NAME      NROW NCOL MB COLS               KEY
+## [1,] dt   1,000,000    4 20 ID,group,Var1,Var2 ID 
+## [2,] dt2    900,000    2 11 ID,Var3            ID 
+## Total: 31MB
+</code></pre>
+</div>
+
+<p>출력결과의 맨 우측 Key 항목에 “ID” 가 있는것을 보아 제대로 세팅이 된 것을 볼 수 있어요.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+
+<h1 id="b-joining">B) joining</h1>
+
+<p>본격적으로 Joining 을 해보겠습니다.<br />
+join 방법은 무난한 left join 을 실시하기 위해 dplyr package 에 있는 <code class="highlighter-rouge">left_join()</code> 함수를 이용 하였습니다.</p>
+
+<p>data.frame 에 대한 join 과<br />
+data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenchmark package 의 <code class="highlighter-rouge">benchmark()</code> 함수를 이용하였습니다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">benchmark</span><span class="p">(</span><span class="w">
+	</span><span class="n">join_res_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">left_join</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">df2</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="o">=</span><span class="s2">"ID"</span><span class="p">),</span><span class="w">
+	</span><span class="n">join_res_dt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">left_join</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span><span class="w"> </span><span class="n">dt2</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="o">=</span><span class="s2">"ID"</span><span class="p">),</span><span class="w"> </span><span class="n">replications</span><span class="o">=</span><span class="m">20</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##                                           test replications elapsed
+## 1 join_res_df &lt;- left_join(df, df2, by = "ID")           20  19.704
+## 2 join_res_dt &lt;- left_join(dt, dt2, by = "ID")           20   2.324
+##   relative user.self sys.self user.child sys.child
+## 1    8.478    18.406    1.155          0         0
+## 2    1.000     1.719    0.584          0         0
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">join_res_df &lt;- left_join(df, df2, by="ID")</code> 와 <code class="highlighter-rouge">join_res_dt &lt;- left_join(dt, dt2, by="ID")</code> 코드를 의도적으로 20번 반복 수행해 걸린 시간을 측정해주게 됩니다.<br />
+현 예제에 대한 시간측정결과 elapsed 항목을 볼 때 data.table 에 대한 join 작업의 수행속도가 data.frame 보다 약 10배 빠른 것을 볼 수 있게 됩니다.</p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><code class="highlighter-rouge">setkey()</code> 함수를 통해 key variable 를 세팅하지 않았던 단계에 <code class="highlighter-rouge">tables()</code> 를 실행시키면 Key 항목은 빈칸이었을 것 입니다. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div>
+    <div class="share-page">
+    <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/07/23/Crawling_image.html">R에서 특정 웹페이지의 이미지 파일 Crawling 하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/12/S3.html">R에서 S3 최소재현예제</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/06/integate_function.html">R에서 구분구적법 적분과정 시뮬레이션 및 `integrate()` 함수 알아보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/05/26/CLT.html">R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html">R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/04/16/using_clipboard.html">R에서 클립보드의 내용물을 끌어오기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/r/2016/06/12/S3.html">&laquo; R에서 S3 최소재현예제</a>
+  
+  
+    <a class="next" href="/diary/2016/07/01/Thanks_GS.html">석사논문 감사의 글 &raquo;</a>
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+
+        var disqus_shortname = "lovetoken";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹";
+        var disqus_title = "R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    /* ]]> */
+    </script>
+</div>
+
+                <footer>
+                    &copy; Lovetoken
+                     
+                    - <a href="https://github.com/lovetoken">https://github.com/lovetoken</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>                    
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>

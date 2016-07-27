@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>lovetoken</title>
+        <meta name="author" content="Lovetoken" />
+        <meta name="description" content="R에서 `try()` 함수 소개" />
+        <meta name="keywords" content="R에서 `try()` 함수 소개, , R" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="" property="fb:app_id">
+        <meta content="" property="og:site_name">
+        
+          <meta content="R에서 `try()` 함수 소개" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="" property="og:description">
+        
+        
+          <meta content="https://lovetoken.github.io/r/2016/02/11/try_function.html" property="og:url">
+        
+        
+          <meta content="2016-02-11T00:00:00+09:00" property="article:published_time">
+          <meta content="https://lovetoken.github.io/about/" property="article:author">
+        
+        
+          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="R" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:creator" content="@">
+        
+          <meta name="twitter:title" content="R에서 `try()` 함수 소개">
+        
+        
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/02/11/try_function.html">
+        
+        
+          <meta name="twitter:description" content="">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', '', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+        <!-- mathjax config similar to math.stackexchange -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">Lovetoken</h1>
+                
+                <div id="about">
+                    저는 개발 취향을 가진 데이터 분석가 Jr. 입니다.  R, Git, Markdown, Shiny, Sublime text 등의 스킬들을 즐깁니다.
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://twitter.com/LT_Lovetoken" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/lovetoken/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>Navigation</strong><br />
+                    &nbsp;&raquo; <a href="/">Home</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">About Me</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/lovetoken">Github</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>R에서 `try()` 함수 소개</h1>
+<span class="time">11 Feb 2016</span>
+
+<span class="categories">
+    &raquo; <a href="/category/R">R</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><hr />
+
+<p>이전에 나는 특정 코드들이 있을 때, 이 코드를 수행하면 에러가 나는지, 나지 않는지 여부를 boolean 값으로 반환하는 그러한 함수를 찾고 있었다. (그보단 이러한 함수를 만들 수 있도록 리소스를 찾아보고 있었다.)<br />
+그러던 중 우연히 알게 된 <code class="highlighter-rouge">try()</code> 함수에 대해 알아보고자 한다.</p>
+
+<p>아래 코드는 <code class="highlighter-rouge">bsid</code> 라는 environment 객체가 없기 때문에 아래의 코드는 에러를 내어 본 파일의 rmarkdown 랜더링을 막게 될 것이다.<br />
+우선 랜더링(컴파일링)마저 막는 상황을 피하기 위해 코드청크를 <code class="highlighter-rouge">eval=F</code> 로 설정했다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">bsdi</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>실제로 <code class="highlighter-rouge">bsid</code> 라는 environment 객체가 없는 상황에 위 코드를 실행시키면</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; ls(envir=bsdi)
+Error in ls(envir = bsdi) : object 'bsdi' not found
+</code></pre>
+</div>
+
+<p>의 에러메세지가 출력된다.</p>
+
+<h2 id="try-function"><code class="highlighter-rouge">try()</code> function</h2>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">try</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="p">{</span><span class="w">
+  </span><span class="n">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">bsdi</span><span class="p">)</span><span class="w">
+</span><span class="p">})</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><code class="highlighter-rouge">try()</code> 함수 안에는 표현식이 들어가는데 이전 예제 코드의 <code class="highlighter-rouge">ls(envir=bsdi)</code> 를 입력하였다.<br />
+<code class="highlighter-rouge">ls(envir=bsdi)</code> 코드는 역시 에러가 반환된다.<br />
+하지만 차이점은 에러를 반환하고도 이후 코드를 계속적으로 수행한다는 차이점을 가지고 있다.<br />
+무슨소리인지 잘 모르겠다면 아래코드를 보면 된다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">try</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="p">{</span><span class="w">
+  </span><span class="n">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">bsdi</span><span class="p">)</span><span class="w">
+</span><span class="p">})</span><span class="w">
+
+</span><span class="n">print</span><span class="p">(</span><span class="s2">"Hello R"</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## [1] "Hello R"
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">try()</code> 함수를 쓴 코드 이후의 코드인 <code class="highlighter-rouge">print("Hello R")</code> 은 정상적으로 실행되 수행된 것을 볼 수 있다.<br />
+유의할 것은 실제로 위 코드청크에 <code class="highlighter-rouge">eval=F</code> 설정을 주지 않고도 렌더링이 막히지 않았는다는 것이다.<br />
+따라서 에러를 뿜는 코드이더라 하더라도, 그것이 <code class="highlighter-rouge">try()</code> 함수로 감싸지면 계속적으로 수행된다는 것이다.</p>
+
+<h3 id="silent-"><code class="highlighter-rouge">silent</code> 인자</h3>
+
+<p><code class="highlighter-rouge">try()</code> 함수의 <code class="highlighter-rouge">silent</code> 인자로 command 에 에러가 반환되는 메세지 조차 침묵시킬 수 있다.<br />
+이 인자의 값을 <code class="highlighter-rouge">TRUE</code> 로 설정하면 에러는 silent 시킨다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">try</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="p">{</span><span class="w">
+  </span><span class="n">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">bsdi</span><span class="p">)</span><span class="w">
+</span><span class="p">},</span><span class="w"> </span><span class="n">silent</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>차이점을 체감하기 위해선 직접 R command 를 수행해볼 필요가 있다.</p>
+
+<h3 id="try--------">두 줄 의 코드를 try 하되 한줄은 정상, 한줄은 에러를 내는 코드로 수정하면?</h3>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">try</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="p">{</span><span class="w">
+  </span><span class="n">print</span><span class="p">(</span><span class="s2">"Hello R"</span><span class="p">)</span><span class="w">   </span><span class="c1"># normal code
+</span><span class="w">  </span><span class="n">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">bsdi</span><span class="p">)</span><span class="w">     </span><span class="c1"># error code
+</span><span class="p">},</span><span class="w"> </span><span class="n">silent</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## [1] "Hello R"
+</code></pre>
+</div>
+
+<p>첫번째 코드는 정상적으로 문자열 “Hello R” 을 출력시킨다.<br />
+그리고 에러반환 코드 2번째 코드는 반응이 없다.</p>
+
+<p>순서를 바꾸어 보면?</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">try</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="p">{</span><span class="w">
+  </span><span class="n">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">bsdi</span><span class="p">)</span><span class="w">     </span><span class="c1"># error code
+</span><span class="w">  </span><span class="n">print</span><span class="p">(</span><span class="s2">"Hello R"</span><span class="p">)</span><span class="w">   </span><span class="c1"># normal code
+</span><span class="p">},</span><span class="w"> </span><span class="n">silent</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>헛.. 첫번째 코드가 에러를 뿜기 때문에 그 이후 코드인 <code class="highlighter-rouge">print("Hello R")</code>는 수행되지 않는것을 볼 수 있다.</p>
+
+<hr />
+
+</div>
+    <div class="share-page">
+    <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/02/11/try_function.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/07/23/Crawling_image.html">R에서 특정 웹페이지의 이미지 파일 Crawling 하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html">R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/12/S3.html">R에서 S3 최소재현예제</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/06/integate_function.html">R에서 구분구적법 적분과정 시뮬레이션 및 `integrate()` 함수 알아보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/05/26/CLT.html">R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html">R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/r/2016/02/08/system_function.html">&laquo; R에서 Shell command 를 실행하기위한 대안 : `system()` 함수</a>
+  
+  
+    <a class="next" href="/r/2016/02/19/replicate_function.html">R에서 `replicate()` 함수 소개 &raquo;</a>
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+
+        var disqus_shortname = "lovetoken";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 `try()` 함수 소개";
+        var disqus_title = "R에서 `try()` 함수 소개";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    /* ]]> */
+    </script>
+</div>
+
+                <footer>
+                    &copy; Lovetoken
+                     
+                    - <a href="https://github.com/lovetoken">https://github.com/lovetoken</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>                    
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>
