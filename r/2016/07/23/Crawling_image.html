@@ -153,7 +153,7 @@
 두번째 : 변환된 HTML 코드에서 &lt;img&gt; tag 의 src 인자값을 정규표현식을 이용해 추출한다.<br />
 세번째 : 준비된 src 인자값 링크들을 R 객체로 만들고 download 명령을 반복문을 이용해 내려준다.</p>
 <p>이렇게 되면 자동적으로 이미지 파일들을 선별하여 내 컴퓨터로 가져올 수 있게 될 것이다.</p>
-<p>패키지는 아래의 4개 패키지를 이용하여 코딩을 하였다.</p>
+<p>패키지는 아래의 3개 패키지를 이용하여 코딩을 하였다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RCurl)
 <span class="kw">library</span>(XML)
 <span class="kw">library</span>(dplyr) <span class="co"># Optional package (for pipe operator)</span></code></pre></div>
@@ -169,9 +169,7 @@
 <p><code>htmlParse()</code> 함수는 XML package 의 함수인데 html 의 구문을 어느정도 이해한 후 단락을 나눠주는 역할을 한다.<br />
 단 이 함수를 통해 반환되는 결과물은 class 가 특이한 형태로 반환된다.<br />
 우리는 대단한 것을 하지 않을 것이므로 일반적인 character 형태로 다시 되돌리기 위해 <code>capture.output()</code> 함수를 한번 더 거친 결과물을 <code>htmlcode</code> 객체로 할당했다.</p>
-<code>htmlcode</code> 의 head 부분만 살펴보면 html 의 시작을 알리는 &quot;
-<!DOCTYPE html>
-<p>&quot; 이 첫번째 단락에 있는것을 볼 수 있다.</p>
+<p><code>htmlcode</code> 의 head 부분만 살펴보면 html 의 시작을 알리는 &quot;&lt;!DOCTYPE html&gt;&quot; 이 첫번째 단락에 있는것을 볼 수 있다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(htmlcode)</code></pre></div>
 <pre><code>## [1] &quot;&lt;!DOCTYPE html&gt;&quot;                                                                                   
 ## [2] &quot;&lt;html itemscope=\&quot;\&quot; itemtype=\&quot;http://schema.org/SearchResultsPage\&quot; lang=\&quot;ko\&quot;&gt;&quot;                

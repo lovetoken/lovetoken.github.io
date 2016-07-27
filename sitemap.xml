@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 27 Jul 2016 15:06:40 +0900</pubDate>
-    <lastBuildDate>Wed, 27 Jul 2016 15:06:40 +0900</lastBuildDate>
+    <pubDate>Wed, 27 Jul 2016 15:23:00 +0900</pubDate>
+    <lastBuildDate>Wed, 27 Jul 2016 15:23:00 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -61,7 +61,7 @@
 두번째 : 변환된 HTML 코드에서 &amp;lt;img&amp;gt; tag 의 src 인자값을 정규표현식을 이용해 추출한다.&lt;br /&gt;
 세번째 : 준비된 src 인자값 링크들을 R 객체로 만들고 download 명령을 반복문을 이용해 내려준다.&lt;/p&gt;
 &lt;p&gt;이렇게 되면 자동적으로 이미지 파일들을 선별하여 내 컴퓨터로 가져올 수 있게 될 것이다.&lt;/p&gt;
-&lt;p&gt;패키지는 아래의 4개 패키지를 이용하여 코딩을 하였다.&lt;/p&gt;
+&lt;p&gt;패키지는 아래의 3개 패키지를 이용하여 코딩을 하였다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(RCurl)
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(XML)
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(dplyr) &lt;span class=&quot;co&quot;&gt;# Optional package (for pipe operator)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -77,9 +77,7 @@
 &lt;p&gt;&lt;code&gt;htmlParse()&lt;/code&gt; 함수는 XML package 의 함수인데 html 의 구문을 어느정도 이해한 후 단락을 나눠주는 역할을 한다.&lt;br /&gt;
 단 이 함수를 통해 반환되는 결과물은 class 가 특이한 형태로 반환된다.&lt;br /&gt;
 우리는 대단한 것을 하지 않을 것이므로 일반적인 character 형태로 다시 되돌리기 위해 &lt;code&gt;capture.output()&lt;/code&gt; 함수를 한번 더 거친 결과물을 &lt;code&gt;htmlcode&lt;/code&gt; 객체로 할당했다.&lt;/p&gt;
-&lt;code&gt;htmlcode&lt;/code&gt; 의 head 부분만 살펴보면 html 의 시작을 알리는 &amp;quot;
-&lt;!DOCTYPE html&gt;
-&lt;p&gt;&amp;quot; 이 첫번째 단락에 있는것을 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;htmlcode&lt;/code&gt; 의 head 부분만 살펴보면 html 의 시작을 알리는 &amp;quot;&amp;lt;!DOCTYPE html&amp;gt;&amp;quot; 이 첫번째 단락에 있는것을 볼 수 있다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;head&lt;/span&gt;(htmlcode)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;&amp;lt;!DOCTYPE html&amp;gt;&amp;quot;                                                                                   
 ## [2] &amp;quot;&amp;lt;html itemscope=\&amp;quot;\&amp;quot; itemtype=\&amp;quot;http://schema.org/SearchResultsPage\&amp;quot; lang=\&amp;quot;ko\&amp;quot;&amp;gt;&amp;quot;                
