@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>lovetoken</title>
+        <meta name="author" content="Lovetoken" />
+        <meta name="description" content="R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기" />
+        <meta name="keywords" content="R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기, , R" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="" property="fb:app_id">
+        <meta content="" property="og:site_name">
+        
+          <meta content="R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="" property="og:description">
+        
+        
+          <meta content="https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html" property="og:url">
+        
+        
+          <meta content="2016-05-18T00:00:00+09:00" property="article:published_time">
+          <meta content="https://lovetoken.github.io/about/" property="article:author">
+        
+        
+          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="R" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:creator" content="@">
+        
+          <meta name="twitter:title" content="R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기">
+        
+        
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html">
+        
+        
+          <meta name="twitter:description" content="">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', '', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+        <!-- mathjax config similar to math.stackexchange -->
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">Lovetoken</h1>
+                
+                <div id="about">
+                    저는 개발 취향을 가진 데이터 분석가 Jr. 입니다.  R, Git, Markdown, Shiny, Sublime text 등의 스킬들을 즐깁니다.
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://twitter.com/LT_Lovetoken" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/lovetoken/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>Navigation</strong><br />
+                    &nbsp;&raquo; <a href="/">Home</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">About Me</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/lovetoken">Github</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기</h1>
+<span class="time">18 May 2016</span>
+
+<span class="categories">
+    &raquo; <a href="/category/R">R</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><hr />
+
+<p>시계열 데이터의 수익률을 계산하는 일들이 많아지면서 <br />
+복잡한 모듈들을 만들 때 아래의 함수들과 패키지가 얼마나 유용한지 몰랐었다.</p>
+
+<p>오늘 정리해보고자 하는 함수는 3가지이며, 부가적으로 시계열 데이터셋에 날짜의 전처리 부담을 줄여주는 xts package 를 조금씩 이용해보려 한다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">xts</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<h1 id="a---">A) 예제 데이터 만들기</h1>
+
+<p>오늘 날짜를 기준으로 약 한 달 전 까지의 코스닥 지수를 예제 데이터로 이용해 보고자 한다. (본 포스팅 글의 오늘 날짜는 스크립트를 작성한 기준 날짜를 기준으로 한다) <br />
+R에서는 특정 주가지수를 자동으로 불러올 수 있는 유용한 패키지가 있는데 바로 quantmod package이다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">quantmod</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>quantmod package는 앞서 말한 xts package와 종속관계 이므로 quantmod package를 로드하면 같이 함께 로드된다. (zoo package 도 마찬가지 이다.)<br />
+여하튼 KOSPI 지수를 받기 위한 코드는 아래와 같다. <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">today</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">Sys.Date</span><span class="p">()</span><span class="w">
+</span><span class="n">kq</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">getSymbols</span><span class="p">(</span><span class="s2">"^kq11"</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="o">=</span><span class="n">today</span><span class="m">-30</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="o">=</span><span class="n">today</span><span class="p">,</span><span class="w"> </span><span class="n">auto.assign</span><span class="o">=</span><span class="nb">F</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##     As of 0.4-0, 'getSymbols' uses env=parent.frame() and
+##  auto.assign=TRUE by default.
+## 
+##  This  behavior  will be  phased out in 0.5-0  when the call  will
+##  default to use auto.assign=FALSE. getOption("getSymbols.env") and 
+##  getOptions("getSymbols.auto.assign") are now checked for alternate defaults
+## 
+##  This message is shown once per session and may be disabled by setting 
+##  options("getSymbols.warning4.0"=FALSE). See ?getSymbols for more details.
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">kq</span><span class="p">;</span><span class="w"> </span><span class="nf">class</span><span class="p">(</span><span class="n">kq</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##            KQ11.Open KQ11.High KQ11.Low KQ11.Close KQ11.Volume
+## 2016-04-18    695.78    695.98   693.00     695.34      706800
+## 2016-04-19    697.31    701.80   696.22     701.68      684100
+## 2016-04-20    703.55    704.44   699.85     699.86      737300
+## 2016-04-21    702.21    702.32   698.39     701.62      834100
+## 2016-04-22    702.90    703.89   700.98     703.05      702700
+## 2016-04-25    705.37    705.44   702.42     703.70      700200
+## 2016-04-26    705.51    705.51   700.76     702.06      778200
+## 2016-04-27    704.42    704.59   699.41     699.52      757000
+## 2016-04-28    702.04    703.95   699.68     699.70      665300
+## 2016-04-29    699.89    700.14   695.82     699.77      645800
+## 2016-05-02    700.43    700.74   690.27     690.27      681200
+## 2016-05-03    693.67    699.24   693.67     698.66      819100
+## 2016-05-04    698.02    698.30   693.25     694.17      826600
+## 2016-05-09    696.66    697.14   690.85     691.82      630400
+## 2016-05-10    693.47    700.53   693.44     700.23      570000
+## 2016-05-11    704.32    704.53   701.29     703.94      637900
+## 2016-05-12    702.46    706.49   699.87     705.04      614200
+## 2016-05-13    705.85    705.92   703.65     704.37      617600
+## 2016-05-16    705.03    705.04   701.25     701.46      660200
+## 2016-05-17    703.08    703.24   693.07     695.95      712200
+##            KQ11.Adjusted
+## 2016-04-18        695.34
+## 2016-04-19        701.68
+## 2016-04-20        699.86
+## 2016-04-21        701.62
+## 2016-04-22        703.05
+## 2016-04-25        703.70
+## 2016-04-26        702.06
+## 2016-04-27        699.52
+## 2016-04-28        699.70
+## 2016-04-29        699.77
+## 2016-05-02        690.27
+## 2016-05-03        698.66
+## 2016-05-04        694.17
+## 2016-05-09        691.82
+## 2016-05-10        700.23
+## 2016-05-11        703.94
+## 2016-05-12        705.04
+## 2016-05-13        704.37
+## 2016-05-16        701.46
+## 2016-05-17        695.95
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## [1] "xts" "zoo"
+</code></pre>
+</div>
+
+<p>다양한 메시지와 함께 우리가 보고 싶은 결과물을 xts class 객체로 반환한다.<br />
+<code class="highlighter-rouge">getSymbols()</code> 함수의 쓰임 법에 대해서 간략히 설명하자면 
+조회하고자 하는 주가 심볼 문자열을 첫 번째 인자값으로 넣고 <code class="highlighter-rouge">from</code>, <code class="highlighter-rouge">to</code> 인자에 조회 날짜에 대한 기간 정보를 넣어줌으로써 활용이 가능하다.<br />
+예제데이터로 사용될 우리가 선택한 코스닥 심볼은 ‘^kq11’ 이다.  <br />
+만약 다른 것을 조회하고 싶다면 해당되는 심볼을 찾은 후 기입하면 된다. (ex. 코스피200지수의 경우 ‘^ks11’)</p>
+
+<p>반환된 결과물을 보면 open, high, low, close, volume, adjusted 6개의 상황별 지수가 있는데 종가지수인 close 만 관심의 대상이라 가정하고 subset 을 추출한 데이터 <code class="highlighter-rouge">data</code> 를 최종 예제데이터로 삼겠다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">kq</span><span class="p">[,</span><span class="m">4</span><span class="p">]</span><span class="w">
+</span></code></pre>
+</div>
+
+<h1 id="b---">B) 일일 수익률 계산하기</h1>
+
+<p>예제데이터를 이용하여 일일 수익률을 계산해 보겠다.<br />
+예를 들어 2016년 4월 19일의 수익률을 계산하기 위해선 해당 시차 지수 701.68 을 직전날시차 지수 695.34 로 나눠 준 후 1을 빼면 된다.<br />
+이것을 모든 날에 대해 일괄적으로 행하여야 한다.<br />
+이를 간편하게 계산하기 위해 <code class="highlighter-rouge">lag()</code> 함수가 유용할 수 있다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">data</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##            KQ11.Close
+## 2016-04-18     695.34
+## 2016-04-19     701.68
+## 2016-04-20     699.86
+## 2016-04-21     701.62
+## 2016-04-22     703.05
+## 2016-04-25     703.70
+## 2016-04-26     702.06
+## 2016-04-27     699.52
+## 2016-04-28     699.70
+## 2016-04-29     699.77
+## 2016-05-02     690.27
+## 2016-05-03     698.66
+## 2016-05-04     694.17
+## 2016-05-09     691.82
+## 2016-05-10     700.23
+## 2016-05-11     703.94
+## 2016-05-12     705.04
+## 2016-05-13     704.37
+## 2016-05-16     701.46
+## 2016-05-17     695.95
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">lag</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##            KQ11.Close
+## 2016-04-18         NA
+## 2016-04-19     695.34
+## 2016-04-20     701.68
+## 2016-04-21     699.86
+## 2016-04-22     701.62
+## 2016-04-25     703.05
+## 2016-04-26     703.70
+## 2016-04-27     702.06
+## 2016-04-28     699.52
+## 2016-04-29     699.70
+## 2016-05-02     699.77
+## 2016-05-03     690.27
+## 2016-05-04     698.66
+## 2016-05-09     694.17
+## 2016-05-10     691.82
+## 2016-05-11     700.23
+## 2016-05-12     703.94
+## 2016-05-13     705.04
+## 2016-05-16     704.37
+## 2016-05-17     701.46
+</code></pre>
+</div>
+
+<p>날짜에 대한 처리 없이 알아서 주가 데이터가 하루 미루어진다.<br />
+<code class="highlighter-rouge">lag()</code> 함수의 두번째 인자는 <code class="highlighter-rouge">k=1</code> 로 디폴트값이 잡혀있는데, 이를 조정하는것도 가능하다.<br />
+<code class="highlighter-rouge">data</code> 와 <code class="highlighter-rouge">lag(data)</code> 를 나누고 상수 1을 뺌으로써 간단히 일일수익률을 계산할 수 있게 된다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">data</span><span class="o">/</span><span class="n">lag</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="m">-1</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##               KQ11.Close
+## 2016-04-18            NA
+## 2016-04-19  0.0091177924
+## 2016-04-20 -0.0025937864
+## 2016-04-21  0.0025148030
+## 2016-04-22  0.0020381303
+## 2016-04-25  0.0009245772
+## 2016-04-26 -0.0023305584
+## 2016-04-27 -0.0036178931
+## 2016-04-28  0.0002573079
+## 2016-04-29  0.0001000543
+## 2016-05-02 -0.0135758888
+## 2016-05-03  0.0121545957
+## 2016-05-04 -0.0064265740
+## 2016-05-09 -0.0033853034
+## 2016-05-10  0.0121563021
+## 2016-05-11  0.0052982907
+## 2016-05-12  0.0015625991
+## 2016-05-13 -0.0009502766
+## 2016-05-16 -0.0041313131
+## 2016-05-17 -0.0078550592
+</code></pre>
+</div>
+
+<p>일일수익률이므로 직전시차 데이터가 존재하지 않는 4월 18일 수익률만 결측치로 나오고 이후 시차는 수익률을 잘 산출해 준다.<br />
+만약 <code class="highlighter-rouge">lag()</code> 함수를 알지 못한다면 아래와 같은 해괴망측한 수동적인 코드로써 구현해야 했을 것이다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">res</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data</span><span class="w">
+</span><span class="n">res</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NA</span><span class="w">
+
+</span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">2</span><span class="o">:</span><span class="n">nrow</span><span class="p">(</span><span class="n">data</span><span class="p">)){</span><span class="w">
+	</span><span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span><span class="o">/</span><span class="n">data</span><span class="p">[[</span><span class="n">i</span><span class="m">-1</span><span class="p">]]</span><span class="m">-1</span><span class="w">
+</span><span class="p">}</span><span class="w"> </span><span class="c1"># T_T.....
+</span></code></pre>
+</div>
+
+<h1 id="c--">C) 로그수익률 계산하기</h1>
+
+<p>만약 일일 로그수익률을 계산하고 싶다면 현시차 주가를 직전시차주가로 나눠준 후 로그함수를 씌워주면 되는데<br />
+방금 알게된 <code class="highlighter-rouge">lag()</code> 함수를 이용하면</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="nf">log</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">lag</span><span class="p">(</span><span class="n">data</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##               KQ11.Close
+## 2016-04-18            NA
+## 2016-04-19  0.0090764763
+## 2016-04-20 -0.0025971561
+## 2016-04-21  0.0025116462
+## 2016-04-22  0.0020360562
+## 2016-04-25  0.0009241501
+## 2016-04-26 -0.0023332784
+## 2016-04-27 -0.0036244535
+## 2016-04-28  0.0002572748
+## 2016-04-29  0.0001000493
+## 2016-05-02 -0.0136688838
+## 2016-05-03  0.0120813217
+## 2016-05-04 -0.0064473133
+## 2016-05-09 -0.0033910465
+## 2016-05-10  0.0120830076
+## 2016-05-11  0.0052843042
+## 2016-05-12  0.0015613795
+## 2016-05-13 -0.0009507284
+## 2016-05-16 -0.0041398706
+## 2016-05-17 -0.0078860727
+</code></pre>
+</div>
+
+<p>의 코드로 일일 로그수익률을 계산할 수 있다.<br />
+그런데 <code class="highlighter-rouge">log()</code>, <code class="highlighter-rouge">lag()</code> 비슷비슷한 함수들이 있어 눈에 확 띄지 않고 복잡해 보인다.<br />
+현재는 현시차와 직전시차의 차이값을 구하는 과정이 필요하다.<br />
+이 차이를 자동으로 계산해주는 함수가 <code class="highlighter-rouge">diff()</code> 이다.<br />
+<code class="highlighter-rouge">diff()</code> 함수를 이용하여 코드를 더 간결하게 해본 결과이다.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">diff</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">data</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##               KQ11.Close
+## 2016-04-18            NA
+## 2016-04-19  0.0090764763
+## 2016-04-20 -0.0025971561
+## 2016-04-21  0.0025116462
+## 2016-04-22  0.0020360562
+## 2016-04-25  0.0009241501
+## 2016-04-26 -0.0023332784
+## 2016-04-27 -0.0036244535
+## 2016-04-28  0.0002572748
+## 2016-04-29  0.0001000493
+## 2016-05-02 -0.0136688838
+## 2016-05-03  0.0120813217
+## 2016-05-04 -0.0064473133
+## 2016-05-09 -0.0033910465
+## 2016-05-10  0.0120830076
+## 2016-05-11  0.0052843042
+## 2016-05-12  0.0015613795
+## 2016-05-13 -0.0009507284
+## 2016-05-16 -0.0041398706
+## 2016-05-17 -0.0078860727
+</code></pre>
+</div>
+
+<p>주가종목에 로그를 취한 후 현시차와 직전시차의 차이값을 <code class="highlighter-rouge">diff()</code> 를 통해 계산한다.<br />
+따라서 <code class="highlighter-rouge">log(data) - log(lag(data))</code> 과 동일한 값이 반환되는 것을 확인할 수 있다.</p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>필자는 quantmod package와, 주가지수데이터셋을 끌어올 수 있는 함수 및 코드를 <a href="http://cafe.naver.com/lovetokens/1569">카페회원분의 질문글</a>을 통해 처음으로 알게 되었다. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div>
+    <div class="share-page">
+    <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/07/23/Crawling_image.html">R에서 특정 웹페이지의 이미지 파일 Crawling 하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html">R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/12/S3.html">R에서 S3 최소재현예제</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/06/integate_function.html">R에서 구분구적법 적분과정 시뮬레이션 및 `integrate()` 함수 알아보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/05/26/CLT.html">R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/04/16/using_clipboard.html">R에서 클립보드의 내용물을 끌어오기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/r/2016/04/16/using_clipboard.html">&laquo; R에서 클립보드의 내용물을 끌어오기</a>
+  
+  
+    <a class="next" href="/r/2016/05/26/CLT.html">R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기 &raquo;</a>
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+
+        var disqus_shortname = "lovetoken";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기";
+        var disqus_title = "R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    /* ]]> */
+    </script>
+</div>
+
+                <footer>
+                    &copy; Lovetoken
+                     
+                    - <a href="https://github.com/lovetoken">https://github.com/lovetoken</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>                    
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>
