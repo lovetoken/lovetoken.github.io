@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 27 Jul 2016 20:11:41 +0900</pubDate>
-    <lastBuildDate>Wed, 27 Jul 2016 20:11:41 +0900</lastBuildDate>
+    <pubDate>Wed, 27 Jul 2016 20:13:49 +0900</pubDate>
+    <lastBuildDate>Wed, 27 Jul 2016 20:13:49 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -1068,6 +1068,67 @@ res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
         <pubDate>Fri, 19 Feb 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/02/19/replicate_function.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2016/02/19/replicate_function.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
+    
+      <item>
+        <title>R에서 `try()` 함수 소개</title>
+        <description>&lt;hr /&gt;
+&lt;p&gt;이전에 나는 특정 코드들이 있을 때, 이 코드를 수행하면 에러가 나는지, 나지 않는지 여부를 boolean 값으로 반환하는 그러한 함수를 찾고 있었다. (그보단 이러한 함수를 만들 수 있도록 리소스를 찾아보고 있었다.)&lt;br /&gt;
+그러던 중 우연히 알게 된 &lt;code&gt;try()&lt;/code&gt; 함수에 대해 알아보고자 한다.&lt;/p&gt;
+&lt;p&gt;아래 코드는 &lt;code&gt;bsid&lt;/code&gt; 라는 environment 객체가 없기 때문에 아래의 코드는 에러를 내어 본 파일의 rmarkdown 랜더링을 막게 될 것이다.&lt;br /&gt;
+우선 랜더링(컴파일링)마저 막는 상황을 피하기 위해 코드청크를 &lt;code&gt;eval=F&lt;/code&gt; 로 설정했다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir=&lt;/span&gt;bsdi)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;실제로 &lt;code&gt;bsid&lt;/code&gt; 라는 environment 객체가 없는 상황에 위 코드를 실행시키면&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; ls(envir=bsdi)
+Error in ls(envir = bsdi) : object &amp;#39;bsdi&amp;#39; not found&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;의 에러메세지가 출력된다.&lt;/p&gt;
+&lt;h2 id=&quot;try-function&quot;&gt;&lt;code&gt;try()&lt;/code&gt; function&lt;/h2&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
+  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir=&lt;/span&gt;bsdi)
+})&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;try()&lt;/code&gt; 함수 안에는 표현식이 들어가는데 이전 예제 코드의 &lt;code&gt;ls(envir=bsdi)&lt;/code&gt; 를 입력하였다.&lt;br /&gt;
+&lt;code&gt;ls(envir=bsdi)&lt;/code&gt; 코드는 역시 에러가 반환된다.&lt;br /&gt;
+하지만 차이점은 에러를 반환하고도 이후 코드를 계속적으로 수행한다는 차이점을 가지고 있다.&lt;br /&gt;
+무슨소리인지 잘 모르겠다면 아래코드를 보면 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
+  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir=&lt;/span&gt;bsdi)
+})
+
+&lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Hello R&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Hello R&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;try()&lt;/code&gt; 함수를 쓴 코드 이후의 코드인 &lt;code&gt;print(&amp;quot;Hello R&amp;quot;)&lt;/code&gt; 은 정상적으로 실행되 수행된 것을 볼 수 있다.&lt;br /&gt;
+유의할 것은 실제로 위 코드청크에 &lt;code&gt;eval=F&lt;/code&gt; 설정을 주지 않고도 렌더링이 막히지 않았는다는 것이다.&lt;br /&gt;
+따라서 에러를 뿜는 코드이더라 하더라도, 그것이 &lt;code&gt;try()&lt;/code&gt; 함수로 감싸지면 계속적으로 수행된다는 것이다.&lt;/p&gt;
+&lt;h3 id=&quot;silent-인자&quot;&gt;&lt;code&gt;silent&lt;/code&gt; 인자&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;try()&lt;/code&gt; 함수의 &lt;code&gt;silent&lt;/code&gt; 인자로 command 에 에러가 반환되는 메세지 조차 침묵시킬 수 있다.&lt;br /&gt;
+이 인자의 값을 &lt;code&gt;TRUE&lt;/code&gt; 로 설정하면 에러는 silent 시킨다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
+  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir=&lt;/span&gt;bsdi)
+}, &lt;span class=&quot;dt&quot;&gt;silent=&lt;/span&gt;T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;차이점을 체감하기 위해선 직접 R command 를 수행해볼 필요가 있다.&lt;/p&gt;
+&lt;h3 id=&quot;두-줄-의-코드를-try-하되-한줄은-정상-한줄은-에러를-내는-코드로-수정하면&quot;&gt;두 줄 의 코드를 try 하되 한줄은 정상, 한줄은 에러를 내는 코드로 수정하면?&lt;/h3&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
+  &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Hello R&amp;quot;&lt;/span&gt;)   &lt;span class=&quot;co&quot;&gt;# normal code&lt;/span&gt;
+  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir=&lt;/span&gt;bsdi)     &lt;span class=&quot;co&quot;&gt;# error code&lt;/span&gt;
+}, &lt;span class=&quot;dt&quot;&gt;silent=&lt;/span&gt;T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Hello R&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;첫번째 코드는 정상적으로 문자열 &amp;quot;Hello R&amp;quot; 을 출력시킨다.&lt;br /&gt;
+그리고 에러반환 코드 2번째 코드는 반응이 없다.&lt;/p&gt;
+&lt;p&gt;순서를 바꾸어 보면?&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
+  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir=&lt;/span&gt;bsdi)     &lt;span class=&quot;co&quot;&gt;# error code&lt;/span&gt;
+  &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Hello R&amp;quot;&lt;/span&gt;)   &lt;span class=&quot;co&quot;&gt;# normal code&lt;/span&gt;
+}, &lt;span class=&quot;dt&quot;&gt;silent=&lt;/span&gt;T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;헛.. 첫번째 코드가 에러를 뿜기 때문에 그 이후 코드인 &lt;code&gt;print(&amp;quot;Hello R&amp;quot;)&lt;/code&gt;는 수행되지 않는것을 볼 수 있다.&lt;/p&gt;
+&lt;hr /&gt;
+</description>
+        <pubDate>Thu, 11 Feb 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2016/02/11/tryfunction.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/02/11/tryfunction.html</guid>
         
         
         <category>R</category>
