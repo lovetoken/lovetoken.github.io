@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 27 Jul 2016 14:13:59 +0900</pubDate>
-    <lastBuildDate>Wed, 27 Jul 2016 14:13:59 +0900</lastBuildDate>
+    <pubDate>Wed, 27 Jul 2016 14:30:05 +0900</pubDate>
+    <lastBuildDate>Wed, 27 Jul 2016 14:30:05 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -195,13 +195,13 @@ R에 대해 아직 모든것을 배운것이 아닌 당시 나의 어떤 모습�
       <item>
         <title>R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹</title>
         <description>&lt;hr /&gt;
-&lt;p&gt;최근에 많이 하는 작업이 있습니다.&lt;br /&gt;
-바로 data.frame 기반으로 데이터를 인아웃풋 한 코드들을 모두 data.table 로 코드 스위칭하는 작업인데요.&lt;br /&gt;
-data.table 의 빠른처리속도는 이전부터 명성이 자자했지만 게으름으로 인해 고집스럽게 쓰지 않았었습니다.&lt;br /&gt;
-하지만 인내심의 한계에 다다르고 빠른 속도를 직접 체감하고 나서 뒤늦게 도입하기 시작한 것 같습니다.&lt;/p&gt;
-&lt;p&gt;구글링을 통해서도 다양한 data.table 의 showcase 들이 있고, 퍼포먼스를 확인할 수 있는 예제코드를 구하기 쉬운데요&lt;br /&gt;
-저도 그러한 예제코드를 만들어 보았고 공유해 보고자 합니다.&lt;br /&gt;
-저는 data.frame 과 data.table 에 대해서 join 작업을 이용해 벤치마킹 하는 코드 프로그램을 아래와 같이 작성해 보았습니다.&lt;/p&gt;
+&lt;p&gt;R에서 최근에 많이 하는 작업이 있다.&lt;br /&gt;
+바로 data.frame 기반으로 데이터를 인아웃풋 한 코드들을 모두 data.table 로 코드 스위칭하는 작업이다.&lt;br /&gt;
+data.table 의 빠른처리속도는 이전부터 명성이 자자했지만 게으름으로 인해 고집스럽게 쓰지 않았었다.&lt;br /&gt;
+하지만 인내심의 한계에 다다르고 빠른 속도를 직접 체감하고 나서 뒤늦게 도입하기 시작한 것 같다.&lt;/p&gt;
+&lt;p&gt;구글링을 통해서도 다양한 data.table 의 showcase 들이 있고, 퍼포먼스를 확인할 수 있는 예제코드를 구하기 쉽다.&lt;br /&gt;
+나도 그러한 예제코드를 만들어 보았고 공유해 보고자 한다.&lt;br /&gt;
+나는 data.frame 과 data.table 에 대해서 join 작업을 이용해 벤치마킹 하는 코드 프로그램을 아래와 같이 작성해 보았다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(data.table)
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(dplyr)
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(rbenchmark)
@@ -226,7 +226,7 @@ dt2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot
     join_res_df &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;left_join&lt;/span&gt;(df, df2),
     join_res_dt &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;left_join&lt;/span&gt;(dt, dt2), &lt;span class=&quot;dt&quot;&gt;replications=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;20&lt;/span&gt;
 )&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;위의 코드를 간략히 설명해 보겠습니다.&lt;/p&gt;
+&lt;p&gt;위의 코드를 간략히 설명해 보면&lt;/p&gt;
 &lt;h1 id=&quot;a-예제로-사용할-data.frame-data.table-객체-만들기&quot;&gt;A) 예제로 사용할 data.frame, data.table 객체 만들기&lt;/h1&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(data.table)
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(dplyr)
@@ -247,42 +247,42 @@ df2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot
 
 dt &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.table&lt;/span&gt;(df); &lt;span class=&quot;kw&quot;&gt;setkey&lt;/span&gt;(dt, ID)
 dt2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.table&lt;/span&gt;(df2); &lt;span class=&quot;kw&quot;&gt;setkey&lt;/span&gt;(dt2, ID)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;1,000,000 개의 데이터셋과 이중에서 90% 인 900,000 개의 새로운 변수를 가진 데이터셋을 서로 join 하기 위해 (의미가 별로 없는) 데이터프레임 &lt;code&gt;df&lt;/code&gt;, &lt;code&gt;df2&lt;/code&gt; 객체를 만드는 코드입니다.&lt;br /&gt;
-join 으로 붙여져야 하는 대상은 &amp;quot;Var3&amp;quot; 으로 명칭된 변수 -10 을 평균으로 하는 정규분포 난수이게 됩니다.&lt;/p&gt;
-&lt;p&gt;이후 class 만 data.table 로 바꾼 &lt;code&gt;dt&lt;/code&gt;, &lt;code&gt;dt2&lt;/code&gt; 동일내용의 객체를 준비합니다.&lt;br /&gt;
-data.table 에선 key variable 를 사전에 지정할 수 있는데 바로 data.table 의 &lt;code&gt;setkey()&lt;/code&gt; 함수를 통해 가능합니다.&lt;br /&gt;
-key 변수는 공통의 &amp;quot;ID&amp;quot; 변수를 선택하게 됩니다.&lt;br /&gt;
-&lt;code&gt;setkey()&lt;/code&gt; 함수를 이용한 이와같은 key 변수 지정은 추후 join 작업의 편의성을 증대시켜주고 처리속도의 작은 개선을 기대할 수 있게 해줍니다.&lt;br /&gt;
-무엇보다 현업시 key variable 에 대한 상기를 지속적으로 해야하는 상황에서 이렇게 명시해 줄 수 있는 도구가 있는것은 긍정적이죠.&lt;br /&gt;
-key variable 세팅이 제대로 되었는지가 궁금하다면 &lt;code&gt;tables()&lt;/code&gt; 함수를 통해 눈으로 확인 할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;1,000,000 개의 데이터셋과 이중에서 90% 인 900,000 개의 새로운 변수를 가진 데이터셋을 서로 join 하기 위해 (의미가 별로 없는) 데이터프레임 &lt;code&gt;df&lt;/code&gt;, &lt;code&gt;df2&lt;/code&gt; 객체를 만드는 코드이다.&lt;br /&gt;
+join 으로 붙여져야 하는 대상은 &amp;quot;Var3&amp;quot; 으로 명칭된 변수 &lt;span class=&quot;math inline&quot;&gt;−10&lt;/span&gt; 을 평균으로 하는 정규분포 난수이다.&lt;/p&gt;
+&lt;p&gt;이후 class 만 data.table 로 바꾼 &lt;code&gt;dt&lt;/code&gt;, &lt;code&gt;dt2&lt;/code&gt; 동일내용의 객체를 준비했다.&lt;br /&gt;
+data.table 에선 key variable 를 사전에 지정할 수 있는데 바로 data.table 의 &lt;code&gt;setkey()&lt;/code&gt; 함수를 통해 가능하다.&lt;br /&gt;
+key 변수는 공통의 &amp;quot;ID&amp;quot; 변수를 선택하였다.&lt;br /&gt;
+&lt;code&gt;setkey()&lt;/code&gt; 함수를 이용한 이와같은 key 변수 지정은 추후 join 작업의 편의성을 증대시켜주고 처리속도의 작은 개선을 기대할 수 있게 해준다.&lt;br /&gt;
+무엇보다 현업시 key variable 에 대한 상기를 지속적으로 해야하는 상황에서 이렇게 명시해 줄 수 있는 도구가 있는것은 긍정적이라고 할 수 있다.&lt;br /&gt;
+key variable 세팅이 제대로 되었는지가 궁금하다면 &lt;code&gt;tables()&lt;/code&gt; 함수를 통해 눈으로 확인 할 수 있다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;tables&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##      NAME      NROW NCOL MB COLS               KEY
 ## [1,] dt   1,000,000    4 20 ID,group,Var1,Var2 ID 
 ## [2,] dt2    900,000    2 11 ID,Var3            ID 
 ## Total: 31MB&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;출력결과의 맨 우측 Key 항목에 &amp;quot;ID&amp;quot; 가 있는것을 보아 제대로 세팅이 된 것을 볼 수 있어요.&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;출력결과의 맨 우측 Key 항목에 &amp;quot;ID&amp;quot; 가 있는것을 보아 제대로 세팅이 된 것을 볼 수 있다.&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;b-joining&quot;&gt;B) joining&lt;/h1&gt;
-&lt;p&gt;본격적으로 Joining 을 해보겠습니다.&lt;br /&gt;
-join 방법은 무난한 left join 을 실시하기 위해 dplyr package 에 있는 &lt;code&gt;left_join()&lt;/code&gt; 함수를 이용 하였습니다.&lt;/p&gt;
+&lt;p&gt;본격적으로 Joining 을 시작한다.&lt;br /&gt;
+join 방법은 무난한 left join 을 실시하기 위해 dplyr package 에 있는 &lt;code&gt;left_join()&lt;/code&gt; 함수를 이용 했다.&lt;/p&gt;
 &lt;p&gt;data.frame 에 대한 join 과&lt;br /&gt;
-data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenchmark package 의 &lt;code&gt;benchmark()&lt;/code&gt; 함수를 이용하였습니다.&lt;/p&gt;
+data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenchmark package 의 &lt;code&gt;benchmark()&lt;/code&gt; 함수를 이용했다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
     join_res_df &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;left_join&lt;/span&gt;(df, df2, &lt;span class=&quot;dt&quot;&gt;by=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;ID&amp;quot;&lt;/span&gt;),
     join_res_dt &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;left_join&lt;/span&gt;(dt, dt2, &lt;span class=&quot;dt&quot;&gt;by=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;ID&amp;quot;&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;replications=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;20&lt;/span&gt;
 )&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##                                           test replications elapsed
-## 1 join_res_df &amp;lt;- left_join(df, df2, by = &amp;quot;ID&amp;quot;)           20  19.704
-## 2 join_res_dt &amp;lt;- left_join(dt, dt2, by = &amp;quot;ID&amp;quot;)           20   2.324
+## 1 join_res_df &amp;lt;- left_join(df, df2, by = &amp;quot;ID&amp;quot;)           20  19.608
+## 2 join_res_dt &amp;lt;- left_join(dt, dt2, by = &amp;quot;ID&amp;quot;)           20   7.667
 ##   relative user.self sys.self user.child sys.child
-## 1    8.478    18.406    1.155          0         0
-## 2    1.000     1.719    0.584          0         0&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;join_res_df &amp;lt;- left_join(df, df2, by=&amp;quot;ID&amp;quot;)&lt;/code&gt; 와 &lt;code&gt;join_res_dt &amp;lt;- left_join(dt, dt2, by=&amp;quot;ID&amp;quot;)&lt;/code&gt; 코드를 의도적으로 20번 반복 수행해 걸린 시간을 측정해주게 됩니다.&lt;br /&gt;
-현 예제에 대한 시간측정결과 elapsed 항목을 볼 때 data.table 에 대한 join 작업의 수행속도가 data.frame 보다 약 10배 빠른 것을 볼 수 있게 됩니다.&lt;/p&gt;
+## 1    2.557    18.395    1.114          0         0
+## 2    1.000     6.782    0.848          0         0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위의 코드는 &lt;code&gt;join_res_df &amp;lt;- left_join(df, df2, by=&amp;quot;ID&amp;quot;)&lt;/code&gt; 와 &lt;code&gt;join_res_dt &amp;lt;- left_join(dt, dt2, by=&amp;quot;ID&amp;quot;)&lt;/code&gt; 코드를 의도적으로 20번 반복 수행해 걸린 시간을 측정해주게 된다.&lt;br /&gt;
+현 예제에 대한 시간측정결과 elapsed 항목을 볼 때 data.table 에 대한 join 작업의 수행속도가 data.frame 보다 약 10배 빠른 것을 볼 수 있다!&lt;/p&gt;
 &lt;hr /&gt;
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
-&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;&lt;code&gt;setkey()&lt;/code&gt; 함수를 통해 key variable 를 세팅하지 않았던 단계에 &lt;code&gt;tables()&lt;/code&gt; 를 실행시키면 Key 항목은 빈칸이었을 것 입니다.&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;&lt;code&gt;setkey()&lt;/code&gt; 함수를 통해 key variable 를 세팅하지 않았던 단계에 &lt;code&gt;tables()&lt;/code&gt; 를 실행시키면 Key 항목은 빈칸이었을 것 이다.&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/section&gt;
 </description>
@@ -383,9 +383,9 @@ video of chunk integrate_ani
 &lt;/p&gt;
 &lt;/video&gt;
 &lt;p&gt;이러한 형태로 넓이를 구하기 힘든 곡선모형의 넓이를 구하기 위해&lt;br /&gt;
-충분히 작은 n개의 기본도형으로 나누어 끼워맞춘 후 넓이를 구한것을 &lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;&lt;em&gt;S&lt;/em&gt;&lt;sub&gt;&lt;em&gt;n&lt;/em&gt;&lt;/sub&gt;&lt;/span&gt;&lt;br /&gt; 이라 할 때&lt;br /&gt;
-기본도형을 더 작은단위로 하여 &lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;&lt;em&gt;n&lt;/em&gt;&lt;/span&gt;&lt;br /&gt; 을 극한으로 보냄으로써 넓이를 근사시키는 것을 &lt;strong&gt;구분구적법&lt;/strong&gt;이라 한다.&lt;br /&gt;
-즉 구분구적법은 &lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;lim&lt;sub&gt;&lt;em&gt;n&lt;/em&gt; → ∞&lt;/sub&gt;&lt;em&gt;S&lt;/em&gt;&lt;sub&gt;&lt;em&gt;n&lt;/em&gt;&lt;/sub&gt;&lt;/span&gt;&lt;br /&gt; 을 계산하는 과정이다.&lt;/p&gt;
+충분히 작은 n개의 기본도형으로 나누어 끼워맞춘 후 넓이를 구한것을 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;S&lt;/em&gt;&lt;sub&gt;&lt;em&gt;n&lt;/em&gt;&lt;/sub&gt;&lt;/span&gt; 이라 할 때&lt;br /&gt;
+기본도형을 더 작은단위로 하여 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;n&lt;/em&gt;&lt;/span&gt; 을 극한으로 보냄으로써 넓이를 근사시키는 것을 &lt;strong&gt;구분구적법&lt;/strong&gt;이라 한다.&lt;br /&gt;
+즉 구분구적법은 &lt;span class=&quot;math inline&quot;&gt;lim&lt;sub&gt;&lt;em&gt;n&lt;/em&gt; → ∞&lt;/sub&gt;&lt;em&gt;S&lt;/em&gt;&lt;sub&gt;&lt;em&gt;n&lt;/em&gt;&lt;/sub&gt;&lt;/span&gt; 을 계산하는 과정이다.&lt;/p&gt;
 &lt;p&gt;컴퓨터는 미분이든 적분이든 사람이 손으로 풀듯이 드라마틱하게 계산할 수 있는 능력이 없을것이다.&lt;br /&gt;
 구분구적법에 기반한 프로그래밍적인 계산을 통해 적분값을 계산하게 될 것인데&lt;br /&gt;
 R에서는 &lt;code&gt;intergrate()&lt;/code&gt; 함수를 이용하여 적분값을 계산할 수 있다.&lt;/p&gt;
@@ -428,7 +428,7 @@ stop 조건이 없을 경우 멈추지 않을것이다.&lt;br /&gt;
 또한 표본의 크기가 커짐에 따라 정규분포로 닮아진다는 것을 보여주는 것과 동시에 점근적으로 보여주는 것이 시뮬레이션의 큰 의미라고 볼 수 있다.&lt;/p&gt;
 &lt;p&gt;우선 현 시뮬레이션에선&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;특정분포를 포아송분포 &lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;&lt;em&gt;X&lt;/em&gt; ∼ &lt;em&gt;P&lt;/em&gt;&lt;em&gt;o&lt;/em&gt;&lt;em&gt;i&lt;/em&gt;&lt;em&gt;s&lt;/em&gt;&lt;em&gt;s&lt;/em&gt;&lt;em&gt;o&lt;/em&gt;&lt;em&gt;n&lt;/em&gt;(&lt;em&gt;λ&lt;/em&gt; = 10)&lt;/span&gt;&lt;br /&gt; 으로&lt;/li&gt;
+&lt;li&gt;특정분포를 포아송분포 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;X&lt;/em&gt; ∼ &lt;em&gt;P&lt;/em&gt;&lt;em&gt;o&lt;/em&gt;&lt;em&gt;i&lt;/em&gt;&lt;em&gt;s&lt;/em&gt;&lt;em&gt;s&lt;/em&gt;&lt;em&gt;o&lt;/em&gt;&lt;em&gt;n&lt;/em&gt;(&lt;em&gt;λ&lt;/em&gt; = 10)&lt;/span&gt; 으로&lt;/li&gt;
 &lt;li&gt;표본개수는 n=500 으로 통일하고&lt;/li&gt;
 &lt;li&gt;표본평균들을 1,000개 준비하기 위해 위 과정을 1000번 반복&lt;/li&gt;
 &lt;/ul&gt;
@@ -1351,7 +1351,7 @@ date &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quo
 어떻게 범주화를 시키느냐? 한쪽은 값이 낮은 그룹, 나머지 한쪽은 값이 높은 그룹으로 이분류가 자동적으로 된다.&lt;br /&gt;
 그리고 위에서 출력된 &lt;code&gt;summary(step_fit)&lt;/code&gt; 의 결과물을 이용해 종속변수 &lt;code&gt;Apps&lt;/code&gt; 의 모델링 식을 표현하면 아래와 같다.&lt;/p&gt;
 &lt;p&gt;&lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;&lt;em&gt;A&lt;/em&gt;&lt;em&gt;p&lt;/em&gt;&lt;em&gt;p&lt;/em&gt;&lt;em&gt;s&lt;/em&gt; = 2494.0 + 969.1 × &lt;em&gt;c&lt;/em&gt;&lt;em&gt;u&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;(&lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt;, 2)(64, 118]&lt;/span&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p&gt;단 위에서 &lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;&lt;em&gt;c&lt;/em&gt;&lt;em&gt;u&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;(&lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt;, 2)(64, 118]&lt;/span&gt;&lt;br /&gt; 의 값은 &lt;code&gt;Grad.Rate&lt;/code&gt; 값이 &lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;64 &amp;lt; &lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt; ≤ 118&lt;/span&gt;&lt;br /&gt; 일 때 1, 아니면 0의 의미이다.&lt;/p&gt;
+&lt;p&gt;단 위에서 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;c&lt;/em&gt;&lt;em&gt;u&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;(&lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt;, 2)(64, 118]&lt;/span&gt; 의 값은 &lt;code&gt;Grad.Rate&lt;/code&gt; 값이 &lt;span class=&quot;math inline&quot;&gt;64 &amp;lt; &lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt; ≤ 118&lt;/span&gt; 일 때 1, 아니면 0의 의미이다.&lt;/p&gt;
 &lt;p&gt;실제 데이터 산포와 &lt;code&gt;step_fit&lt;/code&gt; 적합선을 겹처 표현해보면&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data=&lt;/span&gt;College, &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;grey&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;pch=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;21&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(College$Grad.Rate), &lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(step_fit)), &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)

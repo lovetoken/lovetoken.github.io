@@ -129,6 +129,7 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages (= 89)
+  jekyll-paginate
   jekyll-pandoc
   json
 

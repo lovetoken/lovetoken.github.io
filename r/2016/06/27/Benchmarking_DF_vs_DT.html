@@ -138,13 +138,13 @@
 
 <div class="content">
     <div class="post"><hr />
-<p>최근에 많이 하는 작업이 있습니다.<br />
-바로 data.frame 기반으로 데이터를 인아웃풋 한 코드들을 모두 data.table 로 코드 스위칭하는 작업인데요.<br />
-data.table 의 빠른처리속도는 이전부터 명성이 자자했지만 게으름으로 인해 고집스럽게 쓰지 않았었습니다.<br />
-하지만 인내심의 한계에 다다르고 빠른 속도를 직접 체감하고 나서 뒤늦게 도입하기 시작한 것 같습니다.</p>
-<p>구글링을 통해서도 다양한 data.table 의 showcase 들이 있고, 퍼포먼스를 확인할 수 있는 예제코드를 구하기 쉬운데요<br />
-저도 그러한 예제코드를 만들어 보았고 공유해 보고자 합니다.<br />
-저는 data.frame 과 data.table 에 대해서 join 작업을 이용해 벤치마킹 하는 코드 프로그램을 아래와 같이 작성해 보았습니다.</p>
+<p>R에서 최근에 많이 하는 작업이 있다.<br />
+바로 data.frame 기반으로 데이터를 인아웃풋 한 코드들을 모두 data.table 로 코드 스위칭하는 작업이다.<br />
+data.table 의 빠른처리속도는 이전부터 명성이 자자했지만 게으름으로 인해 고집스럽게 쓰지 않았었다.<br />
+하지만 인내심의 한계에 다다르고 빠른 속도를 직접 체감하고 나서 뒤늦게 도입하기 시작한 것 같다.</p>
+<p>구글링을 통해서도 다양한 data.table 의 showcase 들이 있고, 퍼포먼스를 확인할 수 있는 예제코드를 구하기 쉽다.<br />
+나도 그러한 예제코드를 만들어 보았고 공유해 보고자 한다.<br />
+나는 data.frame 과 data.table 에 대해서 join 작업을 이용해 벤치마킹 하는 코드 프로그램을 아래와 같이 작성해 보았다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(data.table)
 <span class="kw">library</span>(dplyr)
 <span class="kw">library</span>(rbenchmark)
@@ -169,7 +169,7 @@ dt2 &lt;-<span class="st"> </span><span class="kw">data.table</span>(df2); <span
     join_res_df &lt;-<span class="st"> </span><span class="kw">left_join</span>(df, df2),
     join_res_dt &lt;-<span class="st"> </span><span class="kw">left_join</span>(dt, dt2), <span class="dt">replications=</span><span class="dv">20</span>
 )</code></pre></div>
-<p>위의 코드를 간략히 설명해 보겠습니다.</p>
+<p>위의 코드를 간략히 설명해 보면</p>
 <h1 id="a-예제로-사용할-data.frame-data.table-객체-만들기">A) 예제로 사용할 data.frame, data.table 객체 만들기</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(data.table)
 <span class="kw">library</span>(dplyr)
@@ -190,42 +190,42 @@ df2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
 
 dt &lt;-<span class="st"> </span><span class="kw">data.table</span>(df); <span class="kw">setkey</span>(dt, ID)
 dt2 &lt;-<span class="st"> </span><span class="kw">data.table</span>(df2); <span class="kw">setkey</span>(dt2, ID)</code></pre></div>
-<p>1,000,000 개의 데이터셋과 이중에서 90% 인 900,000 개의 새로운 변수를 가진 데이터셋을 서로 join 하기 위해 (의미가 별로 없는) 데이터프레임 <code>df</code>, <code>df2</code> 객체를 만드는 코드입니다.<br />
-join 으로 붙여져야 하는 대상은 &quot;Var3&quot; 으로 명칭된 변수 -10 을 평균으로 하는 정규분포 난수이게 됩니다.</p>
-<p>이후 class 만 data.table 로 바꾼 <code>dt</code>, <code>dt2</code> 동일내용의 객체를 준비합니다.<br />
-data.table 에선 key variable 를 사전에 지정할 수 있는데 바로 data.table 의 <code>setkey()</code> 함수를 통해 가능합니다.<br />
-key 변수는 공통의 &quot;ID&quot; 변수를 선택하게 됩니다.<br />
-<code>setkey()</code> 함수를 이용한 이와같은 key 변수 지정은 추후 join 작업의 편의성을 증대시켜주고 처리속도의 작은 개선을 기대할 수 있게 해줍니다.<br />
-무엇보다 현업시 key variable 에 대한 상기를 지속적으로 해야하는 상황에서 이렇게 명시해 줄 수 있는 도구가 있는것은 긍정적이죠.<br />
-key variable 세팅이 제대로 되었는지가 궁금하다면 <code>tables()</code> 함수를 통해 눈으로 확인 할 수 있습니다.</p>
+<p>1,000,000 개의 데이터셋과 이중에서 90% 인 900,000 개의 새로운 변수를 가진 데이터셋을 서로 join 하기 위해 (의미가 별로 없는) 데이터프레임 <code>df</code>, <code>df2</code> 객체를 만드는 코드이다.<br />
+join 으로 붙여져야 하는 대상은 &quot;Var3&quot; 으로 명칭된 변수 <span class="math inline">−10</span> 을 평균으로 하는 정규분포 난수이다.</p>
+<p>이후 class 만 data.table 로 바꾼 <code>dt</code>, <code>dt2</code> 동일내용의 객체를 준비했다.<br />
+data.table 에선 key variable 를 사전에 지정할 수 있는데 바로 data.table 의 <code>setkey()</code> 함수를 통해 가능하다.<br />
+key 변수는 공통의 &quot;ID&quot; 변수를 선택하였다.<br />
+<code>setkey()</code> 함수를 이용한 이와같은 key 변수 지정은 추후 join 작업의 편의성을 증대시켜주고 처리속도의 작은 개선을 기대할 수 있게 해준다.<br />
+무엇보다 현업시 key variable 에 대한 상기를 지속적으로 해야하는 상황에서 이렇게 명시해 줄 수 있는 도구가 있는것은 긍정적이라고 할 수 있다.<br />
+key variable 세팅이 제대로 되었는지가 궁금하다면 <code>tables()</code> 함수를 통해 눈으로 확인 할 수 있다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tables</span>()</code></pre></div>
 <pre><code>##      NAME      NROW NCOL MB COLS               KEY
 ## [1,] dt   1,000,000    4 20 ID,group,Var1,Var2 ID 
 ## [2,] dt2    900,000    2 11 ID,Var3            ID 
 ## Total: 31MB</code></pre>
-<p>출력결과의 맨 우측 Key 항목에 &quot;ID&quot; 가 있는것을 보아 제대로 세팅이 된 것을 볼 수 있어요.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>출력결과의 맨 우측 Key 항목에 &quot;ID&quot; 가 있는것을 보아 제대로 세팅이 된 것을 볼 수 있다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
 <h1 id="b-joining">B) joining</h1>
-<p>본격적으로 Joining 을 해보겠습니다.<br />
-join 방법은 무난한 left join 을 실시하기 위해 dplyr package 에 있는 <code>left_join()</code> 함수를 이용 하였습니다.</p>
+<p>본격적으로 Joining 을 시작한다.<br />
+join 방법은 무난한 left join 을 실시하기 위해 dplyr package 에 있는 <code>left_join()</code> 함수를 이용 했다.</p>
 <p>data.frame 에 대한 join 과<br />
-data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenchmark package 의 <code>benchmark()</code> 함수를 이용하였습니다.</p>
+data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenchmark package 의 <code>benchmark()</code> 함수를 이용했다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">benchmark</span>(
     join_res_df &lt;-<span class="st"> </span><span class="kw">left_join</span>(df, df2, <span class="dt">by=</span><span class="st">&quot;ID&quot;</span>),
     join_res_dt &lt;-<span class="st"> </span><span class="kw">left_join</span>(dt, dt2, <span class="dt">by=</span><span class="st">&quot;ID&quot;</span>), <span class="dt">replications=</span><span class="dv">20</span>
 )</code></pre></div>
 <pre><code>##                                           test replications elapsed
-## 1 join_res_df &lt;- left_join(df, df2, by = &quot;ID&quot;)           20  19.704
-## 2 join_res_dt &lt;- left_join(dt, dt2, by = &quot;ID&quot;)           20   2.324
+## 1 join_res_df &lt;- left_join(df, df2, by = &quot;ID&quot;)           20  19.608
+## 2 join_res_dt &lt;- left_join(dt, dt2, by = &quot;ID&quot;)           20   7.667
 ##   relative user.self sys.self user.child sys.child
-## 1    8.478    18.406    1.155          0         0
-## 2    1.000     1.719    0.584          0         0</code></pre>
-<p><code>join_res_df &lt;- left_join(df, df2, by=&quot;ID&quot;)</code> 와 <code>join_res_dt &lt;- left_join(dt, dt2, by=&quot;ID&quot;)</code> 코드를 의도적으로 20번 반복 수행해 걸린 시간을 측정해주게 됩니다.<br />
-현 예제에 대한 시간측정결과 elapsed 항목을 볼 때 data.table 에 대한 join 작업의 수행속도가 data.frame 보다 약 10배 빠른 것을 볼 수 있게 됩니다.</p>
+## 1    2.557    18.395    1.114          0         0
+## 2    1.000     6.782    0.848          0         0</code></pre>
+<p>위의 코드는 <code>join_res_df &lt;- left_join(df, df2, by=&quot;ID&quot;)</code> 와 <code>join_res_dt &lt;- left_join(dt, dt2, by=&quot;ID&quot;)</code> 코드를 의도적으로 20번 반복 수행해 걸린 시간을 측정해주게 된다.<br />
+현 예제에 대한 시간측정결과 elapsed 항목을 볼 때 data.table 에 대한 join 작업의 수행속도가 data.frame 보다 약 10배 빠른 것을 볼 수 있다!</p>
 <hr />
 <section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p><code>setkey()</code> 함수를 통해 key variable 를 세팅하지 않았던 단계에 <code>tables()</code> 를 실행시키면 Key 항목은 빈칸이었을 것 입니다.<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p><code>setkey()</code> 함수를 통해 key variable 를 세팅하지 않았던 단계에 <code>tables()</code> 를 실행시키면 Key 항목은 빈칸이었을 것 이다.<a href="#fnref1">↩</a></p></li>
 </ol>
 </section>
 </div>
