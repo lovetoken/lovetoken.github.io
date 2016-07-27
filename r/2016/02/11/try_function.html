@@ -86,7 +86,7 @@
         </script>
 
         <!-- mathjax config similar to math.stackexchange -->
-        <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML"></script>
+        <!-- <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML"></script> -->
     </head>
 
     <body>
@@ -138,97 +138,54 @@
 
 <div class="content">
     <div class="post"><hr />
-
 <p>이전에 나는 특정 코드들이 있을 때, 이 코드를 수행하면 에러가 나는지, 나지 않는지 여부를 boolean 값으로 반환하는 그러한 함수를 찾고 있었다. (그보단 이러한 함수를 만들 수 있도록 리소스를 찾아보고 있었다.)<br />
-그러던 중 우연히 알게 된 <code class="highlighter-rouge">try()</code> 함수에 대해 알아보고자 한다.</p>
-
-<p>아래 코드는 <code class="highlighter-rouge">bsid</code> 라는 environment 객체가 없기 때문에 아래의 코드는 에러를 내어 본 파일의 rmarkdown 랜더링을 막게 될 것이다.<br />
-우선 랜더링(컴파일링)마저 막는 상황을 피하기 위해 코드청크를 <code class="highlighter-rouge">eval=F</code> 로 설정했다.</p>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">bsdi</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
-<p>실제로 <code class="highlighter-rouge">bsid</code> 라는 environment 객체가 없는 상황에 위 코드를 실행시키면</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt; ls(envir=bsdi)
-Error in ls(envir = bsdi) : object 'bsdi' not found
-</code></pre>
-</div>
-
+그러던 중 우연히 알게 된 <code>try()</code> 함수에 대해 알아보고자 한다.</p>
+<p>아래 코드는 <code>bsid</code> 라는 environment 객체가 없기 때문에 아래의 코드는 에러를 내어 본 파일의 rmarkdown 랜더링을 막게 될 것이다.<br />
+우선 랜더링(컴파일링)마저 막는 상황을 피하기 위해 코드청크를 <code>eval=F</code> 로 설정했다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>(<span class="dt">envir=</span>bsdi)</code></pre></div>
+<p>실제로 <code>bsid</code> 라는 environment 객체가 없는 상황에 위 코드를 실행시키면</p>
+<pre><code>&gt; ls(envir=bsdi)
+Error in ls(envir = bsdi) : object &#39;bsdi&#39; not found</code></pre>
 <p>의 에러메세지가 출력된다.</p>
-
-<h2 id="try-function"><code class="highlighter-rouge">try()</code> function</h2>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">try</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="p">{</span><span class="w">
-  </span><span class="n">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">bsdi</span><span class="p">)</span><span class="w">
-</span><span class="p">})</span><span class="w">
-</span></code></pre>
-</div>
-
-<p><code class="highlighter-rouge">try()</code> 함수 안에는 표현식이 들어가는데 이전 예제 코드의 <code class="highlighter-rouge">ls(envir=bsdi)</code> 를 입력하였다.<br />
-<code class="highlighter-rouge">ls(envir=bsdi)</code> 코드는 역시 에러가 반환된다.<br />
+<h2 id="try-function"><code>try()</code> function</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="dt">expr=</span>{
+  <span class="kw">ls</span>(<span class="dt">envir=</span>bsdi)
+})</code></pre></div>
+<p><code>try()</code> 함수 안에는 표현식이 들어가는데 이전 예제 코드의 <code>ls(envir=bsdi)</code> 를 입력하였다.<br />
+<code>ls(envir=bsdi)</code> 코드는 역시 에러가 반환된다.<br />
 하지만 차이점은 에러를 반환하고도 이후 코드를 계속적으로 수행한다는 차이점을 가지고 있다.<br />
 무슨소리인지 잘 모르겠다면 아래코드를 보면 된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="dt">expr=</span>{
+  <span class="kw">ls</span>(<span class="dt">envir=</span>bsdi)
+})
 
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">try</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="p">{</span><span class="w">
-  </span><span class="n">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">bsdi</span><span class="p">)</span><span class="w">
-</span><span class="p">})</span><span class="w">
-
-</span><span class="n">print</span><span class="p">(</span><span class="s2">"Hello R"</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## [1] "Hello R"
-</code></pre>
-</div>
-
-<p><code class="highlighter-rouge">try()</code> 함수를 쓴 코드 이후의 코드인 <code class="highlighter-rouge">print("Hello R")</code> 은 정상적으로 실행되 수행된 것을 볼 수 있다.<br />
-유의할 것은 실제로 위 코드청크에 <code class="highlighter-rouge">eval=F</code> 설정을 주지 않고도 렌더링이 막히지 않았는다는 것이다.<br />
-따라서 에러를 뿜는 코드이더라 하더라도, 그것이 <code class="highlighter-rouge">try()</code> 함수로 감싸지면 계속적으로 수행된다는 것이다.</p>
-
-<h3 id="silent-"><code class="highlighter-rouge">silent</code> 인자</h3>
-
-<p><code class="highlighter-rouge">try()</code> 함수의 <code class="highlighter-rouge">silent</code> 인자로 command 에 에러가 반환되는 메세지 조차 침묵시킬 수 있다.<br />
-이 인자의 값을 <code class="highlighter-rouge">TRUE</code> 로 설정하면 에러는 silent 시킨다.</p>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">try</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="p">{</span><span class="w">
-  </span><span class="n">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">bsdi</span><span class="p">)</span><span class="w">
-</span><span class="p">},</span><span class="w"> </span><span class="n">silent</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
+<span class="kw">print</span>(<span class="st">&quot;Hello R&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;Hello R&quot;</code></pre>
+<p><code>try()</code> 함수를 쓴 코드 이후의 코드인 <code>print(&quot;Hello R&quot;)</code> 은 정상적으로 실행되 수행된 것을 볼 수 있다.<br />
+유의할 것은 실제로 위 코드청크에 <code>eval=F</code> 설정을 주지 않고도 렌더링이 막히지 않았는다는 것이다.<br />
+따라서 에러를 뿜는 코드이더라 하더라도, 그것이 <code>try()</code> 함수로 감싸지면 계속적으로 수행된다는 것이다.</p>
+<h3 id="silent-인자"><code>silent</code> 인자</h3>
+<p><code>try()</code> 함수의 <code>silent</code> 인자로 command 에 에러가 반환되는 메세지 조차 침묵시킬 수 있다.<br />
+이 인자의 값을 <code>TRUE</code> 로 설정하면 에러는 silent 시킨다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="dt">expr=</span>{
+  <span class="kw">ls</span>(<span class="dt">envir=</span>bsdi)
+}, <span class="dt">silent=</span>T)</code></pre></div>
 <p>차이점을 체감하기 위해선 직접 R command 를 수행해볼 필요가 있다.</p>
-
-<h3 id="try--------">두 줄 의 코드를 try 하되 한줄은 정상, 한줄은 에러를 내는 코드로 수정하면?</h3>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">try</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="p">{</span><span class="w">
-  </span><span class="n">print</span><span class="p">(</span><span class="s2">"Hello R"</span><span class="p">)</span><span class="w">   </span><span class="c1"># normal code
-</span><span class="w">  </span><span class="n">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">bsdi</span><span class="p">)</span><span class="w">     </span><span class="c1"># error code
-</span><span class="p">},</span><span class="w"> </span><span class="n">silent</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## [1] "Hello R"
-</code></pre>
-</div>
-
-<p>첫번째 코드는 정상적으로 문자열 “Hello R” 을 출력시킨다.<br />
+<h3 id="두-줄-의-코드를-try-하되-한줄은-정상-한줄은-에러를-내는-코드로-수정하면">두 줄 의 코드를 try 하되 한줄은 정상, 한줄은 에러를 내는 코드로 수정하면?</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="dt">expr=</span>{
+  <span class="kw">print</span>(<span class="st">&quot;Hello R&quot;</span>)   <span class="co"># normal code</span>
+  <span class="kw">ls</span>(<span class="dt">envir=</span>bsdi)     <span class="co"># error code</span>
+}, <span class="dt">silent=</span>T)</code></pre></div>
+<pre><code>## [1] &quot;Hello R&quot;</code></pre>
+<p>첫번째 코드는 정상적으로 문자열 &quot;Hello R&quot; 을 출력시킨다.<br />
 그리고 에러반환 코드 2번째 코드는 반응이 없다.</p>
-
 <p>순서를 바꾸어 보면?</p>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">try</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="p">{</span><span class="w">
-  </span><span class="n">ls</span><span class="p">(</span><span class="n">envir</span><span class="o">=</span><span class="n">bsdi</span><span class="p">)</span><span class="w">     </span><span class="c1"># error code
-</span><span class="w">  </span><span class="n">print</span><span class="p">(</span><span class="s2">"Hello R"</span><span class="p">)</span><span class="w">   </span><span class="c1"># normal code
-</span><span class="p">},</span><span class="w"> </span><span class="n">silent</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
-<p>헛.. 첫번째 코드가 에러를 뿜기 때문에 그 이후 코드인 <code class="highlighter-rouge">print("Hello R")</code>는 수행되지 않는것을 볼 수 있다.</p>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="dt">expr=</span>{
+  <span class="kw">ls</span>(<span class="dt">envir=</span>bsdi)     <span class="co"># error code</span>
+  <span class="kw">print</span>(<span class="st">&quot;Hello R&quot;</span>)   <span class="co"># normal code</span>
+}, <span class="dt">silent=</span>T)</code></pre></div>
+<p>헛.. 첫번째 코드가 에러를 뿜기 때문에 그 이후 코드인 <code>print(&quot;Hello R&quot;)</code>는 수행되지 않는것을 볼 수 있다.</p>
 <hr />
-
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>

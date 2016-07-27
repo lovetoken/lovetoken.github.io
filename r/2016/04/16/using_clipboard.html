@@ -86,7 +86,7 @@
         </script>
 
         <!-- mathjax config similar to math.stackexchange -->
-        <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML"></script>
+        <!-- <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML"></script> -->
     </head>
 
     <body>
@@ -138,43 +138,32 @@
 
 <div class="content">
     <div class="post"><hr />
-
 <p>편하게 데이터를 R에서 불러들이기 위해 간편한 방법이 없을까?<br />
 보통 csv파일을 읽어들이기 위해서 csv파일이 있는 경로를 알고 그경로를 입력해 주어야 한다.<br />
 아래의 코드처럼 말이다.</p>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.csv</span><span class="p">(</span><span class="s2">"./Data/Test.csv"</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./Data/Test.csv&quot;</span>)</code></pre></div>
 <p>워킹디렉토리에서 Data 폴더의 Test.csv 을 읽어들이는 코드이다.<br />
 하지만 간단히 눈앞에 있는 데이터를 R로 불러들이기 위해선 그 데이터 파일의 path 를 알아야 하는 것이 귀찮을 수 있다.<br />
 이러한 귀차니즘까지 발동한다면 Clipboard 를 이용하여 원하는 데이터를 로드하는 것이 현명한 것 같다.</p>
-
 <h2 id="on-windows">on Windows</h2>
-
 <p>예를 들어 아래의 모습처럼 우리가 사용하고자 하는 Test.csv 파일이 MS office Excel 에서 열린 상황의 모습이고,<br />
 이것을 R에서 빨리 불러오고 싶다 가정한다.</p>
-
-<p><img src="/assets/Clipboard_Windows.png" alt="" /></p>
-
+<figure>
+<img src="/assets/Clipboard_Windows.png" />
+</figure>
 <p>다음과 같은 스텝을 따른다.</p>
-
-<ol>
-  <li>Test.csv 파일의 데이터셋을 전체 선택하여 <kbd>Ctrl</kbd> + <kbd>C</kbd> 를 한다.</li>
-  <li>R로 되돌어가 <code class="highlighter-rouge">read.table("clipboard")</code> 를 실행하여 복사했던 데이터가 제대로 불러와 졌는지 확인한다.</li>
-  <li>필요에 따라 <code class="highlighter-rouge">read.table()</code> 함수의 <code class="highlighter-rouge">header</code>, <code class="highlighter-rouge">sep</code> 인자값을 바꾸어 불러온다.</li>
+<ol type="1">
+<li>Test.csv 파일의 데이터셋을 전체 선택하여 <kbd>Ctrl</kbd> + <kbd>C</kbd> 를 한다.</li>
+<li>R로 되돌어가 <code>read.table(&quot;clipboard&quot;)</code> 를 실행하여 복사했던 데이터가 제대로 불러와 졌는지 확인한다.<br />
+</li>
+<li>필요에 따라 <code>read.table()</code> 함수의 <code>header</code>, <code>sep</code> 인자값을 바꾸어 불러온다.</li>
 </ol>
-
 <p>직접 해본 결과의 스크린샷이다.</p>
-
-<p><img src="/assets/Clipboard_Windows2.png" alt="" /></p>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">read.table</span><span class="p">(</span><span class="s2">"clipboard"</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>##     V1   V2
+<figure>
+<img src="/assets/Clipboard_Windows2.png" />
+</figure>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="st">&quot;clipboard&quot;</span>)</code></pre></div>
+<pre><code>##     V1   V2
 ## 1  Var Test
 ## 2    a   14
 ## 3    b   25
@@ -184,15 +173,9 @@
 ## 7    n   45
 ## 8    h    3
 ## 9    s    6
-## 10   x   72
-</code></pre>
-</div>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">read.table</span><span class="p">(</span><span class="s2">"clipboard"</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>##   Var Test
+## 10   x   72</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="st">&quot;clipboard&quot;</span>, <span class="dt">header=</span>T)</code></pre></div>
+<pre><code>##   Var Test
 ## 1   a   14
 ## 2   b   25
 ## 3   d  646
@@ -201,22 +184,15 @@
 ## 6   n   45
 ## 7   h    3
 ## 8   s    6
-## 9   x   72
-</code></pre>
-</div>
-
+## 9   x   72</code></pre>
 <h2 id="on-mac">on Mac</h2>
-
-<p>맥이용자라면 윈도우의 <code class="highlighter-rouge">"clipboard"</code> 와 같은 약속어로 클립보드 내용물을 불러들일 수 없는것을 확인했다.<br />
-<code class="highlighter-rouge">"clipboard"</code> 대신 <code class="highlighter-rouge">pipe("pbpaste")</code> 을 이용한다.</p>
-
-<p><img src="/assets/Clipboard_Mac.png" alt="" /></p>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">read.table</span><span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="s2">"pbpaste"</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>##     V1   V2
+<p>맥이용자라면 윈도우의 <code>&quot;clipboard&quot;</code> 와 같은 약속어로 클립보드 내용물을 불러들일 수 없는것을 확인했다.<br />
+<code>&quot;clipboard&quot;</code> 대신 <code>pipe(&quot;pbpaste&quot;)</code> 을 이용한다.</p>
+<figure>
+<img src="/assets/Clipboard_Mac.png" />
+</figure>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="kw">pipe</span>(<span class="st">&quot;pbpaste&quot;</span>))</code></pre></div>
+<pre><code>##     V1   V2
 ## 1  Var Test
 ## 2    a   14
 ## 3    b   25
@@ -226,15 +202,9 @@
 ## 7    n   45
 ## 8    h    3
 ## 9    s    6
-## 10   x   72
-</code></pre>
-</div>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">read.table</span><span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="s2">"pbpaste"</span><span class="p">),</span><span class="w"> </span><span class="n">header</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>##   Var Test
+## 10   x   72</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="kw">pipe</span>(<span class="st">&quot;pbpaste&quot;</span>), <span class="dt">header=</span>T)</code></pre></div>
+<pre><code>##   Var Test
 ## 1   a   14
 ## 2   b   25
 ## 3   d  646
@@ -243,19 +213,13 @@
 ## 6   n   45
 ## 7   h    3
 ## 8   s    6
-## 9   x   72
-</code></pre>
-</div>
-
-<p>물론 Clipboard 로 데이터를 불러오는 것 이므로 데이터 전체가 아닌 일부분만을 복사하는 것도 가능하다.
-아래의 스크린샷은 데이터의 앞 3개의 필드를 복사하여 R로 불러들여본 결과이다.</p>
-
-<p><img src="/assets/Clipboard_Mac2.png" alt="" /></p>
-
+## 9   x   72</code></pre>
+<p>물론 Clipboard 로 데이터를 불러오는 것 이므로 데이터 전체가 아닌 일부분만을 복사하는 것도 가능하다. 아래의 스크린샷은 데이터의 앞 3개의 필드를 복사하여 R로 불러들여본 결과이다.</p>
+<figure>
+<img src="/assets/Clipboard_Mac2.png" />
+</figure>
 <p>이처럼 Clipboard 를 이용하게 되면 사용하고 싶은 데이터를 선택하여 R로 마치 드레그 하는 방식과 같아진다.</p>
-
 <hr />
-
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>

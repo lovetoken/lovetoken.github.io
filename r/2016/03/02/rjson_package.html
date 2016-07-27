@@ -86,7 +86,7 @@
         </script>
 
         <!-- mathjax config similar to math.stackexchange -->
-        <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML"></script>
+        <!-- <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML"></script> -->
     </head>
 
     <body>
@@ -138,132 +138,78 @@
 
 <div class="content">
     <div class="post"><hr />
-
 <p>JSON 포맷의 데이터를 R에서 읽어 들인 후 가공하기 위해 JSON 형식을 parser 해야 하는 과정이 필요하다고 한다.<br />
-rjson 라는 패키지가 이를 도와주는데 이 안에 있는 함수 <code class="highlighter-rouge">toJSON()</code>, <code class="highlighter-rouge">fromJSON()</code> 2개를 기본적으로 이용하여 실습을 해보겠다.</p>
-
-<h2 id="a-">A) 준비</h2>
-
-<h3 id="a-1--">A-1) 예제 데이터</h3>
-
-<p>실습을 하기 위하여 아래와 같은 JSON 타입의 데이터가 있다고 가정해 보겠다.  <br />
+rjson 라는 패키지가 이를 도와주는데 이 안에 있는 함수 <code>toJSON()</code>, <code>fromJSON()</code> 2개를 기본적으로 이용하여 실습을 해보겠다.</p>
+<h2 id="a-준비">A) 준비</h2>
+<h3 id="a-1-예제-데이터">A-1) 예제 데이터</h3>
+<p>실습을 하기 위하여 아래와 같은 JSON 타입의 데이터가 있다고 가정해 보겠다.<br />
 아래의 데이터는 <a href="https://ko.wikipedia.org/wiki/JSON#.EC.98.88.EC.A0.9C">JSON 을 설명하는 위키백과</a>의 예제데이터를 적절히 수정한 것이다.</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[
+<pre><code>[
   {
-    "Name": "Test",
-    "Age": 25,
-    "Sex": "F",
-    "Address": "Seoul",
-    "Hobby": "Basketball"
+    &quot;Name&quot;: &quot;Test&quot;,
+    &quot;Age&quot;: 25,
+    &quot;Sex&quot;: &quot;F&quot;,
+    &quot;Address&quot;: &quot;Seoul&quot;,
+    &quot;Hobby&quot;: &quot;Basketball&quot;
   }
-]
-</code></pre>
-</div>
-
-<p>이것을 워킹디렉토리에 <code class="highlighter-rouge">test.json</code> 로 저장하고 이를 R에서 적절하게 사용하기 위해 불러와 보겠다.<br />
-어떠한 텍스트에디터를 이용하던 상관없다, 저장방법은 위의 JSON 형식 텍스트를 복사한 다음 “test.json” 이란 파일명으로 저장만 하면 된다.</p>
-
-<p><img src="/assets/rjson_1.png" alt="" /></p>
-
+]</code></pre>
+<p>이것을 워킹디렉토리에 <code>test.json</code> 로 저장하고 이를 R에서 적절하게 사용하기 위해 불러와 보겠다.<br />
+어떠한 텍스트에디터를 이용하던 상관없다, 저장방법은 위의 JSON 형식 텍스트를 복사한 다음 &quot;test.json&quot; 이란 파일명으로 저장만 하면 된다.</p>
+<figure>
+<img src="/assets/rjson_1.png" />
+</figure>
 <p>나는 Sublime text 3 라는 텍스트 에디터를 이용해 이처럼 저장하였다.</p>
-
-<h3 id="a-2-jsonlite--">A-2) jsonlite 패키지 불러오기</h3>
-
+<h3 id="a-2-jsonlite-패키지-불러오기">A-2) jsonlite 패키지 불러오기</h3>
 <p>당연히 rjson 패키지를 불러오는 것이 필요하다.</p>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="s2">"rjson"</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
-<h2 id="b-tojson-fromjson--">B) <code class="highlighter-rouge">toJSON()</code>, <code class="highlighter-rouge">fromJSON()</code> 함수 이용해보기</h2>
-
-<h3 id="b-1-fromjson">B-1) <code class="highlighter-rouge">fromJSON()</code></h3>
-
-<p>우선 <code class="highlighter-rouge">fromJSON()</code> 함수를 알아보자.<br />
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;rjson&quot;</span>)</code></pre></div>
+<h2 id="b-tojson-fromjson-함수-이용해보기">B) <code>toJSON()</code>, <code>fromJSON()</code> 함수 이용해보기</h2>
+<h3 id="b-1-fromjson">B-1) <code>fromJSON()</code></h3>
+<p>우선 <code>fromJSON()</code> 함수를 알아보자.<br />
 JSON 형 데이터를 R에서 가공할 수 있도록 형태를 변환하여 준다.</p>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">fromJSON</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">"test.json"</span><span class="p">)</span><span class="w">
-</span><span class="n">data</span><span class="w">
-</span></code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## [[1]]
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(<span class="dt">file=</span><span class="st">&quot;test.json&quot;</span>)
+data</code></pre></div>
+<pre><code>## [[1]]
 ## [[1]]$Name
-## [1] "Test"
+## [1] &quot;Test&quot;
 ## 
 ## [[1]]$Age
 ## [1] 25
 ## 
 ## [[1]]$Sex
-## [1] "F"
+## [1] &quot;F&quot;
 ## 
 ## [[1]]$Address
-## [1] "Seoul"
+## [1] &quot;Seoul&quot;
 ## 
 ## [[1]]$Hobby
-## [1] "Basketball"
-</code></pre>
-</div>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="nf">class</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## [1] "list"
-</code></pre>
-</div>
-
+## [1] &quot;Basketball&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(data)</code></pre></div>
+<pre><code>## [1] &quot;list&quot;</code></pre>
 <p>list 형식으로 반환되는데 적절히 data.frame 형태로 변환하여 보면 다음과 같다.</p>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">dataframe</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="w">
-</span><span class="n">dataframe</span><span class="w">
-</span></code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>##   Name Age Sex Address      Hobby
-## 1 Test  25   F   Seoul Basketball
-</code></pre>
-</div>
-
-<h3 id="b-2-tojson">B-2) <code class="highlighter-rouge">toJSON()</code></h3>
-
-<p><code class="highlighter-rouge">toJSON()</code> 은 이와 반대의 성격을 가진다.<br />
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dataframe &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(data)
+dataframe</code></pre></div>
+<pre><code>##   Name Age Sex Address      Hobby
+## 1 Test  25   F   Seoul Basketball</code></pre>
+<h3 id="b-2-tojson">B-2) <code>toJSON()</code></h3>
+<p><code>toJSON()</code> 은 이와 반대의 성격을 가진다.<br />
 R의 객체를 특히 list, data.frame 등을 JSON 형으로 변환시킨다.<br />
-방금만든 <code class="highlighter-rouge">dataframe</code> 객체를 다시 JSON 형태로 바꾸기 위해선,</p>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">toJSON</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## [1] "{\"Name\":\"Test\",\"Age\":25,\"Sex\":\"F\",\"Address\":\"Seoul\",\"Hobby\":\"Basketball\"}"
-</code></pre>
-</div>
-
+방금만든 <code>dataframe</code> 객체를 다시 JSON 형태로 바꾸기 위해선,</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">toJSON</span>(dataframe)</code></pre></div>
+<pre><code>## [1] &quot;{\&quot;Name\&quot;:\&quot;Test\&quot;,\&quot;Age\&quot;:25,\&quot;Sex\&quot;:\&quot;F\&quot;,\&quot;Address\&quot;:\&quot;Seoul\&quot;,\&quot;Hobby\&quot;:\&quot;Basketball\&quot;}&quot;</code></pre>
 <p>로 하면된다.</p>
-
-<p>rjson package 말고도 간단히 이용할 수 있는 jsonlite package 도 있는데 이 패키지의 <code class="highlighter-rouge">toJSON()</code> 함수는 pretty 하게 반환하는 기능을 가지고 있다.</p>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">jsonlite</span><span class="o">::</span><span class="n">toJSON</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span><span class="w"> </span><span class="n">pretty</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## [
+<p>rjson package 말고도 간단히 이용할 수 있는 jsonlite package 도 있는데 이 패키지의 <code>toJSON()</code> 함수는 pretty 하게 반환하는 기능을 가지고 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">jsonlite::<span class="kw">toJSON</span>(dataframe, <span class="dt">pretty=</span>T)</code></pre></div>
+<pre><code>## [
 ##   {
-##     "Name": "Test",
-##     "Age": 25,
-##     "Sex": "F",
-##     "Address": "Seoul",
-##     "Hobby": "Basketball"
+##     &quot;Name&quot;: &quot;Test&quot;,
+##     &quot;Age&quot;: 25,
+##     &quot;Sex&quot;: &quot;F&quot;,
+##     &quot;Address&quot;: &quot;Seoul&quot;,
+##     &quot;Hobby&quot;: &quot;Basketball&quot;
 ##   }
-## ]
-</code></pre>
-</div>
-
+## ]</code></pre>
 <p>첫 서두에 있는 예제 데이터와 동일하게 출력된 것을 볼 수 있다.</p>
-
 <hr />
-
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>

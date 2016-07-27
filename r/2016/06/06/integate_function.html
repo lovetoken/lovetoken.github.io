@@ -86,7 +86,7 @@
         </script>
 
         <!-- mathjax config similar to math.stackexchange -->
-        <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML"></script>
+        <!-- <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML"></script> -->
     </head>
 
     <body>
@@ -138,61 +138,50 @@
 
 <div class="content">
     <div class="post"><hr />
-
 <p>내가 고등학교 이과생으로써 지낸 2학년 기억을 돌이켜 보면 적분의 방법은 이렇게 배웠던 것 같다.<br />
 넓이계산이 용이한 사각형을 함수와 x축 사이에 강제로 끼워 맞춤으로써 넓이를 근사시키는 과정을 취하였고,<br />
 특히 x축 기준 사각형을 등간격으로 잘게잘게 쪼개는 과정을 무한대로 취함으로써 적분값을 완벽히 근사시키는 법으로 적분값을 구한다 라고 말이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fun &lt;-<span class="st"> </span>function(x) x^<span class="dv">3</span> -<span class="st"> </span><span class="dv">7</span>*x^<span class="dv">2</span> +<span class="st"> </span><span class="dv">13</span>*x +<span class="st"> </span><span class="dv">12</span>
+fun_forarea &lt;-<span class="st"> </span>function(x){
+    res &lt;-<span class="st"> </span><span class="kw">fun</span>(x)
+    res[ x&lt;<span class="dv">0</span> |<span class="st"> </span>x&gt;<span class="dv">5</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span>
+    <span class="kw">return</span>(res)
+}
 
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">fun</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="m">3</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">7</span><span class="o">*</span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">13</span><span class="o">*</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">12</span><span class="w">
-</span><span class="n">fun_forarea</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="w">
-	</span><span class="n">res</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">
-	</span><span class="n">res</span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="o">&lt;</span><span class="m">0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">x</span><span class="o">&gt;</span><span class="m">5</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NA</span><span class="w">
-	</span><span class="nf">return</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="w">
-</span><span class="p">}</span><span class="w">
+P &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(-<span class="dv">1</span>, <span class="dv">6</span>)), <span class="kw">aes</span>(<span class="dt">x=</span>x)) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">stat_function</span>(<span class="dt">fun=</span>fun) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">stat_function</span>(<span class="dt">fun=</span>fun_forarea, <span class="dt">geom=</span><span class="st">&quot;area&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;#3E5CFF&quot;</span>, <span class="dt">alpha=</span>.<span class="dv">2</span>) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_bw</span>()
 
-</span><span class="n">P</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ggplot</span><span class="p">(</span><span class="n">data.frame</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">)),</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
-	</span><span class="n">stat_function</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">fun</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
-	</span><span class="n">stat_function</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">fun_forarea</span><span class="p">,</span><span class="w"> </span><span class="n">geom</span><span class="o">=</span><span class="s2">"area"</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="s2">"#3E5CFF"</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="o">=</span><span class="m">.2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
-	</span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
-	</span><span class="n">theme_bw</span><span class="p">()</span><span class="w">
-
-</span><span class="n">P</span><span class="w">
-</span></code></pre>
-</div>
-
-<p><img src="/assets/integrate-1.png" alt="" /></p>
-
-<video controls="" loop=""><source src="/assets/integrate_ani-.webm" /><p>video of chunk integrate_ani</p></video>
-
+P</code></pre></div>
+<figure>
+<img src="/assets/integrate-1.png" />
+</figure>
+<video   controls loop>
+<source src="/assets/integrate_ani-.webm" />
+<p>
+video of chunk integrate_ani
+</p>
+</video>
 <p>이러한 형태로 넓이를 구하기 힘든 곡선모형의 넓이를 구하기 위해<br />
-충분히 작은 n개의 기본도형으로 나누어 끼워맞춘 후 넓이를 구한것을 <script type="math/tex">S_n</script> 이라 할 때<br />
-기본도형을 더 작은단위로 하여 <script type="math/tex">n</script> 을 극한으로 보냄으로써 넓이를 근사시키는 것을 <strong>구분구적법</strong>이라 한다.<br />
-즉 구분구적법은 <script type="math/tex">\lim_{n \rightarrow \infty} S_n</script> 을 계산하는 과정이다.</p>
-
-<p>컴퓨터는 미분이든 적분이든 사람이 손으로 풀듯이 드라마틱하게 계산할 수 있는 능력이 없을것이다.  <br />
-구분구적법에 기반한 프로그래밍적인 계산을 통해 적분값을 계산하게 될 것인데 <br />
-R에서는 <code class="highlighter-rouge">intergrate()</code> 함수를 이용하여 적분값을 계산할 수 있다.</p>
-
-<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">integrate</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## 87.08333 with absolute error &lt; 9.7e-13
-</code></pre>
-</div>
-
+충분히 작은 n개의 기본도형으로 나누어 끼워맞춘 후 넓이를 구한것을 <br /><span class="math display"><em>S</em><sub><em>n</em></sub></span><br /> 이라 할 때<br />
+기본도형을 더 작은단위로 하여 <br /><span class="math display"><em>n</em></span><br /> 을 극한으로 보냄으로써 넓이를 근사시키는 것을 <strong>구분구적법</strong>이라 한다.<br />
+즉 구분구적법은 <br /><span class="math display">lim<sub><em>n</em> → ∞</sub><em>S</em><sub><em>n</em></sub></span><br /> 을 계산하는 과정이다.</p>
+<p>컴퓨터는 미분이든 적분이든 사람이 손으로 풀듯이 드라마틱하게 계산할 수 있는 능력이 없을것이다.<br />
+구분구적법에 기반한 프로그래밍적인 계산을 통해 적분값을 계산하게 될 것인데<br />
+R에서는 <code>intergrate()</code> 함수를 이용하여 적분값을 계산할 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">integrate</span>(fun, <span class="dv">0</span>, <span class="dv">5</span>)</code></pre></div>
+<pre><code>## 87.08333 with absolute error &lt; 9.7e-13</code></pre>
 <p>구분구적법은 기본도형을 최대한 잘게 쪼개는 과정이 필요한데<br />
 이를 무한히 반복하는것을 컴퓨터에게 시킨다면<br />
 stop 조건이 없을 경우 멈추지 않을것이다.<br />
 그렇다고 n을 무한으로 보내지 못하고 중간에 stop 하게 되면 적분값의 오차는 반드시 생길수 밖에 없을것이다.<br />
-추정컨데 <code class="highlighter-rouge">integrate()</code> 함수를 실행시키고 출력되는 “absolute error” 문구가 출력된 이유가 이것때문일 것이라 생각된다.</p>
-
-<p><code class="highlighter-rouge">integrate()</code> 함수 사용방법은 간편하다.<br />
+추정컨데 <code>integrate()</code> 함수를 실행시키고 출력되는 &quot;absolute error&quot; 문구가 출력된 이유가 이것때문일 것이라 생각된다.</p>
+<p><code>integrate()</code> 함수 사용방법은 간편하다.<br />
 계산을 하고싶은 함수를 첫번째 인자에 넘겨주고,<br />
-폐구간에 대한 정보를 <code class="highlighter-rouge">lower</code>, <code class="highlighter-rouge">upper</code> 인자에 넘겨주기만 하면 적분값을 계산해 준다.</p>
-
+폐구간에 대한 정보를 <code>lower</code>, <code>upper</code> 인자에 넘겨주기만 하면 적분값을 계산해 준다.</p>
 <hr />
-
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
