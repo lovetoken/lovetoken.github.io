@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 27 Jul 2016 20:13:49 +0900</pubDate>
-    <lastBuildDate>Wed, 27 Jul 2016 20:13:49 +0900</lastBuildDate>
+    <pubDate>Sun, 31 Jul 2016 12:55:29 +0900</pubDate>
+    <lastBuildDate>Sun, 31 Jul 2016 12:55:29 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -767,6 +767,67 @@ for(i in &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;kw
         <pubDate>Wed, 18 May 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
+    
+      <item>
+        <title>R에서 소리, 음원 재생하기 - tuneR, beepr package</title>
+        <description>&lt;hr /&gt;
+&lt;p&gt;코드수행시간이 비교적 길었던 R 스크립트가 있었다.&lt;br /&gt;
+Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시간이 그렇게도 길지 않은 코드여서&lt;br /&gt;
+코드 수행이 끝났다는 알람을 줄 수 있는 방법을 찾고 싶었는데, 알람의 방법은 크게 2가지 정도를 원했었다.&lt;/p&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;문자나 메일을 받는 방법&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;비프음 등의 소리를 재생&lt;/strong&gt; 👈&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;시켜 코드수행이 끝났다는 걸 알려주는 것 이다.&lt;br /&gt;
+첫번째 &amp;quot;문자나 메일을 받는 방법&amp;quot; 은 구체적인 방법을 찾기 힘들었는데, 두번째 &amp;quot;비프음 등의 소리를 재생&amp;quot; 방법을 알아본 결과 패키지를 이용한 아주 간단한 방법이 있었다.&lt;br /&gt;
+지금까지 알게 된 방법들을 간단히 정리해본다.&lt;/p&gt;
+&lt;h1 id=&quot;a-beepr-package-를-이용해-비프음-재생시키기&quot;&gt;A) beepr package 를 이용해 비프음 재생시키기&lt;/h1&gt;
+&lt;p&gt;비프음을 재생시키기 위한 단 한개의 함수를 제공해 주는 패키지가 있다. (역시 심플하고 가벼운 것이 최고다!)&lt;br /&gt;
+패키지명칭도 beepr 이다.&lt;br /&gt;
+제공되는 함수는 &lt;code&gt;beep()&lt;/code&gt; 이다. 즉 &lt;code&gt;beepr::beep()&lt;/code&gt; 로 내가원하는 비프음을 재생시킬 수 있었다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;install.packages&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;beepr&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(beepr)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;beepr package 설치 및 로드하고&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;beep&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;를 직접 실행시켜 보면 마치 전자레인지 가동이 종료될 때의 &amp;quot;ping!&amp;quot; 소리가 난다 🎵🎵&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;beep()&lt;/code&gt; 함수에서 제공되는 사운드는 아래처럼 11개가 있다.&lt;br /&gt;
+기호에 맞게 &lt;code&gt;sound&lt;/code&gt; 인자를 조정해 사용하면 된다.&lt;/p&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;ping&lt;/li&gt;
+&lt;li&gt;coin&lt;/li&gt;
+&lt;li&gt;fanfare&lt;/li&gt;
+&lt;li&gt;complete&lt;/li&gt;
+&lt;li&gt;treasure&lt;/li&gt;
+&lt;li&gt;ready&lt;/li&gt;
+&lt;li&gt;shotgun&lt;/li&gt;
+&lt;li&gt;mario&lt;/li&gt;
+&lt;li&gt;wilhelm&lt;/li&gt;
+&lt;li&gt;facebook&lt;/li&gt;
+&lt;li&gt;sword&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;b-만약-특정-음원파일을-재생시키고-싶다면-tuner-package&quot;&gt;B) 만약 특정 음원파일을 재생시키고 싶다면 tuneR package&lt;/h1&gt;
+&lt;p&gt;소리재생에 관련된 포괄적인 패키지를 찾아본적도 있는데, 그 패키지 안에는 특정음원파일을 재생시키는 기능도 있을것이라 생각했다.&lt;br /&gt;
+나는 tuneR 패키지가 눈에 띄었는데 이 패키지 에서 자신이 가지고 있는 음원파일을 재생시키는 기능을 가진 &lt;code&gt;play()&lt;/code&gt; 함수가 있다. (더 정확히 말하면 Wave class 의 객체만을 실행시키는 함수이다.)&lt;/p&gt;
+&lt;p&gt;그 전에 특정음원파일을 읽어들여 정보를 보관할 객체를 준비해야 할 필요가 있다. 음원 포맷이 mp3 이라면 &lt;code&gt;readMP3()&lt;/code&gt; 와 같은 함수가 이를 도와준다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;install.packages&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;tuneR&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(tuneR)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;역시 tuneR 패키지를 설치하고 사용할 준비를 한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;mp3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;readMP3&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;test.wav&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;play&lt;/span&gt;(mp3)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 코드는 워킹디렉토리에 있는 &amp;quot;Test.mp3&amp;quot; 파일을 불러온 후 R에서 재생시키는 코드이다.&lt;/p&gt;
+&lt;h1 id=&quot;c-두-패키지의-차이점&quot;&gt;C) 두 패키지의 차이점&lt;/h1&gt;
+&lt;p&gt;위에 비프음을 재생시키는 beepr 패키지와 다르게 tuneR 패키지의 &lt;code&gt;play()&lt;/code&gt; 함수는 기본적으로 외부 플레이어를 이용한다는 점에서 차이점이 있다.&lt;br /&gt;
+따라서 &lt;code&gt;beep()&lt;/code&gt; 는 R내에서 이용하는데 용이하지만 tuneR 패키지와 조합한 &lt;code&gt;play()&lt;/code&gt; 함수는 활성화되는 프로그램이 R 에서 외부 플레이어 어플리케이션으로 넘어가 버린다. 그리고 beepr 과 달리 tuneR 은 운영체계 별로 사용법이 상이하다.&lt;/p&gt;
+&lt;hr /&gt;
+</description>
+        <pubDate>Sat, 30 Apr 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html</guid>
         
         
         <category>R</category>

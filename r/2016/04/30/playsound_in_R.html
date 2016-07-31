@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="R에서 rjson package 의 toJSON(), fromJSON() 함수 알아보기" />
-        <meta name="keywords" content="R에서 rjson package 의 toJSON(), fromJSON() 함수 알아보기, , R" />
+        <meta name="description" content="R에서 소리, 음원 재생하기 - tuneR, beepr package" />
+        <meta name="keywords" content="R에서 소리, 음원 재생하기 - tuneR, beepr package, , R" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="R에서 rjson package 의 toJSON(), fromJSON() 함수 알아보기" property="og:title">
+          <meta content="R에서 소리, 음원 재생하기 - tuneR, beepr package" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/03/02/rjson_package.html" property="og:url">
+          <meta content="https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html" property="og:url">
         
         
-          <meta content="2016-03-02T00:00:00+09:00" property="article:published_time">
+          <meta content="2016-04-30T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="R에서 rjson package 의 toJSON(), fromJSON() 함수 알아보기">
+          <meta name="twitter:title" content="R에서 소리, 음원 재생하기 - tuneR, beepr package">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/03/02/rjson_package.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,8 +126,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>R에서 rjson package 의 toJSON(), fromJSON() 함수 알아보기</h1>
-<span class="time">02 Mar 2016</span>
+                <h1>R에서 소리, 음원 재생하기 - tuneR, beepr package</h1>
+<span class="time">30 Apr 2016</span>
 
 <span class="categories">
     &raquo; <a href="/category/R">R</a>
@@ -136,77 +136,53 @@
 
 <div class="content">
     <div class="post"><hr />
-<p>JSON 포맷의 데이터를 R에서 읽어 들인 후 가공하기 위해 JSON 형식을 parser 해야 하는 과정이 필요하다고 한다.<br />
-rjson 라는 패키지가 이를 도와주는데 이 안에 있는 함수 <code>toJSON()</code>, <code>fromJSON()</code> 2개를 기본적으로 이용하여 실습을 해보겠다.</p>
-<h2 id="a-준비">A) 준비</h2>
-<h3 id="a-1-예제-데이터">A-1) 예제 데이터</h3>
-<p>실습을 하기 위하여 아래와 같은 JSON 타입의 데이터가 있다고 가정해 보겠다.<br />
-아래의 데이터는 <a href="https://ko.wikipedia.org/wiki/JSON#.EC.98.88.EC.A0.9C">JSON 을 설명하는 위키백과</a>의 예제데이터를 적절히 수정한 것이다.</p>
-<pre><code>[
-  {
-    &quot;Name&quot;: &quot;Test&quot;,
-    &quot;Age&quot;: 25,
-    &quot;Sex&quot;: &quot;F&quot;,
-    &quot;Address&quot;: &quot;Seoul&quot;,
-    &quot;Hobby&quot;: &quot;Basketball&quot;
-  }
-]</code></pre>
-<p>이것을 워킹디렉토리에 <code>test.json</code> 로 저장하고 이를 R에서 적절하게 사용하기 위해 불러와 보겠다.<br />
-어떠한 텍스트에디터를 이용하던 상관없다, 저장방법은 위의 JSON 형식 텍스트를 복사한 다음 &quot;test.json&quot; 이란 파일명으로 저장만 하면 된다.</p>
-<figure>
-<img src="/assets/rjson_1.png" />
-</figure>
-<p>나는 Sublime text 3 라는 텍스트 에디터를 이용해 이처럼 저장하였다.</p>
-<h3 id="a-2-jsonlite-패키지-불러오기">A-2) jsonlite 패키지 불러오기</h3>
-<p>당연히 rjson 패키지를 불러오는 것이 필요하다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;rjson&quot;</span>)</code></pre></div>
-<h2 id="b-tojson-fromjson-함수-이용해보기">B) <code>toJSON()</code>, <code>fromJSON()</code> 함수 이용해보기</h2>
-<h3 id="b-1-fromjson">B-1) <code>fromJSON()</code></h3>
-<p>우선 <code>fromJSON()</code> 함수를 알아보자.<br />
-JSON 형 데이터를 R에서 가공할 수 있도록 형태를 변환하여 준다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(<span class="dt">file=</span><span class="st">&quot;test.json&quot;</span>)
-data</code></pre></div>
-<pre><code>## [[1]]
-## [[1]]$Name
-## [1] &quot;Test&quot;
-## 
-## [[1]]$Age
-## [1] 25
-## 
-## [[1]]$Sex
-## [1] &quot;F&quot;
-## 
-## [[1]]$Address
-## [1] &quot;Seoul&quot;
-## 
-## [[1]]$Hobby
-## [1] &quot;Basketball&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(data)</code></pre></div>
-<pre><code>## [1] &quot;list&quot;</code></pre>
-<p>list 형식으로 반환되는데 적절히 data.frame 형태로 변환하여 보면 다음과 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dataframe &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(data)
-dataframe</code></pre></div>
-<pre><code>##   Name Age Sex Address      Hobby
-## 1 Test  25   F   Seoul Basketball</code></pre>
-<h3 id="b-2-tojson">B-2) <code>toJSON()</code></h3>
-<p><code>toJSON()</code> 은 이와 반대의 성격을 가진다.<br />
-R의 객체를 특히 list, data.frame 등을 JSON 형으로 변환시킨다.<br />
-방금만든 <code>dataframe</code> 객체를 다시 JSON 형태로 바꾸기 위해선,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">toJSON</span>(dataframe)</code></pre></div>
-<pre><code>## [1] &quot;{\&quot;Name\&quot;:\&quot;Test\&quot;,\&quot;Age\&quot;:25,\&quot;Sex\&quot;:\&quot;F\&quot;,\&quot;Address\&quot;:\&quot;Seoul\&quot;,\&quot;Hobby\&quot;:\&quot;Basketball\&quot;}&quot;</code></pre>
-<p>로 하면된다.</p>
-<p>rjson package 말고도 간단히 이용할 수 있는 jsonlite package 도 있는데 이 패키지의 <code>toJSON()</code> 함수는 pretty 하게 반환하는 기능을 가지고 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">jsonlite::<span class="kw">toJSON</span>(dataframe, <span class="dt">pretty=</span>T)</code></pre></div>
-<pre><code>## [
-##   {
-##     &quot;Name&quot;: &quot;Test&quot;,
-##     &quot;Age&quot;: 25,
-##     &quot;Sex&quot;: &quot;F&quot;,
-##     &quot;Address&quot;: &quot;Seoul&quot;,
-##     &quot;Hobby&quot;: &quot;Basketball&quot;
-##   }
-## ]</code></pre>
-<p>첫 서두에 있는 예제 데이터와 동일하게 출력된 것을 볼 수 있다.</p>
+<p>코드수행시간이 비교적 길었던 R 스크립트가 있었다.<br />
+Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시간이 그렇게도 길지 않은 코드여서<br />
+코드 수행이 끝났다는 알람을 줄 수 있는 방법을 찾고 싶었는데, 알람의 방법은 크게 2가지 정도를 원했었다.</p>
+<ol type="1">
+<li>문자나 메일을 받는 방법</li>
+<li><strong>비프음 등의 소리를 재생</strong> 👈</li>
+</ol>
+<p>시켜 코드수행이 끝났다는 걸 알려주는 것 이다.<br />
+첫번째 &quot;문자나 메일을 받는 방법&quot; 은 구체적인 방법을 찾기 힘들었는데, 두번째 &quot;비프음 등의 소리를 재생&quot; 방법을 알아본 결과 패키지를 이용한 아주 간단한 방법이 있었다.<br />
+지금까지 알게 된 방법들을 간단히 정리해본다.</p>
+<h1 id="a-beepr-package-를-이용해-비프음-재생시키기">A) beepr package 를 이용해 비프음 재생시키기</h1>
+<p>비프음을 재생시키기 위한 단 한개의 함수를 제공해 주는 패키지가 있다. (역시 심플하고 가벼운 것이 최고다!)<br />
+패키지명칭도 beepr 이다.<br />
+제공되는 함수는 <code>beep()</code> 이다. 즉 <code>beepr::beep()</code> 로 내가원하는 비프음을 재생시킬 수 있었다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;beepr&quot;</span>)
+<span class="kw">library</span>(beepr)</code></pre></div>
+<p>beepr package 설치 및 로드하고</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">beep</span>()</code></pre></div>
+<p>를 직접 실행시켜 보면 마치 전자레인지 가동이 종료될 때의 &quot;ping!&quot; 소리가 난다 🎵🎵</p>
+<p><code>beep()</code> 함수에서 제공되는 사운드는 아래처럼 11개가 있다.<br />
+기호에 맞게 <code>sound</code> 인자를 조정해 사용하면 된다.</p>
+<ol type="1">
+<li>ping</li>
+<li>coin</li>
+<li>fanfare</li>
+<li>complete</li>
+<li>treasure</li>
+<li>ready</li>
+<li>shotgun</li>
+<li>mario</li>
+<li>wilhelm</li>
+<li>facebook</li>
+<li>sword</li>
+</ol>
+<h1 id="b-만약-특정-음원파일을-재생시키고-싶다면-tuner-package">B) 만약 특정 음원파일을 재생시키고 싶다면 tuneR package</h1>
+<p>소리재생에 관련된 포괄적인 패키지를 찾아본적도 있는데, 그 패키지 안에는 특정음원파일을 재생시키는 기능도 있을것이라 생각했다.<br />
+나는 tuneR 패키지가 눈에 띄었는데 이 패키지 에서 자신이 가지고 있는 음원파일을 재생시키는 기능을 가진 <code>play()</code> 함수가 있다. (더 정확히 말하면 Wave class 의 객체만을 실행시키는 함수이다.)</p>
+<p>그 전에 특정음원파일을 읽어들여 정보를 보관할 객체를 준비해야 할 필요가 있다. 음원 포맷이 mp3 이라면 <code>readMP3()</code> 와 같은 함수가 이를 도와준다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;tuneR&quot;</span>)
+<span class="kw">library</span>(tuneR)</code></pre></div>
+<p>역시 tuneR 패키지를 설치하고 사용할 준비를 한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mp3 &lt;-<span class="st"> </span><span class="kw">readMP3</span>(<span class="st">&quot;test.wav&quot;</span>)
+<span class="kw">play</span>(mp3)</code></pre></div>
+<p>위의 코드는 워킹디렉토리에 있는 &quot;Test.mp3&quot; 파일을 불러온 후 R에서 재생시키는 코드이다.</p>
+<h1 id="c-두-패키지의-차이점">C) 두 패키지의 차이점</h1>
+<p>위에 비프음을 재생시키는 beepr 패키지와 다르게 tuneR 패키지의 <code>play()</code> 함수는 기본적으로 외부 플레이어를 이용한다는 점에서 차이점이 있다.<br />
+따라서 <code>beep()</code> 는 R내에서 이용하는데 용이하지만 tuneR 패키지와 조합한 <code>play()</code> 함수는 활성화되는 프로그램이 R 에서 외부 플레이어 어플리케이션으로 넘어가 버린다. 그리고 beepr 과 달리 tuneR 은 운영체계 별로 사용법이 상이하다.</p>
 <hr />
 </div>
     <div class="share-page">
@@ -221,7 +197,7 @@ R의 객체를 특히 list, data.frame 등을 JSON 형으로 변환시킨다.<br
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/03/02/rjson_package.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -432,10 +408,10 @@ R의 객체를 특히 list, data.frame 등을 JSON 형으로 변환시킨다.<br
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/r/2016/02/19/replicate_function.html">&laquo; R에서 `replicate()` 함수 소개</a>
+    <a class="prev" href="/r/2016/04/16/using_clipboard.html">&laquo; R에서 클립보드의 내용물을 끌어오기</a>
   
   
-    <a class="next" href="/r/2016/04/16/progressbar.html">R에서 범용적으로 진행표시줄(progress bar)을 구현할 수 있는 progress package &raquo;</a>
+    <a class="next" href="/r/2016/05/18/lag_diff_function.html">R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기 &raquo;</a>
   
 </div>
 
@@ -446,8 +422,8 @@ R의 객체를 특히 list, data.frame 등을 JSON 형으로 변환시킨다.<br
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 rjson package 의 toJSON(), fromJSON() 함수 알아보기";
-        var disqus_title = "R에서 rjson package 의 toJSON(), fromJSON() 함수 알아보기";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 소리, 음원 재생하기 - tuneR, beepr package";
+        var disqus_title = "R에서 소리, 음원 재생하기 - tuneR, beepr package";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

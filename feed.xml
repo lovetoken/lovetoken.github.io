@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 27 Jul 2016 20:13:49 +0900</pubDate>
-    <lastBuildDate>Wed, 27 Jul 2016 20:13:49 +0900</lastBuildDate>
+    <pubDate>Sun, 31 Jul 2016 12:55:29 +0900</pubDate>
+    <lastBuildDate>Sun, 31 Jul 2016 12:55:29 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -774,6 +774,67 @@ for(i in &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;kw
       </item>
     
       <item>
+        <title>R에서 소리, 음원 재생하기 - tuneR, beepr package</title>
+        <description>&lt;hr /&gt;
+&lt;p&gt;코드수행시간이 비교적 길었던 R 스크립트가 있었다.&lt;br /&gt;
+Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시간이 그렇게도 길지 않은 코드여서&lt;br /&gt;
+코드 수행이 끝났다는 알람을 줄 수 있는 방법을 찾고 싶었는데, 알람의 방법은 크게 2가지 정도를 원했었다.&lt;/p&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;문자나 메일을 받는 방법&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;비프음 등의 소리를 재생&lt;/strong&gt; 👈&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;시켜 코드수행이 끝났다는 걸 알려주는 것 이다.&lt;br /&gt;
+첫번째 &amp;quot;문자나 메일을 받는 방법&amp;quot; 은 구체적인 방법을 찾기 힘들었는데, 두번째 &amp;quot;비프음 등의 소리를 재생&amp;quot; 방법을 알아본 결과 패키지를 이용한 아주 간단한 방법이 있었다.&lt;br /&gt;
+지금까지 알게 된 방법들을 간단히 정리해본다.&lt;/p&gt;
+&lt;h1 id=&quot;a-beepr-package-를-이용해-비프음-재생시키기&quot;&gt;A) beepr package 를 이용해 비프음 재생시키기&lt;/h1&gt;
+&lt;p&gt;비프음을 재생시키기 위한 단 한개의 함수를 제공해 주는 패키지가 있다. (역시 심플하고 가벼운 것이 최고다!)&lt;br /&gt;
+패키지명칭도 beepr 이다.&lt;br /&gt;
+제공되는 함수는 &lt;code&gt;beep()&lt;/code&gt; 이다. 즉 &lt;code&gt;beepr::beep()&lt;/code&gt; 로 내가원하는 비프음을 재생시킬 수 있었다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;install.packages&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;beepr&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(beepr)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;beepr package 설치 및 로드하고&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;beep&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;를 직접 실행시켜 보면 마치 전자레인지 가동이 종료될 때의 &amp;quot;ping!&amp;quot; 소리가 난다 🎵🎵&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;beep()&lt;/code&gt; 함수에서 제공되는 사운드는 아래처럼 11개가 있다.&lt;br /&gt;
+기호에 맞게 &lt;code&gt;sound&lt;/code&gt; 인자를 조정해 사용하면 된다.&lt;/p&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;ping&lt;/li&gt;
+&lt;li&gt;coin&lt;/li&gt;
+&lt;li&gt;fanfare&lt;/li&gt;
+&lt;li&gt;complete&lt;/li&gt;
+&lt;li&gt;treasure&lt;/li&gt;
+&lt;li&gt;ready&lt;/li&gt;
+&lt;li&gt;shotgun&lt;/li&gt;
+&lt;li&gt;mario&lt;/li&gt;
+&lt;li&gt;wilhelm&lt;/li&gt;
+&lt;li&gt;facebook&lt;/li&gt;
+&lt;li&gt;sword&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;b-만약-특정-음원파일을-재생시키고-싶다면-tuner-package&quot;&gt;B) 만약 특정 음원파일을 재생시키고 싶다면 tuneR package&lt;/h1&gt;
+&lt;p&gt;소리재생에 관련된 포괄적인 패키지를 찾아본적도 있는데, 그 패키지 안에는 특정음원파일을 재생시키는 기능도 있을것이라 생각했다.&lt;br /&gt;
+나는 tuneR 패키지가 눈에 띄었는데 이 패키지 에서 자신이 가지고 있는 음원파일을 재생시키는 기능을 가진 &lt;code&gt;play()&lt;/code&gt; 함수가 있다. (더 정확히 말하면 Wave class 의 객체만을 실행시키는 함수이다.)&lt;/p&gt;
+&lt;p&gt;그 전에 특정음원파일을 읽어들여 정보를 보관할 객체를 준비해야 할 필요가 있다. 음원 포맷이 mp3 이라면 &lt;code&gt;readMP3()&lt;/code&gt; 와 같은 함수가 이를 도와준다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;install.packages&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;tuneR&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(tuneR)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;역시 tuneR 패키지를 설치하고 사용할 준비를 한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;mp3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;readMP3&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;test.wav&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;play&lt;/span&gt;(mp3)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 코드는 워킹디렉토리에 있는 &amp;quot;Test.mp3&amp;quot; 파일을 불러온 후 R에서 재생시키는 코드이다.&lt;/p&gt;
+&lt;h1 id=&quot;c-두-패키지의-차이점&quot;&gt;C) 두 패키지의 차이점&lt;/h1&gt;
+&lt;p&gt;위에 비프음을 재생시키는 beepr 패키지와 다르게 tuneR 패키지의 &lt;code&gt;play()&lt;/code&gt; 함수는 기본적으로 외부 플레이어를 이용한다는 점에서 차이점이 있다.&lt;br /&gt;
+따라서 &lt;code&gt;beep()&lt;/code&gt; 는 R내에서 이용하는데 용이하지만 tuneR 패키지와 조합한 &lt;code&gt;play()&lt;/code&gt; 함수는 활성화되는 프로그램이 R 에서 외부 플레이어 어플리케이션으로 넘어가 버린다. 그리고 beepr 과 달리 tuneR 은 운영체계 별로 사용법이 상이하다.&lt;/p&gt;
+&lt;hr /&gt;
+</description>
+        <pubDate>Sat, 30 Apr 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
+    
+      <item>
         <title>R에서 클립보드의 내용물을 끌어오기</title>
         <description>&lt;hr /&gt;
 &lt;p&gt;편하게 데이터를 R에서 불러들이기 위해 간편한 방법이 없을까?&lt;br /&gt;
@@ -862,72 +923,6 @@ for(i in &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;kw
         <pubDate>Sat, 16 Apr 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/04/16/using_clipboard.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2016/04/16/using_clipboard.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>R에서 범용적으로 진행표시줄(progress bar)을 구현할 수 있는 progress package</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;이전에 R에서 진행표시줄(progress bar) 을 만들기 위해 &lt;a href=&quot;http://cafe.naver.com/lovetokens/1378&quot;&gt;windows OS 에서 작동되는 &lt;code&gt;winProgressBar()&lt;/code&gt; 함수에 대해서 설명한 적&lt;/a&gt;이 있다.&lt;br /&gt;
-아쉽게도 윈도우 이외 다른 운영체계에서는 이 함수가 지원되지 않는다.&lt;br /&gt;
-결국 상호호환의 문제로 다른 방안을 찾아보아야 하는 상황이 일어났는데 어떠한 운영체계라 하더라도 R에서 진행표시줄을 나타내기 위한 방법을 찾아 정리해보고자 한다.&lt;/p&gt;
-&lt;p&gt;지금까지 찾아본 방법중 가장 좋은 것은 progress package 를 이용하는 것 이었다.&lt;/p&gt;
-&lt;h1 id=&quot;a-example-code&quot;&gt;A) example code&lt;/h1&gt;
-&lt;p&gt;이전에 포스팅한 글을 빌려 똑같은 예제를 이용해 보겠다.&lt;/p&gt;
-&lt;p&gt;임의의 코드를 1000번 반복하는 for문 이며, 반복의 대상이 되는 코드의 내용물 은 상당히 복잡할 것으로 가정한다.&lt;br /&gt;
-예를 들어 반복의 대상이 되는 코드를 한번 수행하는데 걸리는 시간이 iteration 에 상관없이 공통으로 0.01초 라면 for 문이 모두 돌아가기 까지 소요되는 시간은 10초가 된다.&lt;br /&gt;
-이러한 가정을 정확하게 구현하는 코드가 바로 아래 같다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;for(i in &lt;span class=&quot;kw&quot;&gt;seq&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;)){
-
-    &lt;span class=&quot;kw&quot;&gt;Sys.sleep&lt;/span&gt;(&lt;span class=&quot;fl&quot;&gt;0.01&lt;/span&gt;)
-
-}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1 id=&quot;b-progress-package-를-이용해-진행표시줄-만들기&quot;&gt;B) progress package 를 이용해 진행표시줄 만들기&lt;/h1&gt;
-&lt;p&gt;progress package 를 로드&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;progress&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;그 다음 위의 예제코드에 몇 가지 코드를 덧붙인다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;pb &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;progress_bar$&lt;span class=&quot;kw&quot;&gt;new&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;total=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;)
-
-for(i in &lt;span class=&quot;kw&quot;&gt;seq&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;)){
-
-    pb$&lt;span class=&quot;kw&quot;&gt;tick&lt;/span&gt;()
-    &lt;span class=&quot;kw&quot;&gt;Sys.sleep&lt;/span&gt;(&lt;span class=&quot;fl&quot;&gt;0.01&lt;/span&gt;)
-
-}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;추가된 코드는 2줄이다.&lt;/p&gt;
-&lt;p&gt;우선 첫번째 progress bar 에 대한 사전정보가 담긴 객체 &lt;code&gt;pb&lt;/code&gt; 를 만든다.&lt;br /&gt;
-사전정보는 iteration 의 최대값을 넣어준다.&lt;br /&gt;
-즉 우리예시의 반복문은 1000회를 반복하므로 total 인자에 1000을 부여한다.&lt;br /&gt;
-그렇게 만든 객체 &lt;code&gt;pb&lt;/code&gt; 를 반복문 안에 심어주고 이를 째깍째깍 거릴 수 있도록 &lt;code&gt;tick()&lt;/code&gt; 모듈을 심어준다.&lt;br /&gt;
-이것이 가장 기본적인 사용방법이다.&lt;/p&gt;
-&lt;p&gt;실행해보면 R console 에 다음과 같이 진행표시줄이 나타나고, 점진적으로 진행되는 에니메이션을 볼 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;터미널 에서 실행시킨 결과&lt;/em&gt;&lt;/p&gt;
-&lt;figure&gt;
-&lt;img src=&quot;/assets/Progressbar_1.png&quot; /&gt;
-&lt;/figure&gt;
-&lt;p&gt;&lt;em&gt;R studio 에서 실행시킨 결과&lt;/em&gt;&lt;/p&gt;
-&lt;figure&gt;
-&lt;img src=&quot;/assets/Progressbar_2.png&quot; /&gt;
-&lt;/figure&gt;
-&lt;p&gt;추가된 2줄 코드의 문법형태가 Python을 사용하는 것처럼 닮았다.&lt;br /&gt;
-R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자유롭게 조절하여 사용 할 수 있는 듯 하다.&lt;br /&gt;
-그 방법에 대해선 &lt;code&gt;?progress_bar&lt;/code&gt; 를 통해 확인할 수 있으며, 예제코드들을 활용하면 상황에 맞게 커스터마이징도 가능할 듯 싶다.&lt;/p&gt;
-&lt;p&gt;참고로 터미널 command line, R studio 에선 실험결과 정상적으로 진행표시줄이 보이는데, 다른 환경&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;에선 진행표시줄이 안보일 수도 있나 보다.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;section class=&quot;footnotes&quot;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;물론 로드 이전에 패키지의 설치가 되어야 한다. &lt;code&gt;install.packages(&amp;quot;progress&amp;quot;)&lt;/code&gt; 로 가능하다.&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;내가 쓰고 있는 텍스트에디터 Sublime text 3 에서 R-box 플러그인을 이용한 환경에선 진행표시줄이 나타나지 않았다.&lt;a href=&quot;#fnref2&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/section&gt;
-</description>
-        <pubDate>Sat, 16 Apr 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2016/04/16/progressbar.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/04/16/progressbar.html</guid>
         
         
         <category>R</category>
