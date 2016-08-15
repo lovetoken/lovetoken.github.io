@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="R에서 소리, 음원 재생하기 - tuneR, beepr package" />
-        <meta name="keywords" content="R에서 소리, 음원 재생하기 - tuneR, beepr package, , R" />
+        <meta name="description" content="Timeline JS 소개 (with 나의 일본 여행계획)" />
+        <meta name="keywords" content="Timeline JS 소개 (with 나의 일본 여행계획), , Open_source_tool" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="R에서 소리, 음원 재생하기 - tuneR, beepr package" property="og:title">
+          <meta content="Timeline JS 소개 (with 나의 일본 여행계획)" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html" property="og:url">
+          <meta content="https://lovetoken.github.io/open_source_tool/2016/08/15/Itinerary_Japan.html" property="og:url">
         
         
-          <meta content="2016-04-30T00:00:00+09:00" property="article:published_time">
+          <meta content="2016-08-15T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -35,7 +35,7 @@
         
         
           
-          <meta content="R" property="article:section">
+          <meta content="Open_source_tool" property="article:section">
           
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="R에서 소리, 음원 재생하기 - tuneR, beepr package">
+          <meta name="twitter:title" content="Timeline JS 소개 (with 나의 일본 여행계획)">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/open_source_tool/2016/08/15/Itinerary_Japan.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,63 +126,56 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>R에서 소리, 음원 재생하기 - tuneR, beepr package</h1>
-<span class="time">30 Apr 2016</span>
+                <h1>Timeline JS 소개 (with 나의 일본 여행계획)</h1>
+<span class="time">15 Aug 2016</span>
 
 <span class="categories">
-    &raquo; <a href="/category/R">R</a>
+    &raquo; <a href="/category/Open_source_tool">Open_source_tool</a>
 </span>
 
 
 <div class="content">
     <div class="post"><hr />
-<p>코드수행시간이 비교적 길었던 R 스크립트가 있었다.<br />
-Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시간이 그렇게도 길지 않은 코드여서<br />
-코드 수행이 끝났다는 알람을 줄 수 있는 방법을 찾고 싶었는데, 알람의 방법은 크게 2가지 정도를 원했었다.</p>
-<ol type="1">
-<li>문자나 메일을 받는 방법</li>
-<li><strong>비프음 등의 소리를 재생</strong> 👈</li>
-</ol>
-<p>시켜 코드수행이 끝났다는 걸 알려주는 것 이다.<br />
-첫번째 &quot;문자나 메일을 받는 방법&quot; 은 구체적인 방법을 찾기 힘들었는데, 두번째 &quot;비프음 등의 소리를 재생&quot; 방법을 알아본 결과 패키지를 이용한 아주 간단한 방법이 있었다.<br />
-지금까지 알게 된 방법들을 간단히 정리해본다.</p>
-<h1 id="a-beepr-package-를-이용해-비프음-재생시키기">A) beepr package 를 이용해 비프음 재생시키기</h1>
-<p>비프음을 재생시키기 위한 단 한개의 함수를 제공해 주는 패키지가 있다. (역시 심플하고 가벼운 것이 최고다!)<br />
-패키지명칭도 beepr 이다.<br />
-제공되는 함수는 <code>beep()</code> 이다. 즉 <code>beepr::beep()</code> 로 내가원하는 비프음을 재생시킬 수 있었다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;beepr&quot;</span>)
-<span class="kw">library</span>(beepr)</code></pre></div>
-<p>beepr package 설치 및 로드하고</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">beep</span>()</code></pre></div>
-<p>를 직접 실행시켜 보면 마치 전자레인지 가동이 종료될 때의 &quot;ping!&quot; 소리가 난다 🎵🎵</p>
-<p><code>beep()</code> 함수에서 제공되는 사운드는 아래처럼 11개가 있다.<br />
-기호에 맞게 <code>sound</code> 인자를 조정해 사용하면 된다.</p>
-<ol type="1">
-<li>ping</li>
-<li>coin</li>
-<li>fanfare</li>
-<li>complete</li>
-<li>treasure</li>
-<li>ready</li>
-<li>shotgun</li>
-<li>mario</li>
-<li>wilhelm</li>
-<li>facebook</li>
-<li>sword</li>
-</ol>
-<h1 id="b-만약-특정-음원파일을-재생시키고-싶다면-tuner-package">B) 만약 특정 음원파일을 재생시키고 싶다면 tuneR package</h1>
-<p>소리재생에 관련된 포괄적인 패키지를 찾아본적도 있는데, 그 패키지 안에는 특정음원파일을 재생시키는 기능도 있을것이라 생각했다.<br />
-나는 tuneR 패키지가 눈에 띄었는데 이 패키지 에서 자신이 가지고 있는 음원파일을 재생시키는 기능을 가진 <code>play()</code> 함수가 있다. (더 정확히 말하면 Wave class 의 객체만을 실행시키는 함수이다.)</p>
-<p>그 전에 특정음원파일을 읽어들여 정보를 보관할 객체를 준비해야 할 필요가 있다. 음원 포맷이 mp3 이라면 <code>readMP3()</code> 와 같은 함수가 이를 도와준다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;tuneR&quot;</span>)
-<span class="kw">library</span>(tuneR)</code></pre></div>
-<p>역시 tuneR 패키지를 설치하고 사용할 준비를 한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mp3 &lt;-<span class="st"> </span><span class="kw">readMP3</span>(<span class="st">&quot;test.wav&quot;</span>)
-<span class="kw">play</span>(mp3)</code></pre></div>
-<p>위의 코드는 워킹디렉토리에 있는 &quot;Test.mp3&quot; 파일을 불러온 후 R에서 재생시키는 코드이다.</p>
-<h1 id="c-두-패키지의-차이점">C) 두 패키지의 차이점</h1>
-<p>위에 비프음을 재생시키는 beepr 패키지와 다르게 tuneR 패키지의 <code>play()</code> 함수는 기본적으로 외부 플레이어를 이용한다는 점에서 차이점이 있다.<br />
-따라서 <code>beep()</code> 는 R내에서 이용하는데 용이하지만 tuneR 패키지와 조합한 <code>play()</code> 함수는 활성화되는 프로그램이 R 에서 외부 플레이어 어플리케이션으로 넘어가 버린다. 그리고 beepr 과 달리 tuneR 은 운영체계 별로 사용법이 상이하다.</p>
+<p>10월에 친구들과 일본으로 여행을 갈 계획이다.<br />
+2개월이란 시간이 남아있는데 나에겐 첫 해외여행이어서 여러 가지를 신경 쓰고 준비해 보려고 한다.</p>
+<p>여행초보인 내가 지금 고민하는 것은 여행일정표를 여행 동료들과 어떻게 공유하는 게 좋을까 고민하고 있다.<br />
+여행계획이라는 것이 상당히 즉흥적일 수도 있고, 시시각각 변할 수 있는 변덕쟁이이기 때문에 쉽게 수정할 수 있어야 하고, 수정된 것이 바로 적용되어 공유될 수 있어야 편리하다고 생각했다.<br />
+이고민이 최근에 <a href="https://timeline.knightlab.com/">Timeline JS</a> 라는 오픈소스를 발견하는 계기가 되었다.</p>
+<br>
+<center>
+<img src="/assets/TimelineJS1.png" />
+</center>
+<p><br></p>
+<p>본 포스팅 글은 <a href="https://timeline.knightlab.com/">Timeline JS</a> 의 간단한 소개와 사용방법을 내 여행계획과 함께 정리해 보고자 한다.<br />
+(※ 참고로 여행을 갈 당일이 되기까지 이글은 계속해서 변경될 것 같다!)</p>
+<h1 id="a-timeline-js">A) <a href="https://timeline.knightlab.com/">Timeline JS</a></h1>
+<p>백문이 불여일견..<br />
+구구절절 소개하는 것보단 Timeline JS 로 만들 수 있는 것은 아래와 같은 어플리케이션이다.</p>
+<iframe src="https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1mgvNplYZJEfYU8q5_-ML9w4GjJcUH-CuMKSmUU4nI4k&amp;font=Default&amp;lang=en&amp;initial_zoom=2&amp;height=650" width="100%" height="650" frameborder="0">
+</iframe>
+<p>이처럼 인터렉티브한 시간흐름표(Timeline)를 만들 수 있는 오픈소스 도구이다.<br />
+초보자를 위해 Timeline 에 대한 정보를 Google spreadsheet 에 잘 정리해 놓고 연동시키기만 하면 누구든지 만들 수 있다.<br />
+(전문가들을 위한 JSON 스킬을 이용하면 더 핵심적이고 다방면적인 기능들을 활용할 수 있다고 추가로 홈페이지에 소개되어 있다.)</p>
+<p><a href="https://timeline.knightlab.com/">Timeline JS</a> 는 이처럼 <strong>연대기적 성격을 가진 정보를 쉽게 시각적으로 표현할 수 있는 훌륭한 도구</strong>이다.<br />
+그리고 여러 장점이 있겠지만 무엇보다도 웹기반 어플리케이션이기 때문에 쉬운 공유가 가능하고, 다양한 타 어플리케이션과의 연동이 가능하다는 잠재력을 가지고 있다.</p>
+<p>위의 여행계획 정보가 담겨있는 Google spreadsheet 역시 웹을 통해 언제든지 수정, 편집이 가능하므로 Timeline 어플리케이션을 나뿐만 아니라 여행 동료들이 마음껏 수정할 수 있다.</p>
+<p>위의 Timeline 을 만들기 위해서 사용한 Google spreadsheet 는 아래와 같다.</p>
+<p><br><img src="/assets/TimelineJS2.png" /><br></p>
+<center>
+<a href="https://docs.google.com/spreadsheets/d/1mgvNplYZJEfYU8q5_-ML9w4GjJcUH-CuMKSmUU4nI4k/edit#gid=0" class="uri">https://docs.google.com/spreadsheets/d/1mgvNplYZJEfYU8q5_-ML9w4GjJcUH-CuMKSmUU4nI4k/edit#gid=0</a>
+</center>
+<p><br></p>
+<p>Timeline JS 홈페이지에서 기본적으로 <a href="https://drive.google.com/previewtemplate?id=1pHBvXN7nmGkiG8uQSUB82eNlnL8xHu6kydzH_-eguHQ&amp;mode=public">템플릿</a>을 제공해 주는데 이를 가져온 후 항목별로 나와 여행 동료들이 값을 수정한 것 이다.</p>
+<h1 id="b-튜토리얼">B) 튜토리얼</h1>
+<p>직접 만들어 보고 싶은 욕구가 생기면?<br />
+행동으로 옮기기만 하면 된다.<br />
+<a href="https://timeline.knightlab.com/">Timeline JS</a> 홈페이지에서 제공하는 튜토리얼 영상을 보면 내가 소개한 이야기들의 구체적인 방법들이 스크린캐스트로 담겨 있다.</p>
+<br>
+<center>
+<iframe src="https://player.vimeo.com/video/143407878" width="100%" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+</iframe>
+</center>
+<p><br></p>
 <hr />
 </div>
     <div class="share-page">
@@ -197,7 +190,7 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/open_source_tool/2016/08/15/Itinerary_Japan.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -229,19 +222,19 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
     
         
             
-                
-                <div class="panel-body">
-                <h4>Related Posts</h4>
-                <ul>
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/07/23/Crawling_image.html">R에서 특정 웹페이지의 이미지 파일 Crawling 하기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
             
         
     
@@ -257,16 +250,6 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
     
         
             
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html">R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
         
     
 
@@ -274,66 +257,12 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
     
         
             
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/06/12/S3.html">R에서 S3 최소재현예제</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
         
     
 
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/06/06/integate_function.html">R에서 구분구적법 적분과정 시뮬레이션 및 `integrate()` 함수 알아보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/05/26/CLT.html">R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html">R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -408,17 +337,12 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
         
     
 
-
-    </ul>
-    </div>
 
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/r/2016/04/16/using_clipboard.html">&laquo; R에서 클립보드의 내용물을 끌어오기</a>
+    <a class="prev" href="/diary/2016/07/23/Welcome_to_Jekyll.html">&laquo; Blog 의 이전 (Wordpress 에서 Jekyll 로)</a>
   
-  
-    <a class="next" href="/r/2016/05/18/lag_diff_function.html">R에서 수익률 구해보며 `lag()`, `diff()` 함수 알아보기 &raquo;</a>
   
 </div>
 
@@ -429,8 +353,8 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 소리, 음원 재생하기 - tuneR, beepr package";
-        var disqus_title = "R에서 소리, 음원 재생하기 - tuneR, beepr package";
+        var disqus_identifier = "https://lovetoken.github.io_Timeline JS 소개 (with 나의 일본 여행계획)";
+        var disqus_title = "Timeline JS 소개 (with 나의 일본 여행계획)";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

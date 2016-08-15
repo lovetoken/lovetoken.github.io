@@ -5,9 +5,63 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 01 Aug 2016 12:30:18 +0900</pubDate>
-    <lastBuildDate>Mon, 01 Aug 2016 12:30:18 +0900</lastBuildDate>
+    <pubDate>Mon, 15 Aug 2016 19:10:54 +0900</pubDate>
+    <lastBuildDate>Mon, 15 Aug 2016 19:10:54 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>Timeline JS 소개 (with 나의 일본 여행계획)</title>
+        <description>&lt;hr /&gt;
+&lt;p&gt;10월에 친구들과 일본으로 여행을 갈 계획이다.&lt;br /&gt;
+2개월이란 시간이 남아있는데 나에겐 첫 해외여행이어서 여러 가지를 신경 쓰고 준비해 보려고 한다.&lt;/p&gt;
+&lt;p&gt;여행초보인 내가 지금 고민하는 것은 여행일정표를 여행 동료들과 어떻게 공유하는 게 좋을까 고민하고 있다.&lt;br /&gt;
+여행계획이라는 것이 상당히 즉흥적일 수도 있고, 시시각각 변할 수 있는 변덕쟁이이기 때문에 쉽게 수정할 수 있어야 하고, 수정된 것이 바로 적용되어 공유될 수 있어야 편리하다고 생각했다.&lt;br /&gt;
+이고민이 최근에 &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 라는 오픈소스를 발견하는 계기가 되었다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/TimelineJS1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;본 포스팅 글은 &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 의 간단한 소개와 사용방법을 내 여행계획과 함께 정리해 보고자 한다.&lt;br /&gt;
+(※ 참고로 여행을 갈 당일이 되기까지 이글은 계속해서 변경될 것 같다!)&lt;/p&gt;
+&lt;h1 id=&quot;a-timeline-js&quot;&gt;A) &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;백문이 불여일견..&lt;br /&gt;
+구구절절 소개하는 것보단 Timeline JS 로 만들 수 있는 것은 아래와 같은 어플리케이션이다.&lt;/p&gt;
+&lt;iframe src=&quot;https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1mgvNplYZJEfYU8q5_-ML9w4GjJcUH-CuMKSmUU4nI4k&amp;amp;font=Default&amp;amp;lang=en&amp;amp;initial_zoom=2&amp;amp;height=650&quot; width=&quot;100%&quot; height=&quot;650&quot; frameborder=&quot;0&quot;&gt;
+&lt;/iframe&gt;
+&lt;p&gt;이처럼 인터렉티브한 시간흐름표(Timeline)를 만들 수 있는 오픈소스 도구이다.&lt;br /&gt;
+초보자를 위해 Timeline 에 대한 정보를 Google spreadsheet 에 잘 정리해 놓고 연동시키기만 하면 누구든지 만들 수 있다.&lt;br /&gt;
+(전문가들을 위한 JSON 스킬을 이용하면 더 핵심적이고 다방면적인 기능들을 활용할 수 있다고 추가로 홈페이지에 소개되어 있다.)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 는 이처럼 &lt;strong&gt;연대기적 성격을 가진 정보를 쉽게 시각적으로 표현할 수 있는 훌륭한 도구&lt;/strong&gt;이다.&lt;br /&gt;
+그리고 여러 장점이 있겠지만 무엇보다도 웹기반 어플리케이션이기 때문에 쉬운 공유가 가능하고, 다양한 타 어플리케이션과의 연동이 가능하다는 잠재력을 가지고 있다.&lt;/p&gt;
+&lt;p&gt;위의 여행계획 정보가 담겨있는 Google spreadsheet 역시 웹을 통해 언제든지 수정, 편집이 가능하므로 Timeline 어플리케이션을 나뿐만 아니라 여행 동료들이 마음껏 수정할 수 있다.&lt;/p&gt;
+&lt;p&gt;위의 Timeline 을 만들기 위해서 사용한 Google spreadsheet 는 아래와 같다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;img src=&quot;/assets/TimelineJS2.png&quot; /&gt;&lt;br&gt;&lt;/p&gt;
+&lt;center&gt;
+&lt;a href=&quot;https://docs.google.com/spreadsheets/d/1mgvNplYZJEfYU8q5_-ML9w4GjJcUH-CuMKSmUU4nI4k/edit#gid=0&quot; class=&quot;uri&quot;&gt;https://docs.google.com/spreadsheets/d/1mgvNplYZJEfYU8q5_-ML9w4GjJcUH-CuMKSmUU4nI4k/edit#gid=0&lt;/a&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;Timeline JS 홈페이지에서 기본적으로 &lt;a href=&quot;https://drive.google.com/previewtemplate?id=1pHBvXN7nmGkiG8uQSUB82eNlnL8xHu6kydzH_-eguHQ&amp;amp;mode=public&quot;&gt;템플릿&lt;/a&gt;을 제공해 주는데 이를 가져온 후 항목별로 나와 여행 동료들이 값을 수정한 것 이다.&lt;/p&gt;
+&lt;h1 id=&quot;b-튜토리얼&quot;&gt;B) 튜토리얼&lt;/h1&gt;
+&lt;p&gt;직접 만들어 보고 싶은 욕구가 생기면?&lt;br /&gt;
+행동으로 옮기기만 하면 된다.&lt;br /&gt;
+&lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 홈페이지에서 제공하는 튜토리얼 영상을 보면 내가 소개한 이야기들의 구체적인 방법들이 스크린캐스트로 담겨 있다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;iframe src=&quot;https://player.vimeo.com/video/143407878&quot; width=&quot;100%&quot; height=&quot;400&quot; frameborder=&quot;0&quot; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;hr /&gt;
+</description>
+        <pubDate>Mon, 15 Aug 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/open_source_tool/2016/08/15/Itinerary_Japan.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/open_source_tool/2016/08/15/Itinerary_Japan.html</guid>
+        
+        
+        <category>Open_source_tool</category>
+        
+      </item>
     
       <item>
         <title>Blog 의 이전 (Wordpress 에서 Jekyll 로)</title>
@@ -828,101 +882,6 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
         <pubDate>Sat, 30 Apr 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>R에서 클립보드의 내용물을 끌어오기</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;편하게 데이터를 R에서 불러들이기 위해 간편한 방법이 없을까?&lt;br /&gt;
-보통 csv파일을 읽어들이기 위해서 csv파일이 있는 경로를 알고 그경로를 입력해 주어야 한다.&lt;br /&gt;
-아래의 코드처럼 말이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;data &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;./Data/Test.csv&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;워킹디렉토리에서 Data 폴더의 Test.csv 을 읽어들이는 코드이다.&lt;br /&gt;
-하지만 간단히 눈앞에 있는 데이터를 R로 불러들이기 위해선 그 데이터 파일의 path 를 알아야 하는 것이 귀찮을 수 있다.&lt;br /&gt;
-이러한 귀차니즘까지 발동한다면 Clipboard 를 이용하여 원하는 데이터를 로드하는 것이 현명한 것 같다.&lt;/p&gt;
-&lt;h2 id=&quot;on-windows&quot;&gt;on Windows&lt;/h2&gt;
-&lt;p&gt;예를 들어 아래의 모습처럼 우리가 사용하고자 하는 Test.csv 파일이 MS office Excel 에서 열린 상황의 모습이고,&lt;br /&gt;
-이것을 R에서 빨리 불러오고 싶다 가정한다.&lt;/p&gt;
-&lt;figure&gt;
-&lt;img src=&quot;/assets/Clipboard_Windows.png&quot; /&gt;
-&lt;/figure&gt;
-&lt;p&gt;다음과 같은 스텝을 따른다.&lt;/p&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;Test.csv 파일의 데이터셋을 전체 선택하여 &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt; 를 한다.&lt;/li&gt;
-&lt;li&gt;R로 되돌어가 &lt;code&gt;read.table(&amp;quot;clipboard&amp;quot;)&lt;/code&gt; 를 실행하여 복사했던 데이터가 제대로 불러와 졌는지 확인한다.&lt;br /&gt;
-&lt;/li&gt;
-&lt;li&gt;필요에 따라 &lt;code&gt;read.table()&lt;/code&gt; 함수의 &lt;code&gt;header&lt;/code&gt;, &lt;code&gt;sep&lt;/code&gt; 인자값을 바꾸어 불러온다.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;직접 해본 결과의 스크린샷이다.&lt;/p&gt;
-&lt;figure&gt;
-&lt;img src=&quot;/assets/Clipboard_Windows2.png&quot; /&gt;
-&lt;/figure&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.table&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;clipboard&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##     V1   V2
-## 1  Var Test
-## 2    a   14
-## 3    b   25
-## 4    d  646
-## 5    e  773
-## 6    g   12
-## 7    n   45
-## 8    h    3
-## 9    s    6
-## 10   x   72&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.table&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;clipboard&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;header=&lt;/span&gt;T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##   Var Test
-## 1   a   14
-## 2   b   25
-## 3   d  646
-## 4   e  773
-## 5   g   12
-## 6   n   45
-## 7   h    3
-## 8   s    6
-## 9   x   72&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;on-mac&quot;&gt;on Mac&lt;/h2&gt;
-&lt;p&gt;맥이용자라면 윈도우의 &lt;code&gt;&amp;quot;clipboard&amp;quot;&lt;/code&gt; 와 같은 약속어로 클립보드 내용물을 불러들일 수 없는것을 확인했다.&lt;br /&gt;
-&lt;code&gt;&amp;quot;clipboard&amp;quot;&lt;/code&gt; 대신 &lt;code&gt;pipe(&amp;quot;pbpaste&amp;quot;)&lt;/code&gt; 을 이용한다.&lt;/p&gt;
-&lt;figure&gt;
-&lt;img src=&quot;/assets/Clipboard_Mac.png&quot; /&gt;
-&lt;/figure&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.table&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;pipe&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;pbpaste&amp;quot;&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##     V1   V2
-## 1  Var Test
-## 2    a   14
-## 3    b   25
-## 4    d  646
-## 5    e  773
-## 6    g   12
-## 7    n   45
-## 8    h    3
-## 9    s    6
-## 10   x   72&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.table&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;pipe&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;pbpaste&amp;quot;&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;header=&lt;/span&gt;T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##   Var Test
-## 1   a   14
-## 2   b   25
-## 3   d  646
-## 4   e  773
-## 5   g   12
-## 6   n   45
-## 7   h    3
-## 8   s    6
-## 9   x   72&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;물론 Clipboard 로 데이터를 불러오는 것 이므로 데이터 전체가 아닌 일부분만을 복사하는 것도 가능하다. 아래의 스크린샷은 데이터의 앞 3개의 필드를 복사하여 R로 불러들여본 결과이다.&lt;/p&gt;
-&lt;figure&gt;
-&lt;img src=&quot;/assets/Clipboard_Mac2.png&quot; /&gt;
-&lt;/figure&gt;
-&lt;p&gt;이처럼 Clipboard 를 이용하게 되면 사용하고 싶은 데이터를 선택하여 R로 마치 드레그 하는 방식과 같아진다.&lt;/p&gt;
-&lt;hr /&gt;
-</description>
-        <pubDate>Sat, 16 Apr 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2016/04/16/using_clipboard.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/04/16/using_clipboard.html</guid>
         
         
         <category>R</category>
