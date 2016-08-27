@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 27 Aug 2016 18:50:07 +0900</pubDate>
-    <lastBuildDate>Sat, 27 Aug 2016 18:50:07 +0900</lastBuildDate>
+    <pubDate>Sat, 27 Aug 2016 18:51:39 +0900</pubDate>
+    <lastBuildDate>Sat, 27 Aug 2016 18:51:39 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -1589,7 +1589,7 @@ step_fit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class
 이 경우 덧셈과 곱셈 중 우선순위는 곱셈이 더 높은 것이다.&lt;br /&gt;
 이처럼 R의 다양한 연산자들이 조합될 때 계산의 순서를 결정짓는 우선순위를 알고싶다면 &lt;code&gt;?Syntax&lt;/code&gt; 로 열리는 도움말을 참고한다.&lt;br /&gt;
 아래의 그림이 도움말을 연 경우인데 맨 위의 연산자가 가장 높은 순으로 계산수행이 시작된다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;img src=&quot;/assets/operatorR1.PNG&quot; /&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;img src=&quot;/assets/operatorR1.png&quot; /&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h1 id=&quot;b-question&quot;&gt;B) Question&lt;/h1&gt;
 &lt;p&gt;연산자에 대한 빈번한 궁금증과 질문들을 접하는데&lt;br /&gt;
 대표적으로 몇 개만 나열해 보았다.&lt;br /&gt;
