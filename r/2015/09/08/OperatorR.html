@@ -177,7 +177,7 @@ A &lt;-<span class="st"> </span>B &lt;-<span class="st"> </span><span class="dv"
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">-<span class="dv">10</span>^<span class="dv">2</span></code></pre></div>
 <pre><code>## [1] -100</code></pre>
 <p>-10 의 제곱은 100이지만,<br />
-위의 코드가 100이 반환되기를 기대한 순간 <code>?Syntax</code> 를 다시 참고할 시간인 것이다.<br />
+위의 코드가 100이 반환되기를 기대한 순간 <code>?Syntax</code> 를 다시 참고할 시간인 것이다. 🙄<br />
 나는 항상 100이 되길 기대하기 때문에 빈번히 <code>?Syntax</code> 도움말을 조회한다.</p>
 <p><strong><code>-</code>보다 <code>^</code>이 먼저 수행되는 문제를 괄호를 통해 해결</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(-<span class="dv">10</span>)^<span class="dv">2</span></code></pre></div>
@@ -193,12 +193,13 @@ C^<span class="dv">2</span></code></pre></div>
 <p><code>1:10</code> 의 모든 결과값에</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>:<span class="dv">10</span></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
-<p>2를 곱한 것과 같습니다.</p>
+<p>2를 곱한 것과 같다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">1</span>:<span class="dv">10</span>)*<span class="dv">2</span></code></pre></div>
 <pre><code>##  [1]  2  4  6  8 10 12 14 16 18 20</code></pre>
 <p>그런데 <code>(1:10)*2</code> 의 코드가 사실 가장 간단히 구현된 코드가 아니었다.<br />
 연산자 우선순위를 잘 알지 못한다면 습관적으로 <code>1:10</code>이 먼저 수행되어야 한다는 생각에 괄호를 본능적으로 둘러싸게 될 텐데,<br />
-<em>그렇지 않더라도 <code>:</code> 연산자는 <code>*</code> 보다 우위에 있으므로 <code>1:10</code> 을 먼저 계산 이후에 곱 연산 <code>*</code> 을 수행한다. </em> 따라서 괄호를 생략하고 아래와 같이 코드를 작성해도 된다.</p>
+그렇지 않더라도 <code>:</code> 연산자는 <code>*</code> 보다 우위에 있으므로 <code>1:10</code> 을 먼저 계산 이후에 곱 연산 <code>*</code> 을 수행한다.<br />
+따라서 괄호를 생략하고 아래와 같이 코드를 작성해도 된다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>:<span class="dv">10</span>*<span class="dv">2</span></code></pre></div>
 <pre><code>##  [1]  2  4  6  8 10 12 14 16 18 20</code></pre>
 <p>이밖에도 연산자 우선순위에 대한 추가 예제는 <code>?Syntax</code> 의 example code 에도 몇가지 훌륭한 것이 있다.</p>
@@ -220,7 +221,7 @@ C^<span class="dv">2</span></code></pre></div>
 <section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>사실 할당연산자 중 <code>-&gt;</code> 도 존재하지만 이는 아예 모르는게 약이라고 개인적으로 생각한다.<br />
+<li id="fn1"><p>사실 할당연산자 중 <code>-&gt;</code> 도 존재하지만 이는 아예 모르는게 약이라고 개인적으로 생각한다. 😎<br />
 <code>&lt;&lt;-</code> 와 같은 할당연산자도 있는데 할당을 어떤상황이든 전역환경(global environment)으로 지정하여 할당하는 특수한 할당연산자이다.<a href="#fnref1">↩</a></p></li>
 </ol>
 </section>
