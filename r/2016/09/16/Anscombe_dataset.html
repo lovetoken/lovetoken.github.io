@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축" />
-        <meta name="keywords" content="Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축, , R" />
+        <meta name="description" content="회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset" />
+        <meta name="keywords" content="회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset, , R" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축" property="og:title">
+          <meta content="회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2015/03/25/RstudioServer_using_AWSAMI.html" property="og:url">
+          <meta content="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html" property="og:url">
         
         
-          <meta content="2015-03-25T00:00:00+09:00" property="article:published_time">
+          <meta content="2016-09-16T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축">
+          <meta name="twitter:title" content="회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2015/03/25/RstudioServer_using_AWSAMI.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,8 +126,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축</h1>
-<span class="time">25 Mar 2015</span>
+                <h1>회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</h1>
+<span class="time">16 Sep 2016</span>
 
 <span class="categories">
     &raquo; <a href="/category/R">R</a>
@@ -135,31 +135,42 @@
 
 
 <div class="content">
-    <div class="post"><p>Amazon Web Service (AWS) 를 이용하여 미리 구축된 Rstudio Server AMI <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> 를 배포해주는 <a href="http://www.louisaslett.com/">사이트</a>가 있다.</p>
-<p><a href="http://www.louisaslett.com" class="uri">http://www.louisaslett.com</a></p>
-<p>이 AMI를 이용해 직접 여러대의 Rstudio Server 를 손쉽게 구축시킬 수 있다.</p>
-<p>관련된 정보는 <a href="https://www.youtube.com/watch?v=NQu3ugUkYTk">아래링크</a>를 통해 참고하여 알게 되었고 튜토리얼 형태로 이용할 수 있는 방법에 대한 영상까지 있다.</p>
-<p><a href="https://www.youtube.com/watch?v=NQu3ugUkYTk">Brief guide about Rstudio Server's Web interface on AWS : https://www.youtube.com/watch?v=NQu3ugUkYTk</a></p>
-<iframe width="100%" height="400" src="https://www.youtube.com/embed/NQu3ugUkYTk" frameborder="0" allowfullscreen>
-</iframe>
-<p>AWS 를 프리티어로 공짜로 이용하던 이전시절 이영상을 보고 그대로 따라하여 Rstudio Server 를 구축 시켜 봤었다.<br />
-등록되는 도메인을 통해 들어간 후</p>
-<p><em>ID : rstudio</em><br />
-<em>P.W : rstudio</em></p>
-<p>로 로그인하여 자유자재로 웹에서 사용할 수 있게 된다.<br />
-물론 초기 로그인시 아이디와 패스워드는 저렇지만 추후에 다른 패스워드로, 그리고 다른 아이디를 만들어 사용할 수도 있겠다.</p>
-<figure>
-<img src="/assets/AWSAMI-1.png" />
-</figure>
-<p>실질적으로 사용하고자 한다면 AWS EC2 사용 과금을 고려해야하며,<br />
-AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴스를 활성화 시킨다면<br />
-성능, 속도측면에서 기대하지 않는것이 좋을것이다.</p>
-<p>하지만 간편하게 원격으로 R 을 실행할 수도 있고, 소셜코딩이 가능할 수도 있겠으며 간편한 서버증설 등등의<br />
-유용하게 사용할 수 있는 방법은 무궁무진 할 것으로 생각된다.</p>
+    <div class="post"><p>회귀분석을 공부하게 되면<br />
+책이나 인터넷의 포스팅된 글에서 모델적합성의 중요성을 부각시키는 아래의 데이터 시각화 예제를 많이 보았을 것이다.</p>
+<br>
+<center>
+<img src="/assets/anscombe1.png" />
+</center>
+<p><br></p>
+<p>요즘에는 데이터시각화의 중요성을 부각시키는 예제로도 자주 활용되는데<br />
+그만큼 눈으로 직접 보는것이 힘이다.</p>
+<p>나는 종종 이 예제를 활용하고 싶을때가 많았는데<br />
+이 데이터셋을 구하기 전 처음에는 데이터셋의 이름을 모르고 있어서<br />
+직접 눈대중으로 만들려는 멍청한 짓을 한적이 있었다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>하지만 위에 사용된 데이터셋 이름이 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's quartet</a> 임을 알고는 구글링을 통해 손쉽게 얻을 수 있었다.</p>
+<p>그런데 또 뒤늦게<br />
+오늘 알아 챈 것이 있는데 R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's quartet</a> 데이터셋이 빌트인 되어 있었다는 것이다.<br />
+데이터셋을 호출하기 위해선 <code>anscombe</code> 만 치면 됬었다...</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">anscombe</code></pre></div>
+<pre><code>##    x1 x2 x3 x4    y1   y2    y3    y4
+## 1  10 10 10  8  8.04 9.14  7.46  6.58
+## 2   8  8  8  8  6.95 8.14  6.77  5.76
+## 3  13 13 13  8  7.58 8.74 12.74  7.71
+## 4   9  9  9  8  8.81 8.77  7.11  8.84
+## 5  11 11 11  8  8.33 9.26  7.81  8.47
+## 6  14 14 14  8  9.96 8.10  8.84  7.04
+## 7   6  6  6  8  7.24 6.13  6.08  5.25
+## 8   4  4  4 19  4.26 3.10  5.39 12.50
+## 9  12 12 12  8 10.84 9.13  8.15  5.56
+## 10  7  7  7  8  4.82 7.26  6.42  7.91
+## 11  5  5  5  8  5.68 4.74  5.73  6.89</code></pre>
+<p>으악.. 허무하다..<br />
+<code>?anscombe</code> 를 하고 나서 예제코드가 잘 준비된 것을 보니 지금까지 과정들이 헛수고임을 깨닫게 되었다...<br />
+그 충격에 이렇게 블로그 글로 포스팅을 하게 되었다. 😅</p>
 <section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Amazon Machine Image 의 약어로 어떤 소프트웨어나 환경설정을 이미지화 하여 그대로 재활용할 수 있는 템플릿이다.<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>이 멍청한 짓 마저 의외로 엄청 어려워 실패 😓<a href="#fnref1">↩</a></p></li>
 </ol>
 </section>
 </div>
@@ -175,7 +186,7 @@ AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴�
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2015/03/25/RstudioServer_using_AWSAMI.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -193,41 +204,31 @@ AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴�
     
         
             
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>Related Posts</h4>
                 <ul>
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html">회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
                 
                 <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/2016/07/23/Crawling_image.html">R에서 특정 웹페이지의 이미지 파일 Crawling 하기</a>
@@ -320,6 +321,16 @@ AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴�
     
         
             
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html">R에서 수익률 구해보며 lag(), diff() 함수 알아보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
         
     
 
@@ -407,8 +418,8 @@ AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴�
 
 <div class="PageNavigation">
   
+    <a class="prev" href="/open_source_tool/2016/08/15/Itinerary_Japan.html">&laquo; Timeline JS 소개 (with 나의 일본 여행계획)</a>
   
-    <a class="next" href="/r/2015/09/08/OperatorR.html">R에서 연산자의 우선순위 &raquo;</a>
   
 </div>
 
@@ -419,8 +430,8 @@ AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴�
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축";
-        var disqus_title = "Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축";
+        var disqus_identifier = "https://lovetoken.github.io_회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset";
+        var disqus_title = "회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

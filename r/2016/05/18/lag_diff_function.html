@@ -135,8 +135,7 @@
 
 
 <div class="content">
-    <div class="post"><hr />
-<p>시계열 데이터의 수익률을 계산하는 일들이 많아지면서<br />
+    <div class="post"><p>시계열 데이터의 수익률을 계산하는 일들이 많아지면서<br />
 복잡한 모듈들을 만들 때 아래의 함수들과 패키지가 얼마나 유용한지 몰랐었다.</p>
 <p>오늘 정리해보고자 하는 함수는 3가지이며, 부가적으로 시계열 데이터셋에 날짜의 전처리 부담을 줄여주는 xts package 를 조금씩 이용해보려 한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(xts)</code></pre></div>
@@ -343,7 +342,6 @@ for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
 ## 2016-05-17 -0.0078860727</code></pre>
 <p>주가종목에 로그를 취한 후 현시차와 직전시차의 차이값을 <code>diff()</code> 를 통해 계산한다.<br />
 따라서 <code>log(data) - log(lag(data))</code> 과 동일한 값이 반환되는 것을 확인할 수 있다.</p>
-<hr />
 <section class="footnotes">
 <hr />
 <ol>
@@ -381,24 +379,41 @@ for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
     
         
             
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
                 
                 <div class="panel-body">
                 <h4>Related Posts</h4>
                 <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html">회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/2016/07/23/Crawling_image.html">R에서 특정 웹페이지의 이미지 파일 Crawling 하기</a>
@@ -497,16 +512,6 @@ for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html">R에서 소리, 음원 재생하기 - tuneR, beepr package</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
             
         
     

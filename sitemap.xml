@@ -5,14 +5,63 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 01 Sep 2016 20:28:08 +0900</pubDate>
-    <lastBuildDate>Thu, 01 Sep 2016 20:28:08 +0900</lastBuildDate>
+    <pubDate>Fri, 16 Sep 2016 21:19:46 +0900</pubDate>
+    <lastBuildDate>Fri, 16 Sep 2016 21:19:46 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
+        <title>회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</title>
+        <description>&lt;p&gt;회귀분석을 공부하게 되면&lt;br /&gt;
+책이나 인터넷의 포스팅된 글에서 모델적합성의 중요성을 부각시키는 아래의 데이터 시각화 예제를 많이 보았을 것이다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/anscombe1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;요즘에는 데이터시각화의 중요성을 부각시키는 예제로도 자주 활용되는데&lt;br /&gt;
+그만큼 눈으로 직접 보는것이 힘이다.&lt;/p&gt;
+&lt;p&gt;나는 종종 이 예제를 활용하고 싶을때가 많았는데&lt;br /&gt;
+이 데이터셋을 구하기 전 처음에는 데이터셋의 이름을 모르고 있어서&lt;br /&gt;
+직접 눈대중으로 만들려는 멍청한 짓을 한적이 있었다.&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;하지만 위에 사용된 데이터셋 이름이 &lt;a href=&quot;https://en.wikipedia.org/wiki/Anscombe%27s_quartet&quot;&gt;Anscombe&#39;s quartet&lt;/a&gt; 임을 알고는 구글링을 통해 손쉽게 얻을 수 있었다.&lt;/p&gt;
+&lt;p&gt;그런데 또 뒤늦게&lt;br /&gt;
+오늘 알아 챈 것이 있는데 R에서 &lt;a href=&quot;https://en.wikipedia.org/wiki/Anscombe%27s_quartet&quot;&gt;Anscombe&#39;s quartet&lt;/a&gt; 데이터셋이 빌트인 되어 있었다는 것이다.&lt;br /&gt;
+데이터셋을 호출하기 위해선 &lt;code&gt;anscombe&lt;/code&gt; 만 치면 됬었다...&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;anscombe&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##    x1 x2 x3 x4    y1   y2    y3    y4
+## 1  10 10 10  8  8.04 9.14  7.46  6.58
+## 2   8  8  8  8  6.95 8.14  6.77  5.76
+## 3  13 13 13  8  7.58 8.74 12.74  7.71
+## 4   9  9  9  8  8.81 8.77  7.11  8.84
+## 5  11 11 11  8  8.33 9.26  7.81  8.47
+## 6  14 14 14  8  9.96 8.10  8.84  7.04
+## 7   6  6  6  8  7.24 6.13  6.08  5.25
+## 8   4  4  4 19  4.26 3.10  5.39 12.50
+## 9  12 12 12  8 10.84 9.13  8.15  5.56
+## 10  7  7  7  8  4.82 7.26  6.42  7.91
+## 11  5  5  5  8  5.68 4.74  5.73  6.89&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;으악.. 허무하다..&lt;br /&gt;
+&lt;code&gt;?anscombe&lt;/code&gt; 를 하고 나서 예제코드가 잘 준비된 것을 보니 지금까지 과정들이 헛수고임을 깨닫게 되었다...&lt;br /&gt;
+그 충격에 이렇게 블로그 글로 포스팅을 하게 되었다. 😅&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;이 멍청한 짓 마저 의외로 엄청 어려워 실패 😓&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Fri, 16 Sep 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
+    
+      <item>
         <title>Timeline JS 소개 (with 나의 일본 여행계획)</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;10월에 친구들과 일본으로 여행을 갈 계획이다.&lt;br /&gt;
+        <description>&lt;p&gt;10월에 친구들과 일본으로 여행을 갈 계획이다.&lt;br /&gt;
 2개월이란 시간이 남아있는데 나에겐 첫 해외여행이어서 여러 가지를 신경 쓰고 준비해 보려고 한다.&lt;/p&gt;
 &lt;p&gt;여행초보인 내가 지금 고민하는 것은 여행일정표를 여행 동료들과 어떻게 공유하는 게 좋을까 고민하고 있다.&lt;br /&gt;
 여행계획이라는 것이 상당히 즉흥적일 수도 있고, 시시각각 변할 수 있는 변덕쟁이이기 때문에 쉽게 수정할 수 있어야 하고, 수정된 것이 바로 적용되어 공유될 수 있어야 편리하다고 생각했다.&lt;br /&gt;
@@ -52,7 +101,6 @@
 &lt;/iframe&gt;
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;hr /&gt;
 </description>
         <pubDate>Mon, 15 Aug 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/open_source_tool/2016/08/15/Itinerary_Japan.html</link>
@@ -65,8 +113,7 @@
     
       <item>
         <title>Blog 의 이전 (Wordpress 에서 Jekyll 로)</title>
-        <description>&lt;hr /&gt;
-&lt;h2 id=&quot;blog-를-이전했다&quot;&gt;Blog 를 이전했다!&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;blog-를-이전했다&quot;&gt;Blog 를 이전했다!&lt;/h2&gt;
 &lt;p&gt;기존의 블로그는 &lt;a href=&quot;https://ko.wordpress.org/&quot;&gt;Wordpress&lt;/a&gt;를 기반으로 하였고 국내 외부호스팅 서비스를 이용하였었는데, 사실 그때의 블로그가 내생에 처음으로 만들어본 블로그이자 새로운 도전이었었다.&lt;br /&gt;
 따라서 첫 블로그를 제작하는 과정이 신기하였고 들떠 있었으며, 워드프레스의 다양한 기능들과 플러그인 및 가능성들을 맛보며 두서없이 설계를 시작했었다.&lt;br /&gt;
 그 과정이 상당히 재미있었는데 이 때문에 지인의 &amp;quot;Welcome to Jekyll!&amp;quot; 의 문장은 한귀로 흘려버렸고 오로지 워드프레스 하나만을 의존하여 블로그를 기어코 완성시켰었다.&lt;/p&gt;
@@ -84,7 +131,6 @@
 내가 Jekyll 이란 새로운 기술을 이용하여 블로그를 제작하듯이 말이다.&lt;br /&gt;
 내가 공부하고 연구해야할 것을 R 로만 국한시켰던 이전 블로그는 지금의 취지와 많이 달라졌다.&lt;br /&gt;
 때문에 블로그 이전과 동시에 &amp;quot;통계 R 프로그래밍&amp;quot; 커뮤니티 카페와 독립을 꾀하고자 한다.&lt;/p&gt;
-&lt;hr /&gt;
 </description>
         <pubDate>Sat, 23 Jul 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/diary/2016/07/23/Welcome_to_Jekyll.html</link>
@@ -97,8 +143,7 @@
     
       <item>
         <title>R에서 특정 웹페이지의 이미지 파일 Crawling 하기</title>
-        <description>&lt;hr /&gt;
-&lt;h1 id=&quot;a-목표&quot;&gt;A) 목표&lt;/h1&gt;
+        <description>&lt;h1 id=&quot;a-목표&quot;&gt;A) 목표&lt;/h1&gt;
 &lt;p&gt;크롤링과 같은 실전은 경험이 전무하였는데, 최근 친구의 질문 덕분에 제대로 된 크롤링 경험을 쌓을 수 있었다.&lt;br /&gt;
 대단한 경험은 아니지만 나에게 있어 신선했던 경험을 공유하기 위해 정리해 본다.&lt;/p&gt;
 &lt;p&gt;본 포스팅 글은 특정 웹페이지의 이미지 파일들을 내 컴퓨터 하드로 저장시키기 위한 R 코드를 작성하는것을 목표로 한다.&lt;br /&gt;
@@ -189,7 +234,6 @@ src_href &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;img_tag %&amp;g
 &lt;figure&gt;
 &lt;img src=&quot;/assets//Crawling_1.png&quot; /&gt;
 &lt;/figure&gt;
-&lt;hr /&gt;
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
@@ -208,8 +252,7 @@ src_href &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;img_tag %&amp;g
     
       <item>
         <title>석사논문 감사의 글</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;완성된 석사 논문 책자를 받고 나서 상당히 아쉬움이 남는다.&lt;br /&gt;
+        <description>&lt;p&gt;완성된 석사 논문 책자를 받고 나서 상당히 아쉬움이 남는다.&lt;br /&gt;
 바로 감사의 글을 논문에 포함하지 않고 빠른 행정처리를 위해 논문을 제출했다는 것 이다.&lt;br /&gt;
 제출한 논문을 다시 가져와서 감사의 글을 강제로 집어 넣을 수도 없는 노릇이다.&lt;br /&gt;
 그래서 아쉽지만, 감사의 글을 이곳에 남기고자 한다.&lt;/p&gt;
@@ -233,7 +276,6 @@ R에 대해 아직 모든것을 배운것이 아닌 당시 나의 어떤 모습�
 이 방파제를 뚫고 나에게 메시지를 주기 위하여 지속적으로 파도를 일으켜 준 한국외국어대 통계학과 교수님들과, 직접적으로 도움과 후원을 해준 랩실, 그리고 대학원 동기 및 선후배 분들에 대한 그 고마움을 그당시 느끼지 못했다.&lt;br /&gt;
 나는 상대적으로 보면 확실히 정적인 사람이고 요즘 말로 리액션이 약한 사람이다.&lt;br /&gt;
 따라서 리액션 대신 진심어린 지금의 글을 통해 조금이나마 나의 고마움에 대한 표시를 남기고 전달하고자 한다.&lt;/p&gt;
-&lt;hr /&gt;
 </description>
         <pubDate>Fri, 01 Jul 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/diary/2016/07/01/Thanks_GS.html</link>
@@ -246,8 +288,7 @@ R에 대해 아직 모든것을 배운것이 아닌 당시 나의 어떤 모습�
     
       <item>
         <title>R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;R에서 최근에 많이 하는 작업이 있다.&lt;br /&gt;
+        <description>&lt;p&gt;R에서 최근에 많이 하는 작업이 있다.&lt;br /&gt;
 바로 data.frame 기반으로 데이터를 인아웃풋 한 코드들을 모두 data.table 로 코드 스위칭하는 작업이다.&lt;br /&gt;
 data.table 의 빠른처리속도는 이전부터 명성이 자자했지만 게으름으로 인해 고집스럽게 쓰지 않았었다.&lt;br /&gt;
 하지만 인내심의 한계에 다다르고 빠른 속도를 직접 체감하고 나서 뒤늦게 도입하기 시작한 것 같다.&lt;/p&gt;
@@ -330,7 +371,6 @@ data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenc
 ## 2    1.000     6.782    0.848          0         0&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;위의 코드는 &lt;code&gt;join_res_df &amp;lt;- left_join(df, df2, by=&amp;quot;ID&amp;quot;)&lt;/code&gt; 와 &lt;code&gt;join_res_dt &amp;lt;- left_join(dt, dt2, by=&amp;quot;ID&amp;quot;)&lt;/code&gt; 코드를 의도적으로 20번 반복 수행해 걸린 시간을 측정해주게 된다.&lt;br /&gt;
 현 예제에 대한 시간측정결과 elapsed 항목을 볼 때 data.table 에 대한 join 작업의 수행속도가 data.frame 보다 약 10배 빠른 것을 볼 수 있다!&lt;/p&gt;
-&lt;hr /&gt;
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
@@ -349,8 +389,7 @@ data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenc
     
       <item>
         <title>R에서 S3 최소재현예제</title>
-        <description>&lt;hr /&gt;
-&lt;blockquote&gt;
+        <description>&lt;blockquote&gt;
 &lt;p&gt;Hands-On Programming with R (Garrett Grolemund)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;책에서 설명된 S3 에 의하면&lt;/p&gt;
@@ -394,7 +433,6 @@ data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenc
 &lt;pre&gt;&lt;code&gt;##  [1]  0  1  2  3  4  5  6  7  8  9 10
 ## attr(,&amp;quot;class&amp;quot;)
 ## [1] &amp;quot;unknown&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
 </description>
         <pubDate>Sun, 12 Jun 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/06/12/S3.html</link>
@@ -407,8 +445,7 @@ data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenc
     
       <item>
         <title>R에서 구분구적법 적분과정 시뮬레이션 및 integrate() 함수 알아보기</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;내가 고등학교 이과생으로써 지낸 2학년 기억을 돌이켜 보면 적분의 방법은 이렇게 배웠던 것 같다.&lt;br /&gt;
+        <description>&lt;p&gt;내가 고등학교 이과생으로써 지낸 2학년 기억을 돌이켜 보면 적분의 방법은 이렇게 배웠던 것 같다.&lt;br /&gt;
 넓이계산이 용이한 사각형을 함수와 x축 사이에 강제로 끼워 맞춤으로써 넓이를 근사시키는 과정을 취하였고,&lt;br /&gt;
 특히 x축 기준 사각형을 등간격으로 잘게잘게 쪼개는 과정을 무한대로 취함으로써 적분값을 완벽히 근사시키는 법으로 적분값을 구한다 라고 말이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;fun &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x) x^&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt; -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;*x^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt; +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;13&lt;/span&gt;*x +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;12&lt;/span&gt;
@@ -451,7 +488,6 @@ stop 조건이 없을 경우 멈추지 않을것이다.&lt;br /&gt;
 &lt;p&gt;&lt;code&gt;integrate()&lt;/code&gt; 함수 사용방법은 간편하다.&lt;br /&gt;
 계산을 하고싶은 함수를 첫번째 인자에 넘겨주고,&lt;br /&gt;
 폐구간에 대한 정보를 &lt;code&gt;lower&lt;/code&gt;, &lt;code&gt;upper&lt;/code&gt; 인자에 넘겨주기만 하면 적분값을 계산해 준다.&lt;/p&gt;
-&lt;hr /&gt;
 </description>
         <pubDate>Mon, 06 Jun 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/06/06/integate_function.html</link>
@@ -464,8 +500,7 @@ stop 조건이 없을 경우 멈추지 않을것이다.&lt;br /&gt;
     
       <item>
         <title>R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;통계 비전공자에게 중심극한의 정리를 설명해야 했던 적이 있었는데,&lt;br /&gt;
+        <description>&lt;p&gt;통계 비전공자에게 중심극한의 정리를 설명해야 했던 적이 있었는데,&lt;br /&gt;
 심오한 이론들을 증명하며 설명하느니 한번 보여주는 것이 더 큰 공감을 얻게될 것 같아 animation plot 을 준비한적이 있다.&lt;br /&gt;
 본 포스팅 글은 R markdown 포맷에서 코드청크옵션 &lt;code&gt;fig.show=&amp;quot;animate&amp;quot;&lt;/code&gt; 을 통해 animation plot 을 준비하는 것이 가능하다는 것을 소개하고 그 예시로 중심극한정리 시뮬레이션을 통해 설명할 것이다.&lt;/p&gt;
 &lt;h1 id=&quot;a-중심극한정리-central-limit-theorem-에-대해서&quot;&gt;A) 중심극한정리 (Central Limit Theorem) 에 대해서&lt;/h1&gt;
@@ -589,7 +624,6 @@ verbatim 모드로 Rmarkdown 코드청크 전체를 보여주면 아래와 같�
 &lt;p&gt;그리고 이것이 요구사항일지는 모르겠지만 코드수행시간이란 비용 이외에 animation plot 영상을 인코딩하는 시간 역시 필요하다.&lt;br /&gt;
 위의 예제처럼 간단한 수준의 짧은 영상을 만드는 것은 인코딩시간이 조금 걸리지만,&lt;br /&gt;
 그렇지 않으면 많은 인내심이 요구될 수 있다.&lt;/p&gt;
-&lt;hr /&gt;
 </description>
         <pubDate>Thu, 26 May 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/05/26/CLT.html</link>
@@ -602,8 +636,7 @@ verbatim 모드로 Rmarkdown 코드청크 전체를 보여주면 아래와 같�
     
       <item>
         <title>R에서 수익률 구해보며 lag(), diff() 함수 알아보기</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;시계열 데이터의 수익률을 계산하는 일들이 많아지면서&lt;br /&gt;
+        <description>&lt;p&gt;시계열 데이터의 수익률을 계산하는 일들이 많아지면서&lt;br /&gt;
 복잡한 모듈들을 만들 때 아래의 함수들과 패키지가 얼마나 유용한지 몰랐었다.&lt;/p&gt;
 &lt;p&gt;오늘 정리해보고자 하는 함수는 3가지이며, 부가적으로 시계열 데이터셋에 날짜의 전처리 부담을 줄여주는 xts package 를 조금씩 이용해보려 한다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(xts)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -810,7 +843,6 @@ for(i in &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;kw
 ## 2016-05-17 -0.0078860727&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;주가종목에 로그를 취한 후 현시차와 직전시차의 차이값을 &lt;code&gt;diff()&lt;/code&gt; 를 통해 계산한다.&lt;br /&gt;
 따라서 &lt;code&gt;log(data) - log(lag(data))&lt;/code&gt; 과 동일한 값이 반환되는 것을 확인할 수 있다.&lt;/p&gt;
-&lt;hr /&gt;
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
@@ -829,8 +861,7 @@ for(i in &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;kw
     
       <item>
         <title>R에서 소리, 음원 재생하기 - tuneR, beepr package</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;코드수행시간이 비교적 길었던 R 스크립트가 있었다.&lt;br /&gt;
+        <description>&lt;p&gt;코드수행시간이 비교적 길었던 R 스크립트가 있었다.&lt;br /&gt;
 Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시간이 그렇게도 길지 않은 코드여서&lt;br /&gt;
 코드 수행이 끝났다는 알람을 줄 수 있는 방법을 찾고 싶었는데, 알람의 방법은 크게 2가지 정도를 원했었다.&lt;/p&gt;
 &lt;ol type=&quot;1&quot;&gt;
@@ -877,7 +908,6 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
 &lt;h1 id=&quot;c-두-패키지의-차이점&quot;&gt;C) 두 패키지의 차이점&lt;/h1&gt;
 &lt;p&gt;위에 비프음을 재생시키는 beepr 패키지와 다르게 tuneR 패키지의 &lt;code&gt;play()&lt;/code&gt; 함수는 기본적으로 외부 플레이어를 이용한다는 점에서 차이점이 있다.&lt;br /&gt;
 따라서 &lt;code&gt;beep()&lt;/code&gt; 는 R내에서 이용하는데 용이하지만 tuneR 패키지와 조합한 &lt;code&gt;play()&lt;/code&gt; 함수는 활성화되는 프로그램이 R 에서 외부 플레이어 어플리케이션으로 넘어가 버린다. 그리고 beepr 과 달리 tuneR 은 운영체계 별로 사용법이 상이하다.&lt;/p&gt;
-&lt;hr /&gt;
 </description>
         <pubDate>Sat, 30 Apr 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html</link>
@@ -890,8 +920,7 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
     
       <item>
         <title>R에서 클립보드의 내용물을 끌어오기</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;편하게 데이터를 R에서 불러들이기 위해 간편한 방법이 없을까?&lt;br /&gt;
+        <description>&lt;p&gt;편하게 데이터를 R에서 불러들이기 위해 간편한 방법이 없을까?&lt;br /&gt;
 보통 csv파일을 읽어들이기 위해서 csv파일이 있는 경로를 알고 그경로를 입력해 주어야 한다.&lt;br /&gt;
 아래의 코드처럼 말이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;data &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;./Data/Test.csv&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -972,7 +1001,6 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
 &lt;img src=&quot;/assets/Clipboard_Mac2.png&quot; /&gt;
 &lt;/figure&gt;
 &lt;p&gt;이처럼 Clipboard 를 이용하게 되면 사용하고 싶은 데이터를 선택하여 R로 마치 드레그 하는 방식과 같아진다.&lt;/p&gt;
-&lt;hr /&gt;
 </description>
         <pubDate>Sat, 16 Apr 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/04/16/using_clipboard.html</link>
@@ -985,8 +1013,7 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
     
       <item>
         <title>R에서 범용적으로 진행표시줄(progress bar)을 구현할 수 있는 progress package</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;이전에 R에서 진행표시줄(progress bar) 을 만들기 위해 &lt;a href=&quot;http://cafe.naver.com/lovetokens/1378&quot;&gt;windows OS 에서 작동되는 &lt;code&gt;winProgressBar()&lt;/code&gt; 함수에 대해서 설명한 적&lt;/a&gt;이 있다.&lt;br /&gt;
+        <description>&lt;p&gt;이전에 R에서 진행표시줄(progress bar) 을 만들기 위해 &lt;a href=&quot;http://cafe.naver.com/lovetokens/1378&quot;&gt;windows OS 에서 작동되는 &lt;code&gt;winProgressBar()&lt;/code&gt; 함수에 대해서 설명한 적&lt;/a&gt;이 있다.&lt;br /&gt;
 아쉽게도 윈도우 이외 다른 운영체계에서는 이 함수가 지원되지 않는다.&lt;br /&gt;
 결국 상호호환의 문제로 다른 방안을 찾아보아야 하는 상황이 일어났는데 어떠한 운영체계라 하더라도 R에서 진행표시줄을 나타내기 위한 방법을 찾아 정리해보고자 한다.&lt;/p&gt;
 &lt;p&gt;지금까지 찾아본 방법중 가장 좋은 것은 progress package 를 이용하는 것 이었다.&lt;/p&gt;
@@ -1031,7 +1058,6 @@ for(i in &lt;span class=&quot;kw&quot;&gt;seq&lt;/span&gt;(&lt;span class=&quot;
 R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자유롭게 조절하여 사용 할 수 있는 듯 하다.&lt;br /&gt;
 그 방법에 대해선 &lt;code&gt;?progress_bar&lt;/code&gt; 를 통해 확인할 수 있으며, 예제코드들을 활용하면 상황에 맞게 커스터마이징도 가능할 듯 싶다.&lt;/p&gt;
 &lt;p&gt;참고로 터미널 command line, R studio 에선 실험결과 정상적으로 진행표시줄이 보이는데, 다른 환경&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;에선 진행표시줄이 안보일 수도 있나 보다.&lt;/p&gt;
-&lt;hr /&gt;
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
@@ -1051,8 +1077,7 @@ R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자
     
       <item>
         <title>R에서 rjson package 의 toJSON(), fromJSON() 함수 알아보기</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;JSON 포맷의 데이터를 R에서 읽어 들인 후 가공하기 위해 JSON 형식을 parser 해야 하는 과정이 필요하다고 한다.&lt;br /&gt;
+        <description>&lt;p&gt;JSON 포맷의 데이터를 R에서 읽어 들인 후 가공하기 위해 JSON 형식을 parser 해야 하는 과정이 필요하다고 한다.&lt;br /&gt;
 rjson 라는 패키지가 이를 도와주는데 이 안에 있는 함수 &lt;code&gt;toJSON()&lt;/code&gt;, &lt;code&gt;fromJSON()&lt;/code&gt; 2개를 기본적으로 이용하여 실습을 해보겠다.&lt;/p&gt;
 &lt;h2 id=&quot;a-준비&quot;&gt;A) 준비&lt;/h2&gt;
 &lt;h3 id=&quot;a-1-예제-데이터&quot;&gt;A-1) 예제 데이터&lt;/h3&gt;
@@ -1123,7 +1148,6 @@ R의 객체를 특히 list, data.frame 등을 JSON 형으로 변환시킨다.&lt
 ##   }
 ## ]&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;첫 서두에 있는 예제 데이터와 동일하게 출력된 것을 볼 수 있다.&lt;/p&gt;
-&lt;hr /&gt;
 </description>
         <pubDate>Wed, 02 Mar 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/03/02/rjson_package.html</link>
@@ -1136,8 +1160,7 @@ R의 객체를 특히 list, data.frame 등을 JSON 형으로 변환시킨다.&lt
     
       <item>
         <title>R에서 replicate() 함수 소개</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;특정 코드를 반복해서 실행하는 방법들은 반복문을 이용하면 간단히 구현가능하다.&lt;br /&gt;
+        <description>&lt;p&gt;특정 코드를 반복해서 실행하는 방법들은 반복문을 이용하면 간단히 구현가능하다.&lt;br /&gt;
 그런데 반복문의 주안점이 만약 반복된 모든 결과들을 저장해야 한다는 것에 있다면 통상적인 반복문에선 오묘한 방법을 통해 이를 구현한다.&lt;/p&gt;
 &lt;p&gt;for 문을 이용한 간단한 예시 코드를 보면&lt;/p&gt;
 &lt;h3 id=&quot;for문을-이용한-주사위-100회-던지기&quot;&gt;for문을 이용한 주사위 100회 던지기&lt;/h3&gt;
@@ -1178,7 +1201,6 @@ res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;replicate()&lt;/code&gt; 함수는 반복문의 내용(expr)을 두번째 인자에 부여하고 첫번째 인자에 반복회수를 넣어줌으로써 반복실행된 코드의 결과를 벡터형태로 반환시켜주는 편리한 함수이다.&lt;br /&gt;
 사전준비에 대한 로직을 &lt;code&gt;replicate()&lt;/code&gt; 함수가 대신해준다.&lt;br /&gt;
 따라서 코드길이도 확실히 줄일 수 있게 된다.&lt;/p&gt;
-&lt;hr /&gt;
 </description>
         <pubDate>Fri, 19 Feb 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/02/19/replicate_function.html</link>
@@ -1191,8 +1213,7 @@ res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
     
       <item>
         <title>R에서 try() 함수 소개</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;이전에 나는 특정 코드들이 있을 때, 이 코드를 수행하면 에러가 나는지, 나지 않는지 여부를 boolean 값으로 반환하는 그러한 함수를 찾고 있었다. (그보단 이러한 함수를 만들 수 있도록 리소스를 찾아보고 있었다.)&lt;br /&gt;
+        <description>&lt;p&gt;이전에 나는 특정 코드들이 있을 때, 이 코드를 수행하면 에러가 나는지, 나지 않는지 여부를 boolean 값으로 반환하는 그러한 함수를 찾고 있었다. (그보단 이러한 함수를 만들 수 있도록 리소스를 찾아보고 있었다.)&lt;br /&gt;
 그러던 중 우연히 알게 된 &lt;code&gt;try()&lt;/code&gt; 함수에 대해 알아보고자 한다.&lt;/p&gt;
 &lt;p&gt;아래 코드는 &lt;code&gt;bsid&lt;/code&gt; 라는 environment 객체가 없기 때문에 아래의 코드는 에러를 내어 본 파일의 rmarkdown 랜더링을 막게 될 것이다.&lt;br /&gt;
 우선 랜더링(컴파일링)마저 막는 상황을 피하기 위해 코드청크를 &lt;code&gt;eval=F&lt;/code&gt; 로 설정했다.&lt;/p&gt;
@@ -1239,7 +1260,6 @@ Error in ls(envir = bsdi) : object &amp;#39;bsdi&amp;#39; not found&lt;/code&gt;
   &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Hello R&amp;quot;&lt;/span&gt;)   &lt;span class=&quot;co&quot;&gt;# normal code&lt;/span&gt;
 }, &lt;span class=&quot;dt&quot;&gt;silent=&lt;/span&gt;T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;헛.. 첫번째 코드가 에러를 뿜기 때문에 그 이후 코드인 &lt;code&gt;print(&amp;quot;Hello R&amp;quot;)&lt;/code&gt;는 수행되지 않는것을 볼 수 있다.&lt;/p&gt;
-&lt;hr /&gt;
 </description>
         <pubDate>Thu, 11 Feb 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/02/11/tryfunction.html</link>
@@ -1252,8 +1272,7 @@ Error in ls(envir = bsdi) : object &amp;#39;bsdi&amp;#39; not found&lt;/code&gt;
     
       <item>
         <title>R에서 Shell command 를 실행하기위한 대안 : system() 함수</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;(본 글은 Linux, Mac 을 기준으로 작성한 글입니다.)&lt;/p&gt;
+        <description>&lt;p&gt;(본 글은 Linux, Mac 을 기준으로 작성한 글입니다.)&lt;/p&gt;
 &lt;p&gt;Shell command 로 출력되는 것을 R에서 보기 위한 방법은 없을까?&lt;br /&gt;
 예를 들어 워킹디렉토리의 파일리스트를 출력하기 위해선 쉘에서 간단히 &lt;code&gt;ls&lt;/code&gt;, 아니면 &lt;code&gt;ls -al&lt;/code&gt; 등으로 참조할 수 있지만 Rstudio 를 사용하고 있는 상황이 아니고선 R command 상황에서 파일리스트를 참조하기는 좀 그렇다.&lt;/p&gt;
 &lt;p&gt;굳이 찾아본다면 Shell 의 &lt;code&gt;ls -al&lt;/code&gt; 와 같은 R코드는&lt;/p&gt;
@@ -1349,7 +1368,6 @@ date &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quo
 &lt;h2 id=&quot;c-정리&quot;&gt;C) 정리&lt;/h2&gt;
 &lt;p&gt;필자는 Shell 에 대해 완전 초급자여서 즐겨쓰는 명령어 몇 개 이외에 잘 아 는것이 없다.&lt;br /&gt;
 따라서 예제도 저 정도의 수준의 예제 외에 생각나는 아이디어가 바닥이 나버렸다. :( 하지만 Shell 의 고수분들은 응용력과 잠재력이 대단할 것인데 R과의 연동된 좋은 아이디어들을 구현할 수 있을 것 같아 감히 &lt;code&gt;system()&lt;/code&gt; 함수를 소개한다.&lt;/p&gt;
-&lt;hr /&gt;
 </description>
         <pubDate>Mon, 08 Feb 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/02/08/system_function.html</link>
@@ -1362,8 +1380,7 @@ date &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quo
     
       <item>
         <title>R에서 Step function model 이용하기</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;일반적인 선형회귀분석보다 모델의 해석이 특수하나&lt;br /&gt;
+        <description>&lt;p&gt;일반적인 선형회귀분석보다 모델의 해석이 특수하나&lt;br /&gt;
 한눈에 이해할 수 있는 모델링 방법인 Step function 을 R에서 구현해보고자 한다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;data&lt;/span&gt;(College, &lt;span class=&quot;dt&quot;&gt;package=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;ISLR&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;예제로 사용할 데이터는 ISLR 패키지에 내장되어있는 &lt;code&gt;College&lt;/code&gt; 데이터이다.&lt;br /&gt;
@@ -1498,7 +1515,6 @@ step_fit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class
 &lt;figure&gt;
 &lt;img src=&quot;/assets/step_4.png&quot; /&gt;
 &lt;/figure&gt;
-&lt;hr /&gt;
 </description>
         <pubDate>Mon, 25 Jan 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/01/25/Step_function_modeling.html</link>
@@ -1511,8 +1527,7 @@ step_fit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class
     
       <item>
         <title>Imitation game</title>
-        <description>&lt;hr /&gt;
-&lt;br&gt;
+        <description>&lt;br&gt;
 &lt;center&gt;
 &lt;img src=&quot;/assets/Imitation_game_1.png&quot; /&gt;
 &lt;/center&gt;
@@ -1558,7 +1573,6 @@ step_fit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class
 &lt;/li&gt;
 &lt;li&gt;마지막으로 알면 알수록 부족한 것을 뼈저리~~ 느끼게 되더라.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;hr /&gt;
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
@@ -1578,8 +1592,7 @@ step_fit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class
     
       <item>
         <title>R에서 연산자의 우선순위</title>
-        <description>&lt;hr /&gt;
-&lt;h1 id=&quot;a-operator-in-r&quot;&gt;A) Operator in R&lt;/h1&gt;
+        <description>&lt;h1 id=&quot;a-operator-in-r&quot;&gt;A) Operator in R&lt;/h1&gt;
 &lt;p&gt;R은 다양한 연산자(Operator)를 가지고 있다.&lt;br /&gt;
 사칙연산 시 사용되는 &lt;code&gt;-&lt;/code&gt;, &lt;code&gt;+&lt;/code&gt;, &lt;code&gt;*&lt;/code&gt;, &lt;code&gt;/&lt;/code&gt; 뿐만 아니라&lt;br /&gt;
 &lt;code&gt;==&lt;/code&gt;, &lt;code&gt;!=&lt;/code&gt;, &lt;code&gt;&amp;lt;=&lt;/code&gt;, &lt;code&gt;&amp;gt;=&lt;/code&gt; 와 같은 비교연산자,&lt;br /&gt;
@@ -1680,8 +1693,7 @@ C^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/d
     
       <item>
         <title>Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;Amazon Web Service (AWS) 를 이용하여 미리 구축된 Rstudio Server AMI &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; 를 배포해주는 &lt;a href=&quot;http://www.louisaslett.com/&quot;&gt;사이트&lt;/a&gt;가 있다.&lt;/p&gt;
+        <description>&lt;p&gt;Amazon Web Service (AWS) 를 이용하여 미리 구축된 Rstudio Server AMI &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; 를 배포해주는 &lt;a href=&quot;http://www.louisaslett.com/&quot;&gt;사이트&lt;/a&gt;가 있다.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://www.louisaslett.com&quot; class=&quot;uri&quot;&gt;http://www.louisaslett.com&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;이 AMI를 이용해 직접 여러대의 Rstudio Server 를 손쉽게 구축시킬 수 있다.&lt;/p&gt;
 &lt;p&gt;관련된 정보는 &lt;a href=&quot;https://www.youtube.com/watch?v=NQu3ugUkYTk&quot;&gt;아래링크&lt;/a&gt;를 통해 참고하여 알게 되었고 튜토리얼 형태로 이용할 수 있는 방법에 대한 영상까지 있다.&lt;/p&gt;
@@ -1702,7 +1714,6 @@ AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴�
 성능, 속도측면에서 기대하지 않는것이 좋을것이다.&lt;/p&gt;
 &lt;p&gt;하지만 간편하게 원격으로 R 을 실행할 수도 있고, 소셜코딩이 가능할 수도 있겠으며 간편한 서버증설 등등의&lt;br /&gt;
 유용하게 사용할 수 있는 방법은 무궁무진 할 것으로 생각된다.&lt;/p&gt;
-&lt;hr /&gt;
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
