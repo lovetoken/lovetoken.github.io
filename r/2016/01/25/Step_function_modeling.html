@@ -177,7 +177,7 @@
 ##  3rd Qu.: 78.00  
 ##  Max.   :118.00</code></pre>
 <p>18개 만큼의 변수들을 가지고 있는데, 우리 분석은 종속변수를 지원서 등록횟수인 <code>Apps</code> 로 하고, 독립변수를 졸업률인 <code>Grad.Rate</code> 로 제한시켜 두개의 변수만 신경쓰도록 하겠다.</p>
-<h1 id="a-simple-regression-model">A) Simple regression model</h1>
+<h2 id="a-simple-regression-model">A) Simple regression model</h2>
 <p>일반적인 단순선형회귀적합을 하게되면 아래와 같이 모델적합이 된다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reg_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(Apps ~<span class="st"> </span>Grad.Rate, <span class="dt">data=</span>College)
 <span class="kw">summary</span>(reg_fit)</code></pre></div>
@@ -307,6 +307,23 @@ step_fit3 &lt;-<span class="st"> </span><span class="kw">update</span>(step_fit,
                 <ul>
                 
                 <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/09/18/lubridate_package.html">R에서 lubridate package 에 대해</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html">회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</a>
                     
                         (Categories: <a href="/category/R">R</a>)
@@ -410,16 +427,6 @@ step_fit3 &lt;-<span class="st"> </span><span class="kw">update</span>(step_fit,
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/05/26/CLT.html">R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
             
         
     

@@ -135,7 +135,7 @@
 
 
 <div class="content">
-    <div class="post"><h1 id="a-operator-in-r">A) Operator in R</h1>
+    <div class="post"><h2 id="a-operator-in-r">A) Operator in R</h2>
 <p>R은 다양한 연산자(Operator)를 가지고 있다.<br />
 사칙연산 시 사용되는 <code>-</code>, <code>+</code>, <code>*</code>, <code>/</code> 뿐만 아니라<br />
 <code>==</code>, <code>!=</code>, <code>&lt;=</code>, <code>&gt;=</code> 와 같은 비교연산자,<br />
@@ -148,11 +148,11 @@
 이처럼 R의 다양한 연산자들이 조합될 때 계산의 순서를 결정짓는 우선순위를 알고싶다면 <code>?Syntax</code> 로 열리는 도움말을 참고한다.<br />
 아래의 그림이 도움말을 연 경우인데 맨 위의 연산자가 가장 높은 순으로 계산수행이 시작된다.</p>
 <p><br><img src="/assets/operatorR1.png" /><br></p>
-<h1 id="b-question">B) Question</h1>
+<h2 id="b-question">B) Question</h2>
 <p>연산자에 대한 빈번한 궁금증과 질문들을 접하는데<br />
 대표적으로 몇 개만 나열해 보았다.<br />
 만약 위의 연산자의 우선순위에 대해 정확히 알게 된다면 바로 해결되는 문제이며 그렇게 대단한 문제도 아니다.</p>
-<h2 id="b-1---와-의-차이가-무엇인가요">B-1) <code>&lt;-</code> 와 <code>=</code> 의 차이가 무엇인가요??</h2>
+<h3 id="b-1---와-의-차이가-무엇인가요">B-1) <code>&lt;-</code> 와 <code>=</code> 의 차이가 무엇인가요??</h3>
 <p><code>&lt;-</code> 와 <code>=</code> 는 오른쪽에 반환되는 값을 왼쪽에 할당하는 할당연산자<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>로 의미는 똑같다.<br />
 하지만 한가지 차이가 <code>=</code> 보다는 <code>&lt;-</code> 이 더 우선적으로 실행된다는 차이가 존재할 뿐이다.<br />
 예를 들어 <code>B</code> 객체에 25 라는 값을 입력하고 <code>A</code>에 <code>B</code>를 입력하는 코드를 다음과 같이 작성하였다고 가정할 때 굳이 <code>&lt;-</code>, <code>=</code> 두개의 할당연산자를 혼용해 보았다.</p>
@@ -172,7 +172,7 @@ A &lt;-<span class="st"> </span>B</code></pre></div>
 <p><strong>할당연산자를 통일시킴</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">A =<span class="st"> </span>B =<span class="st"> </span><span class="dv">25</span>
 A &lt;-<span class="st"> </span>B &lt;-<span class="st"> </span><span class="dv">25</span></code></pre></div>
-<h2 id="b-2-음의정수값-연산이-생각대로-안되요.">B-2) 음의정수값 연산이 생각대로 안되요.</h2>
+<h3 id="b-2-음의정수값-연산이-생각대로-안되요.">B-2) 음의정수값 연산이 생각대로 안되요.</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">-<span class="dv">10</span>^<span class="dv">2</span></code></pre></div>
 <pre><code>## [1] -100</code></pre>
 <p>-10 의 제곱은 100이지만,<br />
@@ -185,7 +185,7 @@ A &lt;-<span class="st"> </span>B &lt;-<span class="st"> </span><span class="dv"
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">C &lt;-<span class="st"> </span>-<span class="dv">10</span>
 C^<span class="dv">2</span></code></pre></div>
 <pre><code>## [1] 100</code></pre>
-<h2 id="b-3-seq2-20-by2-를-연산자를-통하여-더-간단한-코드로-만들고-싶습니다.">B-3) <code>seq(2, 20, by=2)</code> 를 <code>:</code> 연산자를 통하여 더 간단한 코드로 만들고 싶습니다.</h2>
+<h3 id="b-3-seq2-20-by2-를-연산자를-통하여-더-간단한-코드로-만들고-싶습니다.">B-3) <code>seq(2, 20, by=2)</code> 를 <code>:</code> 연산자를 통하여 더 간단한 코드로 만들고 싶습니다.</h3>
 <p><code>seq(2, 20, by=2)</code> 의 결과를 잘 살펴보면</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dt">by=</span><span class="dv">2</span>)</code></pre></div>
 <pre><code>##  [1]  2  4  6  8 10 12 14 16 18 20</code></pre>
@@ -259,6 +259,23 @@ C^<span class="dv">2</span></code></pre></div>
                 <div class="panel-body">
                 <h4>Related Posts</h4>
                 <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/09/18/lubridate_package.html">R에서 lubridate package 에 대해</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html">회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</a>
@@ -364,16 +381,6 @@ C^<span class="dv">2</span></code></pre></div>
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/05/26/CLT.html">R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
             
         
     

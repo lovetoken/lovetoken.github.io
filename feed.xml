@@ -5,9 +5,431 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 16 Sep 2016 21:19:46 +0900</pubDate>
-    <lastBuildDate>Fri, 16 Sep 2016 21:19:46 +0900</lastBuildDate>
+    <pubDate>Sun, 18 Sep 2016 21:43:03 +0900</pubDate>
+    <lastBuildDate>Sun, 18 Sep 2016 21:43:03 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 lubridate package 에 대해</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://cran.r-project.org/web/packages/lubridate/lubridate.pdf&quot;&gt;lubridate package&lt;/a&gt; 는 Garrett Grolemund 와 Hadley Wickham 외 8명의 힘이 더해져 만들어진 날짜처리 생산성 패키지이다.&lt;/p&gt;
+&lt;p&gt;날짜(Date) &amp;amp; 시각(Time) 데이터는 전 세계 사람들에 의해 보편적으로 정해진 규칙이 있는데, 이 규칙을 정확하게 알지 못하고 데이터를 처리할 때 혼돈이 일어날 수 있다.&lt;br /&gt;
+의외로 위에서 말한 규칙들은 따지고 보면 따져볼수록 많고 복잡하여 인간이 실수할 수 있을 여지가 높다.&lt;br /&gt;
+흠 이런 예제랄까?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;어느 연도가 윤년이어서 2월 29일이 있는지 신경 쓰지 않으면 알 수 없다.&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;4월 31일 데이터셋 정의 (그런 날짜는 존재하지 않는데도 불구하고)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;이런 것 외에도 우리가 접할 수 있는 여러 가지 상황을 가정 해 볼 수 있는데&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;분석 시 기준 Timezone 이 변경될 경우&lt;/li&gt;
+&lt;li&gt;날짜와 시각이 조합된 데이터의 산술연산이 필요할 경우&lt;/li&gt;
+&lt;li&gt;(정말 특이한 사례지만) &lt;a href=&quot;https://ko.wikipedia.org/wiki/%EC%9D%BC%EA%B4%91_%EC%A0%88%EC%95%BD_%EC%8B%9C%EA%B0%84%EC%A0%9C&quot;&gt;일광절약시간제&lt;/a&gt;에 해당되는 Time index 가 존재할 경우&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;등등 날짜시각 데이터셋에 대한 처리 시 우리를 괴롭힐 만한 요소들은 차고 넘친다.&lt;/p&gt;
+&lt;p&gt;이 실수들과 장애물들을 사전에 방지하기 위한 다양한 R 패키지가 제공되고 있다.&lt;br /&gt;
+내가 아는 것을 기준으론 &lt;a href=&quot;https://cran.r-project.org/web/packages/xts/xts.pdf&quot;&gt;xts&lt;/a&gt;, &lt;a href=&quot;https://cran.r-project.org/web/packages/zoo/zoo.pdf&quot;&gt;zoo&lt;/a&gt;, lubridate, &lt;a href=&quot;https://cran.r-project.org/web/packages/chron/chron.pdf&quot;&gt;chron&lt;/a&gt; 의 패키지 정도를 알고 있으되, 자주 사용하는 패키지는 xts 이었다.&lt;/p&gt;
+&lt;p&gt;이번에 살펴볼 &lt;a href=&quot;https://cran.r-project.org/web/packages/lubridate/lubridate.pdf&quot;&gt;lubridate package&lt;/a&gt; 는 lubricate(기름을 치다, 기름을 바르다, 원활히 하다) 의 &amp;quot;lubri&amp;quot; 와 &amp;quot;date&amp;quot; 를 합성시킨 것으로 추측되는데 이처럼 날짜시각 데이터를 원활하게 가공하는 데 도움을 주기 위한 목적으로 특화된 느낌을 받는다.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;&lt;em&gt;l&lt;/em&gt;&lt;em&gt;u&lt;/em&gt;&lt;em&gt;b&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;i&lt;/em&gt; + &lt;em&gt;d&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt;&lt;/span&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;xts, zoo 패키지 조합 역시 강력하지만 강력한 만큼 친숙함은 주지 못한 것 같다.&lt;br /&gt;
+이러한 단점을 보완하고자 부가적으로 알아야 하겠다고 마음먹게 된 패키지 중 하나이었고,&lt;br /&gt;
+R studio 의 Hadley Wickham 에 의해 유지보수 되고 있다고 해서 그 때문에 공부를 시작하기도 한 것 같다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Lubridate is an R package that makes it easier to work with dates and times.&lt;br /&gt;
+- &lt;a href=&quot;https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html&quot;&gt;Do more with dates and times in R with lubridate 1.3.0&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;얼마나 기존방법보다 쉬운지를 내가 겪었던 시행착오와 곁들여&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(lubridate)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;를 실행 후 한 번 탐색해 보겠다.&lt;/p&gt;
+&lt;h2 id=&quot;dates-times-객체-만들기&quot;&gt;dates &amp;amp; times 객체 만들기&lt;/h2&gt;
+&lt;h3 id=&quot;date-객체-만들기&quot;&gt;Date 객체 만들기&lt;/h3&gt;
+&lt;p&gt;R에서 2011년 6월 4일 날짜 데이터를 만들려면 가장 기본적인 방법이 아래의 코드일 것이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;as.Date&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-04&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;as.Date&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-6-4&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-04&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;as.Date&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011/06/04&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-04&amp;quot;
+## 
+## as.Date(&amp;quot;20110604&amp;quot;) # error&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;R의 가장 전통적인 날짜 데이터 class 는 Date 일 것이다.&lt;br /&gt;
+마지막 코드 &lt;code&gt;as.Date(&amp;quot;20110604&amp;quot;)&lt;/code&gt; 와 같이 에러가 나는 코드도 한번 작성해 보았는데&lt;br /&gt;
+이처럼 날짜 데이터셋을 만들기 위해 문자열을 input 하는 방식으로 사용할 경우 문자열을 어떠한 양식에 따라 작성할 것인지도 사람마다 제각각이고 그에 따라 코드가 실행되지 않는 경우가 발생할 것이다.&lt;br /&gt;
+그 양식 중 &lt;code&gt;&amp;quot;20110604&amp;quot;&lt;/code&gt; 와 같이 딜리미터가 없는 문자열은 &lt;code&gt;as.Date()&lt;/code&gt; 가 날짜로 변환할 때&lt;br /&gt;
+어디가 year 이고 month 이며 day 인지 알 수 없어한다.&lt;/p&gt;
+&lt;p&gt;또한&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;as.Date&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;06-04-2011&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;0006-04-20&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;처럼 미국식 날짜 표기법을 사용할 경우에도 마찬가지 문제가 발생한다.&lt;/p&gt;
+&lt;p&gt;이번엔 lubridate package 의 &amp;quot;y&amp;quot;, &amp;quot;m&amp;quot;, &amp;quot;d&amp;quot; 심볼을 이용한 함수들을 이용해 보겠다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011/06/04&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&amp;quot;y&amp;quot;, &amp;quot;m&amp;quot;, &amp;quot;d&amp;quot; 심볼이라고 소개했는데 각각 year, month, day 로 이해할 수 있고&lt;br /&gt;
+이 심볼의 순서를 바꾸어도 먹히는 함수들이 사전에 준비되어 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;mdy&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;06/04/2011&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&amp;quot;06/04/2011&amp;quot; 은 2011년 6월 4일을 미국식으로 날짜 표기한 것인데, 이를 제대로 인식하기 위해서 심볼들의 순서를 그에 맞춘 함수를 이용하면 되겠다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;dmy&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;04/06/2011&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;문자열 양식에는 어느정도의 관용이 있는지 살펴보았다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011/06/04&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-04&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-04&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;20110604&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-04&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;110604&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-04&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;11.06.04&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-04&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;11,06,04&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-04&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;11_06.04&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# ?&lt;/span&gt;
+## [1] &amp;quot;2011-06-04&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011  06  04&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# ㅋㅋ?&lt;/span&gt;
+## [1] &amp;quot;2011-06-04&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011!?06??!04&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# !?&lt;/span&gt;
+## [1] &amp;quot;2011-06-04&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011 =06??04&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# -_-?&lt;/span&gt;
+## [1] &amp;quot;2011-06-04&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;11 No 06 way 04&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# No way!&lt;/span&gt;
+## [1] &amp;quot;2011-06-04&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;lubridate package 설명서에는&lt;br /&gt;
+&lt;strong&gt;heterogeneous format(불균일한 양식)&lt;/strong&gt;에 대한 다양한 준비들이 되어있음을 강조한 문구가 담겨 있는 걸 보았다.&lt;br /&gt;
+이처럼 인간의 실수는 웬만하면 커버할 듯한 위용이다.&lt;/p&gt;
+&lt;h3 id=&quot;dates-times-객체-만들기-1&quot;&gt;Dates + Times 객체 만들기&lt;/h3&gt;
+&lt;p&gt;&amp;quot;2011년 6월 4일&amp;quot; 에 구체적인 시각까지 더해서&lt;br /&gt;
+&amp;quot;2011년 6월 4일 13시 30분 50초&amp;quot; 를 R에서 만들어 보겠다.&lt;/p&gt;
+&lt;p&gt;시각까지 더해진 정보는 Date class 로 정보를 담을 수 없다.&lt;br /&gt;
+즉 &lt;code&gt;as.Date()&lt;/code&gt; 함수로 2011년 6월 4일 13시 30분 50초 정보를 만들 수 없다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;as.Date&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13:30:50&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# 시각정보가 사라짐&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이때부턴 포직스(POSIX) 클래스를 대중적으로 이용하는것으로 알고 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;as.POSIXct&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13:30:50&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04 13:30:50 KST&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;temp &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;as.POSIXlt&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13:30:50&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# list 기반&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이번엔 lubridate package 의 경우이다.&lt;br /&gt;
+lubridate package 에는 &amp;quot;y&amp;quot;, &amp;quot;m&amp;quot;, &amp;quot;d&amp;quot; 심볼 뿐만 아니라 &amp;quot;h&amp;quot;, &amp;quot;m&amp;quot;, &amp;quot;s&amp;quot; 역시 준비되어 있다.&lt;br /&gt;
+각각 hour, minute, second 로 이해할 수 있다.&lt;br /&gt;
+위의 설명했던 대로 &amp;quot;y&amp;quot;, &amp;quot;m&amp;quot;, &amp;quot;d&amp;quot; 와 &amp;quot;h&amp;quot;, &amp;quot;m&amp;quot;, &amp;quot;s&amp;quot; 를 잘 조합하여 사용하면&lt;br /&gt;
+비교적 편하게 &amp;quot;2011년 6월 4일 13시 30분 50초&amp;quot; 정보를 담을 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13:30:50&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04 13:30:50 UTC&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;as.POSIXct()&lt;/code&gt; 와 비교해볼 때 날짜시각 객체를 만드는 방법이 별반 틀릴 것이 없다.&lt;br /&gt;
+만 조금 더 융통성이 있게 사용할 수 있는 점들이 몇 가지 눈에 띈다.&lt;/p&gt;
+&lt;p&gt;만약 분,초 단위의 정보가 없는 경우 &amp;quot;2011년 6월 4일 13시&amp;quot; 의 정보가 투입된다고 가정하면 어떨까?&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;ymd_h&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04 13:00:00 UTC&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;ymd_hms()&lt;/code&gt; 에서 &amp;quot;m&amp;quot;, &amp;quot;s&amp;quot; 심볼을 제외한 &lt;code&gt;ymd_h()&lt;/code&gt; 함수를 이용해 파싱하면 된다.&lt;br /&gt;
+하지만 &lt;code&gt;as.POSIXct()&lt;/code&gt; 으로 &lt;code&gt;&amp;quot;2011-06-04 13&amp;quot;&lt;/code&gt; 를 파싱하는 방법은 조금 고민을 해야하거나 투입되는 문자열 자체를 사전에 건드려야 하는 과정이 필요하다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;as.POSIXct&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# No&lt;/span&gt;
+## [1] &amp;quot;2011-06-04 KST&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;as.POSIXct&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13:00:00&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# Yes&lt;/span&gt;
+## [1] &amp;quot;2011-06-04 13:00:00 KST&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이런 예시로 볼 때 lubridate package 는 사용자 관점으로 친숙한 도구들이 어럿 준비되어 있다.&lt;br /&gt;
+이외에도 heterogeneous format 에 대한 대비 역시 날짜 + 시각 데이터에도 적용된다.&lt;/p&gt;
+&lt;h2 id=&quot;부분정보-추출-extracting-information&quot;&gt;부분정보 추출 (Extracting information)&lt;/h2&gt;
+&lt;p&gt;lubridate package 에는 부분정보를 추출하기 위한 간편 함수들이 여럿 준비되어 있다.&lt;br /&gt;
+&lt;code&gt;second()&lt;/code&gt;, &lt;code&gt;minute()&lt;/code&gt;, &lt;code&gt;hour()&lt;/code&gt;, &lt;code&gt;day()&lt;/code&gt;, &lt;code&gt;wday()&lt;/code&gt;, &lt;code&gt;yday()&lt;/code&gt;, &lt;code&gt;week()&lt;/code&gt;, &lt;code&gt;month()&lt;/code&gt;, &lt;code&gt;year()&lt;/code&gt; 처럼 함수명칭도 상식적으로 이해하기 쉬운 것들이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;ld1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13:30:50&amp;quot;&lt;/span&gt;)
+
+&lt;span class=&quot;kw&quot;&gt;year&lt;/span&gt;(ld1)
+## [1] 2011
+&lt;span class=&quot;kw&quot;&gt;month&lt;/span&gt;(ld1)
+## [1] 6
+&lt;span class=&quot;kw&quot;&gt;day&lt;/span&gt;(ld1)
+## [1] 4
+&lt;span class=&quot;kw&quot;&gt;wday&lt;/span&gt;(ld1)
+## [1] 7
+&lt;span class=&quot;kw&quot;&gt;yday&lt;/span&gt;(ld1)
+## [1] 155
+&lt;span class=&quot;kw&quot;&gt;hour&lt;/span&gt;(ld1)
+## [1] 13
+&lt;span class=&quot;kw&quot;&gt;minute&lt;/span&gt;(ld1)
+## [1] 30
+&lt;span class=&quot;kw&quot;&gt;second&lt;/span&gt;(ld1)
+## [1] 50&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;특히 month, wday 의 경우 &lt;code&gt;label&lt;/code&gt; 인자를 가지고 있는데 이를 &lt;code&gt;TRUE&lt;/code&gt; 로 설정할 경우에&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;month&lt;/span&gt;(ld1, &lt;span class=&quot;dt&quot;&gt;label =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] Jun
+## 12 Levels: Jan &amp;lt; Feb &amp;lt; Mar &amp;lt; Apr &amp;lt; May &amp;lt; Jun &amp;lt; Jul &amp;lt; Aug &amp;lt; Sep &amp;lt; ... &amp;lt; Dec&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;wday&lt;/span&gt;(ld1, &lt;span class=&quot;dt&quot;&gt;label =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] Sat
+## Levels: Sun &amp;lt; Mon &amp;lt; Tues &amp;lt; Wed &amp;lt; Thurs &amp;lt; Fri &amp;lt; Sat&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;월, 요일의 명칭을 factor 로 볼 수 있다.&lt;/p&gt;
+&lt;h3 id=&quot;부분정보-수정&quot;&gt;부분정보 수정&lt;/h3&gt;
+&lt;p&gt;&amp;quot;2011년 6월 4일 13:30:50&amp;quot; 로 저장되어있던 &lt;code&gt;ld1&lt;/code&gt; 에 대해 시각(hour)을 10시로 바꾸려면 어떻게 하여야 할까?&lt;br /&gt;
+내가볼 때 가장 간단한 방법은 부분정보 추출시 사용했던 간편함수들과 assign 연산자를 조합시켜 변경하는 방법이다.&lt;br /&gt;
+아래처럼 사용하면 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;hour&lt;/span&gt;(ld1) &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;
+ld1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04 10:30:50 UTC&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;update()&lt;/code&gt; 제너릭 함수를 사용할 수도 있는데, 엄밀히 말하면 &lt;code&gt;update.POSIXt()&lt;/code&gt; 함수를 이용하는 방법도 있다.&lt;br /&gt;
+아래 코드는 &lt;code&gt;update()&lt;/code&gt; 함수를 이용해 10시로 변경된 &lt;code&gt;ld1&lt;/code&gt; 을 다시 13로 되돌리는 코드이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;ld1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;update&lt;/span&gt;(ld1, &lt;span class=&quot;dt&quot;&gt;hour =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;13&lt;/span&gt;)
+ld1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04 13:30:50 UTC&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;POSIXlt class 인 경우엔 &lt;code&gt;$&lt;/code&gt; 와 assign operator 를 조합해 사용할 수 있는데 이 또한 매력적인 방법이라 생각된다.&lt;br /&gt;
+하지만 아쉽게도 &lt;code&gt;ld1&lt;/code&gt; 는 POSIXct class 이므로 &lt;code&gt;$&lt;/code&gt; 가 바로 먹히지는 않는다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;ld1$hour &lt;span class=&quot;co&quot;&gt;# error&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;굳이 &lt;code&gt;$&lt;/code&gt; 과 assign operator 를 조합해 사용하고 싶다면 &lt;code&gt;as.POSIXlt()&lt;/code&gt; 를 한번 거쳐야 할 것이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;ld2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;as.POSIXlt&lt;/span&gt;(ld1)
+ld2$hour &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;
+ld2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04 10:30:50 UTC&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;날짜시각에-대한-산술연산&quot;&gt;날짜시각에 대한 산술연산&lt;/h2&gt;
+&lt;p&gt;lubridate 와 같은 패키지를 공부하는 목적 중 가장 중요한 특징이 아닐까 싶다.&lt;br /&gt;
+날짜 + 시각에 대한 산술연산은 매우 민감하고도, 생각보다 짜증 나는 문제이다.&lt;/p&gt;
+&lt;p&gt;사과 30개가 있는데, 사과 2개를 더하면 32개가 된다.&lt;br /&gt;
+1월 30일인데, 2틀을 더하면(지나면) 32일이 될까?&lt;br /&gt;
+개인적으론 32일이 되어버렸으면 좋겠지만 32일이란 건 존재하지 않는다. 2월 1일이 된다.&lt;/p&gt;
+&lt;p&gt;나처럼 단순무식한 것을 좋아하는 사람에겐 날짜 + 시각에 대한 산술연산은 많은 피로도를 줄 수 있다.&lt;br /&gt;
+lubridate package 는 이를 예방할 수 있는 강력한 함수들이 많이 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2016-01-30&amp;quot;&lt;/span&gt;) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;days&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2016-02-01&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위의 코드는 1월 30일인데, 2틀을 더하면(지나면)&lt;br /&gt;
+의 문제를 풀어주는 코드이다.&lt;/p&gt;
+&lt;p&gt;특정기간이 지나면 무슨일이 되는지 이렇게 산술연산이 가능하다.&lt;/p&gt;
+&lt;p&gt;지금까지 단일시점 한개의 날짜시각 데이터를 가지고 놀았는데&lt;br /&gt;
+이런 식으로 R의 Vectorization 특징을 활용하여 복수개의 시점을 만들 수도 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2016-01-30&amp;quot;&lt;/span&gt;) -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;days&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;30&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;2016-01-29&amp;quot; &amp;quot;2016-01-28&amp;quot; &amp;quot;2016-01-27&amp;quot; &amp;quot;2016-01-26&amp;quot; &amp;quot;2016-01-25&amp;quot;
+##  [6] &amp;quot;2016-01-24&amp;quot; &amp;quot;2016-01-23&amp;quot; &amp;quot;2016-01-22&amp;quot; &amp;quot;2016-01-21&amp;quot; &amp;quot;2016-01-20&amp;quot;
+## [11] &amp;quot;2016-01-19&amp;quot; &amp;quot;2016-01-18&amp;quot; &amp;quot;2016-01-17&amp;quot; &amp;quot;2016-01-16&amp;quot; &amp;quot;2016-01-15&amp;quot;
+## [16] &amp;quot;2016-01-14&amp;quot; &amp;quot;2016-01-13&amp;quot; &amp;quot;2016-01-12&amp;quot; &amp;quot;2016-01-11&amp;quot; &amp;quot;2016-01-10&amp;quot;
+## [21] &amp;quot;2016-01-09&amp;quot; &amp;quot;2016-01-08&amp;quot; &amp;quot;2016-01-07&amp;quot; &amp;quot;2016-01-06&amp;quot; &amp;quot;2016-01-05&amp;quot;
+## [26] &amp;quot;2016-01-04&amp;quot; &amp;quot;2016-01-03&amp;quot; &amp;quot;2016-01-02&amp;quot; &amp;quot;2016-01-01&amp;quot; &amp;quot;2015-12-31&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;잠깐 &lt;code&gt;days()&lt;/code&gt; 함수명칭을 살펴보자.&lt;br /&gt;
+위에서 부분정보 추출 간편함수중 &lt;code&gt;day()&lt;/code&gt; 가 있었는데 마지막에 &amp;quot;s&amp;quot; 가 붙음으로써 쓰임이 달라진 것을 볼 수 있다.&lt;br /&gt;
+&lt;code&gt;days()&lt;/code&gt; 뿐만 아니라 &lt;code&gt;seconds()&lt;/code&gt;, &lt;code&gt;minutes()&lt;/code&gt;, &lt;code&gt;hours()&lt;/code&gt;, &lt;code&gt;weeks()&lt;/code&gt;, &lt;code&gt;years()&lt;/code&gt;, &lt;code&gt;milliseconds()&lt;/code&gt;, &lt;code&gt;microseconds()&lt;/code&gt;, &lt;code&gt;nanoseconds()&lt;/code&gt;, &lt;code&gt;picoseconds()&lt;/code&gt; 의 함수들이 이와 같은 산술연산에서 사용할 수 있는 패밀리이다.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html&quot;&gt;Do more with dates and times in R with lubridate 1.3.0&lt;/a&gt; 에서 꽤 감명깊은(?) 예제를 발견했는데&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;ymd&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2013-01-31&amp;quot;&lt;/span&gt;) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;months&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;11&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;2013-01-31&amp;quot; NA           &amp;quot;2013-03-31&amp;quot; NA           &amp;quot;2013-05-31&amp;quot;
+##  [6] NA           &amp;quot;2013-07-31&amp;quot; &amp;quot;2013-08-31&amp;quot; NA           &amp;quot;2013-10-31&amp;quot;
+## [11] NA           &amp;quot;2013-12-31&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;월 중에 31일이이 존재하지 않는 월이 어디인지를 알 수 있게 된다.&lt;/p&gt;
+&lt;h2 id=&quot;lubridate-와-dplyr-간의-조합&quot;&gt;lubridate 와 dplyr 간의 조합&lt;/h2&gt;
+&lt;p&gt;lubridate 이든 xts 이든 간에&lt;br /&gt;
+결국은 이러한 Time index 정보들이 담긴 Table 형태에 정보들을 가공하고 처리하게 될 가능성이 매우 높다.&lt;br /&gt;
+dplyr package 와 조합해 현업에서 어떻게 시너지를 일으킬 지를&lt;br /&gt;
+보잘것없는 예제를 통해 조금이나마 확인해 보고 싶다.&lt;br /&gt;
+lubridate package 에 내장된 데이터셋 &lt;code&gt;lakers&lt;/code&gt; 를 이용해 보았다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(dplyr)
+&lt;span class=&quot;kw&quot;&gt;data&lt;/span&gt;(lakers)
+
+lakers &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;tbl_df
+lakers&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 34,624 &amp;lt;U+00D7&amp;gt; 13
+##        date opponent game_type  time period      etype  team
+##       &amp;lt;int&amp;gt;    &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt;      &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+## 1  20081028      POR      home 12:00      1  jump ball   OFF
+## 2  20081028      POR      home 11:39      1       shot   LAL
+## 3  20081028      POR      home 11:37      1    rebound   LAL
+## 4  20081028      POR      home 11:25      1       shot   LAL
+## 5  20081028      POR      home 11:23      1    rebound   LAL
+## 6  20081028      POR      home 11:22      1       shot   LAL
+## 7  20081028      POR      home 11:22      1       foul   POR
+## 8  20081028      POR      home 11:22      1 free throw   LAL
+## 9  20081028      POR      home 11:00      1       foul   LAL
+## 10 20081028      POR      home 10:53      1       shot   POR
+## # ... with 34,614 more rows, and 6 more variables: player &amp;lt;chr&amp;gt;,
+## #   result &amp;lt;chr&amp;gt;, points &amp;lt;int&amp;gt;, type &amp;lt;chr&amp;gt;, x &amp;lt;int&amp;gt;, y &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;잘 보면 &lt;code&gt;date&lt;/code&gt;, &lt;code&gt;time&lt;/code&gt; 변수가 서로 나뉘어 있다.&lt;br /&gt;
+이를 지금까지 배운 lubridate 함수들을 이용하여 통합시켜 관리해보고 싶었다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lakers &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;mutate&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;date =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;paste&lt;/span&gt;(date, time) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;ymd_hm) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;rename&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;time_index =&lt;/span&gt; date) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;select&lt;/span&gt;(-time)
+
+lakers&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 34,624 &amp;lt;U+00D7&amp;gt; 12
+##             time_index opponent game_type period      etype  team
+##                 &amp;lt;dttm&amp;gt;    &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt;      &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+## 1  2008-10-28 12:00:00      POR      home      1  jump ball   OFF
+## 2  2008-10-28 11:39:00      POR      home      1       shot   LAL
+## 3  2008-10-28 11:37:00      POR      home      1    rebound   LAL
+## 4  2008-10-28 11:25:00      POR      home      1       shot   LAL
+## 5  2008-10-28 11:23:00      POR      home      1    rebound   LAL
+## 6  2008-10-28 11:22:00      POR      home      1       shot   LAL
+## 7  2008-10-28 11:22:00      POR      home      1       foul   POR
+## 8  2008-10-28 11:22:00      POR      home      1 free throw   LAL
+## 9  2008-10-28 11:00:00      POR      home      1       foul   LAL
+## 10 2008-10-28 10:53:00      POR      home      1       shot   POR
+## # ... with 34,614 more rows, and 6 more variables: player &amp;lt;chr&amp;gt;,
+## #   result &amp;lt;chr&amp;gt;, points &amp;lt;int&amp;gt;, type &amp;lt;chr&amp;gt;, x &amp;lt;int&amp;gt;, y &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위의 코드를 설명하면&lt;/p&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;&lt;code&gt;date&lt;/code&gt;, &lt;code&gt;time&lt;/code&gt; 두변수를 붙인 문자열에 대해 &lt;code&gt;ymd_hm()&lt;/code&gt; 함수로 넘긴 후&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;time_index&lt;/code&gt; 라는 변수에 담고,&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;date&lt;/code&gt;, &lt;code&gt;time&lt;/code&gt; 두 변수를 제외한 것이다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;이렇게 알맞게 변형된 &lt;code&gt;lakers&lt;/code&gt; 를 이용해 좀 더 의미가 있을만한 탐색을 해보겠다.&lt;/p&gt;
+&lt;h3 id=&quot;group-by-연산&quot;&gt;Group by 연산&lt;/h3&gt;
+&lt;p&gt;첫번째는 Group by 연산이다.&lt;br /&gt;
+월별 평균을 &lt;code&gt;x&lt;/code&gt;, &lt;code&gt;y&lt;/code&gt; 변수에 대해서 계산해보겠다.&lt;br /&gt;
+이때 우리가 알고있는 &lt;code&gt;month()&lt;/code&gt; 함수를 이용하면 아주 간편하게 할 수 있겠다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;group_by&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;month&lt;/span&gt;(time_index)) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;summarize&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;mean_x =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(x, &lt;span class=&quot;dt&quot;&gt;na.rm =&lt;/span&gt; T), &lt;span class=&quot;dt&quot;&gt;mean_y =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(y, &lt;span class=&quot;dt&quot;&gt;na.rm =&lt;/span&gt; T))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 7 &amp;lt;U+00D7&amp;gt; 3
+##   `month(time_index)`   mean_x   mean_y
+##                 &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;
+## 1                   1 25.49382 13.89279
+## 2                   2 25.01759 13.17499
+## 3                   3 25.51587 13.20571
+## 4                   4 25.38344 13.46396
+## 5                  10 24.92188 13.12500
+## 6                  11 25.47463 13.36926
+## 7                  12 25.05895 13.48262&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;연별 평균을 계산하고 싶다면 &lt;code&gt;year()&lt;/code&gt; 이용하면 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;group_by&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;year&lt;/span&gt;(time_index)) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;summarize&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;mean_x =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(x, &lt;span class=&quot;dt&quot;&gt;na.rm =&lt;/span&gt; T), &lt;span class=&quot;dt&quot;&gt;mean_y =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(y, &lt;span class=&quot;dt&quot;&gt;na.rm =&lt;/span&gt; T))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 2 &amp;lt;U+00D7&amp;gt; 3
+##   `year(time_index)`   mean_x   mean_y
+##                &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;
+## 1               2008 25.23402 13.40776
+## 2               2009 25.36407 13.44319&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;filter&quot;&gt;Filter&lt;/h3&gt;
+&lt;p&gt;두번째는 &lt;code&gt;filter()&lt;/code&gt; 를 이용해 분석에 사용할 기간을 서브세팅 해보는 예제를 만들어 보고 싶었다.&lt;br /&gt;
+아래 코드는 &amp;quot;2008-10-28 12:00:00&amp;quot; 이전의 기간을 서브세팅 하는 코드이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;filter&lt;/span&gt;(time_index &amp;lt;=&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2008-10-28 12:00:00&amp;quot;&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 416 &amp;lt;U+00D7&amp;gt; 12
+##             time_index opponent game_type period      etype  team
+##                 &amp;lt;dttm&amp;gt;    &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt;      &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+## 1  2008-10-28 12:00:00      POR      home      1  jump ball   OFF
+## 2  2008-10-28 11:39:00      POR      home      1       shot   LAL
+## 3  2008-10-28 11:37:00      POR      home      1    rebound   LAL
+## 4  2008-10-28 11:25:00      POR      home      1       shot   LAL
+## 5  2008-10-28 11:23:00      POR      home      1    rebound   LAL
+## 6  2008-10-28 11:22:00      POR      home      1       shot   LAL
+## 7  2008-10-28 11:22:00      POR      home      1       foul   POR
+## 8  2008-10-28 11:22:00      POR      home      1 free throw   LAL
+## 9  2008-10-28 11:00:00      POR      home      1       foul   LAL
+## 10 2008-10-28 10:53:00      POR      home      1       shot   POR
+## # ... with 406 more rows, and 6 more variables: player &amp;lt;chr&amp;gt;,
+## #   result &amp;lt;chr&amp;gt;, points &amp;lt;int&amp;gt;, type &amp;lt;chr&amp;gt;, x &amp;lt;int&amp;gt;, y &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;잘 보면 기존에 레코드는 34624 개 였지만, 서브세팅 된 후 레코드는 416 개로 줄어든 것을 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;만약 &amp;quot;2008-10-28 12:00:00&amp;quot; ~ &amp;quot;2009-03-09 00:33:00&amp;quot; 의 기간에 대해서 서브세팅을 하고싶다면 어떻게 하여야 할까?&lt;br /&gt;
+물론 &lt;code&gt;filter()&lt;/code&gt; 안에 조건을 하나 더 넣으면 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;filter&lt;/span&gt;(time_index &amp;gt;=&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2008-10-28 12:00:00&amp;quot;&lt;/span&gt;), time_index &amp;lt;=&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2009-03-09 00:33:00&amp;quot;&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 25,554 &amp;lt;U+00D7&amp;gt; 12
+##             time_index opponent game_type period     etype  team
+##                 &amp;lt;dttm&amp;gt;    &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt;     &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+## 1  2008-10-28 12:00:00      POR      home      1 jump ball   OFF
+## 2  2008-10-29 12:00:00      LAC      away      1 jump ball   OFF
+## 3  2008-10-29 11:36:00      LAC      away      1      shot   LAL
+## 4  2008-10-29 11:24:00      LAC      away      1      shot   LAC
+## 5  2008-10-29 11:24:00      LAC      away      1   rebound   LAL
+## 6  2008-10-29 11:08:00      LAC      away      1      shot   LAL
+## 7  2008-10-29 10:58:00      LAC      away      1      shot   LAC
+## 8  2008-10-29 10:57:00      LAC      away      1   rebound   LAL
+## 9  2008-10-29 10:41:00      LAC      away      1      shot   LAL
+## 10 2008-10-29 10:40:00      LAC      away      1   rebound   LAC
+## # ... with 25,544 more rows, and 6 more variables: player &amp;lt;chr&amp;gt;,
+## #   result &amp;lt;chr&amp;gt;, points &amp;lt;int&amp;gt;, type &amp;lt;chr&amp;gt;, x &amp;lt;int&amp;gt;, y &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;그런데 lubridate package 에는 기간(Time intervals) 에 대해 조금 더 세련된 방법으로 처리할 수 있는 함수들을 제공해 주고 있다.&lt;br /&gt;
+&lt;code&gt;interval()&lt;/code&gt; 함수와 &lt;code&gt;%within%&lt;/code&gt; 연산자를 이용하면 조금 더 직관적인 기간에 대해 서브세팅 할 수 있다.&lt;br /&gt;
+아래처럼 말이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;inter &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;interval&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2008-10-28 12:00:00&amp;quot;&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2009-03-09 00:33:00&amp;quot;&lt;/span&gt;))
+lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;filter&lt;/span&gt;(time_index %within%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;inter)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 25,554 &amp;lt;U+00D7&amp;gt; 12
+##             time_index opponent game_type period     etype  team
+##                 &amp;lt;dttm&amp;gt;    &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt;     &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+## 1  2008-10-28 12:00:00      POR      home      1 jump ball   OFF
+## 2  2008-10-29 12:00:00      LAC      away      1 jump ball   OFF
+## 3  2008-10-29 11:36:00      LAC      away      1      shot   LAL
+## 4  2008-10-29 11:24:00      LAC      away      1      shot   LAC
+## 5  2008-10-29 11:24:00      LAC      away      1   rebound   LAL
+## 6  2008-10-29 11:08:00      LAC      away      1      shot   LAL
+## 7  2008-10-29 10:58:00      LAC      away      1      shot   LAC
+## 8  2008-10-29 10:57:00      LAC      away      1   rebound   LAL
+## 9  2008-10-29 10:41:00      LAC      away      1      shot   LAL
+## 10 2008-10-29 10:40:00      LAC      away      1   rebound   LAC
+## # ... with 25,544 more rows, and 6 more variables: player &amp;lt;chr&amp;gt;,
+## #   result &amp;lt;chr&amp;gt;, points &amp;lt;int&amp;gt;, type &amp;lt;chr&amp;gt;, x &amp;lt;int&amp;gt;, y &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;2개의 조건을 자질구레하게 정의하는것 보단&lt;br /&gt;
+&lt;code&gt;interval()&lt;/code&gt; 를 사용한 후자의 방법이 훨씬 직관적일 수 있겠다.&lt;/p&gt;
+&lt;p&gt;참고로 덧붙이면 &lt;code&gt;interval()&lt;/code&gt; 함수대신 &lt;code&gt;%--%&lt;/code&gt; 연산자를 써도 된다.&lt;br /&gt;
+&lt;code&gt;%--%&lt;/code&gt; 를 &amp;quot;~&amp;quot; 처럼 생각하게 된다면 편할 것 같다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;inter &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2008-10-28 12:00:00&amp;quot;&lt;/span&gt;) %--%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2009-03-09 00:33:00&amp;quot;&lt;/span&gt;)
+lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;filter&lt;/span&gt;(time_index %within%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;inter)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 25,554 &amp;lt;U+00D7&amp;gt; 12
+##             time_index opponent game_type period     etype  team
+##                 &amp;lt;dttm&amp;gt;    &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt;     &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+## 1  2008-10-28 12:00:00      POR      home      1 jump ball   OFF
+## 2  2008-10-29 12:00:00      LAC      away      1 jump ball   OFF
+## 3  2008-10-29 11:36:00      LAC      away      1      shot   LAL
+## 4  2008-10-29 11:24:00      LAC      away      1      shot   LAC
+## 5  2008-10-29 11:24:00      LAC      away      1   rebound   LAL
+## 6  2008-10-29 11:08:00      LAC      away      1      shot   LAL
+## 7  2008-10-29 10:58:00      LAC      away      1      shot   LAC
+## 8  2008-10-29 10:57:00      LAC      away      1   rebound   LAL
+## 9  2008-10-29 10:41:00      LAC      away      1      shot   LAL
+## 10 2008-10-29 10:40:00      LAC      away      1   rebound   LAC
+## # ... with 25,544 more rows, and 6 more variables: player &amp;lt;chr&amp;gt;,
+## #   result &amp;lt;chr&amp;gt;, points &amp;lt;int&amp;gt;, type &amp;lt;chr&amp;gt;, x &amp;lt;int&amp;gt;, y &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;기타-간편-기능-함수들&quot;&gt;기타 간편 기능 함수들&lt;/h2&gt;
+&lt;h3 id=&quot;timezone-인자를-받을-수-있는-now&quot;&gt;Timezone 인자를 받을 수 있는 &lt;code&gt;now()&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;now&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2016-09-18 21:35:41 KST&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;now()&lt;/code&gt; 함수는 &lt;code&gt;Sys.time()&lt;/code&gt; 와 거의 기능이 똑같다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;now&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;America/New_York&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2016-09-18 08:35:41 EDT&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;?&lt;span class=&quot;kw&quot;&gt;now&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;UTC&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;단 위의 예제처럼&lt;br /&gt;
+Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르게 &lt;code&gt;now()&lt;/code&gt; 는 이를 반영한 날짜 + 시각을 반환할 수 있다는 차이가 있다.&lt;/p&gt;
+&lt;h3 id=&quot;오전-오후-am-pm&quot;&gt;오전? 오후? : &lt;code&gt;am()&lt;/code&gt;, &lt;code&gt;pm()&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;현 시간이 오후인지 오전인지 확인하기 위해서&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;ld1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04 13:30:50 UTC&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;hour&lt;/span&gt;(ld1) &amp;gt;=&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;12&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;와 같은 코드를 사용하기 보단&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;am&lt;/span&gt;(ld1)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] FALSE&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;pm&lt;/span&gt;(ld1)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;요런식으로 활용해 볼 수 있겠다.&lt;/p&gt;
+&lt;h3 id=&quot;시각에-대한-올림-내림-반올림&quot;&gt;시각에 대한 올림, 내림, 반올림&lt;/h3&gt;
+&lt;p&gt;제목대로 시각에 대한 올림, 내림, 반올림은 생각만해도 끔찍하다.&lt;br /&gt;
+&lt;code&gt;round_date()&lt;/code&gt;, &lt;code&gt;floor_date()&lt;/code&gt;, &lt;code&gt;ceiling_date()&lt;/code&gt; 함수를 활용하는게 정서상 좋을 것이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;ld1
+## [1] &amp;quot;2011-06-04 13:30:50 UTC&amp;quot;
+
+&lt;span class=&quot;kw&quot;&gt;round_date&lt;/span&gt;(ld1, &lt;span class=&quot;st&quot;&gt;&amp;quot;hour&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-04 14:00:00 UTC&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;round_date&lt;/span&gt;(ld1, &lt;span class=&quot;st&quot;&gt;&amp;quot;day&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-05 UTC&amp;quot;
+
+&lt;span class=&quot;kw&quot;&gt;floor_date&lt;/span&gt;(ld1, &lt;span class=&quot;st&quot;&gt;&amp;quot;hour&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-04 13:00:00 UTC&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;floor_date&lt;/span&gt;(ld1, &lt;span class=&quot;st&quot;&gt;&amp;quot;day&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-04 UTC&amp;quot;
+
+&lt;span class=&quot;kw&quot;&gt;ceiling_date&lt;/span&gt;(ld1, &lt;span class=&quot;st&quot;&gt;&amp;quot;hour&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-04 14:00:00 UTC&amp;quot;
+&lt;span class=&quot;kw&quot;&gt;ceiling_date&lt;/span&gt;(ld1, &lt;span class=&quot;st&quot;&gt;&amp;quot;day&amp;quot;&lt;/span&gt;)
+## [1] &amp;quot;2011-06-05 UTC&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://rpubs.com/davoodastaraky/lubridate&quot;&gt;Woking with Dates and Times with lubridate in R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html&quot;&gt;Do more with dates and times in R with lubridate 1.3.0&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 18 Sep 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2016/09/18/lubridate_package.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/09/18/lubridate_package.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</title>
@@ -73,7 +495,7 @@
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;본 포스팅 글은 &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 의 간단한 소개와 사용방법을 내 여행계획과 함께 정리해 보고자 한다.&lt;br /&gt;
 (※ 참고로 여행을 갈 당일이 되기까지 이글은 계속해서 변경될 것 같다!)&lt;/p&gt;
-&lt;h1 id=&quot;a-timeline-js&quot;&gt;A) &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt;&lt;/h1&gt;
+&lt;h2 id=&quot;a-timeline-js&quot;&gt;A) &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;백문이 불여일견..&lt;br /&gt;
 구구절절 소개하는 것보단 Timeline JS 로 만들 수 있는 것은 아래와 같은 어플리케이션이다.&lt;/p&gt;
 &lt;iframe src=&quot;https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1mgvNplYZJEfYU8q5_-ML9w4GjJcUH-CuMKSmUU4nI4k&amp;amp;font=Default&amp;amp;lang=en&amp;amp;initial_zoom=2&amp;amp;height=650&quot; width=&quot;100%&quot; height=&quot;650&quot; frameborder=&quot;0&quot;&gt;
@@ -91,7 +513,7 @@
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;Timeline JS 홈페이지에서 기본적으로 &lt;a href=&quot;https://drive.google.com/previewtemplate?id=1pHBvXN7nmGkiG8uQSUB82eNlnL8xHu6kydzH_-eguHQ&amp;amp;mode=public&quot;&gt;템플릿&lt;/a&gt;을 제공해 주는데 이를 가져온 후 항목별로 나와 여행 동료들이 값을 수정한 것 이다.&lt;/p&gt;
-&lt;h1 id=&quot;b-튜토리얼&quot;&gt;B) 튜토리얼&lt;/h1&gt;
+&lt;h2 id=&quot;b-튜토리얼&quot;&gt;B) 튜토리얼&lt;/h2&gt;
 &lt;p&gt;직접 만들어 보고 싶은 욕구가 생기면?&lt;br /&gt;
 행동으로 옮기기만 하면 된다.&lt;br /&gt;
 &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 홈페이지에서 제공하는 튜토리얼 영상을 보면 내가 소개한 이야기들의 구체적인 방법들이 스크린캐스트로 담겨 있다.&lt;/p&gt;
@@ -143,7 +565,7 @@
     
       <item>
         <title>R에서 특정 웹페이지의 이미지 파일 Crawling 하기</title>
-        <description>&lt;h1 id=&quot;a-목표&quot;&gt;A) 목표&lt;/h1&gt;
+        <description>&lt;h2 id=&quot;a-목표&quot;&gt;A) 목표&lt;/h2&gt;
 &lt;p&gt;크롤링과 같은 실전은 경험이 전무하였는데, 최근 친구의 질문 덕분에 제대로 된 크롤링 경험을 쌓을 수 있었다.&lt;br /&gt;
 대단한 경험은 아니지만 나에게 있어 신선했던 경험을 공유하기 위해 정리해 본다.&lt;/p&gt;
 &lt;p&gt;본 포스팅 글은 특정 웹페이지의 이미지 파일들을 내 컴퓨터 하드로 저장시키기 위한 R 코드를 작성하는것을 목표로 한다.&lt;br /&gt;
@@ -153,7 +575,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a href=&quot;https://www.google.co.kr/search?biw=1436&amp;amp;bih=782&amp;amp;tbm=isch&amp;amp;sa=1&amp;amp;q=men&amp;amp;oq=men&amp;amp;gs_l=img.3...4008.4572.0.5170.0.0.0.0.0.0.0.0..0.0....0...1c.1.64.img..0.0.0.id2CbaNm_HQ&quot; class=&quot;uri&quot;&gt;https://www.google.co.kr/search?biw=1436&amp;amp;bih=782&amp;amp;tbm=isch&amp;amp;sa=1&amp;amp;q=men&amp;amp;oq=men&amp;amp;gs_l=img.3...4008.4572.0.5170.0.0.0.0.0.0.0.0..0.0....0...1c.1.64.img..0.0.0.id2CbaNm_HQ&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&quot;a-1-준비&quot;&gt;A-1) 준비&lt;/h2&gt;
+&lt;h3 id=&quot;a-1-준비&quot;&gt;A-1) 준비&lt;/h3&gt;
 &lt;p&gt;우선 이미지 파일만을 크롤링 하는 방법에 대해서 구상할 필요가 있다.&lt;br /&gt;
 크롤링 컨셉은 이렇게 잡았보았다.&lt;/p&gt;
 &lt;p&gt;첫번째 : 웹페이지의 HTML 코드를 파싱하여 R 에서 가공할 수 있는 형태로 변환한다.&lt;br /&gt;
@@ -164,8 +586,8 @@
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(RCurl)
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(XML)
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(dplyr) &lt;span class=&quot;co&quot;&gt;# Optional package (for pipe operator)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1 id=&quot;b-시작&quot;&gt;B) 시작&lt;/h1&gt;
-&lt;h2 id=&quot;b-1-img-tag-의-src-인자값-크롤링&quot;&gt;B-1) img tag 의 src 인자값 크롤링&lt;/h2&gt;
+&lt;h2 id=&quot;b-시작&quot;&gt;B) 시작&lt;/h2&gt;
+&lt;h3 id=&quot;b-1-img-tag-의-src-인자값-크롤링&quot;&gt;B-1) img tag 의 src 인자값 크롤링&lt;/h3&gt;
 &lt;p&gt;R 내에서 웹 사이트의 html code 를 character 형식으로 가공하기 위해선 아래의 절차가 필요했다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;htmlcode &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;getURL&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;https://www.google.co.kr/search?biw=1436&amp;amp;bih=782&amp;amp;tbm=isch&amp;amp;sa=1&amp;amp;q=men&amp;amp;oq=men&amp;amp;gs_l=img.3...4008.4572.0.5170.0.0.0.0.0.0.0.0..0.0....0...1c.1.64.img..0.0.0.id2CbaNm_HQ&amp;quot;&lt;/span&gt;) %&amp;gt;%
 &lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;htmlParse %&amp;gt;%
@@ -221,7 +643,7 @@ src_href &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;img_tag %&amp;g
 예를들어 &amp;quot;http:&amp;quot; 로 시작하는것만 소비해야 정상적인 이미지 파일 다운로드가 가능할 것이다.&lt;br /&gt;
 첫번째 링크 /textinputassistant/tia.png 는 루트에서 직접적으로 가져오는 링크 이므로 우리가 접근할 수 있는 이미지가 아니다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;src_href &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;src_href[-&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;b-2-download-image-file&quot;&gt;B-2) download image file&lt;/h2&gt;
+&lt;h3 id=&quot;b-2-download-image-file&quot;&gt;B-2) download image file&lt;/h3&gt;
 &lt;p&gt;이후의 예제는 20개의 준비된 이미지 파일링크를 반복문을 돌려 자신의 하드로 가져오는 코드이다.&lt;br /&gt;
 우선 한개의 파일을 다운로드 하는방법부터 살펴보면&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;download.file&lt;/span&gt;(src_href[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;], &lt;span class=&quot;st&quot;&gt;&amp;quot;./output/test_image1&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -294,7 +716,7 @@ data.table 의 빠른처리속도는 이전부터 명성이 자자했지만 게�
 하지만 인내심의 한계에 다다르고 빠른 속도를 직접 체감하고 나서 뒤늦게 도입하기 시작한 것 같다.&lt;/p&gt;
 &lt;p&gt;구글링을 통해서도 다양한 data.table 의 showcase 들이 있고, 퍼포먼스를 확인할 수 있는 예제코드를 구하기 쉽다.&lt;br /&gt;
 나도 그러한 예제코드를 만들어 보았고 공유해 보고자 한다.&lt;br /&gt;
-나는 data.frame 과 data.table 에 대해서 join 작업을 이용해 벤치마킹 하는 코드 프로그램을 아래와 같이 작성해 보았다.&lt;/p&gt;
+나는 data.frame 과 data.table 에 대해서 병합작업을 이용해 벤치마킹 하는 코드 프로그램을 아래와 같이 작성해 보았다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(data.table)
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(dplyr)
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(rbenchmark)
@@ -320,7 +742,7 @@ dt2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot
     join_res_dt &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;left_join&lt;/span&gt;(dt, dt2), &lt;span class=&quot;dt&quot;&gt;replications=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;20&lt;/span&gt;
 )&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;위의 코드를 간략히 설명해 보면&lt;/p&gt;
-&lt;h1 id=&quot;a-예제로-사용할-data.frame-data.table-객체-만들기&quot;&gt;A) 예제로 사용할 data.frame, data.table 객체 만들기&lt;/h1&gt;
+&lt;h2 id=&quot;a-예제로-사용할-data.frame-data.table-객체-만들기&quot;&gt;A) 예제로 사용할 data.frame, data.table 객체 만들기&lt;/h2&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(data.table)
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(dplyr)
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(rbenchmark)
@@ -354,8 +776,8 @@ key variable 세팅이 제대로 되었는지가 궁금하다면 &lt;code&gt;tab
 ## [2,] dt2    900,000    2 11 ID,Var3            ID 
 ## Total: 31MB&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;출력결과의 맨 우측 Key 항목에 &amp;quot;ID&amp;quot; 가 있는것을 보아 제대로 세팅이 된 것을 볼 수 있다.&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;b-joining&quot;&gt;B) joining&lt;/h1&gt;
-&lt;p&gt;본격적으로 Joining 을 시작한다.&lt;br /&gt;
+&lt;h2 id=&quot;b-join&quot;&gt;B) Join&lt;/h2&gt;
+&lt;p&gt;본격적으로 병합(Join)을 시작한다.&lt;br /&gt;
 join 방법은 무난한 left join 을 실시하기 위해 dplyr package 에 있는 &lt;code&gt;left_join()&lt;/code&gt; 함수를 이용 했다.&lt;/p&gt;
 &lt;p&gt;data.frame 에 대한 join 과&lt;br /&gt;
 data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenchmark package 의 &lt;code&gt;benchmark()&lt;/code&gt; 함수를 이용했다.&lt;/p&gt;
@@ -403,12 +825,12 @@ data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenc
 때문에 R의 S3 가 무엇인지 빠르게 체감할 수 있는 나만의 아주 간단한 self 코드를 만들어 보았다.&lt;br /&gt;
 최소재현예제 이므로 코드실행에 5분만 투자한다면 큰 체감을 얻을 수 있을것으로 예상된다.&lt;br /&gt;
 어떠한 부가설명도 없는 코드를 아래와 같이 공유하고자 한다.&lt;/p&gt;
-&lt;h1 id=&quot;s3-최소재현예제&quot;&gt;S3 최소재현예제&lt;/h1&gt;
-&lt;h2 id=&quot;generic-function&quot;&gt;generic function&lt;/h2&gt;
+&lt;h2 id=&quot;s3-최소재현예제&quot;&gt;S3 최소재현예제&lt;/h2&gt;
+&lt;h3 id=&quot;generic-function&quot;&gt;generic function&lt;/h3&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lovetoken &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x){
   &lt;span class=&quot;kw&quot;&gt;UseMethod&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;lovetoken&amp;quot;&lt;/span&gt;)
 }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;method&quot;&gt;method&lt;/h2&gt;
+&lt;h3 id=&quot;method&quot;&gt;method&lt;/h3&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lovetoken.default &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x){
   x
 }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -418,7 +840,7 @@ data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenc
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lovetoken.class2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x){
   &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;var&lt;/span&gt;(x), &lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(x))
 }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;class&quot;&gt;class&lt;/h2&gt;
+&lt;h3 id=&quot;class&quot;&gt;class&lt;/h3&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;test &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;
 &lt;span class=&quot;kw&quot;&gt;lovetoken&lt;/span&gt;(test) &lt;span class=&quot;co&quot;&gt;# `lovetoken.default(test)` 를 실행하는 것과 동일&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##  [1]  0  1  2  3  4  5  6  7  8  9 10&lt;/code&gt;&lt;/pre&gt;
@@ -503,7 +925,7 @@ stop 조건이 없을 경우 멈추지 않을것이다.&lt;br /&gt;
         <description>&lt;p&gt;통계 비전공자에게 중심극한의 정리를 설명해야 했던 적이 있었는데,&lt;br /&gt;
 심오한 이론들을 증명하며 설명하느니 한번 보여주는 것이 더 큰 공감을 얻게될 것 같아 animation plot 을 준비한적이 있다.&lt;br /&gt;
 본 포스팅 글은 R markdown 포맷에서 코드청크옵션 &lt;code&gt;fig.show=&amp;quot;animate&amp;quot;&lt;/code&gt; 을 통해 animation plot 을 준비하는 것이 가능하다는 것을 소개하고 그 예시로 중심극한정리 시뮬레이션을 통해 설명할 것이다.&lt;/p&gt;
-&lt;h1 id=&quot;a-중심극한정리-central-limit-theorem-에-대해서&quot;&gt;A) 중심극한정리 (Central Limit Theorem) 에 대해서&lt;/h1&gt;
+&lt;h2 id=&quot;a-중심극한정리-central-limit-theorem-에-대해서&quot;&gt;A) 중심극한정리 (Central Limit Theorem) 에 대해서&lt;/h2&gt;
 &lt;p&gt;중심극한정리는 표본의 크기가 커짐에 따라 표본평균의 분포가 점점 정규분포로 근사(닮아) 짐을 의미하는 이론이다.&lt;br /&gt;
 그리고 표본은 어떠한 분포 타입에 나온 것이더라 하더라도 상관없이 중심극한정리에 해당되는것을 특징으로 한다.&lt;br /&gt;
 여기서 헷갈리는 것이 있을 수 있는데, 표본평균은 단하나의 값으로 분포가 될 수 있느냐 라는 질문이 생길 수 있다.&lt;br /&gt;
@@ -520,7 +942,7 @@ stop 조건이 없을 경우 멈추지 않을것이다.&lt;br /&gt;
 &lt;li&gt;표본평균들을 1,000개 준비하기 위해 위 과정을 1000번 반복&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;할 것이다.&lt;/p&gt;
-&lt;h1 id=&quot;b-단편-시뮬레이션&quot;&gt;B) 단편 시뮬레이션&lt;/h1&gt;
+&lt;h2 id=&quot;b-단편-시뮬레이션&quot;&gt;B) 단편 시뮬레이션&lt;/h2&gt;
 &lt;p&gt;위에서 설명한 시뮬레이션은 아래코드를 통해 확인 가능하다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;replicate&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
     n &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;500&lt;/span&gt;
@@ -545,7 +967,7 @@ stop 조건이 없을 경우 멈추지 않을것이다.&lt;br /&gt;
 &lt;p&gt;2번에 해당하는 소위 QQplot 이다.&lt;/p&gt;
 &lt;p&gt;분명 결과물을 통해선 포아송분포에서 뽑은 표본들의 평균의 분포가 정규분포에 근사하는 것을 체감할 수는 있다.&lt;br /&gt;
 하지만 나는 이것보다 분포의 개수가 많으면 많아질수록 정규분포의 닮아짐이 높아진다는 점근적근사를 시각적으로 보여주고 싶은 것이었다.&lt;/p&gt;
-&lt;h1 id=&quot;c-rmarkdown-의-코드청크옵션-fig.showanimate-에-대해서&quot;&gt;C) Rmarkdown 의 코드청크옵션 &lt;code&gt;fig.show=&amp;quot;animate&amp;quot;&lt;/code&gt; 에 대해서&lt;/h1&gt;
+&lt;h2 id=&quot;c-rmarkdown-의-코드청크옵션-fig.showanimate-에-대해서&quot;&gt;C) Rmarkdown 의 코드청크옵션 &lt;code&gt;fig.show=&amp;quot;animate&amp;quot;&lt;/code&gt; 에 대해서&lt;/h2&gt;
 &lt;p&gt;필자는 Rmarkdown 포맷을 자주 사용하여 내 지식을 전달하는 편인데 데이터분석과 융화된 글을 쓰기에 거리낌 없는 도구로 굉장한 공감을 얻었기 때문이다.&lt;br /&gt;
 특히 &lt;code&gt;fig.show=&amp;quot;animate&amp;quot;&lt;/code&gt; 와 같은 코드청크 옵션은 데이터의 변질에 따른 plot output 의 변화를 보여주기에 간편한 기능을 제공해서 적극적으로 애용 중이다.&lt;/p&gt;
 &lt;p&gt;위의 예시를 이어서 설명하자면 단편적인 시뮬레이션을 통해 정규분포에 근사하는 것을 체감시켰지만,&lt;br /&gt;
@@ -618,7 +1040,7 @@ verbatim 모드로 Rmarkdown 코드청크 전체를 보여주면 아래와 같�
 &lt;span class=&quot;co&quot;&gt;#   qqnorm(res, xlim=c(-4, 4), ylim=c(9, 11))&lt;/span&gt;
 &lt;span class=&quot;co&quot;&gt;# }&lt;/span&gt;
 &lt;span class=&quot;co&quot;&gt;# ```&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1 id=&quot;d-요구사항&quot;&gt;D) 요구사항&lt;/h1&gt;
+&lt;h2 id=&quot;d-요구사항&quot;&gt;D) 요구사항&lt;/h2&gt;
 &lt;p&gt;단 이렇게 영상으로 인코딩하는 작업을 하기 위해서 운영체계별로 요구하는 플러그인이 다를 수 있다.&lt;br /&gt;
 필자는 OSX 에서 이 글을 작성한 것이며 &lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;ffmpeg&lt;/a&gt; 설치가 요구되었었다.&lt;/p&gt;
 &lt;p&gt;그리고 이것이 요구사항일지는 모르겠지만 코드수행시간이란 비용 이외에 animation plot 영상을 인코딩하는 시간 역시 필요하다.&lt;br /&gt;
@@ -628,231 +1050,6 @@ verbatim 모드로 Rmarkdown 코드청크 전체를 보여주면 아래와 같�
         <pubDate>Thu, 26 May 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/05/26/CLT.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2016/05/26/CLT.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>R에서 수익률 구해보며 lag(), diff() 함수 알아보기</title>
-        <description>&lt;p&gt;시계열 데이터의 수익률을 계산하는 일들이 많아지면서&lt;br /&gt;
-복잡한 모듈들을 만들 때 아래의 함수들과 패키지가 얼마나 유용한지 몰랐었다.&lt;/p&gt;
-&lt;p&gt;오늘 정리해보고자 하는 함수는 3가지이며, 부가적으로 시계열 데이터셋에 날짜의 전처리 부담을 줄여주는 xts package 를 조금씩 이용해보려 한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(xts)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1 id=&quot;a-예제-데이터-만들기&quot;&gt;A) 예제 데이터 만들기&lt;/h1&gt;
-&lt;p&gt;오늘 날짜를 기준으로 약 한 달 전 까지의 코스닥 지수를 예제 데이터로 이용해 보고자 한다. (본 포스팅 글의 오늘 날짜는 스크립트를 작성한 기준 날짜를 기준으로 한다)&lt;br /&gt;
-R에서는 특정 주가지수를 자동으로 불러올 수 있는 유용한 패키지가 있는데 바로 quantmod package이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(quantmod)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;quantmod package는 앞서 말한 xts package와 종속관계 이므로 quantmod package를 로드하면 같이 함께 로드된다. (zoo package 도 마찬가지 이다.)&lt;br /&gt;
-여하튼 KOSPI 지수를 받기 위한 코드는 아래와 같다. &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;today &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;Sys.Date&lt;/span&gt;()
-kq &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;getSymbols&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;^kq11&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;from=&lt;/span&gt;today&lt;span class=&quot;dv&quot;&gt;-30&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;to=&lt;/span&gt;today, &lt;span class=&quot;dt&quot;&gt;auto.assign=&lt;/span&gt;F)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##     As of 0.4-0, &amp;#39;getSymbols&amp;#39; uses env=parent.frame() and
-##  auto.assign=TRUE by default.
-## 
-##  This  behavior  will be  phased out in 0.5-0  when the call  will
-##  default to use auto.assign=FALSE. getOption(&amp;quot;getSymbols.env&amp;quot;) and 
-##  getOptions(&amp;quot;getSymbols.auto.assign&amp;quot;) are now checked for alternate defaults
-## 
-##  This message is shown once per session and may be disabled by setting 
-##  options(&amp;quot;getSymbols.warning4.0&amp;quot;=FALSE). See ?getSymbols for more details.&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;kq; &lt;span class=&quot;kw&quot;&gt;class&lt;/span&gt;(kq)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##            KQ11.Open KQ11.High KQ11.Low KQ11.Close KQ11.Volume
-## 2016-04-18    695.78    695.98   693.00     695.34      706800
-## 2016-04-19    697.31    701.80   696.22     701.68      684100
-## 2016-04-20    703.55    704.44   699.85     699.86      737300
-## 2016-04-21    702.21    702.32   698.39     701.62      834100
-## 2016-04-22    702.90    703.89   700.98     703.05      702700
-## 2016-04-25    705.37    705.44   702.42     703.70      700200
-## 2016-04-26    705.51    705.51   700.76     702.06      778200
-## 2016-04-27    704.42    704.59   699.41     699.52      757000
-## 2016-04-28    702.04    703.95   699.68     699.70      665300
-## 2016-04-29    699.89    700.14   695.82     699.77      645800
-## 2016-05-02    700.43    700.74   690.27     690.27      681200
-## 2016-05-03    693.67    699.24   693.67     698.66      819100
-## 2016-05-04    698.02    698.30   693.25     694.17      826600
-## 2016-05-09    696.66    697.14   690.85     691.82      630400
-## 2016-05-10    693.47    700.53   693.44     700.23      570000
-## 2016-05-11    704.32    704.53   701.29     703.94      637900
-## 2016-05-12    702.46    706.49   699.87     705.04      614200
-## 2016-05-13    705.85    705.92   703.65     704.37      617600
-## 2016-05-16    705.03    705.04   701.25     701.46      660200
-## 2016-05-17    703.08    703.24   693.07     695.95      712200
-##            KQ11.Adjusted
-## 2016-04-18        695.34
-## 2016-04-19        701.68
-## 2016-04-20        699.86
-## 2016-04-21        701.62
-## 2016-04-22        703.05
-## 2016-04-25        703.70
-## 2016-04-26        702.06
-## 2016-04-27        699.52
-## 2016-04-28        699.70
-## 2016-04-29        699.77
-## 2016-05-02        690.27
-## 2016-05-03        698.66
-## 2016-05-04        694.17
-## 2016-05-09        691.82
-## 2016-05-10        700.23
-## 2016-05-11        703.94
-## 2016-05-12        705.04
-## 2016-05-13        704.37
-## 2016-05-16        701.46
-## 2016-05-17        695.95&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;xts&amp;quot; &amp;quot;zoo&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;다양한 메시지와 함께 우리가 보고 싶은 결과물을 xts class 객체로 반환한다.&lt;br /&gt;
-&lt;code&gt;getSymbols()&lt;/code&gt; 함수의 쓰임 법에 대해서 간략히 설명하자면 조회하고자 하는 주가 심볼 문자열을 첫 번째 인자값으로 넣고 &lt;code&gt;from&lt;/code&gt;, &lt;code&gt;to&lt;/code&gt; 인자에 조회 날짜에 대한 기간 정보를 넣어줌으로써 활용이 가능하다.&lt;br /&gt;
-예제데이터로 사용될 우리가 선택한 코스닥 심볼은 &#39;^kq11&#39; 이다.&lt;br /&gt;
-만약 다른 것을 조회하고 싶다면 해당되는 심볼을 찾은 후 기입하면 된다. (ex. 코스피200지수의 경우 &#39;^ks11&#39;)&lt;/p&gt;
-&lt;p&gt;반환된 결과물을 보면 open, high, low, close, volume, adjusted 6개의 상황별 지수가 있는데 종가지수인 close 만 관심의 대상이라 가정하고 subset 을 추출한 데이터 &lt;code&gt;data&lt;/code&gt; 를 최종 예제데이터로 삼겠다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;data &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;kq[,&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1 id=&quot;b-일일-수익률-계산하기&quot;&gt;B) 일일 수익률 계산하기&lt;/h1&gt;
-&lt;p&gt;예제데이터를 이용하여 일일 수익률을 계산해 보겠다.&lt;br /&gt;
-예를 들어 2016년 4월 19일의 수익률을 계산하기 위해선 해당 시차 지수 701.68 을 직전날시차 지수 695.34 로 나눠 준 후 1을 빼면 된다.&lt;br /&gt;
-이것을 모든 날에 대해 일괄적으로 행하여야 한다.&lt;br /&gt;
-이를 간편하게 계산하기 위해 &lt;code&gt;lag()&lt;/code&gt; 함수가 유용할 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;data&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##            KQ11.Close
-## 2016-04-18     695.34
-## 2016-04-19     701.68
-## 2016-04-20     699.86
-## 2016-04-21     701.62
-## 2016-04-22     703.05
-## 2016-04-25     703.70
-## 2016-04-26     702.06
-## 2016-04-27     699.52
-## 2016-04-28     699.70
-## 2016-04-29     699.77
-## 2016-05-02     690.27
-## 2016-05-03     698.66
-## 2016-05-04     694.17
-## 2016-05-09     691.82
-## 2016-05-10     700.23
-## 2016-05-11     703.94
-## 2016-05-12     705.04
-## 2016-05-13     704.37
-## 2016-05-16     701.46
-## 2016-05-17     695.95&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lag&lt;/span&gt;(data)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##            KQ11.Close
-## 2016-04-18         NA
-## 2016-04-19     695.34
-## 2016-04-20     701.68
-## 2016-04-21     699.86
-## 2016-04-22     701.62
-## 2016-04-25     703.05
-## 2016-04-26     703.70
-## 2016-04-27     702.06
-## 2016-04-28     699.52
-## 2016-04-29     699.70
-## 2016-05-02     699.77
-## 2016-05-03     690.27
-## 2016-05-04     698.66
-## 2016-05-09     694.17
-## 2016-05-10     691.82
-## 2016-05-11     700.23
-## 2016-05-12     703.94
-## 2016-05-13     705.04
-## 2016-05-16     704.37
-## 2016-05-17     701.46&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;날짜에 대한 처리 없이 알아서 주가 데이터가 하루 미루어진다.&lt;br /&gt;
-&lt;code&gt;lag()&lt;/code&gt; 함수의 두번째 인자는 &lt;code&gt;k=1&lt;/code&gt; 로 디폴트값이 잡혀있는데, 이를 조정하는것도 가능하다.&lt;br /&gt;
-&lt;code&gt;data&lt;/code&gt; 와 &lt;code&gt;lag(data)&lt;/code&gt; 를 나누고 상수 1을 뺌으로써 간단히 일일수익률을 계산할 수 있게 된다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;data/&lt;span class=&quot;kw&quot;&gt;lag&lt;/span&gt;(data)-&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##               KQ11.Close
-## 2016-04-18            NA
-## 2016-04-19  0.0091177924
-## 2016-04-20 -0.0025937864
-## 2016-04-21  0.0025148030
-## 2016-04-22  0.0020381303
-## 2016-04-25  0.0009245772
-## 2016-04-26 -0.0023305584
-## 2016-04-27 -0.0036178931
-## 2016-04-28  0.0002573079
-## 2016-04-29  0.0001000543
-## 2016-05-02 -0.0135758888
-## 2016-05-03  0.0121545957
-## 2016-05-04 -0.0064265740
-## 2016-05-09 -0.0033853034
-## 2016-05-10  0.0121563021
-## 2016-05-11  0.0052982907
-## 2016-05-12  0.0015625991
-## 2016-05-13 -0.0009502766
-## 2016-05-16 -0.0041313131
-## 2016-05-17 -0.0078550592&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;일일수익률이므로 직전시차 데이터가 존재하지 않는 4월 18일 수익률만 결측치로 나오고 이후 시차는 수익률을 잘 산출해 준다.&lt;br /&gt;
-만약 &lt;code&gt;lag()&lt;/code&gt; 함수를 알지 못한다면 아래와 같은 해괴망측한 수동적인 코드로써 구현해야 했을 것이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;data
-res[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;] &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;ot&quot;&gt;NA&lt;/span&gt;
-
-for(i in &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;kw&quot;&gt;nrow&lt;/span&gt;(data)){
-    res[i] &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;data[[i]]/data[[i&lt;span class=&quot;dv&quot;&gt;-1&lt;/span&gt;]]-&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;
-} &lt;span class=&quot;co&quot;&gt;# T_T.....&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1 id=&quot;c-로그수익률-계산하기&quot;&gt;C) 로그수익률 계산하기&lt;/h1&gt;
-&lt;p&gt;만약 일일 로그수익률을 계산하고 싶다면 현시차 주가를 직전시차주가로 나눠준 후 로그함수를 씌워주면 되는데&lt;br /&gt;
-방금 알게된 &lt;code&gt;lag()&lt;/code&gt; 함수를 이용하면&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;log&lt;/span&gt;(data) -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;log&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;lag&lt;/span&gt;(data))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##               KQ11.Close
-## 2016-04-18            NA
-## 2016-04-19  0.0090764763
-## 2016-04-20 -0.0025971561
-## 2016-04-21  0.0025116462
-## 2016-04-22  0.0020360562
-## 2016-04-25  0.0009241501
-## 2016-04-26 -0.0023332784
-## 2016-04-27 -0.0036244535
-## 2016-04-28  0.0002572748
-## 2016-04-29  0.0001000493
-## 2016-05-02 -0.0136688838
-## 2016-05-03  0.0120813217
-## 2016-05-04 -0.0064473133
-## 2016-05-09 -0.0033910465
-## 2016-05-10  0.0120830076
-## 2016-05-11  0.0052843042
-## 2016-05-12  0.0015613795
-## 2016-05-13 -0.0009507284
-## 2016-05-16 -0.0041398706
-## 2016-05-17 -0.0078860727&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;의 코드로 일일 로그수익률을 계산할 수 있다.&lt;br /&gt;
-그런데 &lt;code&gt;log()&lt;/code&gt;, &lt;code&gt;lag()&lt;/code&gt; 비슷비슷한 함수들이 있어 눈에 확 띄지 않고 복잡해 보인다.&lt;br /&gt;
-현재는 현시차와 직전시차의 차이값을 구하는 과정이 필요하다.&lt;br /&gt;
-이 차이를 자동으로 계산해주는 함수가 &lt;code&gt;diff()&lt;/code&gt; 이다.&lt;br /&gt;
-&lt;code&gt;diff()&lt;/code&gt; 함수를 이용하여 코드를 더 간결하게 해본 결과이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;diff&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;log&lt;/span&gt;(data))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##               KQ11.Close
-## 2016-04-18            NA
-## 2016-04-19  0.0090764763
-## 2016-04-20 -0.0025971561
-## 2016-04-21  0.0025116462
-## 2016-04-22  0.0020360562
-## 2016-04-25  0.0009241501
-## 2016-04-26 -0.0023332784
-## 2016-04-27 -0.0036244535
-## 2016-04-28  0.0002572748
-## 2016-04-29  0.0001000493
-## 2016-05-02 -0.0136688838
-## 2016-05-03  0.0120813217
-## 2016-05-04 -0.0064473133
-## 2016-05-09 -0.0033910465
-## 2016-05-10  0.0120830076
-## 2016-05-11  0.0052843042
-## 2016-05-12  0.0015613795
-## 2016-05-13 -0.0009507284
-## 2016-05-16 -0.0041398706
-## 2016-05-17 -0.0078860727&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;주가종목에 로그를 취한 후 현시차와 직전시차의 차이값을 &lt;code&gt;diff()&lt;/code&gt; 를 통해 계산한다.&lt;br /&gt;
-따라서 &lt;code&gt;log(data) - log(lag(data))&lt;/code&gt; 과 동일한 값이 반환되는 것을 확인할 수 있다.&lt;/p&gt;
-&lt;section class=&quot;footnotes&quot;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;필자는 quantmod package와, 주가지수데이터셋을 끌어올 수 있는 함수 및 코드를 &lt;a href=&quot;http://cafe.naver.com/lovetokens/1569&quot;&gt;카페회원분의 질문글&lt;/a&gt;을 통해 처음으로 알게 되었다.&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/section&gt;
-</description>
-        <pubDate>Wed, 18 May 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html</guid>
         
         
         <category>R</category>

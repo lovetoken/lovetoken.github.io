@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>lovetoken</title>
+        <meta name="author" content="Lovetoken" />
+        <meta name="description" content="R에서 lubridate package 에 대해" />
+        <meta name="keywords" content="R에서 lubridate package 에 대해, , R" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="" property="fb:app_id">
+        <meta content="" property="og:site_name">
+        
+          <meta content="R에서 lubridate package 에 대해" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="" property="og:description">
+        
+        
+          <meta content="https://lovetoken.github.io/r/2016/09/18/lubridate_package.html" property="og:url">
+        
+        
+          <meta content="2016-09-18T00:00:00+09:00" property="article:published_time">
+          <meta content="https://lovetoken.github.io/about/" property="article:author">
+        
+        
+          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="R" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:creator" content="@">
+        
+          <meta name="twitter:title" content="R에서 lubridate package 에 대해">
+        
+        
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/09/18/lubridate_package.html">
+        
+        
+          <meta name="twitter:description" content="">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', '', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">Lovetoken</h1>
+                
+                <div id="about">
+                    저는 개발 취향을 가진 데이터 분석가 Jr. 입니다.  R, Git, Markdown, Shiny, Sublime text 등의 스킬들을 즐깁니다.
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://twitter.com/LT_Lovetoken" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/lovetoken/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>Navigation</strong><br />
+                    &nbsp;&raquo; <a href="/">Home</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">About Me</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/lovetoken">Github</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>R에서 lubridate package 에 대해</h1>
+<span class="time">18 Sep 2016</span>
+
+<span class="categories">
+    &raquo; <a href="/category/R">R</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><p><a href="https://cran.r-project.org/web/packages/lubridate/lubridate.pdf">lubridate package</a> 는 Garrett Grolemund 와 Hadley Wickham 외 8명의 힘이 더해져 만들어진 날짜처리 생산성 패키지이다.</p>
+<p>날짜(Date) &amp; 시각(Time) 데이터는 전 세계 사람들에 의해 보편적으로 정해진 규칙이 있는데, 이 규칙을 정확하게 알지 못하고 데이터를 처리할 때 혼돈이 일어날 수 있다.<br />
+의외로 위에서 말한 규칙들은 따지고 보면 따져볼수록 많고 복잡하여 인간이 실수할 수 있을 여지가 높다.<br />
+흠 이런 예제랄까?</p>
+<ul>
+<li>어느 연도가 윤년이어서 2월 29일이 있는지 신경 쓰지 않으면 알 수 없다.<br />
+</li>
+<li>4월 31일 데이터셋 정의 (그런 날짜는 존재하지 않는데도 불구하고)</li>
+</ul>
+<p>이런 것 외에도 우리가 접할 수 있는 여러 가지 상황을 가정 해 볼 수 있는데</p>
+<ul>
+<li>분석 시 기준 Timezone 이 변경될 경우</li>
+<li>날짜와 시각이 조합된 데이터의 산술연산이 필요할 경우</li>
+<li>(정말 특이한 사례지만) <a href="https://ko.wikipedia.org/wiki/%EC%9D%BC%EA%B4%91_%EC%A0%88%EC%95%BD_%EC%8B%9C%EA%B0%84%EC%A0%9C">일광절약시간제</a>에 해당되는 Time index 가 존재할 경우</li>
+</ul>
+<p>등등 날짜시각 데이터셋에 대한 처리 시 우리를 괴롭힐 만한 요소들은 차고 넘친다.</p>
+<p>이 실수들과 장애물들을 사전에 방지하기 위한 다양한 R 패키지가 제공되고 있다.<br />
+내가 아는 것을 기준으론 <a href="https://cran.r-project.org/web/packages/xts/xts.pdf">xts</a>, <a href="https://cran.r-project.org/web/packages/zoo/zoo.pdf">zoo</a>, lubridate, <a href="https://cran.r-project.org/web/packages/chron/chron.pdf">chron</a> 의 패키지 정도를 알고 있으되, 자주 사용하는 패키지는 xts 이었다.</p>
+<p>이번에 살펴볼 <a href="https://cran.r-project.org/web/packages/lubridate/lubridate.pdf">lubridate package</a> 는 lubricate(기름을 치다, 기름을 바르다, 원활히 하다) 의 &quot;lubri&quot; 와 &quot;date&quot; 를 합성시킨 것으로 추측되는데 이처럼 날짜시각 데이터를 원활하게 가공하는 데 도움을 주기 위한 목적으로 특화된 느낌을 받는다.</p>
+<p><br /><span class="math display"><em>l</em><em>u</em><em>b</em><em>r</em><em>i</em> + <em>d</em><em>a</em><em>t</em><em>e</em></span><br /></p>
+<p>xts, zoo 패키지 조합 역시 강력하지만 강력한 만큼 친숙함은 주지 못한 것 같다.<br />
+이러한 단점을 보완하고자 부가적으로 알아야 하겠다고 마음먹게 된 패키지 중 하나이었고,<br />
+R studio 의 Hadley Wickham 에 의해 유지보수 되고 있다고 해서 그 때문에 공부를 시작하기도 한 것 같다.</p>
+<blockquote>
+<p>Lubridate is an R package that makes it easier to work with dates and times.<br />
+- <a href="https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html">Do more with dates and times in R with lubridate 1.3.0</a></p>
+</blockquote>
+<p>얼마나 기존방법보다 쉬운지를 내가 겪었던 시행착오와 곁들여</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lubridate)</code></pre></div>
+<p>를 실행 후 한 번 탐색해 보겠다.</p>
+<h2 id="dates-times-객체-만들기">dates &amp; times 객체 만들기</h2>
+<h3 id="date-객체-만들기">Date 객체 만들기</h3>
+<p>R에서 2011년 6월 4일 날짜 데이터를 만들려면 가장 기본적인 방법이 아래의 코드일 것이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.Date</span>(<span class="st">&quot;2011-06-04&quot;</span>)
+## [1] &quot;2011-06-04&quot;
+<span class="kw">as.Date</span>(<span class="st">&quot;2011-6-4&quot;</span>)
+## [1] &quot;2011-06-04&quot;
+<span class="kw">as.Date</span>(<span class="st">&quot;2011/06/04&quot;</span>)
+## [1] &quot;2011-06-04&quot;
+## 
+## as.Date(&quot;20110604&quot;) # error</code></pre></div>
+<p>R의 가장 전통적인 날짜 데이터 class 는 Date 일 것이다.<br />
+마지막 코드 <code>as.Date(&quot;20110604&quot;)</code> 와 같이 에러가 나는 코드도 한번 작성해 보았는데<br />
+이처럼 날짜 데이터셋을 만들기 위해 문자열을 input 하는 방식으로 사용할 경우 문자열을 어떠한 양식에 따라 작성할 것인지도 사람마다 제각각이고 그에 따라 코드가 실행되지 않는 경우가 발생할 것이다.<br />
+그 양식 중 <code>&quot;20110604&quot;</code> 와 같이 딜리미터가 없는 문자열은 <code>as.Date()</code> 가 날짜로 변환할 때<br />
+어디가 year 이고 month 이며 day 인지 알 수 없어한다.</p>
+<p>또한</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.Date</span>(<span class="st">&quot;06-04-2011&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;0006-04-20&quot;</code></pre>
+<p>처럼 미국식 날짜 표기법을 사용할 경우에도 마찬가지 문제가 발생한다.</p>
+<p>이번엔 lubridate package 의 &quot;y&quot;, &quot;m&quot;, &quot;d&quot; 심볼을 이용한 함수들을 이용해 보겠다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ymd</span>(<span class="st">&quot;2011/06/04&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;2011-06-04&quot;</code></pre>
+<p>&quot;y&quot;, &quot;m&quot;, &quot;d&quot; 심볼이라고 소개했는데 각각 year, month, day 로 이해할 수 있고<br />
+이 심볼의 순서를 바꾸어도 먹히는 함수들이 사전에 준비되어 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mdy</span>(<span class="st">&quot;06/04/2011&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;2011-06-04&quot;</code></pre>
+<p>&quot;06/04/2011&quot; 은 2011년 6월 4일을 미국식으로 날짜 표기한 것인데, 이를 제대로 인식하기 위해서 심볼들의 순서를 그에 맞춘 함수를 이용하면 되겠다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dmy</span>(<span class="st">&quot;04/06/2011&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;2011-06-04&quot;</code></pre>
+<p>문자열 양식에는 어느정도의 관용이 있는지 살펴보았다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ymd</span>(<span class="st">&quot;2011/06/04&quot;</span>)
+## [1] &quot;2011-06-04&quot;
+<span class="kw">ymd</span>(<span class="st">&quot;2011-06-04&quot;</span>)
+## [1] &quot;2011-06-04&quot;
+<span class="kw">ymd</span>(<span class="st">&quot;20110604&quot;</span>)
+## [1] &quot;2011-06-04&quot;
+<span class="kw">ymd</span>(<span class="st">&quot;110604&quot;</span>)
+## [1] &quot;2011-06-04&quot;
+<span class="kw">ymd</span>(<span class="st">&quot;11.06.04&quot;</span>)
+## [1] &quot;2011-06-04&quot;
+<span class="kw">ymd</span>(<span class="st">&quot;11,06,04&quot;</span>)
+## [1] &quot;2011-06-04&quot;
+<span class="kw">ymd</span>(<span class="st">&quot;11_06.04&quot;</span>) <span class="co"># ?</span>
+## [1] &quot;2011-06-04&quot;
+<span class="kw">ymd</span>(<span class="st">&quot;2011  06  04&quot;</span>) <span class="co"># ㅋㅋ?</span>
+## [1] &quot;2011-06-04&quot;
+<span class="kw">ymd</span>(<span class="st">&quot;2011!?06??!04&quot;</span>) <span class="co"># !?</span>
+## [1] &quot;2011-06-04&quot;
+<span class="kw">ymd</span>(<span class="st">&quot;2011 =06??04&quot;</span>) <span class="co"># -_-?</span>
+## [1] &quot;2011-06-04&quot;
+<span class="kw">ymd</span>(<span class="st">&quot;11 No 06 way 04&quot;</span>) <span class="co"># No way!</span>
+## [1] &quot;2011-06-04&quot;</code></pre></div>
+<p>lubridate package 설명서에는<br />
+<strong>heterogeneous format(불균일한 양식)</strong>에 대한 다양한 준비들이 되어있음을 강조한 문구가 담겨 있는 걸 보았다.<br />
+이처럼 인간의 실수는 웬만하면 커버할 듯한 위용이다.</p>
+<h3 id="dates-times-객체-만들기-1">Dates + Times 객체 만들기</h3>
+<p>&quot;2011년 6월 4일&quot; 에 구체적인 시각까지 더해서<br />
+&quot;2011년 6월 4일 13시 30분 50초&quot; 를 R에서 만들어 보겠다.</p>
+<p>시각까지 더해진 정보는 Date class 로 정보를 담을 수 없다.<br />
+즉 <code>as.Date()</code> 함수로 2011년 6월 4일 13시 30분 50초 정보를 만들 수 없다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.Date</span>(<span class="st">&quot;2011-06-04 13:30:50&quot;</span>) <span class="co"># 시각정보가 사라짐</span></code></pre></div>
+<pre><code>## [1] &quot;2011-06-04&quot;</code></pre>
+<p>이때부턴 포직스(POSIX) 클래스를 대중적으로 이용하는것으로 알고 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.POSIXct</span>(<span class="st">&quot;2011-06-04 13:30:50&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;2011-06-04 13:30:50 KST&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp &lt;-<span class="st"> </span><span class="kw">as.POSIXlt</span>(<span class="st">&quot;2011-06-04 13:30:50&quot;</span>) <span class="co"># list 기반</span></code></pre></div>
+<p>이번엔 lubridate package 의 경우이다.<br />
+lubridate package 에는 &quot;y&quot;, &quot;m&quot;, &quot;d&quot; 심볼 뿐만 아니라 &quot;h&quot;, &quot;m&quot;, &quot;s&quot; 역시 준비되어 있다.<br />
+각각 hour, minute, second 로 이해할 수 있다.<br />
+위의 설명했던 대로 &quot;y&quot;, &quot;m&quot;, &quot;d&quot; 와 &quot;h&quot;, &quot;m&quot;, &quot;s&quot; 를 잘 조합하여 사용하면<br />
+비교적 편하게 &quot;2011년 6월 4일 13시 30분 50초&quot; 정보를 담을 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ymd_hms</span>(<span class="st">&quot;2011-06-04 13:30:50&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;2011-06-04 13:30:50 UTC&quot;</code></pre>
+<p><code>as.POSIXct()</code> 와 비교해볼 때 날짜시각 객체를 만드는 방법이 별반 틀릴 것이 없다.<br />
+만 조금 더 융통성이 있게 사용할 수 있는 점들이 몇 가지 눈에 띈다.</p>
+<p>만약 분,초 단위의 정보가 없는 경우 &quot;2011년 6월 4일 13시&quot; 의 정보가 투입된다고 가정하면 어떨까?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ymd_h</span>(<span class="st">&quot;2011-06-04 13&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;2011-06-04 13:00:00 UTC&quot;</code></pre>
+<p><code>ymd_hms()</code> 에서 &quot;m&quot;, &quot;s&quot; 심볼을 제외한 <code>ymd_h()</code> 함수를 이용해 파싱하면 된다.<br />
+하지만 <code>as.POSIXct()</code> 으로 <code>&quot;2011-06-04 13&quot;</code> 를 파싱하는 방법은 조금 고민을 해야하거나 투입되는 문자열 자체를 사전에 건드려야 하는 과정이 필요하다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.POSIXct</span>(<span class="st">&quot;2011-06-04 13&quot;</span>) <span class="co"># No</span>
+## [1] &quot;2011-06-04 KST&quot;
+<span class="kw">as.POSIXct</span>(<span class="st">&quot;2011-06-04 13:00:00&quot;</span>) <span class="co"># Yes</span>
+## [1] &quot;2011-06-04 13:00:00 KST&quot;</code></pre></div>
+<p>이런 예시로 볼 때 lubridate package 는 사용자 관점으로 친숙한 도구들이 어럿 준비되어 있다.<br />
+이외에도 heterogeneous format 에 대한 대비 역시 날짜 + 시각 데이터에도 적용된다.</p>
+<h2 id="부분정보-추출-extracting-information">부분정보 추출 (Extracting information)</h2>
+<p>lubridate package 에는 부분정보를 추출하기 위한 간편 함수들이 여럿 준비되어 있다.<br />
+<code>second()</code>, <code>minute()</code>, <code>hour()</code>, <code>day()</code>, <code>wday()</code>, <code>yday()</code>, <code>week()</code>, <code>month()</code>, <code>year()</code> 처럼 함수명칭도 상식적으로 이해하기 쉬운 것들이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ld1 &lt;-<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2011-06-04 13:30:50&quot;</span>)
+
+<span class="kw">year</span>(ld1)
+## [1] 2011
+<span class="kw">month</span>(ld1)
+## [1] 6
+<span class="kw">day</span>(ld1)
+## [1] 4
+<span class="kw">wday</span>(ld1)
+## [1] 7
+<span class="kw">yday</span>(ld1)
+## [1] 155
+<span class="kw">hour</span>(ld1)
+## [1] 13
+<span class="kw">minute</span>(ld1)
+## [1] 30
+<span class="kw">second</span>(ld1)
+## [1] 50</code></pre></div>
+<p>특히 month, wday 의 경우 <code>label</code> 인자를 가지고 있는데 이를 <code>TRUE</code> 로 설정할 경우에</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">month</span>(ld1, <span class="dt">label =</span> T)</code></pre></div>
+<pre><code>## [1] Jun
+## 12 Levels: Jan &lt; Feb &lt; Mar &lt; Apr &lt; May &lt; Jun &lt; Jul &lt; Aug &lt; Sep &lt; ... &lt; Dec</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wday</span>(ld1, <span class="dt">label =</span> T)</code></pre></div>
+<pre><code>## [1] Sat
+## Levels: Sun &lt; Mon &lt; Tues &lt; Wed &lt; Thurs &lt; Fri &lt; Sat</code></pre>
+<p>월, 요일의 명칭을 factor 로 볼 수 있다.</p>
+<h3 id="부분정보-수정">부분정보 수정</h3>
+<p>&quot;2011년 6월 4일 13:30:50&quot; 로 저장되어있던 <code>ld1</code> 에 대해 시각(hour)을 10시로 바꾸려면 어떻게 하여야 할까?<br />
+내가볼 때 가장 간단한 방법은 부분정보 추출시 사용했던 간편함수들과 assign 연산자를 조합시켜 변경하는 방법이다.<br />
+아래처럼 사용하면 된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hour</span>(ld1) &lt;-<span class="st"> </span><span class="dv">10</span>
+ld1</code></pre></div>
+<pre><code>## [1] &quot;2011-06-04 10:30:50 UTC&quot;</code></pre>
+<p><code>update()</code> 제너릭 함수를 사용할 수도 있는데, 엄밀히 말하면 <code>update.POSIXt()</code> 함수를 이용하는 방법도 있다.<br />
+아래 코드는 <code>update()</code> 함수를 이용해 10시로 변경된 <code>ld1</code> 을 다시 13로 되돌리는 코드이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ld1 &lt;-<span class="st"> </span><span class="kw">update</span>(ld1, <span class="dt">hour =</span> <span class="dv">13</span>)
+ld1</code></pre></div>
+<pre><code>## [1] &quot;2011-06-04 13:30:50 UTC&quot;</code></pre>
+<p>POSIXlt class 인 경우엔 <code>$</code> 와 assign operator 를 조합해 사용할 수 있는데 이 또한 매력적인 방법이라 생각된다.<br />
+하지만 아쉽게도 <code>ld1</code> 는 POSIXct class 이므로 <code>$</code> 가 바로 먹히지는 않는다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ld1$hour <span class="co"># error</span></code></pre></div>
+<p>굳이 <code>$</code> 과 assign operator 를 조합해 사용하고 싶다면 <code>as.POSIXlt()</code> 를 한번 거쳐야 할 것이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ld2 &lt;-<span class="st"> </span><span class="kw">as.POSIXlt</span>(ld1)
+ld2$hour &lt;-<span class="st"> </span><span class="dv">10</span>
+ld2</code></pre></div>
+<pre><code>## [1] &quot;2011-06-04 10:30:50 UTC&quot;</code></pre>
+<h2 id="날짜시각에-대한-산술연산">날짜시각에 대한 산술연산</h2>
+<p>lubridate 와 같은 패키지를 공부하는 목적 중 가장 중요한 특징이 아닐까 싶다.<br />
+날짜 + 시각에 대한 산술연산은 매우 민감하고도, 생각보다 짜증 나는 문제이다.</p>
+<p>사과 30개가 있는데, 사과 2개를 더하면 32개가 된다.<br />
+1월 30일인데, 2틀을 더하면(지나면) 32일이 될까?<br />
+개인적으론 32일이 되어버렸으면 좋겠지만 32일이란 건 존재하지 않는다. 2월 1일이 된다.</p>
+<p>나처럼 단순무식한 것을 좋아하는 사람에겐 날짜 + 시각에 대한 산술연산은 많은 피로도를 줄 수 있다.<br />
+lubridate package 는 이를 예방할 수 있는 강력한 함수들이 많이 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ymd</span>(<span class="st">&quot;2016-01-30&quot;</span>) +<span class="st"> </span><span class="kw">days</span>(<span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] &quot;2016-02-01&quot;</code></pre>
+<p>위의 코드는 1월 30일인데, 2틀을 더하면(지나면)<br />
+의 문제를 풀어주는 코드이다.</p>
+<p>특정기간이 지나면 무슨일이 되는지 이렇게 산술연산이 가능하다.</p>
+<p>지금까지 단일시점 한개의 날짜시각 데이터를 가지고 놀았는데<br />
+이런 식으로 R의 Vectorization 특징을 활용하여 복수개의 시점을 만들 수도 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ymd</span>(<span class="st">&quot;2016-01-30&quot;</span>) -<span class="st"> </span><span class="kw">days</span>(<span class="dv">1</span>:<span class="dv">30</span>)</code></pre></div>
+<pre><code>##  [1] &quot;2016-01-29&quot; &quot;2016-01-28&quot; &quot;2016-01-27&quot; &quot;2016-01-26&quot; &quot;2016-01-25&quot;
+##  [6] &quot;2016-01-24&quot; &quot;2016-01-23&quot; &quot;2016-01-22&quot; &quot;2016-01-21&quot; &quot;2016-01-20&quot;
+## [11] &quot;2016-01-19&quot; &quot;2016-01-18&quot; &quot;2016-01-17&quot; &quot;2016-01-16&quot; &quot;2016-01-15&quot;
+## [16] &quot;2016-01-14&quot; &quot;2016-01-13&quot; &quot;2016-01-12&quot; &quot;2016-01-11&quot; &quot;2016-01-10&quot;
+## [21] &quot;2016-01-09&quot; &quot;2016-01-08&quot; &quot;2016-01-07&quot; &quot;2016-01-06&quot; &quot;2016-01-05&quot;
+## [26] &quot;2016-01-04&quot; &quot;2016-01-03&quot; &quot;2016-01-02&quot; &quot;2016-01-01&quot; &quot;2015-12-31&quot;</code></pre>
+<p>잠깐 <code>days()</code> 함수명칭을 살펴보자.<br />
+위에서 부분정보 추출 간편함수중 <code>day()</code> 가 있었는데 마지막에 &quot;s&quot; 가 붙음으로써 쓰임이 달라진 것을 볼 수 있다.<br />
+<code>days()</code> 뿐만 아니라 <code>seconds()</code>, <code>minutes()</code>, <code>hours()</code>, <code>weeks()</code>, <code>years()</code>, <code>milliseconds()</code>, <code>microseconds()</code>, <code>nanoseconds()</code>, <code>picoseconds()</code> 의 함수들이 이와 같은 산술연산에서 사용할 수 있는 패밀리이다.</p>
+<p><a href="https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html">Do more with dates and times in R with lubridate 1.3.0</a> 에서 꽤 감명깊은(?) 예제를 발견했는데</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ymd</span>(<span class="st">&quot;2013-01-31&quot;</span>) +<span class="st"> </span><span class="kw">months</span>(<span class="dv">0</span>:<span class="dv">11</span>)</code></pre></div>
+<pre><code>##  [1] &quot;2013-01-31&quot; NA           &quot;2013-03-31&quot; NA           &quot;2013-05-31&quot;
+##  [6] NA           &quot;2013-07-31&quot; &quot;2013-08-31&quot; NA           &quot;2013-10-31&quot;
+## [11] NA           &quot;2013-12-31&quot;</code></pre>
+<p>월 중에 31일이이 존재하지 않는 월이 어디인지를 알 수 있게 된다.</p>
+<h2 id="lubridate-와-dplyr-간의-조합">lubridate 와 dplyr 간의 조합</h2>
+<p>lubridate 이든 xts 이든 간에<br />
+결국은 이러한 Time index 정보들이 담긴 Table 형태에 정보들을 가공하고 처리하게 될 가능성이 매우 높다.<br />
+dplyr package 와 조합해 현업에서 어떻게 시너지를 일으킬 지를<br />
+보잘것없는 예제를 통해 조금이나마 확인해 보고 싶다.<br />
+lubridate package 에 내장된 데이터셋 <code>lakers</code> 를 이용해 보았다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">data</span>(lakers)
+
+lakers &lt;-<span class="st"> </span>lakers %&gt;%<span class="st"> </span>tbl_df
+lakers</code></pre></div>
+<pre><code>## # A tibble: 34,624 &lt;U+00D7&gt; 13
+##        date opponent game_type  time period      etype  team
+##       &lt;int&gt;    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt; &lt;chr&gt;
+## 1  20081028      POR      home 12:00      1  jump ball   OFF
+## 2  20081028      POR      home 11:39      1       shot   LAL
+## 3  20081028      POR      home 11:37      1    rebound   LAL
+## 4  20081028      POR      home 11:25      1       shot   LAL
+## 5  20081028      POR      home 11:23      1    rebound   LAL
+## 6  20081028      POR      home 11:22      1       shot   LAL
+## 7  20081028      POR      home 11:22      1       foul   POR
+## 8  20081028      POR      home 11:22      1 free throw   LAL
+## 9  20081028      POR      home 11:00      1       foul   LAL
+## 10 20081028      POR      home 10:53      1       shot   POR
+## # ... with 34,614 more rows, and 6 more variables: player &lt;chr&gt;,
+## #   result &lt;chr&gt;, points &lt;int&gt;, type &lt;chr&gt;, x &lt;int&gt;, y &lt;int&gt;</code></pre>
+<p>잘 보면 <code>date</code>, <code>time</code> 변수가 서로 나뉘어 있다.<br />
+이를 지금까지 배운 lubridate 함수들을 이용하여 통합시켜 관리해보고 싶었다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lakers &lt;-<span class="st"> </span>lakers %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">date =</span> <span class="kw">paste</span>(date, time) %&gt;%<span class="st"> </span>ymd_hm) %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">rename</span>(<span class="dt">time_index =</span> date) %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">select</span>(-time)
+
+lakers</code></pre></div>
+<pre><code>## # A tibble: 34,624 &lt;U+00D7&gt; 12
+##             time_index opponent game_type period      etype  team
+##                 &lt;dttm&gt;    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt; &lt;chr&gt;
+## 1  2008-10-28 12:00:00      POR      home      1  jump ball   OFF
+## 2  2008-10-28 11:39:00      POR      home      1       shot   LAL
+## 3  2008-10-28 11:37:00      POR      home      1    rebound   LAL
+## 4  2008-10-28 11:25:00      POR      home      1       shot   LAL
+## 5  2008-10-28 11:23:00      POR      home      1    rebound   LAL
+## 6  2008-10-28 11:22:00      POR      home      1       shot   LAL
+## 7  2008-10-28 11:22:00      POR      home      1       foul   POR
+## 8  2008-10-28 11:22:00      POR      home      1 free throw   LAL
+## 9  2008-10-28 11:00:00      POR      home      1       foul   LAL
+## 10 2008-10-28 10:53:00      POR      home      1       shot   POR
+## # ... with 34,614 more rows, and 6 more variables: player &lt;chr&gt;,
+## #   result &lt;chr&gt;, points &lt;int&gt;, type &lt;chr&gt;, x &lt;int&gt;, y &lt;int&gt;</code></pre>
+<p>위의 코드를 설명하면</p>
+<ol type="1">
+<li><code>date</code>, <code>time</code> 두변수를 붙인 문자열에 대해 <code>ymd_hm()</code> 함수로 넘긴 후</li>
+<li><code>time_index</code> 라는 변수에 담고,<br />
+</li>
+<li><code>date</code>, <code>time</code> 두 변수를 제외한 것이다.</li>
+</ol>
+<p>이렇게 알맞게 변형된 <code>lakers</code> 를 이용해 좀 더 의미가 있을만한 탐색을 해보겠다.</p>
+<h3 id="group-by-연산">Group by 연산</h3>
+<p>첫번째는 Group by 연산이다.<br />
+월별 평균을 <code>x</code>, <code>y</code> 변수에 대해서 계산해보겠다.<br />
+이때 우리가 알고있는 <code>month()</code> 함수를 이용하면 아주 간편하게 할 수 있겠다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lakers %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(<span class="kw">month</span>(time_index)) %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_x =</span> <span class="kw">mean</span>(x, <span class="dt">na.rm =</span> T), <span class="dt">mean_y =</span> <span class="kw">mean</span>(y, <span class="dt">na.rm =</span> T))</code></pre></div>
+<pre><code>## # A tibble: 7 &lt;U+00D7&gt; 3
+##   `month(time_index)`   mean_x   mean_y
+##                 &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1                   1 25.49382 13.89279
+## 2                   2 25.01759 13.17499
+## 3                   3 25.51587 13.20571
+## 4                   4 25.38344 13.46396
+## 5                  10 24.92188 13.12500
+## 6                  11 25.47463 13.36926
+## 7                  12 25.05895 13.48262</code></pre>
+<p>연별 평균을 계산하고 싶다면 <code>year()</code> 이용하면 된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lakers %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(<span class="kw">year</span>(time_index)) %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_x =</span> <span class="kw">mean</span>(x, <span class="dt">na.rm =</span> T), <span class="dt">mean_y =</span> <span class="kw">mean</span>(y, <span class="dt">na.rm =</span> T))</code></pre></div>
+<pre><code>## # A tibble: 2 &lt;U+00D7&gt; 3
+##   `year(time_index)`   mean_x   mean_y
+##                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1               2008 25.23402 13.40776
+## 2               2009 25.36407 13.44319</code></pre>
+<h3 id="filter">Filter</h3>
+<p>두번째는 <code>filter()</code> 를 이용해 분석에 사용할 기간을 서브세팅 해보는 예제를 만들어 보고 싶었다.<br />
+아래 코드는 &quot;2008-10-28 12:00:00&quot; 이전의 기간을 서브세팅 하는 코드이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lakers %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(time_index &lt;=<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2008-10-28 12:00:00&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 416 &lt;U+00D7&gt; 12
+##             time_index opponent game_type period      etype  team
+##                 &lt;dttm&gt;    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt; &lt;chr&gt;
+## 1  2008-10-28 12:00:00      POR      home      1  jump ball   OFF
+## 2  2008-10-28 11:39:00      POR      home      1       shot   LAL
+## 3  2008-10-28 11:37:00      POR      home      1    rebound   LAL
+## 4  2008-10-28 11:25:00      POR      home      1       shot   LAL
+## 5  2008-10-28 11:23:00      POR      home      1    rebound   LAL
+## 6  2008-10-28 11:22:00      POR      home      1       shot   LAL
+## 7  2008-10-28 11:22:00      POR      home      1       foul   POR
+## 8  2008-10-28 11:22:00      POR      home      1 free throw   LAL
+## 9  2008-10-28 11:00:00      POR      home      1       foul   LAL
+## 10 2008-10-28 10:53:00      POR      home      1       shot   POR
+## # ... with 406 more rows, and 6 more variables: player &lt;chr&gt;,
+## #   result &lt;chr&gt;, points &lt;int&gt;, type &lt;chr&gt;, x &lt;int&gt;, y &lt;int&gt;</code></pre>
+<p>잘 보면 기존에 레코드는 34624 개 였지만, 서브세팅 된 후 레코드는 416 개로 줄어든 것을 확인할 수 있다.</p>
+<p>만약 &quot;2008-10-28 12:00:00&quot; ~ &quot;2009-03-09 00:33:00&quot; 의 기간에 대해서 서브세팅을 하고싶다면 어떻게 하여야 할까?<br />
+물론 <code>filter()</code> 안에 조건을 하나 더 넣으면 된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lakers %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(time_index &gt;=<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2008-10-28 12:00:00&quot;</span>), time_index &lt;=<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2009-03-09 00:33:00&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 25,554 &lt;U+00D7&gt; 12
+##             time_index opponent game_type period     etype  team
+##                 &lt;dttm&gt;    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;     &lt;chr&gt; &lt;chr&gt;
+## 1  2008-10-28 12:00:00      POR      home      1 jump ball   OFF
+## 2  2008-10-29 12:00:00      LAC      away      1 jump ball   OFF
+## 3  2008-10-29 11:36:00      LAC      away      1      shot   LAL
+## 4  2008-10-29 11:24:00      LAC      away      1      shot   LAC
+## 5  2008-10-29 11:24:00      LAC      away      1   rebound   LAL
+## 6  2008-10-29 11:08:00      LAC      away      1      shot   LAL
+## 7  2008-10-29 10:58:00      LAC      away      1      shot   LAC
+## 8  2008-10-29 10:57:00      LAC      away      1   rebound   LAL
+## 9  2008-10-29 10:41:00      LAC      away      1      shot   LAL
+## 10 2008-10-29 10:40:00      LAC      away      1   rebound   LAC
+## # ... with 25,544 more rows, and 6 more variables: player &lt;chr&gt;,
+## #   result &lt;chr&gt;, points &lt;int&gt;, type &lt;chr&gt;, x &lt;int&gt;, y &lt;int&gt;</code></pre>
+<p>그런데 lubridate package 에는 기간(Time intervals) 에 대해 조금 더 세련된 방법으로 처리할 수 있는 함수들을 제공해 주고 있다.<br />
+<code>interval()</code> 함수와 <code>%within%</code> 연산자를 이용하면 조금 더 직관적인 기간에 대해 서브세팅 할 수 있다.<br />
+아래처럼 말이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inter &lt;-<span class="st"> </span><span class="kw">interval</span>(<span class="kw">ymd_hms</span>(<span class="st">&quot;2008-10-28 12:00:00&quot;</span>), <span class="kw">ymd_hms</span>(<span class="st">&quot;2009-03-09 00:33:00&quot;</span>))
+lakers %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(time_index %within%<span class="st"> </span>inter)</code></pre></div>
+<pre><code>## # A tibble: 25,554 &lt;U+00D7&gt; 12
+##             time_index opponent game_type period     etype  team
+##                 &lt;dttm&gt;    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;     &lt;chr&gt; &lt;chr&gt;
+## 1  2008-10-28 12:00:00      POR      home      1 jump ball   OFF
+## 2  2008-10-29 12:00:00      LAC      away      1 jump ball   OFF
+## 3  2008-10-29 11:36:00      LAC      away      1      shot   LAL
+## 4  2008-10-29 11:24:00      LAC      away      1      shot   LAC
+## 5  2008-10-29 11:24:00      LAC      away      1   rebound   LAL
+## 6  2008-10-29 11:08:00      LAC      away      1      shot   LAL
+## 7  2008-10-29 10:58:00      LAC      away      1      shot   LAC
+## 8  2008-10-29 10:57:00      LAC      away      1   rebound   LAL
+## 9  2008-10-29 10:41:00      LAC      away      1      shot   LAL
+## 10 2008-10-29 10:40:00      LAC      away      1   rebound   LAC
+## # ... with 25,544 more rows, and 6 more variables: player &lt;chr&gt;,
+## #   result &lt;chr&gt;, points &lt;int&gt;, type &lt;chr&gt;, x &lt;int&gt;, y &lt;int&gt;</code></pre>
+<p>2개의 조건을 자질구레하게 정의하는것 보단<br />
+<code>interval()</code> 를 사용한 후자의 방법이 훨씬 직관적일 수 있겠다.</p>
+<p>참고로 덧붙이면 <code>interval()</code> 함수대신 <code>%--%</code> 연산자를 써도 된다.<br />
+<code>%--%</code> 를 &quot;~&quot; 처럼 생각하게 된다면 편할 것 같다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inter &lt;-<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2008-10-28 12:00:00&quot;</span>) %--%<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2009-03-09 00:33:00&quot;</span>)
+lakers %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(time_index %within%<span class="st"> </span>inter)</code></pre></div>
+<pre><code>## # A tibble: 25,554 &lt;U+00D7&gt; 12
+##             time_index opponent game_type period     etype  team
+##                 &lt;dttm&gt;    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;     &lt;chr&gt; &lt;chr&gt;
+## 1  2008-10-28 12:00:00      POR      home      1 jump ball   OFF
+## 2  2008-10-29 12:00:00      LAC      away      1 jump ball   OFF
+## 3  2008-10-29 11:36:00      LAC      away      1      shot   LAL
+## 4  2008-10-29 11:24:00      LAC      away      1      shot   LAC
+## 5  2008-10-29 11:24:00      LAC      away      1   rebound   LAL
+## 6  2008-10-29 11:08:00      LAC      away      1      shot   LAL
+## 7  2008-10-29 10:58:00      LAC      away      1      shot   LAC
+## 8  2008-10-29 10:57:00      LAC      away      1   rebound   LAL
+## 9  2008-10-29 10:41:00      LAC      away      1      shot   LAL
+## 10 2008-10-29 10:40:00      LAC      away      1   rebound   LAC
+## # ... with 25,544 more rows, and 6 more variables: player &lt;chr&gt;,
+## #   result &lt;chr&gt;, points &lt;int&gt;, type &lt;chr&gt;, x &lt;int&gt;, y &lt;int&gt;</code></pre>
+<h2 id="기타-간편-기능-함수들">기타 간편 기능 함수들</h2>
+<h3 id="timezone-인자를-받을-수-있는-now">Timezone 인자를 받을 수 있는 <code>now()</code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">now</span>()</code></pre></div>
+<pre><code>## [1] &quot;2016-09-18 21:35:41 KST&quot;</code></pre>
+<p><code>now()</code> 함수는 <code>Sys.time()</code> 와 거의 기능이 똑같다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">now</span>(<span class="st">&quot;America/New_York&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;2016-09-18 08:35:41 EDT&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?<span class="kw">now</span>(<span class="st">&quot;UTC&quot;</span>)</code></pre></div>
+<p>단 위의 예제처럼<br />
+Timezone 변경에 대해서 <code>Sys.time()</code> 과는 다르게 <code>now()</code> 는 이를 반영한 날짜 + 시각을 반환할 수 있다는 차이가 있다.</p>
+<h3 id="오전-오후-am-pm">오전? 오후? : <code>am()</code>, <code>pm()</code></h3>
+<p>현 시간이 오후인지 오전인지 확인하기 위해서</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ld1</code></pre></div>
+<pre><code>## [1] &quot;2011-06-04 13:30:50 UTC&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hour</span>(ld1) &gt;=<span class="st"> </span><span class="dv">12</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>와 같은 코드를 사용하기 보단</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">am</span>(ld1)</code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pm</span>(ld1)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>요런식으로 활용해 볼 수 있겠다.</p>
+<h3 id="시각에-대한-올림-내림-반올림">시각에 대한 올림, 내림, 반올림</h3>
+<p>제목대로 시각에 대한 올림, 내림, 반올림은 생각만해도 끔찍하다.<br />
+<code>round_date()</code>, <code>floor_date()</code>, <code>ceiling_date()</code> 함수를 활용하는게 정서상 좋을 것이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ld1
+## [1] &quot;2011-06-04 13:30:50 UTC&quot;
+
+<span class="kw">round_date</span>(ld1, <span class="st">&quot;hour&quot;</span>)
+## [1] &quot;2011-06-04 14:00:00 UTC&quot;
+<span class="kw">round_date</span>(ld1, <span class="st">&quot;day&quot;</span>)
+## [1] &quot;2011-06-05 UTC&quot;
+
+<span class="kw">floor_date</span>(ld1, <span class="st">&quot;hour&quot;</span>)
+## [1] &quot;2011-06-04 13:00:00 UTC&quot;
+<span class="kw">floor_date</span>(ld1, <span class="st">&quot;day&quot;</span>)
+## [1] &quot;2011-06-04 UTC&quot;
+
+<span class="kw">ceiling_date</span>(ld1, <span class="st">&quot;hour&quot;</span>)
+## [1] &quot;2011-06-04 14:00:00 UTC&quot;
+<span class="kw">ceiling_date</span>(ld1, <span class="st">&quot;day&quot;</span>)
+## [1] &quot;2011-06-05 UTC&quot;</code></pre></div>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://rpubs.com/davoodastaraky/lubridate">Woking with Dates and Times with lubridate in R</a></li>
+<li><a href="https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html">Do more with dates and times in R with lubridate 1.3.0</a></li>
+</ul>
+</div>
+    <div class="share-page">
+    <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/09/18/lubridate_package.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html">회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/07/23/Crawling_image.html">R에서 특정 웹페이지의 이미지 파일 Crawling 하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html">R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/12/S3.html">R에서 S3 최소재현예제</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/06/integate_function.html">R에서 구분구적법 적분과정 시뮬레이션 및 integrate() 함수 알아보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/05/26/CLT.html">R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/r/2016/09/16/Anscombe_dataset.html">&laquo; 회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</a>
+  
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+
+        var disqus_shortname = "lovetoken";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 lubridate package 에 대해";
+        var disqus_title = "R에서 lubridate package 에 대해";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    /* ]]> */
+    </script>
+</div>
+
+                <footer>
+                    &copy; Lovetoken
+                     
+                    - <a href="https://github.com/lovetoken">https://github.com/lovetoken</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>                    
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>

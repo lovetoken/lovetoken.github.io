@@ -135,7 +135,7 @@
 
 
 <div class="content">
-    <div class="post"><h1 id="a-목표">A) 목표</h1>
+    <div class="post"><h2 id="a-목표">A) 목표</h2>
 <p>크롤링과 같은 실전은 경험이 전무하였는데, 최근 친구의 질문 덕분에 제대로 된 크롤링 경험을 쌓을 수 있었다.<br />
 대단한 경험은 아니지만 나에게 있어 신선했던 경험을 공유하기 위해 정리해 본다.</p>
 <p>본 포스팅 글은 특정 웹페이지의 이미지 파일들을 내 컴퓨터 하드로 저장시키기 위한 R 코드를 작성하는것을 목표로 한다.<br />
@@ -145,7 +145,7 @@
 <blockquote>
 <p><a href="https://www.google.co.kr/search?biw=1436&amp;bih=782&amp;tbm=isch&amp;sa=1&amp;q=men&amp;oq=men&amp;gs_l=img.3...4008.4572.0.5170.0.0.0.0.0.0.0.0..0.0....0...1c.1.64.img..0.0.0.id2CbaNm_HQ" class="uri">https://www.google.co.kr/search?biw=1436&amp;bih=782&amp;tbm=isch&amp;sa=1&amp;q=men&amp;oq=men&amp;gs_l=img.3...4008.4572.0.5170.0.0.0.0.0.0.0.0..0.0....0...1c.1.64.img..0.0.0.id2CbaNm_HQ</a></p>
 </blockquote>
-<h2 id="a-1-준비">A-1) 준비</h2>
+<h3 id="a-1-준비">A-1) 준비</h3>
 <p>우선 이미지 파일만을 크롤링 하는 방법에 대해서 구상할 필요가 있다.<br />
 크롤링 컨셉은 이렇게 잡았보았다.</p>
 <p>첫번째 : 웹페이지의 HTML 코드를 파싱하여 R 에서 가공할 수 있는 형태로 변환한다.<br />
@@ -156,8 +156,8 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RCurl)
 <span class="kw">library</span>(XML)
 <span class="kw">library</span>(dplyr) <span class="co"># Optional package (for pipe operator)</span></code></pre></div>
-<h1 id="b-시작">B) 시작</h1>
-<h2 id="b-1-img-tag-의-src-인자값-크롤링">B-1) img tag 의 src 인자값 크롤링</h2>
+<h2 id="b-시작">B) 시작</h2>
+<h3 id="b-1-img-tag-의-src-인자값-크롤링">B-1) img tag 의 src 인자값 크롤링</h3>
 <p>R 내에서 웹 사이트의 html code 를 character 형식으로 가공하기 위해선 아래의 절차가 필요했다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">htmlcode &lt;-<span class="st"> </span><span class="kw">getURL</span>(<span class="st">&quot;https://www.google.co.kr/search?biw=1436&amp;bih=782&amp;tbm=isch&amp;sa=1&amp;q=men&amp;oq=men&amp;gs_l=img.3...4008.4572.0.5170.0.0.0.0.0.0.0.0..0.0....0...1c.1.64.img..0.0.0.id2CbaNm_HQ&quot;</span>) %&gt;%
 <span class="st">    </span>htmlParse %&gt;%
@@ -213,7 +213,7 @@ src_href &lt;-<span class="st"> </span>img_tag %&gt;%<span class="st"> </span><s
 예를들어 &quot;http:&quot; 로 시작하는것만 소비해야 정상적인 이미지 파일 다운로드가 가능할 것이다.<br />
 첫번째 링크 /textinputassistant/tia.png 는 루트에서 직접적으로 가져오는 링크 이므로 우리가 접근할 수 있는 이미지가 아니다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">src_href &lt;-<span class="st"> </span>src_href[-<span class="dv">1</span>]</code></pre></div>
-<h2 id="b-2-download-image-file">B-2) download image file</h2>
+<h3 id="b-2-download-image-file">B-2) download image file</h3>
 <p>이후의 예제는 20개의 준비된 이미지 파일링크를 반복문을 돌려 자신의 하드로 가져오는 코드이다.<br />
 우선 한개의 파일을 다운로드 하는방법부터 살펴보면</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">download.file</span>(src_href[<span class="dv">1</span>], <span class="st">&quot;./output/test_image1&quot;</span>)</code></pre></div>
@@ -267,6 +267,23 @@ src_href &lt;-<span class="st"> </span>img_tag %&gt;%<span class="st"> </span><s
                 <div class="panel-body">
                 <h4>Related Posts</h4>
                 <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/09/18/lubridate_package.html">R에서 lubridate package 에 대해</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html">회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</a>
@@ -379,16 +396,6 @@ src_href &lt;-<span class="st"> </span>img_tag %&gt;%<span class="st"> </span><s
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html">R에서 수익률 구해보며 lag(), diff() 함수 알아보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
             
         
     
