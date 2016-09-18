@@ -231,7 +231,6 @@ R studio 의 Hadley Wickham 에 의해 유지보수 되고 있다고 해서 그 
 <p>이때부턴 포직스(POSIX) 클래스를 대중적으로 이용하는것으로 알고 있다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.POSIXct</span>(<span class="st">&quot;2011-06-04 13:30:50&quot;</span>)</code></pre></div>
 <pre><code>## [1] &quot;2011-06-04 13:30:50 KST&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp &lt;-<span class="st"> </span><span class="kw">as.POSIXlt</span>(<span class="st">&quot;2011-06-04 13:30:50&quot;</span>) <span class="co"># list 기반</span></code></pre></div>
 <p>이번엔 lubridate package 의 경우이다.<br />
 lubridate package 에는 &quot;y&quot;, &quot;m&quot;, &quot;d&quot; 심볼 뿐만 아니라 &quot;h&quot;, &quot;m&quot;, &quot;s&quot; 역시 준비되어 있다.<br />
 각각 hour, minute, second 로 이해할 수 있다.<br />

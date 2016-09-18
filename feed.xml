@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 18 Sep 2016 21:43:03 +0900</pubDate>
-    <lastBuildDate>Sun, 18 Sep 2016 21:43:03 +0900</lastBuildDate>
+    <pubDate>Sun, 18 Sep 2016 21:54:31 +0900</pubDate>
+    <lastBuildDate>Sun, 18 Sep 2016 21:54:31 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -107,7 +107,6 @@ R studio 의 Hadley Wickham 에 의해 유지보수 되고 있다고 해서 그 
 &lt;p&gt;이때부턴 포직스(POSIX) 클래스를 대중적으로 이용하는것으로 알고 있다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;as.POSIXct&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13:30:50&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04 13:30:50 KST&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;temp &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;as.POSIXlt&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13:30:50&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# list 기반&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;이번엔 lubridate package 의 경우이다.&lt;br /&gt;
 lubridate package 에는 &amp;quot;y&amp;quot;, &amp;quot;m&amp;quot;, &amp;quot;d&amp;quot; 심볼 뿐만 아니라 &amp;quot;h&amp;quot;, &amp;quot;m&amp;quot;, &amp;quot;s&amp;quot; 역시 준비되어 있다.&lt;br /&gt;
 각각 hour, minute, second 로 이해할 수 있다.&lt;br /&gt;
