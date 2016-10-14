@@ -5,9 +5,144 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 18 Sep 2016 21:54:31 +0900</pubDate>
-    <lastBuildDate>Sun, 18 Sep 2016 21:54:31 +0900</lastBuildDate>
+    <pubDate>Fri, 14 Oct 2016 21:56:55 +0900</pubDate>
+    <lastBuildDate>Fri, 14 Oct 2016 21:56:55 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기</title>
+        <description>&lt;h1 id=&quot;a-단계-구분도---choropleth-map&quot;&gt;A) 단계 구분도 - Choropleth Map&lt;/h1&gt;
+&lt;p&gt;데이터 시각화를 주제로 모습을 자주 보이는 단계 구분도 (Choropleth Map)에 대해서 알아보고자 한다.&lt;br /&gt;
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Choropleth_map&quot;&gt;Choropleth map&lt;/a&gt;은 지역당 특정주제의 통계치를 활용해 시각적인 요소를 가미하여 나타낸 지도로서, 예시를 하나 들자면 국가별 인구의 밀도를 수치에 따라 색깔의 농도를 달리하여 나타내는 지도로 들 수 있다.&lt;/p&gt;
+&lt;p&gt;그림으로 표현하면 다음과 같다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/choro1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;꽤 괜찮은 데이터 지도(data map)를 그려주는 Natural Breaks란? [http://gisutd.tistory.com/7]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;이런 단계구분도를 R을 이용해 구현해 본 예제는 아래와 같다.&lt;/p&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/choro2.png&quot; /&gt;
+&lt;/center&gt;
+&lt;blockquote&gt;
+&lt;p&gt;R Graphics Cookbook [Programming Insight] - 300page&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;b-r을-이용한-간단한-예제-실습&quot;&gt;B) R을 이용한 간단한 예제 실습&lt;/h1&gt;
+&lt;p&gt;위 예제로 든 것을 실제로 만들어 보며 실습을 해보았다.&lt;br /&gt;
+R의 여러 패키지의 도움을 빌렸다.&lt;br /&gt;
+&amp;quot;maps&amp;quot;, &amp;quot;dplyr&amp;quot;, &amp;quot;&amp;quot;ggplot2&amp;quot; 3개의 패키지 도움을 빌리기 위해 로드한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# install.packages(&amp;quot;maps&amp;quot;)&lt;/span&gt;
+&lt;span class=&quot;co&quot;&gt;# install.packages(&amp;quot;dplyr&amp;quot;)&lt;/span&gt;
+&lt;span class=&quot;co&quot;&gt;# install.packages(&amp;quot;ggplot2&amp;quot;)&lt;/span&gt;
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;ggplot2&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;maps&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;dplyr&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&amp;quot;maps&amp;quot; 패키지에는 지도를 그리기 위한 위도, 경도 및 이에 매칭되는 나라에 대한 정보를 데이터프레임셋으로 만들 수 있도록 해주는데,&lt;br /&gt;
+모든 나라의 지도정보가 담겨있으므로 Choropleth map 으로 그리고 싶은 나라를 서브세팅하여 전처리하는 것이 가능하다.&lt;br /&gt;
+그래픽 엔진으로는 &amp;quot;ggplot2&amp;quot; 패키지를 선택해 Choropleth map을 구현해 볼 것이며,&lt;br /&gt;
+&amp;quot;dplyr&amp;quot; 패키지는 데이터 전처리의 간편함수들을 이용하기 위함이다.&lt;/p&gt;
+&lt;p&gt;바로 위에 예시로 그린 나라는 미국이다.&lt;br /&gt;
+미국만을 서브세팅 하여 그리는 예제만 해보고자 한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;map_data()&lt;/code&gt; 는 해당지도의 경도, 위도, 지역, 지역명, 지도의 다각형을 그릴 수 있게 해 주는 서브정보들이 담겨있는 데이터프레임을 반환시켜주는데 ggplot2 패키지의 함수임을 유의하며 사용했다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;states_map &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;map_data&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;state&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;map_data 의 첫 번째 인자를 &lt;code&gt;&amp;quot;state&amp;quot;&lt;/code&gt; 로 하여 미국의 주 시에 대한 정보의 데이터프레임을 &lt;code&gt;states_map&lt;/code&gt; 명칭의 객체로 저장했다.&lt;br /&gt;
+참고로 &lt;code&gt;&amp;quot;state&amp;quot;&lt;/code&gt; 는 미국의 주, &lt;code&gt;&amp;quot;world&amp;quot;&lt;/code&gt; 는 전세계, &lt;code&gt;&amp;quot;france&amp;quot;&lt;/code&gt; 는 프랑스 지도 정보가 반환된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;head&lt;/span&gt;(states_map, &lt;span class=&quot;dt&quot;&gt;n =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;20&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##         long      lat group order  region subregion
+## 1  -87.46201 30.38968     1     1 alabama      &amp;lt;NA&amp;gt;
+## 2  -87.48493 30.37249     1     2 alabama      &amp;lt;NA&amp;gt;
+## 3  -87.52503 30.37249     1     3 alabama      &amp;lt;NA&amp;gt;
+## 4  -87.53076 30.33239     1     4 alabama      &amp;lt;NA&amp;gt;
+## 5  -87.57087 30.32665     1     5 alabama      &amp;lt;NA&amp;gt;
+## 6  -87.58806 30.32665     1     6 alabama      &amp;lt;NA&amp;gt;
+## 7  -87.59379 30.30947     1     7 alabama      &amp;lt;NA&amp;gt;
+## 8  -87.59379 30.28655     1     8 alabama      &amp;lt;NA&amp;gt;
+## 9  -87.67400 30.27509     1     9 alabama      &amp;lt;NA&amp;gt;
+## 10 -87.81152 30.25790     1    10 alabama      &amp;lt;NA&amp;gt;
+## 11 -87.88026 30.24644     1    11 alabama      &amp;lt;NA&amp;gt;
+## 12 -87.92037 30.24644     1    12 alabama      &amp;lt;NA&amp;gt;
+## 13 -87.95475 30.24644     1    13 alabama      &amp;lt;NA&amp;gt;
+## 14 -88.00632 30.24071     1    14 alabama      &amp;lt;NA&amp;gt;
+## 15 -88.01778 30.25217     1    15 alabama      &amp;lt;NA&amp;gt;
+## 16 -88.01205 30.26936     1    16 alabama      &amp;lt;NA&amp;gt;
+## 17 -87.99486 30.27509     1    17 alabama      &amp;lt;NA&amp;gt;
+## 18 -87.95475 30.27509     1    18 alabama      &amp;lt;NA&amp;gt;
+## 19 -87.90318 30.28082     1    19 alabama      &amp;lt;NA&amp;gt;
+## 20 -87.82870 30.28655     1    20 alabama      &amp;lt;NA&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;데이터의 앞부분 일부를 보니,&lt;br /&gt;
+&amp;quot;alabama&amp;quot; 지역의 다각형을 그리기 위한 경도(long), 위도(lat) 정보가 있는 것을 볼 수 있다.&lt;br /&gt;
+물론 alabama 만 있는 것이 아니라 수많은 미국의 주 region 이 존재하는 데이터이다.&lt;br /&gt;
+이를 ggplot2 패키지를 이용해 구체화 시키는 코드를 아래와 같이 작성해 보았다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;ggplot&lt;/span&gt;(states_map, &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(long, lat, &lt;span class=&quot;dt&quot;&gt;group =&lt;/span&gt; group)) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_polygon&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;color =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;black&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;fill =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;gray&amp;quot;&lt;/span&gt;) +
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;coord_map&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;polyconic&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/choro3.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;code&gt;ggplot()&lt;/code&gt; 의 첫번째 인자에는 본체 데이터를 입력하고, 두번째 인자에 &lt;code&gt;aes(x = long, y = lat)&lt;/code&gt; 을 지정하여 위도, 경도를 각각 x축과 y축에 매칭시킨다.&lt;br /&gt;
+다음으로 &lt;code&gt;geom_polygon()&lt;/code&gt; 와 &lt;code&gt;coord_map()&lt;/code&gt; 함수를 통해 다각형을 그리는 명령을 넣어 구체화 시키면 ggplot2 packages를 이용한 결과물이 위와 같이 나오게 된다.&lt;/p&gt;
+&lt;p&gt;그런데 위의 결과물은 단지 지도의 형태만을 볼 수 있고,&lt;br /&gt;
+주시내별 어떠한 정보도 담겨있지 않은 공통된 회색이기 때문에&lt;br /&gt;
+choropleth map 이라고 할 수 없는 상태이다.&lt;br /&gt;
+주시내별 어떠한 정보를 담기 위하여 R의 내장데이터인 &lt;code&gt;USArrests&lt;/code&gt; 를 활용해 보았다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;head&lt;/span&gt;(USArrests)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##            Murder Assault UrbanPop Rape
+## Alabama      13.2     236       58 21.2
+## Alaska       10.0     263       48 44.5
+## Arizona       8.1     294       80 31.0
+## Arkansas      8.8     190       50 19.5
+## California    9.0     276       91 40.6
+## Colorado      7.9     204       78 38.7&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;USArrests&lt;/code&gt; 객체는 미국의 주시내별 폭력∙범죄율 정보를 담고 있는 data.frame 빌트인 객체이다.&lt;br /&gt;
+이를 이용하여 미국의 어떠한 마을에 범죄율이 강하고 적은지를 쉽게 확인할 수 있는 choropleth map 을 만들어 보면 의미 있는 결과물이 나올 것이라 예상된다.&lt;br /&gt;
+앞에서 사용했던 미국 주시내별 지도위치정보를 담은 데이터프레임셋 &lt;code&gt;states_map&lt;/code&gt; 를 다시 가지고 와서&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;states_map &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;map_data&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;state&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;region 변수와 내장데이터셋 &lt;code&gt;USArrests&lt;/code&gt; 의 region 변수를 &lt;code&gt;merge()&lt;/code&gt; 함수를 이용해 병합해 보았다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;crime_map &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;region =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;tolower&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;rownames&lt;/span&gt;(USArrests)), USArrests) %&amp;gt;%
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;merge&lt;/span&gt;(states_map, &lt;span class=&quot;dt&quot;&gt;by =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;region&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;head&lt;/span&gt;(crime_map)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##    region Murder Assault UrbanPop Rape      long      lat group order
+## 1 alabama   13.2     236       58 21.2 -87.46201 30.38968     1     1
+## 2 alabama   13.2     236       58 21.2 -87.48493 30.37249     1     2
+## 3 alabama   13.2     236       58 21.2 -87.95475 30.24644     1    13
+## 4 alabama   13.2     236       58 21.2 -88.00632 30.24071     1    14
+## 5 alabama   13.2     236       58 21.2 -88.01778 30.25217     1    15
+## 6 alabama   13.2     236       58 21.2 -87.52503 30.37249     1     3
+##   subregion
+## 1      &amp;lt;NA&amp;gt;
+## 2      &amp;lt;NA&amp;gt;
+## 3      &amp;lt;NA&amp;gt;
+## 4      &amp;lt;NA&amp;gt;
+## 5      &amp;lt;NA&amp;gt;
+## 6      &amp;lt;NA&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이렇게 만들어진 &lt;code&gt;crime_map&lt;/code&gt; 객체의 헤더부분을 살펴보면&lt;br /&gt;
+&lt;code&gt;region&lt;/code&gt; 변수에 따른 &lt;code&gt;Murder&lt;/code&gt;, &lt;code&gt;Assault&lt;/code&gt;, &lt;code&gt;UrbanPop&lt;/code&gt;, &lt;code&gt;Rape&lt;/code&gt; 변수정보들이 붙여진 것을 확인할 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;arrange&lt;/span&gt;(crime_map, order) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ggplot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(long, lat, &lt;span class=&quot;dt&quot;&gt;group =&lt;/span&gt; group, &lt;span class=&quot;dt&quot;&gt;fill =&lt;/span&gt; Murder)) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_polygon&lt;/span&gt;() +
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;coord_map&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;polyconic&amp;quot;&lt;/span&gt;) +
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;scale_fill_continuous&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;low =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;pink&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;high =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;black&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/choro4.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;code&gt;arrange()&lt;/code&gt; 를 이용하여 order 변수 순으로 정렬을 해주었는데,&lt;br /&gt;
+정렬을 시키는 이유는 올바른 다각형을 그리기 위함이다.&lt;br /&gt;
+병합작업 시 원래 순서대로 정렬되어있던 것이 헝클어졌기 때문에 필요한 전처리 작업이다.&lt;br /&gt;
+(정렬작업을 하지 않는다면 도저히 무슨 그림인지 알 수 없는 결과물이 나온다)&lt;/p&gt;
+&lt;p&gt;이후 &lt;code&gt;ggplot()&lt;/code&gt; 에 &lt;code&gt;fill&lt;/code&gt; 인자를 &lt;code&gt;Murder&lt;/code&gt; 변수로 지정하여 미국의 주시내별 살인범죄수에 따라 색깔의 농도가 진해지는 결과물을 출력하면 되겠다.&lt;br /&gt;
+위의 결과물과 맨 첫 번째 소개했던 결과물이 같은 것을 확인할 수 있다.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 14 Oct 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2016/10/14/Choropleth_map_basic.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/10/14/Choropleth_map_basic.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>R에서 lubridate package 에 대해</title>
@@ -913,142 +1048,6 @@ stop 조건이 없을 경우 멈추지 않을것이다.&lt;br /&gt;
         <pubDate>Mon, 06 Jun 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/06/06/integate_function.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2016/06/06/integate_function.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기</title>
-        <description>&lt;p&gt;통계 비전공자에게 중심극한의 정리를 설명해야 했던 적이 있었는데,&lt;br /&gt;
-심오한 이론들을 증명하며 설명하느니 한번 보여주는 것이 더 큰 공감을 얻게될 것 같아 animation plot 을 준비한적이 있다.&lt;br /&gt;
-본 포스팅 글은 R markdown 포맷에서 코드청크옵션 &lt;code&gt;fig.show=&amp;quot;animate&amp;quot;&lt;/code&gt; 을 통해 animation plot 을 준비하는 것이 가능하다는 것을 소개하고 그 예시로 중심극한정리 시뮬레이션을 통해 설명할 것이다.&lt;/p&gt;
-&lt;h2 id=&quot;a-중심극한정리-central-limit-theorem-에-대해서&quot;&gt;A) 중심극한정리 (Central Limit Theorem) 에 대해서&lt;/h2&gt;
-&lt;p&gt;중심극한정리는 표본의 크기가 커짐에 따라 표본평균의 분포가 점점 정규분포로 근사(닮아) 짐을 의미하는 이론이다.&lt;br /&gt;
-그리고 표본은 어떠한 분포 타입에 나온 것이더라 하더라도 상관없이 중심극한정리에 해당되는것을 특징으로 한다.&lt;br /&gt;
-여기서 헷갈리는 것이 있을 수 있는데, 표본평균은 단하나의 값으로 분포가 될 수 있느냐 라는 질문이 생길 수 있다.&lt;br /&gt;
-이 궁금증은 표본 자체가 확률변수라는 것으로써 이해할 수 있다.&lt;br /&gt;
-표본 자체가 확률변수이므로 이를 종합하여 평균한 값 하나일지라도 분명 확률변수이며 이는 분포로써 설명이 가능하다.&lt;br /&gt;
-하지만 시뮬레이션에서 사용할 표본평균은 단 한 개 가지고는 분포를 시각적으로 볼 수 없다.&lt;br /&gt;
-따라서 표본평균들을 여러 개 발생시킬 것이다.&lt;/p&gt;
-&lt;p&gt;정리하면 시뮬레이션 시 특정 분포에 대해 많은 표본을 뽑은 후 표본평균계산 후 이를 반복해서 다양한 표본평균들을 준비해 히스토그램으로 분포를 확인할 것이다.&lt;br /&gt;
-또한 표본의 크기가 커짐에 따라 정규분포로 닮아진다는 것을 보여주는 것과 동시에 점근적으로 보여주는 것이 시뮬레이션의 큰 의미라고 볼 수 있다.&lt;/p&gt;
-&lt;p&gt;우선 현 시뮬레이션에선&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;특정분포를 포아송분포 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;X&lt;/em&gt; ∼ &lt;em&gt;P&lt;/em&gt;&lt;em&gt;o&lt;/em&gt;&lt;em&gt;i&lt;/em&gt;&lt;em&gt;s&lt;/em&gt;&lt;em&gt;s&lt;/em&gt;&lt;em&gt;o&lt;/em&gt;&lt;em&gt;n&lt;/em&gt;(&lt;em&gt;λ&lt;/em&gt; = 10)&lt;/span&gt; 으로&lt;/li&gt;
-&lt;li&gt;표본개수는 n=500 으로 통일하고&lt;/li&gt;
-&lt;li&gt;표본평균들을 1,000개 준비하기 위해 위 과정을 1000번 반복&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;할 것이다.&lt;/p&gt;
-&lt;h2 id=&quot;b-단편-시뮬레이션&quot;&gt;B) 단편 시뮬레이션&lt;/h2&gt;
-&lt;p&gt;위에서 설명한 시뮬레이션은 아래코드를 통해 확인 가능하다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;replicate&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
-    n &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;500&lt;/span&gt;
-    sample &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;rpois&lt;/span&gt;(n, &lt;span class=&quot;dt&quot;&gt;lambda=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;)
-    &lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(sample)
-})&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;위 코드를 통해 1000개의 표본평균들이 &lt;code&gt;res&lt;/code&gt; 객체에 담겨있게된다.&lt;br /&gt;
-정규분포로 근사되었는지 분포를 확인하는건 2가지 방법을 통해 해보고자 한다.&lt;/p&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;히스토그램과 밀도추정선을 덧그린 plot&lt;/li&gt;
-&lt;li&gt;Quantile-Quantile Plots&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;hist&lt;/span&gt;(res, &lt;span class=&quot;dt&quot;&gt;freq=&lt;/span&gt;F); &lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;density&lt;/span&gt;(res), &lt;span class=&quot;dt&quot;&gt;lty=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;figure&gt;
-&lt;img src=&quot;/assets/CLT1-1.png&quot; /&gt;
-&lt;/figure&gt;
-&lt;p&gt;1번에 해당되는 히스토그램이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;qqnorm&lt;/span&gt;(res)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;figure&gt;
-&lt;img src=&quot;/assets/CLT2-1.png&quot; /&gt;
-&lt;/figure&gt;
-&lt;p&gt;2번에 해당하는 소위 QQplot 이다.&lt;/p&gt;
-&lt;p&gt;분명 결과물을 통해선 포아송분포에서 뽑은 표본들의 평균의 분포가 정규분포에 근사하는 것을 체감할 수는 있다.&lt;br /&gt;
-하지만 나는 이것보다 분포의 개수가 많으면 많아질수록 정규분포의 닮아짐이 높아진다는 점근적근사를 시각적으로 보여주고 싶은 것이었다.&lt;/p&gt;
-&lt;h2 id=&quot;c-rmarkdown-의-코드청크옵션-fig.showanimate-에-대해서&quot;&gt;C) Rmarkdown 의 코드청크옵션 &lt;code&gt;fig.show=&amp;quot;animate&amp;quot;&lt;/code&gt; 에 대해서&lt;/h2&gt;
-&lt;p&gt;필자는 Rmarkdown 포맷을 자주 사용하여 내 지식을 전달하는 편인데 데이터분석과 융화된 글을 쓰기에 거리낌 없는 도구로 굉장한 공감을 얻었기 때문이다.&lt;br /&gt;
-특히 &lt;code&gt;fig.show=&amp;quot;animate&amp;quot;&lt;/code&gt; 와 같은 코드청크 옵션은 데이터의 변질에 따른 plot output 의 변화를 보여주기에 간편한 기능을 제공해서 적극적으로 애용 중이다.&lt;/p&gt;
-&lt;p&gt;위의 예시를 이어서 설명하자면 단편적인 시뮬레이션을 통해 정규분포에 근사하는 것을 체감시켰지만,&lt;br /&gt;
-이보다 더 중요한 것을 설명하기 위해 표본개수 즉 표본평균을 계산한 반복회수가 증가함으로써 일어나는 정규근사 정도를 animation ploting 통해 보여줄 것이다.&lt;/p&gt;
-&lt;p&gt;아래처럼 말이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(numbers) &lt;span class=&quot;co&quot;&gt;# for fibonacci function&lt;/span&gt;
-ani_N &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(); for(i in &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;30&lt;/span&gt;) ani_N[i&lt;span class=&quot;dv&quot;&gt;-4&lt;/span&gt;] &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;fibonacci&lt;/span&gt;(i)
-ani_N&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##  [1]      5      8     13     21     34     55     89    144    233    377
-## [11]    610    987   1597   2584   4181   6765  10946  17711  28657  46368
-## [21]  75025 121393 196418 317811 514229 832040&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;for(N in ani_N){
-    res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;replicate&lt;/span&gt;(N, &lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
-        n &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;500&lt;/span&gt;
-        sample &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;rpois&lt;/span&gt;(n, &lt;span class=&quot;dt&quot;&gt;lambda=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;)
-        &lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(sample)
-    })
-    &lt;span class=&quot;kw&quot;&gt;hist&lt;/span&gt;(res, &lt;span class=&quot;dt&quot;&gt;freq=&lt;/span&gt;F, &lt;span class=&quot;dt&quot;&gt;ylim=&lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;xlim=&lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;9&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;11&lt;/span&gt;)); &lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;density&lt;/span&gt;(res), &lt;span class=&quot;dt&quot;&gt;lty=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;)
-}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;video   controls loop&gt;
-&lt;source src=&quot;/assets/CLT1_ani-.webm&quot; /&gt;
-&lt;p&gt;
-video of chunk CLT1_ani
-&lt;/p&gt;
-&lt;/video&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;for(N in ani_N){
-    res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;replicate&lt;/span&gt;(N, &lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;{
-        n &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;500&lt;/span&gt;
-        sample &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;rpois&lt;/span&gt;(n, &lt;span class=&quot;dt&quot;&gt;lambda=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;)
-        &lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(sample)
-    })
-    &lt;span class=&quot;kw&quot;&gt;qqnorm&lt;/span&gt;(res, &lt;span class=&quot;dt&quot;&gt;xlim=&lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(-&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;ylim=&lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;9&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;11&lt;/span&gt;))
-}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;video   controls loop&gt;
-&lt;source src=&quot;/assets/CLT2_ani-.webm&quot; /&gt;
-&lt;p&gt;
-video of chunk CLT2_ani
-&lt;/p&gt;
-&lt;/video&gt;
-&lt;p&gt;위의 B장에서 수행했던 코드의 본체는 부수적인 차이만 존재할 뿐 거의 흡사하다.&lt;br /&gt;
-차이점은 시뮬레이션 본체코드를 for 문을 통해 &lt;code&gt;ani_N&lt;/code&gt; 의 피보나치수열로 반복회수를 조정한것이며,&lt;br /&gt;
-시각화 코드인 &lt;code&gt;hist()&lt;/code&gt;, &lt;code&gt;qqnorm()&lt;/code&gt; 함수에 &lt;code&gt;xlim&lt;/code&gt;, &lt;code&gt;ylim&lt;/code&gt; 인자값들을 부여해 범위를 고정시켰다는 차이가 있다.&lt;br /&gt;
-그리고 본장에서 설명하고자 차이점은 사실 R코드가 아닌 Rmarkdown 코드청크옵션에 내막이 있다.&lt;br /&gt;
-verbatim 모드로 Rmarkdown 코드청크 전체를 보여주면 아래와 같다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# ```{r fig.show=&amp;quot;animate&amp;quot;, interval=.4}&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;# for(N in ani_N){&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;#   res &amp;lt;- replicate(N, expr={&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;#       n &amp;lt;- 500&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;#       sample &amp;lt;- rpois(n, lambda=10)&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;#       mean(sample)&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;#   })&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;#   hist(res, freq=F, ylim=c(0, 7), xlim=c(9, 11)); lines(density(res), lty=2, col=&amp;quot;blue&amp;quot;)&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;# }&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;# ```&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;사실 코드청크에 &lt;code&gt;fig.show=&amp;quot;animate&amp;quot;, interval=.4&lt;/code&gt; 와 같은 옵션이 존재하지 않는다면&lt;br /&gt;
-&lt;code&gt;ani_N&lt;/code&gt; 의 마지막 값에 대한 중심극한 시뮬레이션 histogram 결과만 나올것이다.&lt;br /&gt;
-실제 수행된 코드는 &lt;code&gt;ani_N&lt;/code&gt; 에 담겨있는 수열들의 값대로 히스토그램을 그리겠지만 결국 출력되는건 마지막 값에 해당되는 단편 시뮬레이션 plot output 이다.&lt;/p&gt;
-&lt;p&gt;하지만 코드청크에 &lt;code&gt;fig.show=&amp;quot;animate&amp;quot;&lt;/code&gt; 를 부여하면 중간중간에 출력되는 plot output 을 임시로 모두 저장하게된다.&lt;br /&gt;
-이후 코드청크의 &lt;code&gt;interval&lt;/code&gt; 옵션값만큼의 간격으로 저장된 plot output 프레임들을 순차적으로 인코딩하여 영상을 만든다!&lt;br /&gt;
-지금은 interval 값을 0.4초로 지정했는데 프레임 넘김을 더 빠르게 하고싶은 경우 이값을 작게 조정하여 희망하는 속도로 맞출 수 있다.&lt;br /&gt;
-그리하여 피보나치수열 대로 표본이 증가하면 증가할수록 정규분포로 근사되는것을 시각적으로 볼 수 있게 되는 것이다.&lt;/p&gt;
-&lt;p&gt;QQplot animation 도 마찬가지 형태이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# ```{r fig.show=&amp;quot;animate&amp;quot;, interval=.4}&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;# for(N in ani_N){&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;#   res &amp;lt;- replicate(N, expr={&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;#       n &amp;lt;- 500&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;#       sample &amp;lt;- rpois(n, lambda=10)&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;#       mean(sample)&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;#   })&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;#   qqnorm(res, xlim=c(-4, 4), ylim=c(9, 11))&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;# }&lt;/span&gt;
-&lt;span class=&quot;co&quot;&gt;# ```&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;d-요구사항&quot;&gt;D) 요구사항&lt;/h2&gt;
-&lt;p&gt;단 이렇게 영상으로 인코딩하는 작업을 하기 위해서 운영체계별로 요구하는 플러그인이 다를 수 있다.&lt;br /&gt;
-필자는 OSX 에서 이 글을 작성한 것이며 &lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;ffmpeg&lt;/a&gt; 설치가 요구되었었다.&lt;/p&gt;
-&lt;p&gt;그리고 이것이 요구사항일지는 모르겠지만 코드수행시간이란 비용 이외에 animation plot 영상을 인코딩하는 시간 역시 필요하다.&lt;br /&gt;
-위의 예제처럼 간단한 수준의 짧은 영상을 만드는 것은 인코딩시간이 조금 걸리지만,&lt;br /&gt;
-그렇지 않으면 많은 인내심이 요구될 수 있다.&lt;/p&gt;
-</description>
-        <pubDate>Thu, 26 May 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2016/05/26/CLT.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/05/26/CLT.html</guid>
         
         
         <category>R</category>
