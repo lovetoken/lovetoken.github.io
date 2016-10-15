@@ -249,7 +249,7 @@ lubridate package 에는 &quot;y&quot;, &quot;m&quot;, &quot;d&quot; 심볼 뿐�
 ## [1] &quot;2011-06-04 KST&quot;
 <span class="kw">as.POSIXct</span>(<span class="st">&quot;2011-06-04 13:00:00&quot;</span>) <span class="co"># Yes</span>
 ## [1] &quot;2011-06-04 13:00:00 KST&quot;</code></pre></div>
-<p>이런 예시로 볼 때 lubridate package 는 사용자 관점으로 친숙한 도구들이 어럿 준비되어 있다.<br />
+<p>이런 예시로 볼 때 lubridate package 는 사용자 관점으로 친숙한 도구들이 여럿 준비되어 있다.<br />
 이외에도 heterogeneous format 에 대한 대비 역시 날짜 + 시각 데이터에도 적용된다.</p>
 <h2 id="부분정보-추출-extracting-information">부분정보 추출 (Extracting information)</h2>
 <p>lubridate package 에는 부분정보를 추출하기 위한 간편 함수들이 여럿 준비되어 있다.<br />
@@ -504,7 +504,7 @@ lakers %&gt;%<span class="st"> </span>
 <p><code>now()</code> 함수는 <code>Sys.time()</code> 와 거의 기능이 똑같다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">now</span>(<span class="st">&quot;America/New_York&quot;</span>)</code></pre></div>
 <pre><code>## [1] &quot;2016-09-18 08:35:41 EDT&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?<span class="kw">now</span>(<span class="st">&quot;UTC&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">now</span>(<span class="st">&quot;UTC&quot;</span>)</code></pre></div>
 <p>단 위의 예제처럼<br />
 Timezone 변경에 대해서 <code>Sys.time()</code> 과는 다르게 <code>now()</code> 는 이를 반영한 날짜 + 시각을 반환할 수 있다는 차이가 있다.</p>
 <h3 id="오전-오후-am-pm">오전? 오후? : <code>am()</code>, <code>pm()</code></h3>

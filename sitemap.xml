@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 14 Oct 2016 21:56:55 +0900</pubDate>
-    <lastBuildDate>Fri, 14 Oct 2016 21:56:55 +0900</lastBuildDate>
+    <pubDate>Sat, 15 Oct 2016 09:23:53 +0900</pubDate>
+    <lastBuildDate>Sat, 15 Oct 2016 09:23:53 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -260,7 +260,7 @@ lubridate package 에는 &amp;quot;y&amp;quot;, &amp;quot;m&amp;quot;, &amp;quot
 ## [1] &amp;quot;2011-06-04 KST&amp;quot;
 &lt;span class=&quot;kw&quot;&gt;as.POSIXct&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13:00:00&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# Yes&lt;/span&gt;
 ## [1] &amp;quot;2011-06-04 13:00:00 KST&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;이런 예시로 볼 때 lubridate package 는 사용자 관점으로 친숙한 도구들이 어럿 준비되어 있다.&lt;br /&gt;
+&lt;p&gt;이런 예시로 볼 때 lubridate package 는 사용자 관점으로 친숙한 도구들이 여럿 준비되어 있다.&lt;br /&gt;
 이외에도 heterogeneous format 에 대한 대비 역시 날짜 + 시각 데이터에도 적용된다.&lt;/p&gt;
 &lt;h2 id=&quot;부분정보-추출-extracting-information&quot;&gt;부분정보 추출 (Extracting information)&lt;/h2&gt;
 &lt;p&gt;lubridate package 에는 부분정보를 추출하기 위한 간편 함수들이 여럿 준비되어 있다.&lt;br /&gt;
@@ -515,7 +515,7 @@ lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
 &lt;p&gt;&lt;code&gt;now()&lt;/code&gt; 함수는 &lt;code&gt;Sys.time()&lt;/code&gt; 와 거의 기능이 똑같다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;now&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;America/New_York&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2016-09-18 08:35:41 EDT&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;?&lt;span class=&quot;kw&quot;&gt;now&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;UTC&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;now&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;UTC&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;단 위의 예제처럼&lt;br /&gt;
 Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르게 &lt;code&gt;now()&lt;/code&gt; 는 이를 반영한 날짜 + 시각을 반환할 수 있다는 차이가 있다.&lt;/p&gt;
 &lt;h3 id=&quot;오전-오후-am-pm&quot;&gt;오전? 오후? : &lt;code&gt;am()&lt;/code&gt;, &lt;code&gt;pm()&lt;/code&gt;&lt;/h3&gt;
