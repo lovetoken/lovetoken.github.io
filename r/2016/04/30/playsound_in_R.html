@@ -135,20 +135,20 @@
 
 
 <div class="content">
-    <div class="post"><p>코드수행시간이 비교적 길었던 R 스크립트가 있었다.<br />
+    <div class="post"><p>코드 수행시간이 비교적 길었던 R 스크립트가 있었다.<br />
 Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시간이 그렇게도 길지 않은 코드여서<br />
 코드 수행이 끝났다는 알람을 줄 수 있는 방법을 찾고 싶었는데, 알람의 방법은 크게 2가지 정도를 원했었다.</p>
 <ol type="1">
 <li>문자나 메일을 받는 방법</li>
 <li><strong>비프음 등의 소리를 재생</strong> 👈</li>
 </ol>
-<p>시켜 코드수행이 끝났다는 걸 알려주는 것 이다.<br />
-첫번째 &quot;문자나 메일을 받는 방법&quot; 은 구체적인 방법을 찾기 힘들었는데, 두번째 &quot;비프음 등의 소리를 재생&quot; 방법을 알아본 결과 패키지를 이용한 아주 간단한 방법이 있었다.<br />
+<p>시켜 코드 수행이 끝났다는 걸 알려주는 것 이다.<br />
+첫 번째 &quot;문자나 메일을 받는 방법&quot; 은 구체적인 방법을 찾기 힘들었는데, 두 번째 &quot;비프음 등의 소리를 재생&quot; 방법을 알아본 결과 패키지를 이용한 아주 간단한 방법이 있었다.<br />
 지금까지 알게 된 방법들을 간단히 정리해본다.</p>
 <h2 id="a-beepr-package-를-이용해-비프음-재생시키기">A) beepr package 를 이용해 비프음 재생시키기</h2>
-<p>비프음을 재생시키기 위한 단 한개의 함수를 제공해 주는 패키지가 있다. (역시 심플하고 가벼운 것이 최고다!)<br />
-패키지명칭도 beepr 이다.<br />
-제공되는 함수는 <code>beep()</code> 이다. 즉 <code>beepr::beep()</code> 로 내가원하는 비프음을 재생시킬 수 있었다.</p>
+<p>비프음을 재생시키기 위한 단 한 개의 함수를 제공해 주는 패키지가 있다. (역시 심플하고 가벼운 것이 최고다 😄)<br />
+패키지 명칭도 &quot;beepr&quot; 이다.<br />
+제공되는 함수는 <code>beep()</code> 이다. 즉 <code>beepr::beep()</code> 로 내가 원하는 비프음을 재생시킬 수 있었다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;beepr&quot;</span>)
 <span class="kw">library</span>(beepr)</code></pre></div>
 <p>beepr package 설치 및 로드하고</p>
@@ -169,10 +169,10 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
 <li>facebook</li>
 <li>sword</li>
 </ol>
-<h2 id="b-만약-특정-음원파일을-재생시키고-싶다면-tuner-package">B) 만약 특정 음원파일을 재생시키고 싶다면 tuneR package</h2>
-<p>소리재생에 관련된 포괄적인 패키지를 찾아본적도 있는데, 그 패키지 안에는 특정음원파일을 재생시키는 기능도 있을것이라 생각했다.<br />
-나는 tuneR 패키지가 눈에 띄었는데 이 패키지 에서 자신이 가지고 있는 음원파일을 재생시키는 기능을 가진 <code>play()</code> 함수가 있다. (더 정확히 말하면 Wave class 의 객체만을 실행시키는 함수이다.)</p>
-<p>그 전에 특정음원파일을 읽어들여 정보를 보관할 객체를 준비해야 할 필요가 있다. 음원 포맷이 mp3 이라면 <code>readMP3()</code> 와 같은 함수가 이를 도와준다.</p>
+<h2 id="b-만약-특정-음원-파일을-재생시키고-싶다면-tuner-package">B) 만약 특정 음원 파일을 재생시키고 싶다면 tuneR package</h2>
+<p>소리재생에 관련된 포괄적인 패키지를 찾아본적도 있는데, 그 패키지 안에는 특정 음원 파일을 재생시키는 기능도 있을것이라 생각했다.<br />
+나는 tuneR 패키지가 눈에 띄었는데 이 패키지 에서 자신이 가지고 있는 음원 파일을 재생시키는 기능을 가진 <code>play()</code> 함수가 있다. (더 정확히 말하면 Wave class 의 객체만을 실행시키는 함수이다.)</p>
+<p>그 전에 특정 음원 파일을 읽어들여 정보를 보관할 객체를 준비해야 할 필요가 있다. 음원 포맷이 mp3 이라면 <code>readMP3()</code> 와 같은 함수가 이를 도와준다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;tuneR&quot;</span>)
 <span class="kw">library</span>(tuneR)</code></pre></div>
 <p>역시 tuneR 패키지를 설치하고 사용할 준비를 한다.</p>
@@ -181,7 +181,7 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
 <p>위의 코드는 워킹디렉토리에 있는 &quot;Test.mp3&quot; 파일을 불러온 후 R에서 재생시키는 코드이다.</p>
 <h2 id="c-두-패키지의-차이점">C) 두 패키지의 차이점</h2>
 <p>위에 비프음을 재생시키는 beepr 패키지와 다르게 tuneR 패키지의 <code>play()</code> 함수는 기본적으로 외부 플레이어를 이용한다는 점에서 차이점이 있다.<br />
-따라서 <code>beep()</code> 는 R내에서 이용하는데 용이하지만 tuneR 패키지와 조합한 <code>play()</code> 함수는 활성화되는 프로그램이 R 에서 외부 플레이어 어플리케이션으로 넘어가 버린다. 그리고 beepr 과 달리 tuneR 은 운영체계 별로 사용법이 상이하다.</p>
+따라서 <code>beep()</code> 는 R내에서 이용하는데 쉽지만 tuneR 패키지와 조합한 <code>play()</code> 함수는 활성화되는 프로그램이 R 에서 외부 플레이어 애플리케이션으로 넘어가 버린다. 그리고 beepr 과 달리 tuneR 은 운영체계별로 사용법이 상이하다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -217,6 +217,23 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
                 <div class="panel-body">
                 <h4>Related Posts</h4>
                 <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/10/18/ggmap.html">R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/2016/10/14/Choropleth_map_basic.html">R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기</a>
@@ -322,16 +339,6 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/06/12/S3.html">R에서 S3 최소재현예제</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
             
         
     

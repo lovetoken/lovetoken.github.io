@@ -5,9 +5,185 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 18 Oct 2016 16:47:56 +0900</pubDate>
-    <lastBuildDate>Tue, 18 Oct 2016 16:47:56 +0900</lastBuildDate>
+    <pubDate>Tue, 18 Oct 2016 22:26:26 +0900</pubDate>
+    <lastBuildDate>Tue, 18 Oct 2016 22:26:26 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제</title>
+        <description>&lt;p&gt;&amp;quot;map&amp;quot; 이란 단어에 &amp;quot;Google&amp;quot; 의 &amp;quot;g&amp;quot; 알파벳 2개를 덧붙인 것으로 추정이 바로 되는&lt;br /&gt;
+&lt;a href=&quot;https://cran.r-project.org/web/packages/ggmap/ggmap.pdf&quot;&gt;ggmap package&lt;/a&gt; 는 &lt;a href=&quot;https://enterprise.google.com/intl/ko/maps/products/mapsapi.html&quot;&gt;Google map API&lt;/a&gt; 를 이용하여 지도자료를 불러와주는 역할을 하는 패키지이다.&lt;/p&gt;
+&lt;p&gt;간략한 예제를 통해 &amp;quot;ggmap&amp;quot; 패키지의 주요 함수 &lt;code&gt;get_googlemap()&lt;/code&gt;, &lt;code&gt;ggmap()&lt;/code&gt; 2개의 사용방법을 알아본 후&lt;br /&gt;
+지도위에 간단한 경로를 결합하는 간단한 예제를 실습해 보고자 한다.&lt;/p&gt;
+&lt;h2 id=&quot;a-우리나라-지도-호출&quot;&gt;A) 우리나라 지도 호출&lt;/h2&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;getmap &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;get_googlemap&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;seoul&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;ggmap&lt;/span&gt;(getmap)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-1-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;위의 2줄 코드는 서울시를 중심으로 google 지도 그림을 로드시켜&lt;br /&gt;
+R에 plotting 하는 코드이다.&lt;/p&gt;
+&lt;p&gt;정말 간단한 로직으로 동작하는 편이다.&lt;/p&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;&lt;code&gt;get_googlemap()&lt;/code&gt; 함수를 통해 불러오고 싶은 곳의 장소를 문자열 값으로 첫 번째 인자에 넣어 실행해 이를 객체화 함&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ggmap()&lt;/code&gt; 함수 안에 방금 만든 객체를 입력시킨 후 실행하면 원하는 장소를 중심으로 구글 지도가 plotting 됨&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;로직이 이처럼 간단하므로 앞으로 체인연산자(chain operation)를 사용해 간단히 한 줄로 실행하겠다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;get_googlemap&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;seoul&amp;quot;&lt;/span&gt;) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;ggmap&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;b-ggplot2-의-함수들과-조합&quot;&gt;B) ggplot2 의 함수들과 조합&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;ggmap()&lt;/code&gt; 으로 반환되는 결과물은 기본적으로 ggplot 기반의 결과물인데 이점을 이용하여 ggplot2 패키지의 함수와 조합해 지도 위에 새로운 정보들을 더할 수 있다.&lt;br /&gt;
+&amp;quot;ggmap&amp;quot;, &amp;quot;ggplot2&amp;quot; 이 두 패키지의 조합은 다양한 Geo Visualization(지리적 시각화) 을 구사할 수 있는 잠재력이 있을거라 생각된다.&lt;br /&gt;
+지금은 복잡한 실습보단 간단한 예제를 통해 맛보기를 아래처럼 해보았다.&lt;/p&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-3-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;그림을 다시 자세히 보면 x축이 &amp;quot;lon&amp;quot; 이라고 적혀있고, y축은 &amp;quot;lat&amp;quot; 라고 적혀 있다.&lt;br /&gt;
+&amp;quot;lon&amp;quot; 은 경도(longitude), &amp;quot;lat&amp;quot; 은 위도(latitude) 를 각각 뜻한다고 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;즉 위도와 경도의 데이터가 있다면 이 지도 위에 ggplot2 를 이용하여 무언가를 덧그릴 수 있을 것이다.&lt;/p&gt;
+&lt;h3 id=&quot;b-1-포인팅&quot;&gt;B-1) 포인팅&lt;/h3&gt;
+&lt;p&gt;의미는 크게 없지만, 서초역과 강남역 부근에 무언가 장난을 쳐보려 한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;서초역 : 경도 127.007675, 위도 37.491843&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;강남역 : 경도 127.027544, 위도 37.497968&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;즉&lt;br /&gt;
+(127.007675, 37.491843), (127.027544, 37.497968)&lt;br /&gt;
+좌표에 점을 찍게 되면 서초역과 강남역의 위치에 다음과 같은 모습이 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;get_googlemap&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;seoul&amp;quot;&lt;/span&gt;) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;ggmap
+
+locationInfo &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(
+  &lt;span class=&quot;dt&quot;&gt;Name =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;서초역&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;강남역&amp;quot;&lt;/span&gt;), 
+  &lt;span class=&quot;dt&quot;&gt;lon =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;fl&quot;&gt;127.007675&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;127.027544&lt;/span&gt;),
+    &lt;span class=&quot;dt&quot;&gt;lat =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;fl&quot;&gt;37.491843&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;37.497968&lt;/span&gt;)
+)
+
+p1 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_point&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; locationInfo, &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; lon, &lt;span class=&quot;dt&quot;&gt;y =&lt;/span&gt; lat))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-4-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;잘 안 보일 수도 있지만 전 사진과 다르게 2개의 점이 추가된 것을 볼 수 있다.&lt;br /&gt;
+2개의 검은 점은 각각 서초역과 강남역에 찍혔다.&lt;/p&gt;
+&lt;p&gt;지도를 조금 더 확대해 볼 수도 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;get_googlemap&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;gangnamgu&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;zoom =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;12&lt;/span&gt;) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;ggmap
+p2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-5-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;지도의 중앙을 &amp;quot;gangnamgu&amp;quot; 즉 강남구로 설정하고 &lt;code&gt;zoom&lt;/code&gt; 인자를 12값으로 설정한 경우이다.&lt;br /&gt;
+&lt;code&gt;zoom&lt;/code&gt; 인자의 디폴트 값 10 보다 큰 값을 주었으므로 조금은 확대되어 보이게 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p2 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_point&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; locationInfo, &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; lon, &lt;span class=&quot;dt&quot;&gt;y =&lt;/span&gt; lat))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-6-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;지도를 확대하든 지도의 중심점을 옮기든 간에 서초역과 강남역에 포인팅하는 코드는 문제없이 작동한다.&lt;br /&gt;
+포인팅 말고도 포인팅된 곳에 무엇이 위치해 있는지 라벨링이 되어있다면 더 보기 좋을 것이다.&lt;br /&gt;
+라벨링도 ggplot2 기능 그대로 쓰던대로 쓰면 된다.&lt;br /&gt;
+아래는 &lt;code&gt;geom_text()&lt;/code&gt; 를 이용해본 예이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p2 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_point&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; locationInfo, &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; lon, &lt;span class=&quot;dt&quot;&gt;y =&lt;/span&gt; lat)) +
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_text&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; locationInfo, &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;label =&lt;/span&gt; Name), &lt;span class=&quot;dt&quot;&gt;size =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;vjust =&lt;/span&gt; -&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-7-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;h3 id=&quot;b-2-경로-그리기&quot;&gt;B-2) 경로 그리기&lt;/h3&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;locationInfo &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(
+    &lt;span class=&quot;dt&quot;&gt;Name =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;강남&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;양재&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;양재시민의숲&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;청계산입구&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;판교&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;정자&amp;quot;&lt;/span&gt;), 
+    &lt;span class=&quot;dt&quot;&gt;lon =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;fl&quot;&gt;127.028046&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;127.035140&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;127.038451&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;127.054769&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;127.111172&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;127.108367&lt;/span&gt;), 
+    &lt;span class=&quot;dt&quot;&gt;lat =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;fl&quot;&gt;37.497001&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;37.483368&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;37.469655&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;37.448196&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;37.394786&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;37.366777&lt;/span&gt;)
+)
+
+locationInfo&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##           Name      lon      lat
+## 1         강남 127.0280 37.49700
+## 2         양재 127.0351 37.48337
+## 3 양재시민의숲 127.0385 37.46966
+## 4   청계산입구 127.0548 37.44820
+## 5         판교 127.1112 37.39479
+## 6         정자 127.1084 37.36678&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;신분당선을 기준으로 정자역에서 강남역까지 경로를 표현해 보고자 &lt;code&gt;locationInfo&lt;/code&gt; 내용을 바꾸었다.&lt;br /&gt;
+이를 이용하여 신분당선의 대략적인 경로를 표현해 보도록 하겠다. &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;get_googlemap&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;gwacheon&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;zoom =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;11&lt;/span&gt;) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;ggmap
+p3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;p3 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_point&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; locationInfo, &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; lon, &lt;span class=&quot;dt&quot;&gt;y =&lt;/span&gt; lat)) +
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_text&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; locationInfo, &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;label =&lt;/span&gt; Name), &lt;span class=&quot;dt&quot;&gt;size =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;hjust =&lt;/span&gt; &lt;span class=&quot;fl&quot;&gt;1.2&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;fontface =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;bold&amp;quot;&lt;/span&gt;)
+p3&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-9-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;우선 과천시를 중심으로 두고 &lt;code&gt;zoom = 11&lt;/code&gt; 로 설정하여 지도를 뿌린 후&lt;br /&gt;
+신분당선에 해당되는 역에 점을 찍고 라벨링을 더해보았다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p3 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_path&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; locationInfo, &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; lon, &lt;span class=&quot;dt&quot;&gt;y =&lt;/span&gt; lat), &lt;span class=&quot;dt&quot;&gt;color =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;alpha =&lt;/span&gt; .&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-10-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;그다음 경로를 표현하기 위해 각 점에 적당한 직선을 &lt;code&gt;geom_path()&lt;/code&gt; 를 통해 그리면 신분당선의 경로가 어떤지를 볼 수 있겠다.&lt;/p&gt;
+&lt;h2 id=&quot;c-기타&quot;&gt;C) 기타&lt;/h2&gt;
+&lt;p&gt;소개한 &lt;code&gt;get_googlemap()&lt;/code&gt;, &lt;code&gt;ggmap()&lt;/code&gt; 함수의 옵션들은 정말 방대한 편이다.&lt;br /&gt;
+모든 것을 건드려 보진 못했지만 유용할 것으로 생각하는 기능 중&lt;/p&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;지도를 꽉 채워 출력하는 기능&lt;/li&gt;
+&lt;li&gt;Map type 을 변경하는 기능&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;이 눈에 띄었다.&lt;/p&gt;
+&lt;h3 id=&quot;c-1-extent-device-로-지도-꽉-채워-보기&quot;&gt;C-1) &lt;code&gt;extent = &amp;quot;device&amp;quot;&lt;/code&gt; 로 지도 꽉 채워 보기&lt;/h3&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;get_googlemap&lt;/span&gt;() %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;ggmap&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-11-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;code&gt;ggmap()&lt;/code&gt; 함수를 디폴트로 사용한 결과이다.&lt;br /&gt;
+지도 그림만을 출력하지 못하고 x축, y축이 함께 그려지는데 상황에 따라 불필요할 수 있다.&lt;br /&gt;
+온전히 지도 그림만을 출력하고 싶다면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;get_googlemap&lt;/span&gt;() %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ggmap&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;extent =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;device&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-12-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;code&gt;extent = &amp;quot;device&amp;quot;&lt;/code&gt; 를 이용하면 되겠다.&lt;/p&gt;
+&lt;h3 id=&quot;c-2-get_googlemap-함수의-maptype-인자를-조정해-지도스타일-바꾸기&quot;&gt;C-2) &lt;code&gt;get_googlemap()&lt;/code&gt; 함수의 &lt;code&gt;maptype&lt;/code&gt; 인자를 조정해 지도스타일 바꾸기&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;get_googlemap()&lt;/code&gt; 함수의 &lt;code&gt;maptype&lt;/code&gt; 인자 값을&lt;br /&gt;
+&amp;quot;terrain&amp;quot;, &amp;quot;satellite&amp;quot;, &amp;quot;roadmap&amp;quot;, &amp;quot;hybrid&amp;quot; 등으로 조절해보면&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;satellite 로 설정한 결과&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p4 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;get_googlemap&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;maptype =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;satellite&amp;quot;&lt;/span&gt;) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;ggmap
+p4 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ggtitle&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;maptype : satellite&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-13-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;em&gt;terrain 로 설정한 결과&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p5 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;get_googlemap&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;maptype =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;terrain&amp;quot;&lt;/span&gt;) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;ggmap
+p5 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ggtitle&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;maptype : terrain&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-14-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;em&gt;roadmap 로 설정한 결과&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p6 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;get_googlemap&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;maptype =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;roadmap&amp;quot;&lt;/span&gt;) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;ggmap
+p6 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ggtitle&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;maptype : roadmap&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-15-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;em&gt;hybrid 로 설정한 결과&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p7 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;get_googlemap&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;maptype =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;hybrid&amp;quot;&lt;/span&gt;) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;ggmap
+p7 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ggtitle&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;maptype : hybrid&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/ggmap-16-1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;이처럼 쓰임에 맞는 지도 스타일을 선택할 수 있다.&lt;/p&gt;
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf&quot;&gt;ggmap: Spatial Visualization with ggplot2 by David Kahle and Hadley Wickham&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;참고로 지금의 신분당선은 이보다 노선이 더 많아졌다.&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Tue, 18 Oct 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2016/10/18/ggmap.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/10/18/ggmap.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기</title>
@@ -993,61 +1169,6 @@ data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenc
         <pubDate>Sun, 12 Jun 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/06/12/S3.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2016/06/12/S3.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>R에서 구분구적법 적분과정 시뮬레이션 및 integrate() 함수 알아보기</title>
-        <description>&lt;p&gt;내가 고등학교 이과생으로서 지낸 2학년 기억을 돌이켜 보면 적분의 방법은 이렇게 배웠던 것 같다.&lt;br /&gt;
-넓이 계산이 쉬운 사각형을 함수와 x축 사이에 강제로 끼워 맞춤으로써 넓이를 근사시키는 과정을 밟았고,&lt;br /&gt;
-특히 x축 기준 사각형을 등간격으로 잘게 잘게 쪼개는 과정을 무한대로 취함으로써 적분 값을 완벽히 근사시키는 법으로 구한다고 말이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;fun &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x) x^&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt; -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;*x^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt; +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;13&lt;/span&gt;*x +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;12&lt;/span&gt;
-fun_forarea &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x){
-    res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;fun&lt;/span&gt;(x)
-    res[ x&amp;lt;&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt; |&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;x&amp;gt;&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt; ] &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;ot&quot;&gt;NA&lt;/span&gt;
-    &lt;span class=&quot;kw&quot;&gt;return&lt;/span&gt;(res)
-}
-
-P &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ggplot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x=&lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(-&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;)), &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x=&lt;/span&gt;x)) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
-&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;stat_function&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;fun=&lt;/span&gt;fun) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
-&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;stat_function&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;fun=&lt;/span&gt;fun_forarea, &lt;span class=&quot;dt&quot;&gt;geom=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;area&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;fill=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;#3E5CFF&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;alpha=&lt;/span&gt;.&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
-&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_hline&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;yintercept =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
-&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;theme_bw&lt;/span&gt;()
-
-P&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;figure&gt;
-&lt;img src=&quot;/assets/integrate-1.png&quot; /&gt;
-&lt;/figure&gt;
-&lt;video   controls loop&gt;
-&lt;source src=&quot;/assets/integrate_ani-.webm&quot; /&gt;
-&lt;p&gt;
-video of chunk integrate_ani
-&lt;/p&gt;
-&lt;/video&gt;
-&lt;p&gt;이러한 형태로 넓이를 구하기 힘든 곡선모형의 넓이를 구하기 위해&lt;br /&gt;
-충분히 작은 n개의 기본도형으로 나누어 끼워 맞춘 후 넓이를 구한 것을 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;S&lt;/em&gt;&lt;sub&gt;&lt;em&gt;n&lt;/em&gt;&lt;/sub&gt;&lt;/span&gt; 이라 할 때&lt;br /&gt;
-기본도형을 더 작은 단위로 하여 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;n&lt;/em&gt;&lt;/span&gt; 을 극한으로 보냄으로써 넓이를 근사시키는 것을 &lt;strong&gt;구분구적법&lt;/strong&gt;이라 한다.&lt;br /&gt;
-즉 구분구적법은 &lt;span class=&quot;math inline&quot;&gt;lim&lt;sub&gt;&lt;em&gt;n&lt;/em&gt; → ∞&lt;/sub&gt;&lt;em&gt;S&lt;/em&gt;&lt;sub&gt;&lt;em&gt;n&lt;/em&gt;&lt;/sub&gt;&lt;/span&gt; 을 계산하는 과정이다.&lt;/p&gt;
-&lt;p&gt;컴퓨터는 미분이든 적분이든 사람이 손으로 풀듯이 드라마틱하게 계산할 수 있는 능력이 없을 것이다.&lt;br /&gt;
-구분구적법에 기반한 프로그래밍적인 계산을 통해 적분 값을 계산하게 될 것인데&lt;br /&gt;
-R에서는 &lt;code&gt;intergrate()&lt;/code&gt; 함수를 이용하여 적분 값을 계산할 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;integrate&lt;/span&gt;(fun, &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## 87.08333 with absolute error &amp;lt; 9.7e-13&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;구분구적법은 기본도형을 최대한 잘게 쪼개는 과정이 필요한데&lt;br /&gt;
-이를 무한히 반복하는 것을 컴퓨터에게 시킨다면&lt;br /&gt;
-stop 조건이 없을 경우 멈추지 않을것이다.&lt;br /&gt;
-그렇다고 n을 무한으로 보내지 못하고 중간에 stop 하게 되면 적분값의 오차는 반드시 생길수 밖에 없을것이다.&lt;br /&gt;
-추정하건대 &lt;code&gt;integrate()&lt;/code&gt; 함수를 실행시키고 출력되는 &amp;quot;absolute error&amp;quot; 문구가 출력된 이유가 이것 때문일 것이라 생각한다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;integrate()&lt;/code&gt; 함수 사용방법은 간편하다.&lt;br /&gt;
-계산을 하고 싶은 함수를 첫 번째 인자에 넘겨주고,&lt;br /&gt;
-폐구간에 대한 정보를 &lt;code&gt;lower&lt;/code&gt;, &lt;code&gt;upper&lt;/code&gt; 인자에 넘겨주기만 하면 적분 값을 계산해 준다.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 06 Jun 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2016/06/06/integate_function.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/06/06/integate_function.html</guid>
         
         
         <category>R</category>

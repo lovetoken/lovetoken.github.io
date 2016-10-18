@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>lovetoken</title>
+        <meta name="author" content="Lovetoken" />
+        <meta name="description" content="R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제" />
+        <meta name="keywords" content="R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제, , R" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="" property="fb:app_id">
+        <meta content="" property="og:site_name">
+        
+          <meta content="R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="" property="og:description">
+        
+        
+          <meta content="https://lovetoken.github.io/r/2016/10/18/ggmap.html" property="og:url">
+        
+        
+          <meta content="2016-10-18T00:00:00+09:00" property="article:published_time">
+          <meta content="https://lovetoken.github.io/about/" property="article:author">
+        
+        
+          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="R" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:creator" content="@">
+        
+          <meta name="twitter:title" content="R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제">
+        
+        
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/10/18/ggmap.html">
+        
+        
+          <meta name="twitter:description" content="">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', '', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">Lovetoken</h1>
+                
+                <div id="about">
+                    저는 개발 취향을 가진 데이터 분석가 Jr. 입니다.  R, Git, Markdown, Shiny, Sublime text 등의 스킬들을 즐깁니다.
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://twitter.com/LT_Lovetoken" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/lovetoken/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>Navigation</strong><br />
+                    &nbsp;&raquo; <a href="/">Home</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">About Me</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/lovetoken">Github</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제</h1>
+<span class="time">18 Oct 2016</span>
+
+<span class="categories">
+    &raquo; <a href="/category/R">R</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><p>&quot;map&quot; 이란 단어에 &quot;Google&quot; 의 &quot;g&quot; 알파벳 2개를 덧붙인 것으로 추정이 바로 되는<br />
+<a href="https://cran.r-project.org/web/packages/ggmap/ggmap.pdf">ggmap package</a> 는 <a href="https://enterprise.google.com/intl/ko/maps/products/mapsapi.html">Google map API</a> 를 이용하여 지도자료를 불러와주는 역할을 하는 패키지이다.</p>
+<p>간략한 예제를 통해 &quot;ggmap&quot; 패키지의 주요 함수 <code>get_googlemap()</code>, <code>ggmap()</code> 2개의 사용방법을 알아본 후<br />
+지도위에 간단한 경로를 결합하는 간단한 예제를 실습해 보고자 한다.</p>
+<h2 id="a-우리나라-지도-호출">A) 우리나라 지도 호출</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">getmap &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="st">&quot;seoul&quot;</span>)
+<span class="kw">ggmap</span>(getmap)</code></pre></div>
+<center>
+<img src="/assets/ggmap-1-1.png" />
+</center>
+<p>위의 2줄 코드는 서울시를 중심으로 google 지도 그림을 로드시켜<br />
+R에 plotting 하는 코드이다.</p>
+<p>정말 간단한 로직으로 동작하는 편이다.</p>
+<ol type="1">
+<li><code>get_googlemap()</code> 함수를 통해 불러오고 싶은 곳의 장소를 문자열 값으로 첫 번째 인자에 넣어 실행해 이를 객체화 함</li>
+<li><code>ggmap()</code> 함수 안에 방금 만든 객체를 입력시킨 후 실행하면 원하는 장소를 중심으로 구글 지도가 plotting 됨</li>
+</ol>
+<p>로직이 이처럼 간단하므로 앞으로 체인연산자(chain operation)를 사용해 간단히 한 줄로 실행하겠다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_googlemap</span>(<span class="st">&quot;seoul&quot;</span>) %&gt;%<span class="st"> </span>ggmap</code></pre></div>
+<h2 id="b-ggplot2-의-함수들과-조합">B) ggplot2 의 함수들과 조합</h2>
+<p><code>ggmap()</code> 으로 반환되는 결과물은 기본적으로 ggplot 기반의 결과물인데 이점을 이용하여 ggplot2 패키지의 함수와 조합해 지도 위에 새로운 정보들을 더할 수 있다.<br />
+&quot;ggmap&quot;, &quot;ggplot2&quot; 이 두 패키지의 조합은 다양한 Geo Visualization(지리적 시각화) 을 구사할 수 있는 잠재력이 있을거라 생각된다.<br />
+지금은 복잡한 실습보단 간단한 예제를 통해 맛보기를 아래처럼 해보았다.</p>
+<center>
+<img src="/assets/ggmap-3-1.png" />
+</center>
+<p>그림을 다시 자세히 보면 x축이 &quot;lon&quot; 이라고 적혀있고, y축은 &quot;lat&quot; 라고 적혀 있다.<br />
+&quot;lon&quot; 은 경도(longitude), &quot;lat&quot; 은 위도(latitude) 를 각각 뜻한다고 볼 수 있다.</p>
+<p>즉 위도와 경도의 데이터가 있다면 이 지도 위에 ggplot2 를 이용하여 무언가를 덧그릴 수 있을 것이다.</p>
+<h3 id="b-1-포인팅">B-1) 포인팅</h3>
+<p>의미는 크게 없지만, 서초역과 강남역 부근에 무언가 장난을 쳐보려 한다.</p>
+<ul>
+<li>서초역 : 경도 127.007675, 위도 37.491843<br />
+</li>
+<li>강남역 : 경도 127.027544, 위도 37.497968</li>
+</ul>
+<p>즉<br />
+(127.007675, 37.491843), (127.027544, 37.497968)<br />
+좌표에 점을 찍게 되면 서초역과 강남역의 위치에 다음과 같은 모습이 된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="st">&quot;seoul&quot;</span>) %&gt;%<span class="st"> </span>ggmap
+
+locationInfo &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">Name =</span> <span class="kw">c</span>(<span class="st">&quot;서초역&quot;</span>, <span class="st">&quot;강남역&quot;</span>), 
+  <span class="dt">lon =</span> <span class="kw">c</span>(<span class="fl">127.007675</span>, <span class="fl">127.027544</span>),
+    <span class="dt">lat =</span> <span class="kw">c</span>(<span class="fl">37.491843</span>, <span class="fl">37.497968</span>)
+)
+
+p1 +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat))</code></pre></div>
+<center>
+<img src="/assets/ggmap-4-1.png" />
+</center>
+<p>잘 안 보일 수도 있지만 전 사진과 다르게 2개의 점이 추가된 것을 볼 수 있다.<br />
+2개의 검은 점은 각각 서초역과 강남역에 찍혔다.</p>
+<p>지도를 조금 더 확대해 볼 수도 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p2 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="st">&quot;gangnamgu&quot;</span>, <span class="dt">zoom =</span> <span class="dv">12</span>) %&gt;%<span class="st"> </span>ggmap
+p2</code></pre></div>
+<center>
+<img src="/assets/ggmap-5-1.png" />
+</center>
+<p>지도의 중앙을 &quot;gangnamgu&quot; 즉 강남구로 설정하고 <code>zoom</code> 인자를 12값으로 설정한 경우이다.<br />
+<code>zoom</code> 인자의 디폴트 값 10 보다 큰 값을 주었으므로 조금은 확대되어 보이게 된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p2 +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat))</code></pre></div>
+<center>
+<img src="/assets/ggmap-6-1.png" />
+</center>
+<p>지도를 확대하든 지도의 중심점을 옮기든 간에 서초역과 강남역에 포인팅하는 코드는 문제없이 작동한다.<br />
+포인팅 말고도 포인팅된 곳에 무엇이 위치해 있는지 라벨링이 되어있다면 더 보기 좋을 것이다.<br />
+라벨링도 ggplot2 기능 그대로 쓰던대로 쓰면 된다.<br />
+아래는 <code>geom_text()</code> 를 이용해본 예이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p2 +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat)) +
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">label =</span> Name), <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">vjust =</span> -<span class="dv">1</span>)</code></pre></div>
+<center>
+<img src="/assets/ggmap-7-1.png" />
+</center>
+<h3 id="b-2-경로-그리기">B-2) 경로 그리기</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">locationInfo &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+    <span class="dt">Name =</span> <span class="kw">c</span>(<span class="st">&quot;강남&quot;</span>, <span class="st">&quot;양재&quot;</span>, <span class="st">&quot;양재시민의숲&quot;</span>, <span class="st">&quot;청계산입구&quot;</span>, <span class="st">&quot;판교&quot;</span>, <span class="st">&quot;정자&quot;</span>), 
+    <span class="dt">lon =</span> <span class="kw">c</span>(<span class="fl">127.028046</span>, <span class="fl">127.035140</span>, <span class="fl">127.038451</span>, <span class="fl">127.054769</span>, <span class="fl">127.111172</span>, <span class="fl">127.108367</span>), 
+    <span class="dt">lat =</span> <span class="kw">c</span>(<span class="fl">37.497001</span>, <span class="fl">37.483368</span>, <span class="fl">37.469655</span>, <span class="fl">37.448196</span>, <span class="fl">37.394786</span>, <span class="fl">37.366777</span>)
+)
+
+locationInfo</code></pre></div>
+<pre><code>##           Name      lon      lat
+## 1         강남 127.0280 37.49700
+## 2         양재 127.0351 37.48337
+## 3 양재시민의숲 127.0385 37.46966
+## 4   청계산입구 127.0548 37.44820
+## 5         판교 127.1112 37.39479
+## 6         정자 127.1084 37.36678</code></pre>
+<p>신분당선을 기준으로 정자역에서 강남역까지 경로를 표현해 보고자 <code>locationInfo</code> 내용을 바꾸었다.<br />
+이를 이용하여 신분당선의 대략적인 경로를 표현해 보도록 하겠다. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p3 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="st">&quot;gwacheon&quot;</span>, <span class="dt">zoom =</span> <span class="dv">11</span>) %&gt;%<span class="st"> </span>ggmap
+p3 &lt;-<span class="st"> </span>p3 +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat)) +
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">label =</span> Name), <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">hjust =</span> <span class="fl">1.2</span>, <span class="dt">fontface =</span> <span class="st">&quot;bold&quot;</span>)
+p3</code></pre></div>
+<center>
+<img src="/assets/ggmap-9-1.png" />
+</center>
+<p>우선 과천시를 중심으로 두고 <code>zoom = 11</code> 로 설정하여 지도를 뿌린 후<br />
+신분당선에 해당되는 역에 점을 찍고 라벨링을 더해보았다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p3 +<span class="st"> </span><span class="kw">geom_path</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>, <span class="dt">lwd =</span> <span class="dv">1</span>)</code></pre></div>
+<center>
+<img src="/assets/ggmap-10-1.png" />
+</center>
+<p>그다음 경로를 표현하기 위해 각 점에 적당한 직선을 <code>geom_path()</code> 를 통해 그리면 신분당선의 경로가 어떤지를 볼 수 있겠다.</p>
+<h2 id="c-기타">C) 기타</h2>
+<p>소개한 <code>get_googlemap()</code>, <code>ggmap()</code> 함수의 옵션들은 정말 방대한 편이다.<br />
+모든 것을 건드려 보진 못했지만 유용할 것으로 생각하는 기능 중</p>
+<ol type="1">
+<li>지도를 꽉 채워 출력하는 기능</li>
+<li>Map type 을 변경하는 기능</li>
+</ol>
+<p>이 눈에 띄었다.</p>
+<h3 id="c-1-extent-device-로-지도-꽉-채워-보기">C-1) <code>extent = &quot;device&quot;</code> 로 지도 꽉 채워 보기</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_googlemap</span>() %&gt;%<span class="st"> </span>ggmap</code></pre></div>
+<center>
+<img src="/assets/ggmap-11-1.png" />
+</center>
+<p><code>ggmap()</code> 함수를 디폴트로 사용한 결과이다.<br />
+지도 그림만을 출력하지 못하고 x축, y축이 함께 그려지는데 상황에 따라 불필요할 수 있다.<br />
+온전히 지도 그림만을 출력하고 싶다면</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_googlemap</span>() %&gt;%<span class="st"> </span><span class="kw">ggmap</span>(<span class="dt">extent =</span> <span class="st">&quot;device&quot;</span>)</code></pre></div>
+<center>
+<img src="/assets/ggmap-12-1.png" />
+</center>
+<p><code>extent = &quot;device&quot;</code> 를 이용하면 되겠다.</p>
+<h3 id="c-2-get_googlemap-함수의-maptype-인자를-조정해-지도스타일-바꾸기">C-2) <code>get_googlemap()</code> 함수의 <code>maptype</code> 인자를 조정해 지도스타일 바꾸기</h3>
+<p><code>get_googlemap()</code> 함수의 <code>maptype</code> 인자 값을<br />
+&quot;terrain&quot;, &quot;satellite&quot;, &quot;roadmap&quot;, &quot;hybrid&quot; 등으로 조절해보면</p>
+<p><em>satellite 로 설정한 결과</em></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p4 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="dt">maptype =</span> <span class="st">&quot;satellite&quot;</span>) %&gt;%<span class="st"> </span>ggmap
+p4 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;maptype : satellite&quot;</span>)</code></pre></div>
+<center>
+<img src="/assets/ggmap-13-1.png" />
+</center>
+<p><em>terrain 로 설정한 결과</em></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p5 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="dt">maptype =</span> <span class="st">&quot;terrain&quot;</span>) %&gt;%<span class="st"> </span>ggmap
+p5 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;maptype : terrain&quot;</span>)</code></pre></div>
+<center>
+<img src="/assets/ggmap-14-1.png" />
+</center>
+<p><em>roadmap 로 설정한 결과</em></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p6 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="dt">maptype =</span> <span class="st">&quot;roadmap&quot;</span>) %&gt;%<span class="st"> </span>ggmap
+p6 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;maptype : roadmap&quot;</span>)</code></pre></div>
+<center>
+<img src="/assets/ggmap-15-1.png" />
+</center>
+<p><em>hybrid 로 설정한 결과</em></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p7 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="dt">maptype =</span> <span class="st">&quot;hybrid&quot;</span>) %&gt;%<span class="st"> </span>ggmap
+p7 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;maptype : hybrid&quot;</span>)</code></pre></div>
+<center>
+<img src="/assets/ggmap-16-1.png" />
+</center>
+<p>이처럼 쓰임에 맞는 지도 스타일을 선택할 수 있다.</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf">ggmap: Spatial Visualization with ggplot2 by David Kahle and Hadley Wickham</a></li>
+</ul>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>참고로 지금의 신분당선은 이보다 노선이 더 많아졌다.<a href="#fnref1">↩</a></p></li>
+</ol>
+</section>
+</div>
+    <div class="share-page">
+    <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/10/18/ggmap.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/10/14/Choropleth_map_basic.html">R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/09/18/lubridate_package.html">R에서 lubridate package 에 대해</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html">회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/07/23/Crawling_image.html">R에서 특정 웹페이지의 이미지 파일 Crawling 하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html">R에서 data.frame 과 data.table 에 대해 join 작업을 이용한 벤치마킹</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/06/12/S3.html">R에서 S3 최소재현예제</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/r/2016/10/14/Choropleth_map_basic.html">&laquo; R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기</a>
+  
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+
+        var disqus_shortname = "lovetoken";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제";
+        var disqus_title = "R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    /* ]]> */
+    </script>
+</div>
+
+                <footer>
+                    Copyleft by Lovetoken
+                     
+                    - <a href="https://github.com/lovetoken">https://github.com/lovetoken</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>                    
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>
