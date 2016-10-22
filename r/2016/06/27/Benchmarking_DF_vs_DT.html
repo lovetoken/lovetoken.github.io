@@ -164,7 +164,7 @@ dt2 &lt;-<span class="st"> </span><span class="kw">data.table</span>(df2); <span
 
 <span class="kw">benchmark</span>(
     join_res_df &lt;-<span class="st"> </span><span class="kw">left_join</span>(df, df2),
-    join_res_dt &lt;-<span class="st"> </span><span class="kw">left_join</span>(dt, dt2), <span class="dt">replications=</span><span class="dv">20</span>
+    join_res_dt &lt;-<span class="st"> </span><span class="kw">left_join</span>(dt, dt2), <span class="dt">replications =</span> <span class="dv">20</span>
 )</code></pre></div>
 <p>위의 코드를 간략히 설명해 보면</p>
 <h2 id="a-예제로-사용할-data.frame-data.table-객체-만들기">A) 예제로 사용할 data.frame, data.table 객체 만들기</h2>
@@ -208,7 +208,7 @@ join 방법은 무난한 left join 을 실시하기 위해 dplyr package 에 있
 data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenchmark package 의 <code>benchmark()</code> 함수를 이용했다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">benchmark</span>(
     join_res_df &lt;-<span class="st"> </span><span class="kw">left_join</span>(df, df2, <span class="dt">by=</span><span class="st">&quot;ID&quot;</span>),
-    join_res_dt &lt;-<span class="st"> </span><span class="kw">left_join</span>(dt, dt2, <span class="dt">by=</span><span class="st">&quot;ID&quot;</span>), <span class="dt">replications=</span><span class="dv">20</span>
+    join_res_dt &lt;-<span class="st"> </span><span class="kw">left_join</span>(dt, dt2, <span class="dt">by=</span><span class="st">&quot;ID&quot;</span>), <span class="dt">replications =</span> <span class="dv">20</span>
 )</code></pre></div>
 <pre><code>##                                           test replications elapsed
 ## 1 join_res_df &lt;- left_join(df, df2, by = &quot;ID&quot;)           20  19.608

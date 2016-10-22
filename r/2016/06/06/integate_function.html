@@ -145,9 +145,9 @@ fun_forarea &lt;-<span class="st"> </span>function(x){
     <span class="kw">return</span>(res)
 }
 
-P &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">c</span>(-<span class="dv">1</span>, <span class="dv">6</span>)), <span class="kw">aes</span>(<span class="dt">x=</span>x)) +<span class="st"> </span>
-<span class="st">    </span><span class="kw">stat_function</span>(<span class="dt">fun=</span>fun) +<span class="st"> </span>
-<span class="st">    </span><span class="kw">stat_function</span>(<span class="dt">fun=</span>fun_forarea, <span class="dt">geom=</span><span class="st">&quot;area&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;#3E5CFF&quot;</span>, <span class="dt">alpha=</span>.<span class="dv">2</span>) +<span class="st"> </span>
+P &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(-<span class="dv">1</span>, <span class="dv">6</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> x)) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> fun) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> fun_forarea, <span class="dt">geom =</span> <span class="st">&quot;area&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;#3E5CFF&quot;</span>, <span class="dt">alpha =</span> .<span class="dv">2</span>) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">theme_bw</span>()
 

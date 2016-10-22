@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 18 Oct 2016 22:26:26 +0900</pubDate>
-    <lastBuildDate>Tue, 18 Oct 2016 22:26:26 +0900</lastBuildDate>
+    <pubDate>Sat, 22 Oct 2016 23:44:42 +0900</pubDate>
+    <lastBuildDate>Sat, 22 Oct 2016 23:44:42 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -922,9 +922,9 @@ Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르�
 img_tag &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;htmlcode %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;regmatches&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;regexpr&lt;/span&gt;(img_tag_pattern, .))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;Step2) 소비된 img tag 중에서 src argument 값을 소비&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;src_href_pattern &amp;lt;-&lt;span class=&quot;st&quot;&gt; &amp;quot;(?&amp;lt;=src=&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\\\&amp;quot;&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;).*?(?=&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\\\&amp;quot;&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;)&amp;quot;&lt;/span&gt;
-src_href &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;img_tag %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;regmatches&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;regexpr&lt;/span&gt;(src_href_pattern, ., &lt;span class=&quot;dt&quot;&gt;perl=&lt;/span&gt;T))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+src_href &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;img_tag %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;regmatches&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;regexpr&lt;/span&gt;(src_href_pattern, ., &lt;span class=&quot;dt&quot;&gt;perl =&lt;/span&gt; T))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;각각의 정규표현식을 설명하면 첫번째 단계의 &lt;code&gt;&amp;lt;img.*?&amp;gt;&lt;/code&gt; 은 img tag 전체를 선택하는 패턴이며,&lt;br /&gt;
-두번째 단계의 &lt;code&gt;(?&amp;lt;=src=\\\&amp;quot;).*?(?=\\\&amp;quot;)&lt;/code&gt; 는 src 인자값을 선택하되 양옆의 &amp;quot;&amp;quot; 큰따옴표는 소비하지 않는 패턴이다. (R의 grep 함수에서 정규표현식의 이스케이프가 제대로 동작하지 않는다면 &lt;code&gt;perl=TRUE&lt;/code&gt; 를 통해 해결이 가능하기도 하다.)&lt;/p&gt;
+두번째 단계의 &lt;code&gt;(?&amp;lt;=src=\\\&amp;quot;).*?(?=\\\&amp;quot;)&lt;/code&gt; 는 src 인자값을 선택하되 양옆의 &amp;quot;&amp;quot; 큰따옴표는 소비하지 않는 패턴이다. (R의 grep 함수에서 정규표현식의 이스케이프가 제대로 동작하지 않는다면 &lt;code&gt;perl = TRUE&lt;/code&gt; 를 통해 해결이 가능하기도 하다.)&lt;/p&gt;
 &lt;p&gt;단계를 크개 2개로 나누어 정규표현식을 짠 이유는 img tag 중에서 src 인자값을 추출하여야 이미지링크 문자열만 뽑을 수 있기 때문이다.&lt;/p&gt;
 &lt;p&gt;이렇게 준비된 결과 &lt;code&gt;src_href&lt;/code&gt; 를 살펴보면 다음과 같다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;src_href&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -964,7 +964,7 @@ src_href &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;img_tag %&amp;g
 }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;output 폴더에 &amp;quot;image_1&amp;quot;, ... , &amp;quot;image_20&amp;quot; 개의 이미지가 잘 저장되어 있는지 확인해보면 되겠다!&lt;/p&gt;
 &lt;figure&gt;
-&lt;img src=&quot;/assets//Crawling_1.png&quot; /&gt;
+&lt;img src=&quot;/assets/Crawling_1.png&quot; /&gt;
 &lt;/figure&gt;
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
@@ -988,6 +988,7 @@ src_href &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;img_tag %&amp;g
 바로 감사의 글을 논문에 포함하지 않고 빠른 행정처리를 위해 논문을 제출했다는 것이다.&lt;br /&gt;
 제출한 논문을 다시 가져와서 감사의 글을 강제로 집어넣을 수도 없는 노릇이다.&lt;br /&gt;
 그래서 아쉽지만, 감사의 글을 이곳에 남기고자 한다.&lt;/p&gt;
+&lt;hr /&gt;
 &lt;p&gt;&lt;strong&gt;감사의 글&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;어떠한 계기 때문에 석사과정을 밟기로 각오하고 이 길을 선택했는지 지금 와서 생각해보면 구체화 시키기가 쉽지 않다. 솔직히 말해서 잘 모르겠다. 전반적으로 볼 때 난 자연스럽게 여기까지 오게 되었다.&lt;br /&gt;
 모든 것이 이러한 식으로 물 흐르듯 화살 같은 속도의 시간이란 버스에 탑승하여 또 어딘가 모르는 곳에 하차하고, 탑승하는 것을 되풀이하다가 또 한 번 도심 속에 하차했다.&lt;br /&gt;
@@ -1049,7 +1050,7 @@ dt2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot
 
 &lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
     join_res_df &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;left_join&lt;/span&gt;(df, df2),
-    join_res_dt &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;left_join&lt;/span&gt;(dt, dt2), &lt;span class=&quot;dt&quot;&gt;replications=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;20&lt;/span&gt;
+    join_res_dt &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;left_join&lt;/span&gt;(dt, dt2), &lt;span class=&quot;dt&quot;&gt;replications =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;20&lt;/span&gt;
 )&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;위의 코드를 간략히 설명해 보면&lt;/p&gt;
 &lt;h2 id=&quot;a-예제로-사용할-data.frame-data.table-객체-만들기&quot;&gt;A) 예제로 사용할 data.frame, data.table 객체 만들기&lt;/h2&gt;
@@ -1093,7 +1094,7 @@ join 방법은 무난한 left join 을 실시하기 위해 dplyr package 에 있
 data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenchmark package 의 &lt;code&gt;benchmark()&lt;/code&gt; 함수를 이용했다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
     join_res_df &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;left_join&lt;/span&gt;(df, df2, &lt;span class=&quot;dt&quot;&gt;by=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;ID&amp;quot;&lt;/span&gt;),
-    join_res_dt &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;left_join&lt;/span&gt;(dt, dt2, &lt;span class=&quot;dt&quot;&gt;by=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;ID&amp;quot;&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;replications=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;20&lt;/span&gt;
+    join_res_dt &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;left_join&lt;/span&gt;(dt, dt2, &lt;span class=&quot;dt&quot;&gt;by=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;ID&amp;quot;&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;replications =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;20&lt;/span&gt;
 )&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##                                           test replications elapsed
 ## 1 join_res_df &amp;lt;- left_join(df, df2, by = &amp;quot;ID&amp;quot;)           20  19.608

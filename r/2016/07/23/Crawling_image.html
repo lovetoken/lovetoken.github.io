@@ -182,9 +182,9 @@
 img_tag &lt;-<span class="st"> </span>htmlcode %&gt;%<span class="st"> </span><span class="kw">regmatches</span>(<span class="kw">regexpr</span>(img_tag_pattern, .))</code></pre></div>
 <p><strong>Step2) 소비된 img tag 중에서 src argument 값을 소비</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">src_href_pattern &lt;-<span class="st"> &quot;(?&lt;=src=</span><span class="ch">\\\&quot;</span><span class="st">).*?(?=</span><span class="ch">\\\&quot;</span><span class="st">)&quot;</span>
-src_href &lt;-<span class="st"> </span>img_tag %&gt;%<span class="st"> </span><span class="kw">regmatches</span>(<span class="kw">regexpr</span>(src_href_pattern, ., <span class="dt">perl=</span>T))</code></pre></div>
+src_href &lt;-<span class="st"> </span>img_tag %&gt;%<span class="st"> </span><span class="kw">regmatches</span>(<span class="kw">regexpr</span>(src_href_pattern, ., <span class="dt">perl =</span> T))</code></pre></div>
 <p>각각의 정규표현식을 설명하면 첫번째 단계의 <code>&lt;img.*?&gt;</code> 은 img tag 전체를 선택하는 패턴이며,<br />
-두번째 단계의 <code>(?&lt;=src=\\\&quot;).*?(?=\\\&quot;)</code> 는 src 인자값을 선택하되 양옆의 &quot;&quot; 큰따옴표는 소비하지 않는 패턴이다. (R의 grep 함수에서 정규표현식의 이스케이프가 제대로 동작하지 않는다면 <code>perl=TRUE</code> 를 통해 해결이 가능하기도 하다.)</p>
+두번째 단계의 <code>(?&lt;=src=\\\&quot;).*?(?=\\\&quot;)</code> 는 src 인자값을 선택하되 양옆의 &quot;&quot; 큰따옴표는 소비하지 않는 패턴이다. (R의 grep 함수에서 정규표현식의 이스케이프가 제대로 동작하지 않는다면 <code>perl = TRUE</code> 를 통해 해결이 가능하기도 하다.)</p>
 <p>단계를 크개 2개로 나누어 정규표현식을 짠 이유는 img tag 중에서 src 인자값을 추출하여야 이미지링크 문자열만 뽑을 수 있기 때문이다.</p>
 <p>이렇게 준비된 결과 <code>src_href</code> 를 살펴보면 다음과 같다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">src_href</code></pre></div>
@@ -224,7 +224,7 @@ src_href &lt;-<span class="st"> </span>img_tag %&gt;%<span class="st"> </span><s
 }</code></pre></div>
 <p>output 폴더에 &quot;image_1&quot;, ... , &quot;image_20&quot; 개의 이미지가 잘 저장되어 있는지 확인해보면 되겠다!</p>
 <figure>
-<img src="/assets//Crawling_1.png" />
+<img src="/assets/Crawling_1.png" />
 </figure>
 <section class="footnotes">
 <hr />

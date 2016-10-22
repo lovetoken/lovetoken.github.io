@@ -157,9 +157,9 @@
 <p>할 것이다.</p>
 <h2 id="b-단편-시뮬레이션">B) 단편 시뮬레이션</h2>
 <p>위에서 설명한 시뮬레이션은 아래코드를 통해 확인 가능하다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="dt">expr=</span>{
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="dt">expr =</span> {
     n &lt;-<span class="st"> </span><span class="dv">500</span>
-    sample &lt;-<span class="st"> </span><span class="kw">rpois</span>(n, <span class="dt">lambda=</span><span class="dv">10</span>)
+    sample &lt;-<span class="st"> </span><span class="kw">rpois</span>(n, <span class="dt">lambda =</span> <span class="dv">10</span>)
     <span class="kw">mean</span>(sample)
 })</code></pre></div>
 <p>위 코드를 통해 1000개의 표본평균들이 <code>res</code> 객체에 담겨있게된다.<br />
@@ -168,7 +168,7 @@
 <li>히스토그램과 밀도추정선을 덧그린 plot</li>
 <li>Quantile-Quantile Plots</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(res, <span class="dt">freq=</span>F); <span class="kw">lines</span>(<span class="kw">density</span>(res), <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(res, <span class="dt">freq =</span> F); <span class="kw">lines</span>(<span class="kw">density</span>(res), <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</code></pre></div>
 <figure>
 <img src="/assets/CLT1-1.png" />
 </figure>
@@ -207,12 +207,12 @@ video of chunk CLT1_ani
 </p>
 </video>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for(N in ani_N){
-    res &lt;-<span class="st"> </span><span class="kw">replicate</span>(N, <span class="dt">expr=</span>{
+    res &lt;-<span class="st"> </span><span class="kw">replicate</span>(N, <span class="dt">expr =</span> {
         n &lt;-<span class="st"> </span><span class="dv">500</span>
-        sample &lt;-<span class="st"> </span><span class="kw">rpois</span>(n, <span class="dt">lambda=</span><span class="dv">10</span>)
+        sample &lt;-<span class="st"> </span><span class="kw">rpois</span>(n, <span class="dt">lambda =</span> <span class="dv">10</span>)
         <span class="kw">mean</span>(sample)
     })
-    <span class="kw">qqnorm</span>(res, <span class="dt">xlim=</span><span class="kw">c</span>(-<span class="dv">4</span>, <span class="dv">4</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">11</span>))
+    <span class="kw">qqnorm</span>(res, <span class="dt">xlim =</span> <span class="kw">c</span>(-<span class="dv">4</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">11</span>))
 }</code></pre></div>
 <video   controls loop>
 <source src="/assets/CLT2_ani-.webm" />
@@ -227,12 +227,12 @@ video of chunk CLT2_ani
 verbatim 모드로 Rmarkdown 코드청크 전체를 보여주면 아래와 같다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ```{r fig.show=&quot;animate&quot;, interval=.4}</span>
 <span class="co"># for(N in ani_N){</span>
-<span class="co">#   res &lt;- replicate(N, expr={</span>
+<span class="co">#   res &lt;- replicate(N, expr = {</span>
 <span class="co">#       n &lt;- 500</span>
-<span class="co">#       sample &lt;- rpois(n, lambda=10)</span>
+<span class="co">#       sample &lt;- rpois(n, lambda = 10)</span>
 <span class="co">#       mean(sample)</span>
 <span class="co">#   })</span>
-<span class="co">#   hist(res, freq=F, ylim=c(0, 7), xlim=c(9, 11)); lines(density(res), lty=2, col=&quot;blue&quot;)</span>
+<span class="co">#   hist(res, freq = F, ylim = c(0, 7), xlim = c(9, 11)); lines(density(res), lty = 2, col = &quot;blue&quot;)</span>
 <span class="co"># }</span>
 <span class="co"># ```</span></code></pre></div>
 <p>사실 코드청크에 <code>fig.show=&quot;animate&quot;, interval=.4</code> 와 같은 옵션이 존재하지 않는다면<br />
@@ -245,12 +245,12 @@ verbatim 모드로 Rmarkdown 코드청크 전체를 보여주면 아래와 같�
 <p>QQplot animation 도 마찬가지 형태이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ```{r fig.show=&quot;animate&quot;, interval=.4}</span>
 <span class="co"># for(N in ani_N){</span>
-<span class="co">#   res &lt;- replicate(N, expr={</span>
+<span class="co">#   res &lt;- replicate(N, expr = {</span>
 <span class="co">#       n &lt;- 500</span>
-<span class="co">#       sample &lt;- rpois(n, lambda=10)</span>
+<span class="co">#       sample &lt;- rpois(n, lambda = 10)</span>
 <span class="co">#       mean(sample)</span>
 <span class="co">#   })</span>
-<span class="co">#   qqnorm(res, xlim=c(-4, 4), ylim=c(9, 11))</span>
+<span class="co">#   qqnorm(res, xlim = c(-4, 4), ylim = c(9, 11))</span>
 <span class="co"># }</span>
 <span class="co"># ```</span></code></pre></div>
 <h2 id="d-요구사항">D) 요구사항</h2>
