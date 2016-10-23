@@ -5,9 +5,71 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 22 Oct 2016 23:44:42 +0900</pubDate>
-    <lastBuildDate>Sat, 22 Oct 2016 23:44:42 +0900</lastBuildDate>
+    <pubDate>Sun, 23 Oct 2016 22:21:18 +0900</pubDate>
+    <lastBuildDate>Sun, 23 Oct 2016 22:21:18 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>Alfred(알프레드) 에서 네이버 검색쿼리를 통한 간편한 네이버검색</title>
+        <description>&lt;figure&gt;
+&lt;img src=&quot;/assets/alfred_1.png&quot; /&gt;
+&lt;/figure&gt;
+&lt;p&gt;Mac 에서 Spotlight 대용으로 &lt;a href=&quot;https://www.alfredapp.com/&quot;&gt;Alfred&lt;/a&gt; 를 사용중이며 최대한 다양한 기능들을 이용해 보고있었다.&lt;br /&gt;
+개인적으로 가장 생산성이 높은, 그리고 자주 사용하는 기능은 검색쿼리를 등록해 한방에 검색을 하는 편의를 가장 많이 느끼고 있었다.&lt;/p&gt;
+&lt;h2 id=&quot;a-alfred-검색쿼리-기능&quot;&gt;A) Alfred 검색쿼리 기능&lt;/h2&gt;
+&lt;p&gt;부연설명을 하자면 아래와 같다.&lt;br /&gt;
+만약 영어를 잘하고 싶어서 네이버에 &amp;quot;영어를 잘하는 법&amp;quot; 이라는 검색어로 검색을 원할때 보통 아래와 같은 과정일 것이다. &lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;네이버 웹페이지가 뜨는것을 기다린 후, &lt;code&gt;영어를 잘하는 법&lt;/code&gt; 으로 검색바에 타자를 치고 엔터를 누름&lt;/strong&gt; &lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;그런데 여기서 네이버라는 특정 검색 서비스 웹페이지를 들어가는 과정이 번거로울 수 있다.&lt;br /&gt;
+네이버를 Alfred 에 검색 키워드로 등록하고 (예를들어 &lt;code&gt;na&lt;/code&gt; 라고 등록한다면) 검색쿼리 설정을 해놓으면 &lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;kbd&gt;Opt&lt;/kbd&gt; + &lt;kbd&gt;Space&lt;/kbd&gt; 로 Alfred 실행 후 &lt;code&gt;na 영어를 잘하는 법&lt;/code&gt; 타자 치고 엔터를 누름&lt;/strong&gt; &lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;이란 과정으로 검색을 간편하게 할 수 있을 것이다.&lt;/p&gt;
+&lt;h2 id=&quot;b-alfred-검색쿼리-등록방법-alfred-v3.1.1-을-기준&quot;&gt;B) Alfred 검색쿼리 등록방법 (Alfred v3.1.1 을 기준)&lt;/h2&gt;
+&lt;p&gt;등록방법을 구구절절 쓰는 것 보다 스크린캐스트를 보는것이 좋을 것 같다.&lt;br /&gt;
+아래 영상처럼 하면 된다.&lt;br /&gt;
+이 영상은 Alfred 에 Github 검색쿼리를 등록한 후 테스트 하는 영상이 되겠다.&lt;/p&gt;
+&lt;iframe width=&quot;100%&quot; height=&quot;400&quot; src=&quot;https://www.youtube.com/embed/eG_Z5INGfsM&quot; frameborder=&quot;0&quot; allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;h2 id=&quot;c-alfred-검색쿼리-예시&quot;&gt;C) Alfred 검색쿼리 예시&lt;/h2&gt;
+&lt;p&gt;최근에 나는 Alfred 가 3.X 버전을 출시하면서 이전 1.X 버전을 생각없이 지웠는데&lt;br /&gt;
+아쉽게도 1.X 버전에 커스터마이징 된 환경들이 싹 날라가 버렸다. 😓&lt;/p&gt;
+&lt;p&gt;특히 검색쿼리를 다시 찾고 세팅하는것이 번거로웠는데&lt;br /&gt;
+이참에 글로 쫙 정리해놓아야 겠다는 생각이 들었다.&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.naver.com/&quot;&gt;Naver&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;http://search.naver.com/search.naver?query={query}&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://endic.naver.com/?sLn=kr&quot;&gt;Naver 영어사전&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;http://endic.naver.com/search.nhn?sLn=kr&amp;amp;query={query}&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://soundcloud.com&quot;&gt;Soundcloud&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;https://soundcloud.com/search?q={query}&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/&quot;&gt;Github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;https://github.com/search?q={query}&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.r-bloggers.com/&quot;&gt;R-bloggers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;https://www.r-bloggers.com/search/{query}/&lt;/code&gt;&lt;/pre&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;필자가 자주 이용하는 웹페이지를 기준으로 정리했다. Alfred 에서 기본적으로 지원해주는 구글, 위키, 트위터, 페이스북등의 쿼리를 제외하고 내가 자주 사용하는 사이트들에 대한 부분이다.&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Sun, 23 Oct 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/etc/2016/10/23/naver_search_query.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/etc/2016/10/23/naver_search_query.html</guid>
+        
+        
+        <category>etc</category>
+        
+      </item>
     
       <item>
         <title>R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제</title>
@@ -1114,62 +1176,6 @@ data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenc
         <pubDate>Mon, 27 Jun 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>R에서 S3 최소재현예제</title>
-        <description>&lt;blockquote&gt;
-&lt;p&gt;Hands-On Programming with R (Garrett Grolemund)&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;책에서 설명된 S3 에 의하면&lt;/p&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;제너릭 함수 (generic function)&lt;/li&gt;
-&lt;li&gt;메서드 (method)&lt;/li&gt;
-&lt;li&gt;클래스 (class)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;3개의 기반 디스패치를 가리켜 S3라고 한다.&lt;/p&gt;
-&lt;p&gt;하지만 저런용어가 쉽게 와닿지 않는 상태에서 이해하기란 쉽지 않았다.&lt;br /&gt;
-때문에 R의 S3 가 무엇인지 빠르게 체감할 수 있는 나만의 아주 간단한 self 코드를 만들어 보았다.&lt;br /&gt;
-최소재현예제 이므로 코드실행에 5분만 투자한다면 큰 체감을 얻을 수 있을것으로 예상된다.&lt;br /&gt;
-어떠한 부가설명도 없는 코드를 아래와 같이 공유하고자 한다.&lt;/p&gt;
-&lt;h2 id=&quot;s3-최소재현예제&quot;&gt;S3 최소재현예제&lt;/h2&gt;
-&lt;h3 id=&quot;generic-function&quot;&gt;generic function&lt;/h3&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lovetoken &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x){
-  &lt;span class=&quot;kw&quot;&gt;UseMethod&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;lovetoken&amp;quot;&lt;/span&gt;)
-}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;method&quot;&gt;method&lt;/h3&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lovetoken.default &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x){
-  x
-}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lovetoken.class1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x){
-  &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sum&lt;/span&gt;(x), &lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(x))
-}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lovetoken.class2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x){
-  &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;var&lt;/span&gt;(x), &lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(x))
-}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;class&quot;&gt;class&lt;/h3&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;test &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;
-&lt;span class=&quot;kw&quot;&gt;lovetoken&lt;/span&gt;(test) &lt;span class=&quot;co&quot;&gt;# `lovetoken.default(test)` 를 실행하는 것과 동일&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##  [1]  0  1  2  3  4  5  6  7  8  9 10&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;class&lt;/span&gt;(test) &amp;lt;-&lt;span class=&quot;st&quot;&gt; &amp;quot;class1&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;kw&quot;&gt;lovetoken&lt;/span&gt;(test) &lt;span class=&quot;co&quot;&gt;# `lovetoken.class1(test)` 를 실행하는 것과 동일&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 55  5&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;class&lt;/span&gt;(test) &amp;lt;-&lt;span class=&quot;st&quot;&gt; &amp;quot;class2&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;kw&quot;&gt;lovetoken&lt;/span&gt;(test) &lt;span class=&quot;co&quot;&gt;# `lovetoken.class2(test)` 를 실행하는 것과 동일&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 11.000000  3.316625&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;class&lt;/span&gt;(test) &amp;lt;-&lt;span class=&quot;st&quot;&gt; &amp;quot;unknown&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;kw&quot;&gt;lovetoken&lt;/span&gt;(test) &lt;span class=&quot;co&quot;&gt;# `lovetoken.default(test)` 를 실행하는 것과 동일&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##  [1]  0  1  2  3  4  5  6  7  8  9 10
-## attr(,&amp;quot;class&amp;quot;)
-## [1] &amp;quot;unknown&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-</description>
-        <pubDate>Sun, 12 Jun 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2016/06/12/S3.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/06/12/S3.html</guid>
         
         
         <category>R</category>
