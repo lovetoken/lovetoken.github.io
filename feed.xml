@@ -5,35 +5,35 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Oct 2016 22:21:18 +0900</pubDate>
-    <lastBuildDate>Sun, 23 Oct 2016 22:21:18 +0900</lastBuildDate>
+    <pubDate>Sun, 23 Oct 2016 22:34:17 +0900</pubDate>
+    <lastBuildDate>Sun, 23 Oct 2016 22:34:17 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
-        <title>Alfred(알프레드) 에서 네이버 검색쿼리를 통한 간편한 네이버검색</title>
+        <title>Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색</title>
         <description>&lt;figure&gt;
 &lt;img src=&quot;/assets/alfred_1.png&quot; /&gt;
 &lt;/figure&gt;
-&lt;p&gt;Mac 에서 Spotlight 대용으로 &lt;a href=&quot;https://www.alfredapp.com/&quot;&gt;Alfred&lt;/a&gt; 를 사용중이며 최대한 다양한 기능들을 이용해 보고있었다.&lt;br /&gt;
-개인적으로 가장 생산성이 높은, 그리고 자주 사용하는 기능은 검색쿼리를 등록해 한방에 검색을 하는 편의를 가장 많이 느끼고 있었다.&lt;/p&gt;
+&lt;p&gt;Mac에서 Spotlight 대용으로 &lt;a href=&quot;https://www.alfredapp.com/&quot;&gt;Alfred&lt;/a&gt; 를 사용 중이며 최대한 다양한 기능들을 이용해 보고 있었다.&lt;br /&gt;
+개인적으로 가장 생산성이 높은, 그리고 자주 사용하는 기능은 검색쿼리를 등록해 한방에 검색하는 편의를 가장 많이 느끼고 있었다.&lt;/p&gt;
 &lt;h2 id=&quot;a-alfred-검색쿼리-기능&quot;&gt;A) Alfred 검색쿼리 기능&lt;/h2&gt;
 &lt;p&gt;부연설명을 하자면 아래와 같다.&lt;br /&gt;
-만약 영어를 잘하고 싶어서 네이버에 &amp;quot;영어를 잘하는 법&amp;quot; 이라는 검색어로 검색을 원할때 보통 아래와 같은 과정일 것이다. &lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;네이버 웹페이지가 뜨는것을 기다린 후, &lt;code&gt;영어를 잘하는 법&lt;/code&gt; 으로 검색바에 타자를 치고 엔터를 누름&lt;/strong&gt; &lt;br&gt;&lt;br&gt;&lt;/p&gt;
+만약 영어를 잘하고 싶어서 네이버에 &amp;quot;영어를 잘하는 법&amp;quot; 이라는 검색어로 검색을 원할 때 보통 아래와 같은 과정일 것이다. &lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;네이버 웹페이지가 뜨는 것을 기다린 후, &lt;code&gt;영어를 잘하는 법&lt;/code&gt; 으로 검색바에 타자를 치고 엔터를 누름&lt;/strong&gt; &lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;그런데 여기서 네이버라는 특정 검색 서비스 웹페이지를 들어가는 과정이 번거로울 수 있다.&lt;br /&gt;
-네이버를 Alfred 에 검색 키워드로 등록하고 (예를들어 &lt;code&gt;na&lt;/code&gt; 라고 등록한다면) 검색쿼리 설정을 해놓으면 &lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;kbd&gt;Opt&lt;/kbd&gt; + &lt;kbd&gt;Space&lt;/kbd&gt; 로 Alfred 실행 후 &lt;code&gt;na 영어를 잘하는 법&lt;/code&gt; 타자 치고 엔터를 누름&lt;/strong&gt; &lt;br&gt;&lt;br&gt;&lt;/p&gt;
+네이버를 Alfred 에 검색 키워드로 등록하고 (예를 들어 &lt;code&gt;na&lt;/code&gt; 라고 등록한다면) 검색쿼리 설정을 해놓으면 &lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;kbd&gt;⌥&lt;/kbd&gt; + &lt;kbd&gt;Space&lt;/kbd&gt; 로 Alfred 실행 후 &lt;code&gt;na 영어를 잘하는 법&lt;/code&gt; 타자 치고 엔터를 누름&lt;/strong&gt; &lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;이란 과정으로 검색을 간편하게 할 수 있을 것이다.&lt;/p&gt;
 &lt;h2 id=&quot;b-alfred-검색쿼리-등록방법-alfred-v3.1.1-을-기준&quot;&gt;B) Alfred 검색쿼리 등록방법 (Alfred v3.1.1 을 기준)&lt;/h2&gt;
-&lt;p&gt;등록방법을 구구절절 쓰는 것 보다 스크린캐스트를 보는것이 좋을 것 같다.&lt;br /&gt;
+&lt;p&gt;등록방법을 구구절절 쓰는 것 보다 스크린캐스트를 보는 것이 좋을 것 같다.&lt;br /&gt;
 아래 영상처럼 하면 된다.&lt;br /&gt;
-이 영상은 Alfred 에 Github 검색쿼리를 등록한 후 테스트 하는 영상이 되겠다.&lt;/p&gt;
+이 영상은 Alfred 에 Github 검색쿼리를 등록한 후 테스트하는 영상이 되겠다.&lt;/p&gt;
 &lt;iframe width=&quot;100%&quot; height=&quot;400&quot; src=&quot;https://www.youtube.com/embed/eG_Z5INGfsM&quot; frameborder=&quot;0&quot; allowfullscreen&gt;
 &lt;/iframe&gt;
 &lt;h2 id=&quot;c-alfred-검색쿼리-예시&quot;&gt;C) Alfred 검색쿼리 예시&lt;/h2&gt;
-&lt;p&gt;최근에 나는 Alfred 가 3.X 버전을 출시하면서 이전 1.X 버전을 생각없이 지웠는데&lt;br /&gt;
+&lt;p&gt;최근에 나는 Alfred 가 3.X 버전을 출시하면서 이전 1.X 버전을 생각 없이 지웠는데&lt;br /&gt;
 아쉽게도 1.X 버전에 커스터마이징 된 환경들이 싹 날라가 버렸다. 😓&lt;/p&gt;
-&lt;p&gt;특히 검색쿼리를 다시 찾고 세팅하는것이 번거로웠는데&lt;br /&gt;
+&lt;p&gt;특히 검색쿼리를 다시 찾고 세팅하는 것이 번거로웠는데&lt;br /&gt;
 이참에 글로 쫙 정리해놓아야 겠다는 생각이 들었다.&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;http://www.naver.com/&quot;&gt;Naver&lt;/a&gt;&lt;/li&gt;
