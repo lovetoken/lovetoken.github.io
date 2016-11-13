@@ -5,9 +5,253 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Oct 2016 22:34:17 +0900</pubDate>
-    <lastBuildDate>Sun, 23 Oct 2016 22:34:17 +0900</lastBuildDate>
+    <pubDate>Sun, 13 Nov 2016 14:47:55 +0900</pubDate>
+    <lastBuildDate>Sun, 13 Nov 2016 14:47:55 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 factor 형 자료 처리를 위한 forcats package 에 대해</title>
+        <description>&lt;center&gt;
+&lt;img src=&quot;/assets/forcats_1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;a-개요&quot;&gt;A) 개요&lt;/h2&gt;
+&lt;p&gt;R에서 범주형 변수를 다룰 때 factor 형을 이용한다.&lt;br /&gt;
+범주형 자료는 연속형 자료와는 다르게 그 자체의 고유한 의미를 가진다는 특성때문에 정성적인 관리가 필요한 편이다.&lt;br /&gt;
+애초에 많은 관심을 필요로 하고 있다고 볼 수 있다.&lt;br /&gt;
+이러한 이유로 범주형 자료를 접근하고 핸들링하는 많은 함수들이 R에 존재한다.&lt;/p&gt;
+&lt;p&gt;최근에는 factors 의 알파벳 순서를 교묘히(?) 바꾸어 네이밍한 &lt;a href=&quot;https://cran.r-project.org/web/packages/forcats/forcats.pdf&quot;&gt;forcats package&lt;/a&gt; 가 CRAN 에 등록되었는데, &lt;del&gt;고양이를 위한 패키지가 아니라&lt;/del&gt; factor형 핸들링을 위한 함수들이 제공되는 패키지이다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The goal of the &lt;strong&gt;forcats&lt;/strong&gt; package is to provide a suite of useful tools that solve common problems with factors.&lt;br /&gt;
+- &lt;a href=&quot;https://github.com/tidyverse/forcats&quot;&gt;forcats package 의 README.md 중&lt;/a&gt;에서&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;b-패키지-설치&quot;&gt;B) 패키지 설치&lt;/h2&gt;
+&lt;p&gt;CRAN 에 등록되어 있으므로&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;install.packages&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;forcats&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;로 설치할 수 있다.&lt;/p&gt;
+&lt;p&gt;major 버전은 아직 0 이므로 계속적으로 개발될 가능성이 있는 상태이다.&lt;br /&gt;
+개발버전을 사용하고 싶다면 Github 를 통해 패키지를 설치해도 되겠다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# Or the the development version from GitHub:&lt;/span&gt;
+devtools::&lt;span class=&quot;kw&quot;&gt;install_github&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;tidyverse/forcats&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;c-getting-started&quot;&gt;C) Getting started&lt;/h2&gt;
+&lt;p&gt;forcats package 의 함수들은 &amp;quot;fct_&amp;quot; 로 시작한다.&lt;br /&gt;
+이후의 단어가 함수쓰임의 의미를 담고 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;colgroup&gt;
+&lt;col style=&quot;width: 11%&quot; /&gt;
+&lt;col style=&quot;width: 88%&quot; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr class=&quot;header&quot;&gt;
+&lt;th style=&quot;text-align: left;&quot;&gt;함수명칭&lt;/th&gt;
+&lt;th style=&quot;text-align: left;&quot;&gt;내용&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_anon&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Anonymise factor levels&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_c&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Concatenate factors, unioning levels.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_collapse&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Collapse factors into groups.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_count&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Count entries in a factor&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_drop&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Drop unnused levels&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_expand&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Add additional levels to a factor&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_explicit_na&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Make missing values explicit&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_infreq&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Reorders levels in order of first appearance or frequency.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_inorder&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Reorders levels in order of first appearance or frequency.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_lump&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Lump together least/most common levels into &amp;quot;other&amp;quot;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_recode&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Change the levels of a factor&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_relevel&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Change the order of levels in a factor&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_reorder&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Reorder the levels of a function according to another variable&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_reorder2&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Reorder the levels of a function according to another variable&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_rev&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Reverse the levels of a factor&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_shift&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Shift the order of levels of a factor&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_shuffle&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Randomly permute the levels of a factor&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_unify&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Unify the levels in a list of factors&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;fct_unique&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Unique values of a factor&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;접두사 &amp;quot;fct_&amp;quot; 가 코딩할 때 불편할 수도 있겠다 싶지만, 오히려 &amp;quot;fct_&amp;quot; 가 있음으로 변수형자료를 핸들링하는 것임을 정확하게 인지할 수 있는 tag같은 역할을 하는 것 같기도 해서 나는 개인적으로 좋다. &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;여하튼 이 함수들 중 자주 사용하는 것을 몇 개 언급해보고자 한다.&lt;/p&gt;
+&lt;h3 id=&quot;c-1-fct_recode&quot;&gt;C-1) &lt;code&gt;fct_recode()&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;factor 형 자료를 다룰 때 가장 번거로운 것 중 하나는 요인의 성격을 보존한 채 오직 명칭만 변경하는 과정이다.&lt;/p&gt;
+&lt;p&gt;예를들면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;ex &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;factor&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;L&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;M&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;small&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;small&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;L&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;M&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;L&amp;quot;&lt;/span&gt;), 
+    &lt;span class=&quot;dt&quot;&gt;levels =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;small&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;M&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;L&amp;quot;&lt;/span&gt;))
+ex&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] L     M     small small L     M     L    
+## Levels: small M L&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위와 같은 &lt;code&gt;ex&lt;/code&gt; factor 형 자료의 요인들은 &amp;quot;small&amp;quot;, &amp;quot;M&amp;quot;, &amp;quot;L&amp;quot; 3개가 있다.&lt;br /&gt;
+흠.. 그런데 요인의 명칭이 뭔가 맘에 들지 않는다(고 가정하자).&lt;br /&gt;
+특히 &amp;quot;small&amp;quot; 을 &amp;quot;S&amp;quot; 로 바꾸기만 하면 좋을 것 같아&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;levels&lt;/span&gt;(ex)[&lt;span class=&quot;kw&quot;&gt;levels&lt;/span&gt;(ex) ==&lt;span class=&quot;st&quot;&gt; &amp;quot;small&amp;quot;&lt;/span&gt;] &amp;lt;-&lt;span class=&quot;st&quot;&gt; &amp;quot;S&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;와 같은 코딩을 필자 이전까지 해왔었다.&lt;br /&gt;
+전통적인 방식이지만 어찌 보면 무식하고 조악한 코딩일 수도 있겠다.&lt;/p&gt;
+&lt;p&gt;forcats package 에선 위의 예시처럼 요인명칭을 변경할 일이 있을 때&lt;br /&gt;
+수준들의 위치를 인덱싱해 수동적으로 바꾸는 방법 대신 &lt;code&gt;fct_recode()&lt;/code&gt; 라는 함수를 통해 바꿀 수 있는 방법을 제공한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;fct_recode&lt;/span&gt;(ex, &lt;span class=&quot;dt&quot;&gt;S =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;small&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] L M S S L M L
+## Levels: S M L&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;잠깐 딴 길로 세보자.&lt;br /&gt;
+함수로써 제공한다는 것은 의외로 큰 의미가 있는데&lt;br /&gt;
+R을 제대로 사용하시는 분들이라면 이 의미는 가볍게 알 것이다.&lt;br /&gt;
+&lt;code&gt;fct_recode()&lt;/code&gt; 함수 이외의 forcats package 내에 함수들은 모두 혼자서 외롭게 활용될 일은 거의 없을 것이다.&lt;br /&gt;
+아래 코드는 dplyr package 와 함께 &lt;code&gt;fct_recode()&lt;/code&gt; 함수를 좀 더 실용적으로 사용해 본 예라고 할 수 있겠다. (참고로 &lt;code&gt;gss_cat&lt;/code&gt; 는 forcats 패키지에 내장되어있는 데이터셋이다)&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# Origin&lt;/span&gt;
+gss_cat %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;count&lt;/span&gt;(partyid)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 10 &amp;lt;U+00D7&amp;gt; 2
+##               partyid     n
+##                &amp;lt;fctr&amp;gt; &amp;lt;int&amp;gt;
+## 1           No answer   154
+## 2          Don&amp;#39;t know     1
+## 3         Other party   393
+## 4   Strong republican  2314
+## 5  Not str republican  3032
+## 6        Ind,near rep  1791
+## 7         Independent  4119
+## 8        Ind,near dem  2499
+## 9    Not str democrat  3690
+## 10    Strong democrat  3490&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# Change level values&lt;/span&gt;
+gss_cat %&amp;gt;%
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;mutate&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;partyid =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;fct_recode&lt;/span&gt;(partyid,
+    &lt;span class=&quot;st&quot;&gt;&amp;quot;Republican, strong&amp;quot;&lt;/span&gt;    =&lt;span class=&quot;st&quot;&gt; &amp;quot;Strong republican&amp;quot;&lt;/span&gt;,
+    &lt;span class=&quot;st&quot;&gt;&amp;quot;Republican, weak&amp;quot;&lt;/span&gt;      =&lt;span class=&quot;st&quot;&gt; &amp;quot;Not str republican&amp;quot;&lt;/span&gt;,
+    &lt;span class=&quot;st&quot;&gt;&amp;quot;Independent, near rep&amp;quot;&lt;/span&gt; =&lt;span class=&quot;st&quot;&gt; &amp;quot;Ind,near rep&amp;quot;&lt;/span&gt;,
+    &lt;span class=&quot;st&quot;&gt;&amp;quot;Independent, near dem&amp;quot;&lt;/span&gt; =&lt;span class=&quot;st&quot;&gt; &amp;quot;Ind,near dem&amp;quot;&lt;/span&gt;,
+    &lt;span class=&quot;st&quot;&gt;&amp;quot;Democrat, weak&amp;quot;&lt;/span&gt;        =&lt;span class=&quot;st&quot;&gt; &amp;quot;Not str democrat&amp;quot;&lt;/span&gt;,
+    &lt;span class=&quot;st&quot;&gt;&amp;quot;Democrat, strong&amp;quot;&lt;/span&gt;      =&lt;span class=&quot;st&quot;&gt; &amp;quot;Strong democrat&amp;quot;&lt;/span&gt;
+  )) %&amp;gt;%
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;count&lt;/span&gt;(partyid)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 10 &amp;lt;U+00D7&amp;gt; 2
+##                  partyid     n
+##                   &amp;lt;fctr&amp;gt; &amp;lt;int&amp;gt;
+## 1              No answer   154
+## 2             Don&amp;#39;t know     1
+## 3            Other party   393
+## 4     Republican, strong  2314
+## 5       Republican, weak  3032
+## 6  Independent, near rep  1791
+## 7            Independent  4119
+## 8  Independent, near dem  2499
+## 9         Democrat, weak  3690
+## 10      Democrat, strong  3490&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;c-2-fct_lump&quot;&gt;C-2) &lt;code&gt;fct_lump()&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;lump 영단어의 뜻은 &amp;quot;덩어리&amp;quot;, &amp;quot;한 무더기&amp;quot; 정도이다.&lt;br /&gt;
+파편들을 모아 한 덩어리로 만들어 주는 &lt;code&gt;fct_lump()&lt;/code&gt;, 곰곰이 생각해 보면 &amp;quot;파편들을 모아 한 덩어리로 만드는&amp;quot; 일은 꽤 많다.&lt;br /&gt;
+이런 예제를 생각하면 바로 이해가 될 것 같다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;d2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;gss_cat %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;count&lt;/span&gt;(partyid) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;arrange&lt;/span&gt;(n)
+
+&lt;span class=&quot;kw&quot;&gt;pie&lt;/span&gt;(d2$n, d2$partyid)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/forcats_2.png&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;응답 비율이 매우 낮은 요인들은 &amp;quot;Don&#39;t know&amp;quot;, &amp;quot;No answer&amp;quot;, &amp;quot;Other party&amp;quot; 등이 있다.&lt;br /&gt;
+응답 비율이 너무 낮아서 pie chart 에 잘 보이지 않고 겹쳐저 있다.&lt;br /&gt;
+그리고 응답 비율이 너무 낮은것은 때로는 의미가 없어 &amp;quot;etc&amp;quot; 와 같은 기타항목으로 처리하곤 하는데&lt;br /&gt;
+이때 &amp;quot;Don&#39;t know&amp;quot;, &amp;quot;No answer&amp;quot;, &amp;quot;Other party&amp;quot; 에 해당되는 요인들을 기타 항목으로 덩어리를 만들기 위해선 뜻밖에 많은 고민이 필요할 수 있다.&lt;/p&gt;
+&lt;p&gt;우리가 알고 있는 &lt;code&gt;fct_recode()&lt;/code&gt; 함수로 이를 해결할 수도 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;d2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;gss_cat %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;mutate&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;partyid =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;fct_recode&lt;/span&gt;(partyid, 
+        &lt;span class=&quot;st&quot;&gt;&amp;quot;etc&amp;quot;&lt;/span&gt; =&lt;span class=&quot;st&quot;&gt; &amp;quot;Don&amp;#39;t know&amp;quot;&lt;/span&gt;,
+        &lt;span class=&quot;st&quot;&gt;&amp;quot;etc&amp;quot;&lt;/span&gt; =&lt;span class=&quot;st&quot;&gt; &amp;quot;No answer&amp;quot;&lt;/span&gt;,
+        &lt;span class=&quot;st&quot;&gt;&amp;quot;etc&amp;quot;&lt;/span&gt; =&lt;span class=&quot;st&quot;&gt; &amp;quot;Other party&amp;quot;&lt;/span&gt;
+    )) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;count&lt;/span&gt;(partyid) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;arrange&lt;/span&gt;(n)
+
+&lt;span class=&quot;kw&quot;&gt;pie&lt;/span&gt;(d2$n, d2$partyid)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/forcats_3.png&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;응답 비율이 낮은 요인들을 &amp;quot;etc&amp;quot; 라는 명칭으로 바꾸면 된다.&lt;/p&gt;
+&lt;p&gt;음.. 그런데 좋은 해결책으로도 보일 수 있겠지만 이방법은 비효율적인 문제가 역시 있다.&lt;br /&gt;
+일단 &amp;quot;Don&#39;t know&amp;quot;, &amp;quot;No answer&amp;quot;, &amp;quot;Other party&amp;quot; 3개의 요인이 응답 비율이 낮은 것임을 사후적으로 인지해야 하고,&lt;br /&gt;
+이후 &amp;quot;etc&amp;quot; 라는 명칭으로 바꾸는 것은 뭔가 일을 2번하는 느낌을 받을 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;fct_lump()&lt;/code&gt; 함수는 이처럼 &amp;quot;etc&amp;quot; 라는 덩어리를 아주 간단하게 만들어 준다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;d2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;gss_cat %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;mutate&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;partyid =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;fct_lump&lt;/span&gt;(partyid, &lt;span class=&quot;dt&quot;&gt;n =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;other_level =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;etc&amp;quot;&lt;/span&gt;)) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;count&lt;/span&gt;(partyid) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;arrange&lt;/span&gt;(n)
+
+&lt;span class=&quot;kw&quot;&gt;pie&lt;/span&gt;(d2$n, d2$partyid)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/forcats_4.png&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;fct_lump(partyid, n = 7, other_level = &amp;quot;etc&amp;quot;)&lt;/code&gt; 를 살펴보면 &lt;code&gt;n&lt;/code&gt; 인자를 7로 설정하여 7개의 주항목 요인 외에는 &amp;quot;etc&amp;quot; 라는 명칭으로 자동으로 바꿔준다.&lt;br /&gt;
+따라서 pie chart를 보면 소수의견인 &amp;quot;Don&#39;t know&amp;quot;, &amp;quot;No answer&amp;quot;, &amp;quot;Other party&amp;quot; 요인들이 &amp;quot;etc&amp;quot; 로 통합된 것을 확인할 수 있다.&lt;/p&gt;
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.r-bloggers.com/forcats-0-1-0-%F0%9F%90%88%F0%9F%90%88%F0%9F%90%88%F0%9F%90%88/&quot;&gt;forcats 0.1.0 🐈🐈🐈🐈&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;Rstudio IDE 를 사용하고 있다면 &lt;kbd&gt;tap&lt;/kbd&gt;을 이용한 자동완성을 이용하면 그렇게 불편하지도 않다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Sun, 13 Nov 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2016/11/13/forcats_package.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/11/13/forcats_package.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색</title>
