@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 13 Nov 2016 15:04:51 +0900</pubDate>
-    <lastBuildDate>Sun, 13 Nov 2016 15:04:51 +0900</lastBuildDate>
+    <pubDate>Tue, 15 Nov 2016 21:33:14 +0900</pubDate>
+    <lastBuildDate>Tue, 15 Nov 2016 21:33:14 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -2252,54 +2252,76 @@ res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </item>
     
       <item>
-        <title>R에서 try() 함수 소개</title>
-        <description>&lt;p&gt;이전에 나는 특정 코드들이 있을 때, 이 코드를 수행하면 에러가 나는지, 나지 않는지 여부를 boolean 값으로 반환하는 그러한 함수를 찾고 있었다. (그보단 이러한 함수를 만들 수 있도록 리소스를 찾아보고 있었다.)&lt;br /&gt;
+        <title>R에서 try(), tryCatch() 함수 소개</title>
+        <description>&lt;p&gt;이전에 나는 특정 코드들이 있을 때, 이 코드를 수행하면 에러가 나는지, 나지 않는지 여부를 boolean 값으로 반환하는 그러한 함수를 찾고 있었다. (그보단 이러한 함수를 만들 수 있도록 리소스를 찾아보고 있었다)&lt;br /&gt;
 그러던 중 우연히 알게 된 &lt;code&gt;try()&lt;/code&gt; 함수에 대해 알아보고자 한다.&lt;/p&gt;
-&lt;p&gt;아래 코드는 &lt;code&gt;bsid&lt;/code&gt; 라는 environment 객체가 없기 때문에 아래의 코드는 에러를 내어 본 파일의 rmarkdown 랜더링을 막게 될 것이다.&lt;br /&gt;
-우선 랜더링(컴파일링)마저 막는 상황을 피하기 위해 코드청크를 &lt;code&gt;eval=F&lt;/code&gt; 로 설정했다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir=&lt;/span&gt;bsdi)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;실제로 &lt;code&gt;bsid&lt;/code&gt; 라는 environment 객체가 없는 상황에 위 코드를 실행시키면&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; ls(envir=bsdi)
-Error in ls(envir = bsdi) : object &amp;#39;bsdi&amp;#39; not found&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;R이 처음으로 실행된 상황에서 (깔끔한 상태에서) 아래 코드는 &lt;code&gt;bsid&lt;/code&gt; 라는 객체가 어떠한 환경에서도 없기 때문에 에러를 발생한다.&lt;br /&gt;
+만약 .rmd 포맷으로 코딩을 하고 있는 상황이라면 오류나는 코드청크가 하나라도 있는 경우 랜더링이 막히게 될 것이다.&lt;br /&gt;
+우선 랜더링마저 막히는 상황을 피하기 위해 코드청크의 옵션을 &lt;code&gt;eval=F&lt;/code&gt; 로 설정했다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;bsid&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;실제로 위 코드를 실행시키면&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; bsid
+Error: object &amp;#39;bsid&amp;#39; not found&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;의 에러메세지가 출력된다.&lt;/p&gt;
-&lt;h2 id=&quot;try-function&quot;&gt;&lt;code&gt;try()&lt;/code&gt; function&lt;/h2&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr =&lt;/span&gt; {
-  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir =&lt;/span&gt; bsdi)
-})&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;try()&lt;/code&gt; 함수 안에는 표현식이 들어가는데 이전 예제 코드의 &lt;code&gt;ls(envir = bsdi)&lt;/code&gt; 를 입력하였다.&lt;br /&gt;
-&lt;code&gt;ls(envir = bsdi)&lt;/code&gt; 코드는 역시 에러가 반환된다.&lt;br /&gt;
-하지만 차이점은 에러를 반환하고도 이후 코드를 계속적으로 수행한다는 차이점을 가지고 있다.&lt;br /&gt;
+&lt;h2 id=&quot;a-try-함수&quot;&gt;A) &lt;code&gt;try()&lt;/code&gt; 함수&lt;/h2&gt;
+&lt;p&gt;에러를 뿜는 위의 코드를 &lt;code&gt;try()&lt;/code&gt; 함수로 감싸주어 보자.&lt;br /&gt;
+감싼 이 코드는 단순히 &amp;quot;try&amp;quot; 라는 단어 대로 시도를 해보고 안되면 마는 식으로 동작하게 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;bsid)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;try()&lt;/code&gt; 함수 안에는 표현식(&lt;code&gt;expr&lt;/code&gt;)이 들어가는데 여기에 &lt;code&gt;bsid&lt;/code&gt; 를 입력하였다.&lt;br /&gt;
+이 코드는 역시 에러가 반환된다. 하지만&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;bsid&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이것과의 차이점은 에러를 반환하고도 &lt;strong&gt;이후 코드를 계속적으로 수행&lt;/strong&gt;한다는 차이점을 가지고 있다.&lt;br /&gt;
 무슨소리인지 잘 모르겠다면 아래코드를 보면 된다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr =&lt;/span&gt; {
-  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir =&lt;/span&gt; bsdi)
-})
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr=&lt;/span&gt;bsid)
 
 &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Hello R&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Hello R&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;try()&lt;/code&gt; 함수를 쓴 코드 이후의 코드인 &lt;code&gt;print(&amp;quot;Hello R&amp;quot;)&lt;/code&gt; 은 정상적으로 실행되 수행된 것을 볼 수 있다.&lt;br /&gt;
-유의할 것은 실제로 위 코드청크에 &lt;code&gt;eval = F&lt;/code&gt; 설정을 주지 않고도 렌더링이 막히지 않았는다는 것이다.&lt;br /&gt;
+유의할 것은 실제로 위 코드청크에 &lt;code&gt;eval=F&lt;/code&gt; 설정을 주지 않고도 렌더링이 막히지 않았는다는 것이다.&lt;br /&gt;
 따라서 에러를 뿜는 코드이더라 하더라도, 그것이 &lt;code&gt;try()&lt;/code&gt; 함수로 감싸지면 계속적으로 수행된다는 것이다.&lt;/p&gt;
-&lt;h3 id=&quot;silent-인자&quot;&gt;&lt;code&gt;silent&lt;/code&gt; 인자&lt;/h3&gt;
+&lt;h3 id=&quot;a-1-silent-인자&quot;&gt;A-1) &lt;code&gt;silent&lt;/code&gt; 인자&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;try()&lt;/code&gt; 함수의 &lt;code&gt;silent&lt;/code&gt; 인자로 command 에 에러가 반환되는 메세지 조차 침묵시킬 수 있다.&lt;br /&gt;
 이 인자의 값을 &lt;code&gt;TRUE&lt;/code&gt; 로 설정하면 에러는 silent 시킨다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr =&lt;/span&gt; {
-  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir =&lt;/span&gt; bsdi)
-}, &lt;span class=&quot;dt&quot;&gt;silent =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;차이점을 체감하기 위해선 직접 R command 를 수행해볼 필요가 있다.&lt;/p&gt;
-&lt;h3 id=&quot;두-줄-의-코드를-try-하되-한줄은-정상-한줄은-에러를-내는-코드로-수정하면&quot;&gt;두 줄 의 코드를 try 하되 한줄은 정상, 한줄은 에러를 내는 코드로 수정하면?&lt;/h3&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr =&lt;/span&gt; {
-  &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Hello R&amp;quot;&lt;/span&gt;)   &lt;span class=&quot;co&quot;&gt;# normal code&lt;/span&gt;
-  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir =&lt;/span&gt; bsdi)     &lt;span class=&quot;co&quot;&gt;# error code&lt;/span&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(bsid, &lt;span class=&quot;dt&quot;&gt;silent =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;차이점을 체감하기 위해선 직접 R 을 켜 코드를 동작시켜 볼 필요가 있다.&lt;/p&gt;
+&lt;h3 id=&quot;a-2-두-줄-의-코드를-try-하되-한줄은-정상-한줄은-에러를-내는-코드로-수정하면&quot;&gt;A-2) 두 줄 의 코드를 try 하되 한줄은 정상, 한줄은 에러를 내는 코드로 수정하면?&lt;/h3&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;({
+  &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Hello R&amp;quot;&lt;/span&gt;)  &lt;span class=&quot;co&quot;&gt;# normal code&lt;/span&gt;
+  bsid  &lt;span class=&quot;co&quot;&gt;# error code&lt;/span&gt;
 }, &lt;span class=&quot;dt&quot;&gt;silent =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Hello R&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;첫번째 코드는 정상적으로 문자열 &amp;quot;Hello R&amp;quot; 을 출력시킨다.&lt;br /&gt;
-그리고 에러반환 코드 2번째 코드는 반응이 없다.&lt;/p&gt;
+그리고 에러를 반환하는 2번째 코드는 반응이 없다.&lt;/p&gt;
 &lt;p&gt;순서를 바꾸어 보면?&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;expr =&lt;/span&gt; {
-  &lt;span class=&quot;kw&quot;&gt;ls&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;envir =&lt;/span&gt; bsdi)     &lt;span class=&quot;co&quot;&gt;# error code&lt;/span&gt;
-  &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Hello R&amp;quot;&lt;/span&gt;)   &lt;span class=&quot;co&quot;&gt;# normal code&lt;/span&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;try&lt;/span&gt;({
+  bsid  &lt;span class=&quot;co&quot;&gt;# error code&lt;/span&gt;
+  &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Hello R&amp;quot;&lt;/span&gt;)  &lt;span class=&quot;co&quot;&gt;# normal code&lt;/span&gt;
 }, &lt;span class=&quot;dt&quot;&gt;silent =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;헛.. 첫번째 코드가 에러를 뿜기 때문에 그 이후 코드인 &lt;code&gt;print(&amp;quot;Hello R&amp;quot;)&lt;/code&gt;는 수행되지 않는것을 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;흠 첫번째 코드가 에러를 뿜기 때문에 그 이후 코드인 &lt;code&gt;print(&amp;quot;Hello R&amp;quot;)&lt;/code&gt;는 수행되지 않는것을 볼 수 있다. &lt;code&gt;try()&lt;/code&gt; 함수에 감싸져있는 코드덩어리는 평소대로 에러코드 이후인 정상적 코드를 실행하지 못한다.&lt;/p&gt;
+&lt;h2 id=&quot;b-에러가-날-경우의-예외처리를-위한-trycatch-함수&quot;&gt;B) 에러가 날 경우의 예외처리를 위한 &lt;code&gt;tryCatch()&lt;/code&gt; 함수&lt;/h2&gt;
+&lt;p&gt;이처럼 &lt;code&gt;try()&lt;/code&gt; 함수를 알아 보았는데 잘 이용하면 에러가 나는 코드를 건너뛰고 다음 프로세스를 진행할 수 있다.&lt;br /&gt;
+에러가 나는 상황에 대한 조건부 프로세스가 따로 필요하다면 &lt;code&gt;try()&lt;/code&gt; 함수만으론 부족할 수 있다.&lt;br /&gt;
+이럴때는 lowerCamelCase 로 네이밍된 &lt;code&gt;tryCatch()&lt;/code&gt; 함수를 이용하면 간편하게 해결할 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;tryCatch&lt;/span&gt;(bsid,
+  &lt;span class=&quot;dt&quot;&gt;error =&lt;/span&gt; function(e) &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;I am error&amp;quot;&lt;/span&gt;),
+  &lt;span class=&quot;dt&quot;&gt;warning =&lt;/span&gt; function(w) &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;I am warning&amp;quot;&lt;/span&gt;),
+  &lt;span class=&quot;dt&quot;&gt;finally =&lt;/span&gt; &lt;span class=&quot;ot&quot;&gt;NULL&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;I am error&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;tryCatch()&lt;/code&gt; 에는 본코드가 에러를 뿜을 때 실행될 함수를 설정하는 &lt;code&gt;error&lt;/code&gt;,&lt;br /&gt;
+에러가 아니라 warning 가 일어날 때 실행될 함수를 설정하는 &lt;code&gt;warning&lt;/code&gt;,&lt;br /&gt;
+조건 상관없이 공통으로 실행되는 &lt;code&gt;finally&lt;/code&gt; 인자들을 이용할 수 있어 좀 더 섬세한 예외처리가 가능하다.&lt;/p&gt;
+&lt;p&gt;위의 예제는 &lt;code&gt;bsid&lt;/code&gt; 객체가 존재하지 않아 &lt;code&gt;error&lt;/code&gt; 에 해당되는 &lt;code&gt;print(&amp;quot;I am error&amp;quot;)&lt;/code&gt; 가 실행된 경우이다. 만약&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;bsid &amp;lt;-&lt;span class=&quot;st&quot;&gt; &amp;quot;I exist!&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;를 실행한 다음 위의 코드를 실행한다면?&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;tryCatch&lt;/span&gt;(bsid,
+  &lt;span class=&quot;dt&quot;&gt;error =&lt;/span&gt; function(e) &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;I am error&amp;quot;&lt;/span&gt;),
+  &lt;span class=&quot;dt&quot;&gt;warning =&lt;/span&gt; function(w) &lt;span class=&quot;kw&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;I am warning&amp;quot;&lt;/span&gt;),
+  &lt;span class=&quot;dt&quot;&gt;finally =&lt;/span&gt; &lt;span class=&quot;ot&quot;&gt;NULL&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;I exist!&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;del&gt;
+&amp;quot;그래 넌 존재해&amp;quot; 라는 결론을 낼 수 있다.
+&lt;/del&gt;
+&lt;p&gt;error, warning 둘다 해당되지 않으므로 본 코드 &lt;code&gt;bsid&lt;/code&gt; 가 정상 실행되어 &amp;quot;I exist!&amp;quot; 를 외치는 걸 볼 수 있다.&lt;/p&gt;
 </description>
         <pubDate>Thu, 11 Feb 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/02/11/tryfunction.html</link>
