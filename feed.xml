@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 15 Nov 2016 21:33:14 +0900</pubDate>
-    <lastBuildDate>Tue, 15 Nov 2016 21:33:14 +0900</lastBuildDate>
+    <pubDate>Mon, 05 Dec 2016 17:03:45 +0900</pubDate>
+    <lastBuildDate>Mon, 05 Dec 2016 17:03:45 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -629,12 +629,17 @@ choropleth map 이라고 할 수 없는 상태이다.&lt;br /&gt;
     
       <item>
         <title>R에서 lubridate package 에 대해</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://cran.r-project.org/web/packages/lubridate/lubridate.pdf&quot;&gt;lubridate package&lt;/a&gt; 는 Garrett Grolemund 와 Hadley Wickham 외 8명의 힘이 더해져 만들어진 날짜처리 생산성 패키지이다.&lt;/p&gt;
+        <description>&lt;br&gt;&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/lubridate.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cran.r-project.org/web/packages/lubridate/lubridate.pdf&quot;&gt;lubridate package&lt;/a&gt; 는 Garrett Grolemund 와 Hadley Wickham 외 8명의 힘이 더해져 만들어진 날짜처리 생산성 패키지이다.&lt;/p&gt;
 &lt;p&gt;날짜(Date) &amp;amp; 시각(Time) 데이터는 전 세계 사람들에 의해 보편적으로 정해진 규칙이 있는데, 이 규칙을 정확하게 알지 못하고 데이터를 처리할 때 혼돈이 일어날 수 있다.&lt;br /&gt;
 의외로 위에서 말한 규칙들은 따지고 보면 따져볼수록 많고 복잡하여 인간이 실수할 수 있을 여지가 높다.&lt;br /&gt;
 흠 이런 예제랄까?&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;어느 연도가 윤년이어서 2월 29일이 있는지 신경 쓰지 않으면 알 수 없다.&lt;br /&gt;
+&lt;li&gt;어느 연도가 윤년이어서 2월 29일이 있는지 없는지 신경 쓰지 않으면 알 수 없다.&lt;br /&gt;
 &lt;/li&gt;
 &lt;li&gt;4월 31일 데이터셋 정의 (그런 날짜는 존재하지 않는데도 불구하고)&lt;/li&gt;
 &lt;/ul&gt;
@@ -659,8 +664,8 @@ R studio 의 Hadley Wickham 에 의해 유지보수 되고 있다고 해서 그 
 &lt;p&gt;얼마나 기존방법보다 쉬운지를 내가 겪었던 시행착오와 곁들여&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(lubridate)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;를 실행 후 한 번 탐색해 보겠다.&lt;/p&gt;
-&lt;h2 id=&quot;dates-times-객체-만들기&quot;&gt;dates &amp;amp; times 객체 만들기&lt;/h2&gt;
-&lt;h3 id=&quot;date-객체-만들기&quot;&gt;Date 객체 만들기&lt;/h3&gt;
+&lt;h2 id=&quot;a-dates-times-객체-만들기&quot;&gt;A) dates &amp;amp; times 객체 만들기&lt;/h2&gt;
+&lt;h3 id=&quot;a-1-date-객체-만들기&quot;&gt;A-1) Date 객체 만들기&lt;/h3&gt;
 &lt;p&gt;R에서 2011년 6월 4일 날짜 데이터를 만들려면 가장 기본적인 방법이 아래의 코드일 것이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;as.Date&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04&amp;quot;&lt;/span&gt;)
 ## [1] &amp;quot;2011-06-04&amp;quot;
@@ -715,7 +720,7 @@ R studio 의 Hadley Wickham 에 의해 유지보수 되고 있다고 해서 그 
 &lt;p&gt;lubridate package 설명서에는&lt;br /&gt;
 &lt;strong&gt;heterogeneous format(불균일한 양식)&lt;/strong&gt;에 대한 다양한 준비들이 되어있음을 강조한 문구가 담겨 있는 걸 보았다.&lt;br /&gt;
 이처럼 인간의 실수는 웬만하면 커버할 듯한 위용이다.&lt;/p&gt;
-&lt;h3 id=&quot;dates-times-객체-만들기-1&quot;&gt;Dates + Times 객체 만들기&lt;/h3&gt;
+&lt;h3 id=&quot;a-2-dates-times-객체-만들기&quot;&gt;A-2) Dates + Times 객체 만들기&lt;/h3&gt;
 &lt;p&gt;&amp;quot;2011년 6월 4일&amp;quot; 에 구체적인 시각까지 더해서&lt;br /&gt;
 &amp;quot;2011년 6월 4일 13시 30분 50초&amp;quot; 를 R에서 만들어 보겠다.&lt;/p&gt;
 &lt;p&gt;시각까지 더해진 정보는 Date class 로 정보를 담을 수 없다.&lt;br /&gt;
@@ -733,8 +738,8 @@ lubridate package 에는 &amp;quot;y&amp;quot;, &amp;quot;m&amp;quot;, &amp;quot
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13:30:50&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04 13:30:50 UTC&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;as.POSIXct()&lt;/code&gt; 와 비교해볼 때 날짜시각 객체를 만드는 방법이 별반 틀릴 것이 없다.&lt;br /&gt;
-만 조금 더 융통성이 있게 사용할 수 있는 점들이 몇 가지 눈에 띈다.&lt;/p&gt;
-&lt;p&gt;만약 분,초 단위의 정보가 없는 경우 &amp;quot;2011년 6월 4일 13시&amp;quot; 의 정보가 투입된다고 가정하면 어떨까?&lt;/p&gt;
+하지만 조금 더 융통성이 있게 사용할 수 있는 점들이 몇 가지 눈에 띈다.&lt;/p&gt;
+&lt;p&gt;만약 분, 초 단위의 정보가 없는 경우 &amp;quot;2011년 6월 4일 13시&amp;quot; 의 정보가 투입된다고 가정하면 어떨까?&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;ymd_h&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04 13:00:00 UTC&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;ymd_hms()&lt;/code&gt; 에서 &amp;quot;m&amp;quot;, &amp;quot;s&amp;quot; 심볼을 제외한 &lt;code&gt;ymd_h()&lt;/code&gt; 함수를 이용해 파싱하면 된다.&lt;br /&gt;
@@ -745,7 +750,7 @@ lubridate package 에는 &amp;quot;y&amp;quot;, &amp;quot;m&amp;quot;, &amp;quot
 ## [1] &amp;quot;2011-06-04 13:00:00 KST&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;이런 예시로 볼 때 lubridate package 는 사용자 관점으로 친숙한 도구들이 여럿 준비되어 있다.&lt;br /&gt;
 이외에도 heterogeneous format 에 대한 대비 역시 날짜 + 시각 데이터에도 적용된다.&lt;/p&gt;
-&lt;h2 id=&quot;부분정보-추출-extracting-information&quot;&gt;부분정보 추출 (Extracting information)&lt;/h2&gt;
+&lt;h2 id=&quot;b-부분정보-추출-extracting-information&quot;&gt;B) 부분정보 추출 (Extracting information)&lt;/h2&gt;
 &lt;p&gt;lubridate package 에는 부분정보를 추출하기 위한 간편 함수들이 여럿 준비되어 있다.&lt;br /&gt;
 &lt;code&gt;second()&lt;/code&gt;, &lt;code&gt;minute()&lt;/code&gt;, &lt;code&gt;hour()&lt;/code&gt;, &lt;code&gt;day()&lt;/code&gt;, &lt;code&gt;wday()&lt;/code&gt;, &lt;code&gt;yday()&lt;/code&gt;, &lt;code&gt;week()&lt;/code&gt;, &lt;code&gt;month()&lt;/code&gt;, &lt;code&gt;year()&lt;/code&gt; 처럼 함수명칭도 상식적으로 이해하기 쉬운 것들이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;ld1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2011-06-04 13:30:50&amp;quot;&lt;/span&gt;)
@@ -774,14 +779,14 @@ lubridate package 에는 &amp;quot;y&amp;quot;, &amp;quot;m&amp;quot;, &amp;quot
 &lt;pre&gt;&lt;code&gt;## [1] Sat
 ## Levels: Sun &amp;lt; Mon &amp;lt; Tues &amp;lt; Wed &amp;lt; Thurs &amp;lt; Fri &amp;lt; Sat&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;월, 요일의 명칭을 factor 로 볼 수 있다.&lt;/p&gt;
-&lt;h3 id=&quot;부분정보-수정&quot;&gt;부분정보 수정&lt;/h3&gt;
+&lt;h3 id=&quot;b-1-부분정보-수정&quot;&gt;B-1) 부분정보 수정&lt;/h3&gt;
 &lt;p&gt;&amp;quot;2011년 6월 4일 13:30:50&amp;quot; 로 저장되어있던 &lt;code&gt;ld1&lt;/code&gt; 에 대해 시각(hour)을 10시로 바꾸려면 어떻게 하여야 할까?&lt;br /&gt;
 내가볼 때 가장 간단한 방법은 부분정보 추출시 사용했던 간편함수들과 assign 연산자를 조합시켜 변경하는 방법이다.&lt;br /&gt;
 아래처럼 사용하면 된다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;hour&lt;/span&gt;(ld1) &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;
 ld1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04 10:30:50 UTC&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;update()&lt;/code&gt; 제너릭 함수를 사용할 수도 있는데, 엄밀히 말하면 &lt;code&gt;update.POSIXt()&lt;/code&gt; 함수를 이용하는 방법도 있다.&lt;br /&gt;
+&lt;p&gt;&lt;code&gt;update()&lt;/code&gt; 제너릭 함수를 사용할 수도 있는데, 엄밀히 말하면 &lt;code&gt;update.POSIXt()&lt;/code&gt; 를 이용하는 방법다.&lt;br /&gt;
 아래 코드는 &lt;code&gt;update()&lt;/code&gt; 함수를 이용해 10시로 변경된 &lt;code&gt;ld1&lt;/code&gt; 을 다시 13로 되돌리는 코드이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;ld1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;update&lt;/span&gt;(ld1, &lt;span class=&quot;dt&quot;&gt;hour =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;13&lt;/span&gt;)
 ld1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -794,7 +799,7 @@ ld1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 ld2$hour &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;
 ld2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04 10:30:50 UTC&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;날짜시각에-대한-산술연산&quot;&gt;날짜시각에 대한 산술연산&lt;/h2&gt;
+&lt;h2 id=&quot;c-날짜시각에-대한-산술연산&quot;&gt;C) 날짜시각에 대한 산술연산&lt;/h2&gt;
 &lt;p&gt;lubridate 와 같은 패키지를 공부하는 목적 중 가장 중요한 특징이 아닐까 싶다.&lt;br /&gt;
 날짜 + 시각에 대한 산술연산은 매우 민감하고도, 생각보다 짜증 나는 문제이다.&lt;/p&gt;
 &lt;p&gt;사과 30개가 있는데, 사과 2개를 더하면 32개가 된다.&lt;br /&gt;
@@ -824,8 +829,9 @@ lubridate package 는 이를 예방할 수 있는 강력한 함수들이 많이 
 &lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;2013-01-31&amp;quot; NA           &amp;quot;2013-03-31&amp;quot; NA           &amp;quot;2013-05-31&amp;quot;
 ##  [6] NA           &amp;quot;2013-07-31&amp;quot; &amp;quot;2013-08-31&amp;quot; NA           &amp;quot;2013-10-31&amp;quot;
 ## [11] NA           &amp;quot;2013-12-31&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;월 중에 31일이이 존재하지 않는 월이 어디인지를 알 수 있게 된다.&lt;/p&gt;
-&lt;h2 id=&quot;lubridate-와-dplyr-간의-조합&quot;&gt;lubridate 와 dplyr 간의 조합&lt;/h2&gt;
+&lt;p&gt;위 결과를 통해&lt;br /&gt;
+월 중에 31일이 존재하지 않는 월이 어디인지를 알 수 있게 된다.&lt;/p&gt;
+&lt;h2 id=&quot;d-lubridate-와-dplyr-간의-조합&quot;&gt;D) lubridate 와 dplyr 간의 조합&lt;/h2&gt;
 &lt;p&gt;lubridate 이든 xts 이든 간에&lt;br /&gt;
 결국은 이러한 Time index 정보들이 담긴 Table 형태에 정보들을 가공하고 처리하게 될 가능성이 매우 높다.&lt;br /&gt;
 dplyr package 와 조합해 현업에서 어떻게 시너지를 일으킬 지를&lt;br /&gt;
@@ -882,7 +888,7 @@ lakers&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;li&gt;&lt;code&gt;date&lt;/code&gt;, &lt;code&gt;time&lt;/code&gt; 두 변수를 제외한 것이다.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;이렇게 알맞게 변형된 &lt;code&gt;lakers&lt;/code&gt; 를 이용해 좀 더 의미가 있을만한 탐색을 해보겠다.&lt;/p&gt;
-&lt;h3 id=&quot;group-by-연산&quot;&gt;Group by 연산&lt;/h3&gt;
+&lt;h3 id=&quot;d-1-group-by-연산&quot;&gt;D-1) Group by 연산&lt;/h3&gt;
 &lt;p&gt;첫번째는 Group by 연산이다.&lt;br /&gt;
 월별 평균을 &lt;code&gt;x&lt;/code&gt;, &lt;code&gt;y&lt;/code&gt; 변수에 대해서 계산해보겠다.&lt;br /&gt;
 이때 우리가 알고있는 &lt;code&gt;month()&lt;/code&gt; 함수를 이용하면 아주 간편하게 할 수 있겠다.&lt;/p&gt;
@@ -908,7 +914,7 @@ lakers&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 ##                &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;
 ## 1               2008 25.23402 13.40776
 ## 2               2009 25.36407 13.44319&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;filter&quot;&gt;Filter&lt;/h3&gt;
+&lt;h3 id=&quot;d-2-filter&quot;&gt;D-2) Filter&lt;/h3&gt;
 &lt;p&gt;두번째는 &lt;code&gt;filter()&lt;/code&gt; 를 이용해 분석에 사용할 기간을 서브세팅 해보는 예제를 만들어 보고 싶었다.&lt;br /&gt;
 아래 코드는 &amp;quot;2008-10-28 12:00:00&amp;quot; 이전의 기간을 서브세팅 하는 코드이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
@@ -949,7 +955,7 @@ lakers&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 ## # ... with 25,544 more rows, and 6 more variables: player &amp;lt;chr&amp;gt;,
 ## #   result &amp;lt;chr&amp;gt;, points &amp;lt;int&amp;gt;, type &amp;lt;chr&amp;gt;, x &amp;lt;int&amp;gt;, y &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;그런데 lubridate package 에는 기간(Time intervals) 에 대해 조금 더 세련된 방법으로 처리할 수 있는 함수들을 제공해 주고 있다.&lt;br /&gt;
-&lt;code&gt;interval()&lt;/code&gt; 함수와 &lt;code&gt;%within%&lt;/code&gt; 연산자를 이용하면 조금 더 직관적인 기간에 대해 서브세팅 할 수 있다.&lt;br /&gt;
+&lt;code&gt;interval()&lt;/code&gt; 함수와 &lt;code&gt;%within%&lt;/code&gt; 연산자를 이용하면 조금 더 직관적인 서브세팅을 할 수 있다.&lt;br /&gt;
 아래처럼 말이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;inter &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;interval&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2008-10-28 12:00:00&amp;quot;&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2009-03-09 00:33:00&amp;quot;&lt;/span&gt;))
 lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
@@ -972,7 +978,7 @@ lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
 &lt;p&gt;2개의 조건을 자질구레하게 정의하는것 보단&lt;br /&gt;
 &lt;code&gt;interval()&lt;/code&gt; 를 사용한 후자의 방법이 훨씬 직관적일 수 있겠다.&lt;/p&gt;
 &lt;p&gt;참고로 덧붙이면 &lt;code&gt;interval()&lt;/code&gt; 함수대신 &lt;code&gt;%--%&lt;/code&gt; 연산자를 써도 된다.&lt;br /&gt;
-&lt;code&gt;%--%&lt;/code&gt; 를 &amp;quot;~&amp;quot; 처럼 생각하게 된다면 편할 것 같다.&lt;/p&gt;
+&lt;code&gt;%--%&lt;/code&gt; 를 &amp;quot;~&amp;quot; 처럼 생각하면 편할 것 같다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;inter &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2008-10-28 12:00:00&amp;quot;&lt;/span&gt;) %--%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ymd_hms&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;2009-03-09 00:33:00&amp;quot;&lt;/span&gt;)
 lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
 &lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;filter&lt;/span&gt;(time_index %within%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;inter)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -991,8 +997,8 @@ lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
 ## 10 2008-10-29 10:40:00      LAC      away      1   rebound   LAC
 ## # ... with 25,544 more rows, and 6 more variables: player &amp;lt;chr&amp;gt;,
 ## #   result &amp;lt;chr&amp;gt;, points &amp;lt;int&amp;gt;, type &amp;lt;chr&amp;gt;, x &amp;lt;int&amp;gt;, y &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;기타-간편-기능-함수들&quot;&gt;기타 간편 기능 함수들&lt;/h2&gt;
-&lt;h3 id=&quot;timezone-인자를-받을-수-있는-now&quot;&gt;Timezone 인자를 받을 수 있는 &lt;code&gt;now()&lt;/code&gt;&lt;/h3&gt;
+&lt;h2 id=&quot;e-기타-간편-기능-함수들&quot;&gt;E) 기타 간편 기능 함수들&lt;/h2&gt;
+&lt;h3 id=&quot;e-1-timezone-인자를-받을-수-있는-now&quot;&gt;E-1) Timezone 인자를 받을 수 있는 &lt;code&gt;now()&lt;/code&gt;&lt;/h3&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;now&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2016-09-18 21:35:41 KST&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;now()&lt;/code&gt; 함수는 &lt;code&gt;Sys.time()&lt;/code&gt; 와 거의 기능이 똑같다.&lt;/p&gt;
@@ -1001,7 +1007,7 @@ lakers %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;now&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;UTC&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;단 위의 예제처럼&lt;br /&gt;
 Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르게 &lt;code&gt;now()&lt;/code&gt; 는 이를 반영한 날짜 + 시각을 반환할 수 있다는 차이가 있다.&lt;/p&gt;
-&lt;h3 id=&quot;오전-오후-am-pm&quot;&gt;오전? 오후? : &lt;code&gt;am()&lt;/code&gt;, &lt;code&gt;pm()&lt;/code&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;e-2-오전-오후-am-pm&quot;&gt;E-2) 오전? 오후? : &lt;code&gt;am()&lt;/code&gt;, &lt;code&gt;pm()&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;현 시간이 오후인지 오전인지 확인하기 위해서&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;ld1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2011-06-04 13:30:50 UTC&amp;quot;&lt;/code&gt;&lt;/pre&gt;
@@ -1013,7 +1019,7 @@ Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르�
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;pm&lt;/span&gt;(ld1)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;요런식으로 활용해 볼 수 있겠다.&lt;/p&gt;
-&lt;h3 id=&quot;시각에-대한-올림-내림-반올림&quot;&gt;시각에 대한 올림, 내림, 반올림&lt;/h3&gt;
+&lt;h3 id=&quot;e-3-시각에-대한-올림-내림-반올림&quot;&gt;E-3) 시각에 대한 올림, 내림, 반올림&lt;/h3&gt;
 &lt;p&gt;제목대로 시각에 대한 올림, 내림, 반올림은 생각만해도 끔찍하다.&lt;br /&gt;
 &lt;code&gt;round_date()&lt;/code&gt;, &lt;code&gt;floor_date()&lt;/code&gt;, &lt;code&gt;ceiling_date()&lt;/code&gt; 함수를 활용하는게 정서상 좋을 것이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;ld1

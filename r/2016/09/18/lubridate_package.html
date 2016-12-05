@@ -135,12 +135,17 @@
 
 
 <div class="content">
-    <div class="post"><p><a href="https://cran.r-project.org/web/packages/lubridate/lubridate.pdf">lubridate package</a> 는 Garrett Grolemund 와 Hadley Wickham 외 8명의 힘이 더해져 만들어진 날짜처리 생산성 패키지이다.</p>
+    <div class="post"><br><br>
+<center>
+<img src="/assets/lubridate.png" />
+</center>
+<p><br><br></p>
+<p><a href="https://cran.r-project.org/web/packages/lubridate/lubridate.pdf">lubridate package</a> 는 Garrett Grolemund 와 Hadley Wickham 외 8명의 힘이 더해져 만들어진 날짜처리 생산성 패키지이다.</p>
 <p>날짜(Date) &amp; 시각(Time) 데이터는 전 세계 사람들에 의해 보편적으로 정해진 규칙이 있는데, 이 규칙을 정확하게 알지 못하고 데이터를 처리할 때 혼돈이 일어날 수 있다.<br />
 의외로 위에서 말한 규칙들은 따지고 보면 따져볼수록 많고 복잡하여 인간이 실수할 수 있을 여지가 높다.<br />
 흠 이런 예제랄까?</p>
 <ul>
-<li>어느 연도가 윤년이어서 2월 29일이 있는지 신경 쓰지 않으면 알 수 없다.<br />
+<li>어느 연도가 윤년이어서 2월 29일이 있는지 없는지 신경 쓰지 않으면 알 수 없다.<br />
 </li>
 <li>4월 31일 데이터셋 정의 (그런 날짜는 존재하지 않는데도 불구하고)</li>
 </ul>
@@ -165,8 +170,8 @@ R studio 의 Hadley Wickham 에 의해 유지보수 되고 있다고 해서 그 
 <p>얼마나 기존방법보다 쉬운지를 내가 겪었던 시행착오와 곁들여</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lubridate)</code></pre></div>
 <p>를 실행 후 한 번 탐색해 보겠다.</p>
-<h2 id="dates-times-객체-만들기">dates &amp; times 객체 만들기</h2>
-<h3 id="date-객체-만들기">Date 객체 만들기</h3>
+<h2 id="a-dates-times-객체-만들기">A) dates &amp; times 객체 만들기</h2>
+<h3 id="a-1-date-객체-만들기">A-1) Date 객체 만들기</h3>
 <p>R에서 2011년 6월 4일 날짜 데이터를 만들려면 가장 기본적인 방법이 아래의 코드일 것이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.Date</span>(<span class="st">&quot;2011-06-04&quot;</span>)
 ## [1] &quot;2011-06-04&quot;
@@ -221,7 +226,7 @@ R studio 의 Hadley Wickham 에 의해 유지보수 되고 있다고 해서 그 
 <p>lubridate package 설명서에는<br />
 <strong>heterogeneous format(불균일한 양식)</strong>에 대한 다양한 준비들이 되어있음을 강조한 문구가 담겨 있는 걸 보았다.<br />
 이처럼 인간의 실수는 웬만하면 커버할 듯한 위용이다.</p>
-<h3 id="dates-times-객체-만들기-1">Dates + Times 객체 만들기</h3>
+<h3 id="a-2-dates-times-객체-만들기">A-2) Dates + Times 객체 만들기</h3>
 <p>&quot;2011년 6월 4일&quot; 에 구체적인 시각까지 더해서<br />
 &quot;2011년 6월 4일 13시 30분 50초&quot; 를 R에서 만들어 보겠다.</p>
 <p>시각까지 더해진 정보는 Date class 로 정보를 담을 수 없다.<br />
@@ -239,8 +244,8 @@ lubridate package 에는 &quot;y&quot;, &quot;m&quot;, &quot;d&quot; 심볼 뿐�
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ymd_hms</span>(<span class="st">&quot;2011-06-04 13:30:50&quot;</span>)</code></pre></div>
 <pre><code>## [1] &quot;2011-06-04 13:30:50 UTC&quot;</code></pre>
 <p><code>as.POSIXct()</code> 와 비교해볼 때 날짜시각 객체를 만드는 방법이 별반 틀릴 것이 없다.<br />
-만 조금 더 융통성이 있게 사용할 수 있는 점들이 몇 가지 눈에 띈다.</p>
-<p>만약 분,초 단위의 정보가 없는 경우 &quot;2011년 6월 4일 13시&quot; 의 정보가 투입된다고 가정하면 어떨까?</p>
+하지만 조금 더 융통성이 있게 사용할 수 있는 점들이 몇 가지 눈에 띈다.</p>
+<p>만약 분, 초 단위의 정보가 없는 경우 &quot;2011년 6월 4일 13시&quot; 의 정보가 투입된다고 가정하면 어떨까?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ymd_h</span>(<span class="st">&quot;2011-06-04 13&quot;</span>)</code></pre></div>
 <pre><code>## [1] &quot;2011-06-04 13:00:00 UTC&quot;</code></pre>
 <p><code>ymd_hms()</code> 에서 &quot;m&quot;, &quot;s&quot; 심볼을 제외한 <code>ymd_h()</code> 함수를 이용해 파싱하면 된다.<br />
@@ -251,7 +256,7 @@ lubridate package 에는 &quot;y&quot;, &quot;m&quot;, &quot;d&quot; 심볼 뿐�
 ## [1] &quot;2011-06-04 13:00:00 KST&quot;</code></pre></div>
 <p>이런 예시로 볼 때 lubridate package 는 사용자 관점으로 친숙한 도구들이 여럿 준비되어 있다.<br />
 이외에도 heterogeneous format 에 대한 대비 역시 날짜 + 시각 데이터에도 적용된다.</p>
-<h2 id="부분정보-추출-extracting-information">부분정보 추출 (Extracting information)</h2>
+<h2 id="b-부분정보-추출-extracting-information">B) 부분정보 추출 (Extracting information)</h2>
 <p>lubridate package 에는 부분정보를 추출하기 위한 간편 함수들이 여럿 준비되어 있다.<br />
 <code>second()</code>, <code>minute()</code>, <code>hour()</code>, <code>day()</code>, <code>wday()</code>, <code>yday()</code>, <code>week()</code>, <code>month()</code>, <code>year()</code> 처럼 함수명칭도 상식적으로 이해하기 쉬운 것들이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ld1 &lt;-<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2011-06-04 13:30:50&quot;</span>)
@@ -280,14 +285,14 @@ lubridate package 에는 &quot;y&quot;, &quot;m&quot;, &quot;d&quot; 심볼 뿐�
 <pre><code>## [1] Sat
 ## Levels: Sun &lt; Mon &lt; Tues &lt; Wed &lt; Thurs &lt; Fri &lt; Sat</code></pre>
 <p>월, 요일의 명칭을 factor 로 볼 수 있다.</p>
-<h3 id="부분정보-수정">부분정보 수정</h3>
+<h3 id="b-1-부분정보-수정">B-1) 부분정보 수정</h3>
 <p>&quot;2011년 6월 4일 13:30:50&quot; 로 저장되어있던 <code>ld1</code> 에 대해 시각(hour)을 10시로 바꾸려면 어떻게 하여야 할까?<br />
 내가볼 때 가장 간단한 방법은 부분정보 추출시 사용했던 간편함수들과 assign 연산자를 조합시켜 변경하는 방법이다.<br />
 아래처럼 사용하면 된다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hour</span>(ld1) &lt;-<span class="st"> </span><span class="dv">10</span>
 ld1</code></pre></div>
 <pre><code>## [1] &quot;2011-06-04 10:30:50 UTC&quot;</code></pre>
-<p><code>update()</code> 제너릭 함수를 사용할 수도 있는데, 엄밀히 말하면 <code>update.POSIXt()</code> 함수를 이용하는 방법도 있다.<br />
+<p><code>update()</code> 제너릭 함수를 사용할 수도 있는데, 엄밀히 말하면 <code>update.POSIXt()</code> 를 이용하는 방법다.<br />
 아래 코드는 <code>update()</code> 함수를 이용해 10시로 변경된 <code>ld1</code> 을 다시 13로 되돌리는 코드이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ld1 &lt;-<span class="st"> </span><span class="kw">update</span>(ld1, <span class="dt">hour =</span> <span class="dv">13</span>)
 ld1</code></pre></div>
@@ -300,7 +305,7 @@ ld1</code></pre></div>
 ld2$hour &lt;-<span class="st"> </span><span class="dv">10</span>
 ld2</code></pre></div>
 <pre><code>## [1] &quot;2011-06-04 10:30:50 UTC&quot;</code></pre>
-<h2 id="날짜시각에-대한-산술연산">날짜시각에 대한 산술연산</h2>
+<h2 id="c-날짜시각에-대한-산술연산">C) 날짜시각에 대한 산술연산</h2>
 <p>lubridate 와 같은 패키지를 공부하는 목적 중 가장 중요한 특징이 아닐까 싶다.<br />
 날짜 + 시각에 대한 산술연산은 매우 민감하고도, 생각보다 짜증 나는 문제이다.</p>
 <p>사과 30개가 있는데, 사과 2개를 더하면 32개가 된다.<br />
@@ -330,8 +335,9 @@ lubridate package 는 이를 예방할 수 있는 강력한 함수들이 많이 
 <pre><code>##  [1] &quot;2013-01-31&quot; NA           &quot;2013-03-31&quot; NA           &quot;2013-05-31&quot;
 ##  [6] NA           &quot;2013-07-31&quot; &quot;2013-08-31&quot; NA           &quot;2013-10-31&quot;
 ## [11] NA           &quot;2013-12-31&quot;</code></pre>
-<p>월 중에 31일이이 존재하지 않는 월이 어디인지를 알 수 있게 된다.</p>
-<h2 id="lubridate-와-dplyr-간의-조합">lubridate 와 dplyr 간의 조합</h2>
+<p>위 결과를 통해<br />
+월 중에 31일이 존재하지 않는 월이 어디인지를 알 수 있게 된다.</p>
+<h2 id="d-lubridate-와-dplyr-간의-조합">D) lubridate 와 dplyr 간의 조합</h2>
 <p>lubridate 이든 xts 이든 간에<br />
 결국은 이러한 Time index 정보들이 담긴 Table 형태에 정보들을 가공하고 처리하게 될 가능성이 매우 높다.<br />
 dplyr package 와 조합해 현업에서 어떻게 시너지를 일으킬 지를<br />
@@ -388,7 +394,7 @@ lakers</code></pre></div>
 <li><code>date</code>, <code>time</code> 두 변수를 제외한 것이다.</li>
 </ol>
 <p>이렇게 알맞게 변형된 <code>lakers</code> 를 이용해 좀 더 의미가 있을만한 탐색을 해보겠다.</p>
-<h3 id="group-by-연산">Group by 연산</h3>
+<h3 id="d-1-group-by-연산">D-1) Group by 연산</h3>
 <p>첫번째는 Group by 연산이다.<br />
 월별 평균을 <code>x</code>, <code>y</code> 변수에 대해서 계산해보겠다.<br />
 이때 우리가 알고있는 <code>month()</code> 함수를 이용하면 아주 간편하게 할 수 있겠다.</p>
@@ -414,7 +420,7 @@ lakers</code></pre></div>
 ##                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1               2008 25.23402 13.40776
 ## 2               2009 25.36407 13.44319</code></pre>
-<h3 id="filter">Filter</h3>
+<h3 id="d-2-filter">D-2) Filter</h3>
 <p>두번째는 <code>filter()</code> 를 이용해 분석에 사용할 기간을 서브세팅 해보는 예제를 만들어 보고 싶었다.<br />
 아래 코드는 &quot;2008-10-28 12:00:00&quot; 이전의 기간을 서브세팅 하는 코드이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lakers %&gt;%<span class="st"> </span>
@@ -455,7 +461,7 @@ lakers</code></pre></div>
 ## # ... with 25,544 more rows, and 6 more variables: player &lt;chr&gt;,
 ## #   result &lt;chr&gt;, points &lt;int&gt;, type &lt;chr&gt;, x &lt;int&gt;, y &lt;int&gt;</code></pre>
 <p>그런데 lubridate package 에는 기간(Time intervals) 에 대해 조금 더 세련된 방법으로 처리할 수 있는 함수들을 제공해 주고 있다.<br />
-<code>interval()</code> 함수와 <code>%within%</code> 연산자를 이용하면 조금 더 직관적인 기간에 대해 서브세팅 할 수 있다.<br />
+<code>interval()</code> 함수와 <code>%within%</code> 연산자를 이용하면 조금 더 직관적인 서브세팅을 할 수 있다.<br />
 아래처럼 말이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inter &lt;-<span class="st"> </span><span class="kw">interval</span>(<span class="kw">ymd_hms</span>(<span class="st">&quot;2008-10-28 12:00:00&quot;</span>), <span class="kw">ymd_hms</span>(<span class="st">&quot;2009-03-09 00:33:00&quot;</span>))
 lakers %&gt;%<span class="st"> </span>
@@ -478,7 +484,7 @@ lakers %&gt;%<span class="st"> </span>
 <p>2개의 조건을 자질구레하게 정의하는것 보단<br />
 <code>interval()</code> 를 사용한 후자의 방법이 훨씬 직관적일 수 있겠다.</p>
 <p>참고로 덧붙이면 <code>interval()</code> 함수대신 <code>%--%</code> 연산자를 써도 된다.<br />
-<code>%--%</code> 를 &quot;~&quot; 처럼 생각하게 된다면 편할 것 같다.</p>
+<code>%--%</code> 를 &quot;~&quot; 처럼 생각하면 편할 것 같다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inter &lt;-<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2008-10-28 12:00:00&quot;</span>) %--%<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2009-03-09 00:33:00&quot;</span>)
 lakers %&gt;%<span class="st"> </span>
 <span class="st">    </span><span class="kw">filter</span>(time_index %within%<span class="st"> </span>inter)</code></pre></div>
@@ -497,8 +503,8 @@ lakers %&gt;%<span class="st"> </span>
 ## 10 2008-10-29 10:40:00      LAC      away      1   rebound   LAC
 ## # ... with 25,544 more rows, and 6 more variables: player &lt;chr&gt;,
 ## #   result &lt;chr&gt;, points &lt;int&gt;, type &lt;chr&gt;, x &lt;int&gt;, y &lt;int&gt;</code></pre>
-<h2 id="기타-간편-기능-함수들">기타 간편 기능 함수들</h2>
-<h3 id="timezone-인자를-받을-수-있는-now">Timezone 인자를 받을 수 있는 <code>now()</code></h3>
+<h2 id="e-기타-간편-기능-함수들">E) 기타 간편 기능 함수들</h2>
+<h3 id="e-1-timezone-인자를-받을-수-있는-now">E-1) Timezone 인자를 받을 수 있는 <code>now()</code></h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">now</span>()</code></pre></div>
 <pre><code>## [1] &quot;2016-09-18 21:35:41 KST&quot;</code></pre>
 <p><code>now()</code> 함수는 <code>Sys.time()</code> 와 거의 기능이 똑같다.</p>
@@ -507,7 +513,7 @@ lakers %&gt;%<span class="st"> </span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">now</span>(<span class="st">&quot;UTC&quot;</span>)</code></pre></div>
 <p>단 위의 예제처럼<br />
 Timezone 변경에 대해서 <code>Sys.time()</code> 과는 다르게 <code>now()</code> 는 이를 반영한 날짜 + 시각을 반환할 수 있다는 차이가 있다.</p>
-<h3 id="오전-오후-am-pm">오전? 오후? : <code>am()</code>, <code>pm()</code></h3>
+<h3 id="e-2-오전-오후-am-pm">E-2) 오전? 오후? : <code>am()</code>, <code>pm()</code></h3>
 <p>현 시간이 오후인지 오전인지 확인하기 위해서</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ld1</code></pre></div>
 <pre><code>## [1] &quot;2011-06-04 13:30:50 UTC&quot;</code></pre>
@@ -519,7 +525,7 @@ Timezone 변경에 대해서 <code>Sys.time()</code> 과는 다르게 <code>now(
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pm</span>(ld1)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>요런식으로 활용해 볼 수 있겠다.</p>
-<h3 id="시각에-대한-올림-내림-반올림">시각에 대한 올림, 내림, 반올림</h3>
+<h3 id="e-3-시각에-대한-올림-내림-반올림">E-3) 시각에 대한 올림, 내림, 반올림</h3>
 <p>제목대로 시각에 대한 올림, 내림, 반올림은 생각만해도 끔찍하다.<br />
 <code>round_date()</code>, <code>floor_date()</code>, <code>ceiling_date()</code> 함수를 활용하는게 정서상 좋을 것이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ld1

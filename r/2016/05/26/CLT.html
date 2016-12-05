@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기" />
-        <meta name="keywords" content="R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기, , R" />
+        <meta name="description" content="R에서 중심극한의 정리를 animation plotting 을 통해 시뮬레이션 하기" />
+        <meta name="keywords" content="R에서 중심극한의 정리를 animation plotting 을 통해 시뮬레이션 하기, , R" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기" property="og:title">
+          <meta content="R에서 중심극한의 정리를 animation plotting 을 통해 시뮬레이션 하기" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -46,7 +46,7 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기">
+          <meta name="twitter:title" content="R에서 중심극한의 정리를 animation plotting 을 통해 시뮬레이션 하기">
         
         
           <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/05/26/CLT.html">
@@ -126,7 +126,7 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기</h1>
+                <h1>R에서 중심극한의 정리를 animation plotting 을 통해 시뮬레이션 하기</h1>
 <span class="time">26 May 2016</span>
 
 <span class="categories">
@@ -137,17 +137,17 @@
 <div class="content">
     <div class="post"><p>통계 비전공자에게 중심극한의 정리를 설명해야 했던 적이 있었는데,<br />
 심오한 이론들을 증명하며 설명하느니 한번 보여주는 것이 더 큰 공감을 얻게될 것 같아 animation plot 을 준비한적이 있다.<br />
-본 포스팅 글은 R markdown 포맷에서 코드청크옵션 <code>fig.show=&quot;animate&quot;</code> 을 통해 animation plot 을 준비하는 것이 가능하다는 것을 소개하고 그 예시로 중심극한정리 시뮬레이션을 통해 설명할 것이다.</p>
+본 포스팅 글은 R markdown 포맷에서 코드청크옵션 <code>fig.show = &quot;animate&quot;</code> 을 통해 animation plot 을 준비하는 것이 가능하다는 것을 소개하고 그 예시로 중심극한정리 시뮬레이션을 통해 설명할 것이다.</p>
 <h2 id="a-중심극한정리-central-limit-theorem-에-대해서">A) 중심극한정리 (Central Limit Theorem) 에 대해서</h2>
-<p>중심극한정리는 표본의 크기가 커짐에 따라 표본평균의 분포가 점점 정규분포로 근사(닮아) 짐을 의미하는 이론이다.<br />
+<p>중심극한정리는 표본의 크기가 커짐에 따라 표본평균의 분포가 점점 정규분포로 닮아(근사) 짐을 의미하는 이론이다.<br />
 그리고 표본은 어떠한 분포 타입에 나온 것이더라 하더라도 상관없이 중심극한정리에 해당되는것을 특징으로 한다.<br />
 여기서 헷갈리는 것이 있을 수 있는데, 표본평균은 단하나의 값으로 분포가 될 수 있느냐 라는 질문이 생길 수 있다.<br />
 이 궁금증은 표본 자체가 확률변수라는 것으로써 이해할 수 있다.<br />
 표본 자체가 확률변수이므로 이를 종합하여 평균한 값 하나일지라도 분명 확률변수이며 이는 분포로써 설명이 가능하다.<br />
-하지만 시뮬레이션에서 사용할 표본평균은 단 한 개 가지고는 분포를 시각적으로 볼 수 없다.<br />
+하지만 시뮬레이션에서 사용할 표본평균은 단 한 개 가지고는 분포를 시각적으로 볼 수 없는 노릇이다.<br />
 따라서 표본평균들을 여러 개 발생시킬 것이다.</p>
 <p>정리하면 시뮬레이션 시 특정 분포에 대해 많은 표본을 뽑은 후 표본평균계산 후 이를 반복해서 다양한 표본평균들을 준비해 히스토그램으로 분포를 확인할 것이다.<br />
-또한 표본의 크기가 커짐에 따라 정규분포로 닮아진다는 것을 보여주는 것과 동시에 점근적으로 보여주는 것이 시뮬레이션의 큰 의미라고 볼 수 있다.</p>
+또한 표본의 크기가 커짐에 따라 정규분포로 닮아진다는 것을 점근적으로 보여주는 것이 시뮬레이션의 큰 의미라고 볼 수 있다.</p>
 <p>우선 현 시뮬레이션에선</p>
 <ul>
 <li>특정분포를 포아송분포 <span class="math inline"><em>X</em> ∼ <em>P</em><em>o</em><em>i</em><em>s</em><em>s</em><em>o</em><em>n</em>(<em>λ</em> = 10)</span> 으로</li>
@@ -157,7 +157,7 @@
 <p>할 것이다.</p>
 <h2 id="b-단편-시뮬레이션">B) 단편 시뮬레이션</h2>
 <p>위에서 설명한 시뮬레이션은 아래코드를 통해 확인 가능하다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="dt">expr =</span> {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="dt">expr=</span>{
     n &lt;-<span class="st"> </span><span class="dv">500</span>
     sample &lt;-<span class="st"> </span><span class="kw">rpois</span>(n, <span class="dt">lambda =</span> <span class="dv">10</span>)
     <span class="kw">mean</span>(sample)
@@ -168,26 +168,29 @@
 <li>히스토그램과 밀도추정선을 덧그린 plot</li>
 <li>Quantile-Quantile Plots</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(res, <span class="dt">freq =</span> F); <span class="kw">lines</span>(<span class="kw">density</span>(res), <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</code></pre></div>
-<figure>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(res, <span class="dt">freq =</span> F)
+<span class="kw">lines</span>(<span class="kw">density</span>(res), <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<center>
 <img src="/assets/CLT1-1.png" />
-</figure>
+</center>
 <p>1번에 해당되는 히스토그램이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(res)</code></pre></div>
-<figure>
+<center>
 <img src="/assets/CLT2-1.png" />
-</figure>
+</center>
 <p>2번에 해당하는 소위 QQplot 이다.</p>
 <p>분명 결과물을 통해선 포아송분포에서 뽑은 표본들의 평균의 분포가 정규분포에 근사하는 것을 체감할 수는 있다.<br />
 하지만 나는 이것보다 분포의 개수가 많으면 많아질수록 정규분포의 닮아짐이 높아진다는 점근적근사를 시각적으로 보여주고 싶은 것이었다.</p>
-<h2 id="c-rmarkdown-의-코드청크옵션-fig.showanimate-에-대해서">C) Rmarkdown 의 코드청크옵션 <code>fig.show=&quot;animate&quot;</code> 에 대해서</h2>
+<h2 id="c-rmarkdown-의-코드청크옵션-fig.show-animate-에-대해서">C) Rmarkdown 의 코드청크옵션 <code>fig.show = &quot;animate&quot;</code> 에 대해서</h2>
 <p>필자는 Rmarkdown 포맷을 자주 사용하여 내 지식을 전달하는 편인데 데이터분석과 융화된 글을 쓰기에 거리낌 없는 도구로 굉장한 공감을 얻었기 때문이다.<br />
-특히 <code>fig.show=&quot;animate&quot;</code> 와 같은 코드청크 옵션은 데이터의 변질에 따른 plot output 의 변화를 보여주기에 간편한 기능을 제공해서 적극적으로 애용 중이다.</p>
+특히 <code>fig.show = &quot;animate&quot;</code> 와 같은 코드청크 옵션은 데이터의 변질에 따른 plot output 의 변화를 보여주기에 간편한 기능을 제공해서 적극적으로 애용 중이다.</p>
 <p>위의 예시를 이어서 설명하자면 단편적인 시뮬레이션을 통해 정규분포에 근사하는 것을 체감시켰지만,<br />
-이보다 더 중요한 것을 설명하기 위해 표본개수 즉 표본평균을 계산한 반복회수가 증가함으로써 일어나는 정규근사 정도를 animation ploting 통해 보여줄 것이다.</p>
+이보다 더 중요한 것을 설명하기 위해 표본개수 즉 표본평균을 계산한 반복회수가 증가함으로써 일어나는 정규근사 정도를 animation plotting 통해 보여줄 것이다.</p>
 <p>아래처럼 말이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(numbers) <span class="co"># for fibonacci function</span>
-ani_N &lt;-<span class="st"> </span><span class="kw">c</span>(); for(i in <span class="dv">5</span>:<span class="dv">30</span>) ani_N[i<span class="dv">-4</span>] &lt;-<span class="st"> </span><span class="kw">fibonacci</span>(i)
+
+ani_N &lt;-<span class="st"> </span><span class="kw">c</span>()
+for(i in <span class="dv">5</span>:<span class="dv">30</span>) ani_N[i<span class="dv">-4</span>] &lt;-<span class="st"> </span><span class="kw">fibonacci</span>(i)
 ani_N</code></pre></div>
 <pre><code>##  [1]      5      8     13     21     34     55     89    144    233    377
 ## [11]    610    987   1597   2584   4181   6765  10946  17711  28657  46368
@@ -195,57 +198,63 @@ ani_N</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for(N in ani_N){
     res &lt;-<span class="st"> </span><span class="kw">replicate</span>(N, <span class="dt">expr=</span>{
         n &lt;-<span class="st"> </span><span class="dv">500</span>
-        sample &lt;-<span class="st"> </span><span class="kw">rpois</span>(n, <span class="dt">lambda=</span><span class="dv">10</span>)
+        sample &lt;-<span class="st"> </span><span class="kw">rpois</span>(n, <span class="dt">lambda =</span> <span class="dv">10</span>)
         <span class="kw">mean</span>(sample)
     })
-    <span class="kw">hist</span>(res, <span class="dt">freq=</span>F, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">7</span>), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">11</span>)); <span class="kw">lines</span>(<span class="kw">density</span>(res), <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)
+    <span class="kw">hist</span>(res, <span class="dt">freq =</span> F, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">7</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">11</span>))
+    <span class="kw">lines</span>(<span class="kw">density</span>(res), <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)
 }</code></pre></div>
+<center>
 <video   controls loop>
 <source src="/assets/CLT1_ani-.webm" />
 <p>
 video of chunk CLT1_ani
 </p>
 </video>
+</center>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for(N in ani_N){
-    res &lt;-<span class="st"> </span><span class="kw">replicate</span>(N, <span class="dt">expr =</span> {
+    res &lt;-<span class="st"> </span><span class="kw">replicate</span>(N, <span class="dt">expr=</span>{
         n &lt;-<span class="st"> </span><span class="dv">500</span>
         sample &lt;-<span class="st"> </span><span class="kw">rpois</span>(n, <span class="dt">lambda =</span> <span class="dv">10</span>)
         <span class="kw">mean</span>(sample)
     })
     <span class="kw">qqnorm</span>(res, <span class="dt">xlim =</span> <span class="kw">c</span>(-<span class="dv">4</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">11</span>))
 }</code></pre></div>
+<center>
 <video   controls loop>
 <source src="/assets/CLT2_ani-.webm" />
 <p>
 video of chunk CLT2_ani
 </p>
 </video>
+</center>
 <p>위의 B장에서 수행했던 코드의 본체는 부수적인 차이만 존재할 뿐 거의 흡사하다.<br />
 차이점은 시뮬레이션 본체코드를 for 문을 통해 <code>ani_N</code> 의 피보나치수열로 반복회수를 조정한것이며,<br />
 시각화 코드인 <code>hist()</code>, <code>qqnorm()</code> 함수에 <code>xlim</code>, <code>ylim</code> 인자값들을 부여해 범위를 고정시켰다는 차이가 있다.<br />
-그리고 본장에서 설명하고자 차이점은 사실 R코드가 아닌 Rmarkdown 코드청크옵션에 내막이 있다.<br />
+그리고 본장에서 설명하고자 하는 차이점은 사실 R코드가 아닌 Rmarkdown 코드청크옵션에 내막이 있다.<br />
 verbatim 모드로 Rmarkdown 코드청크 전체를 보여주면 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ```{r fig.show=&quot;animate&quot;, interval=.4}</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ```{r fig.show = &quot;animate&quot;, interval = .4}</span>
 <span class="co"># for(N in ani_N){</span>
-<span class="co">#   res &lt;- replicate(N, expr = {</span>
+<span class="co">#   res &lt;- replicate(N, expr={</span>
 <span class="co">#       n &lt;- 500</span>
 <span class="co">#       sample &lt;- rpois(n, lambda = 10)</span>
 <span class="co">#       mean(sample)</span>
 <span class="co">#   })</span>
-<span class="co">#   hist(res, freq = F, ylim = c(0, 7), xlim = c(9, 11)); lines(density(res), lty = 2, col = &quot;blue&quot;)</span>
+<span class="co">#   hist(res, freq = F, ylim = c(0, 7), xlim = c(9, 11))</span>
+<span class="co">#   lines(density(res), lty=2, col=&quot;blue&quot;)</span>
 <span class="co"># }</span>
 <span class="co"># ```</span></code></pre></div>
-<p>사실 코드청크에 <code>fig.show=&quot;animate&quot;, interval=.4</code> 와 같은 옵션이 존재하지 않는다면<br />
+<p>사실 코드청크에 <code>fig.show = &quot;animate&quot;, interval = .4</code> 와 같은 옵션이 존재하지 않는다면<br />
 <code>ani_N</code> 의 마지막 값에 대한 중심극한 시뮬레이션 histogram 결과만 나올것이다.<br />
 실제 수행된 코드는 <code>ani_N</code> 에 담겨있는 수열들의 값대로 히스토그램을 그리겠지만 결국 출력되는건 마지막 값에 해당되는 단편 시뮬레이션 plot output 이다.</p>
-<p>하지만 코드청크에 <code>fig.show=&quot;animate&quot;</code> 를 부여하면 중간중간에 출력되는 plot output 을 임시로 모두 저장하게된다.<br />
+<p>하지만 코드청크에 <code>fig.show = &quot;animate&quot;</code> 를 부여하면 중간중간에 출력되는 plot output 을 임시로 모두 저장하게된다.<br />
 이후 코드청크의 <code>interval</code> 옵션값만큼의 간격으로 저장된 plot output 프레임들을 순차적으로 인코딩하여 영상을 만든다!<br />
 지금은 interval 값을 0.4초로 지정했는데 프레임 넘김을 더 빠르게 하고싶은 경우 이값을 작게 조정하여 희망하는 속도로 맞출 수 있다.<br />
 그리하여 피보나치수열 대로 표본이 증가하면 증가할수록 정규분포로 근사되는것을 시각적으로 볼 수 있게 되는 것이다.</p>
 <p>QQplot animation 도 마찬가지 형태이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ```{r fig.show=&quot;animate&quot;, interval=.4}</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ```{r fig.show = &quot;animate&quot;, interval = .4}</span>
 <span class="co"># for(N in ani_N){</span>
-<span class="co">#   res &lt;- replicate(N, expr = {</span>
+<span class="co">#   res &lt;- replicate(N, expr={</span>
 <span class="co">#       n &lt;- 500</span>
 <span class="co">#       sample &lt;- rpois(n, lambda = 10)</span>
 <span class="co">#       mean(sample)</span>
@@ -553,8 +562,8 @@ verbatim 모드로 Rmarkdown 코드청크 전체를 보여주면 아래와 같�
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기";
-        var disqus_title = "R에서 중심극한의 정리를 animation ploting 을 통해 시뮬레이션 하기";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 중심극한의 정리를 animation plotting 을 통해 시뮬레이션 하기";
+        var disqus_title = "R에서 중심극한의 정리를 animation plotting 을 통해 시뮬레이션 하기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {
