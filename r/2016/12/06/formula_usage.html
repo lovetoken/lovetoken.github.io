@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>lovetoken</title>
+        <meta name="author" content="Lovetoken" />
+        <meta name="description" content="R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰" />
+        <meta name="keywords" content="R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰, , R" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="" property="fb:app_id">
+        <meta content="" property="og:site_name">
+        
+          <meta content="R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="" property="og:description">
+        
+        
+          <meta content="https://lovetoken.github.io/r/2016/12/06/formula_usage.html" property="og:url">
+        
+        
+          <meta content="2016-12-06T00:00:00+09:00" property="article:published_time">
+          <meta content="https://lovetoken.github.io/about/" property="article:author">
+        
+        
+          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="R" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:creator" content="@">
+        
+          <meta name="twitter:title" content="R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰">
+        
+        
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/12/06/formula_usage.html">
+        
+        
+          <meta name="twitter:description" content="">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', '', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">Lovetoken</h1>
+                
+                <div id="about">
+                    저는 개발 취향을 가진 데이터 분석가 Jr. 입니다.  R, Git, Markdown, Shiny, Sublime text 등의 스킬들을 즐깁니다.
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://twitter.com/LT_Lovetoken" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/lovetoken/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>Navigation</strong><br />
+                    &nbsp;&raquo; <a href="/">Home</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">About Me</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/lovetoken">Github</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰</h1>
+<span class="time">06 Dec 2016</span>
+
+<span class="categories">
+    &raquo; <a href="/category/R">R</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><p>R을 이용한 모델링을 할 때 <code>formula</code> 인자값을 어떤식으로 입력해야 하는지 하는지 정리해 볼 필요가 있다.<br />
+대표적으로 <code>lm()</code> 함수의 첫번째 인자에 대한 입력값을 예로 들 수 있을 것이다.<br />
+이 인자값에는 약속에 의해 정해진 기호(operator)를 이용하여 모델의 뼈대를 설정할 수 있다.<br />
+몇가지의 기호만 알고 이를 조합한다면 일반적인 뼈대를 구성하는데 문제가 생기진 않을 것이다.</p>
+<p>(본 글에서 사용될 기초데이터는 <code>mtcars</code> 이다.)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mtcars)</code></pre></div>
+<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<h2 id="a-기호">A) &quot;~&quot; 기호</h2>
+<p>기본적으로 <code>formula</code> 인자값의 입력은 종속변수를 앞에 쓰고 독립변수를 뒤에 쓰게 되는데<br />
+종속변수와 독립변수를 구분 짓는 기호는 &quot;~&quot; 이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ wt, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt  
+##      37.285       -5.344</code></pre>
+<p>위의 단순선형회귀적합 코드를 살펴보자.<br />
+<code>lm()</code> 함수의 첫번째 인자입력값을 보면 <code>mpg ~ wt</code> 로 되어있다.<br />
+왼쪽 맨앞의 <code>mpg</code> 는 종속변수로 지정하고, 오른쪽 뒤에 있는 <code>wt</code> 는 독립변수로 지정하겠다는 의미가 된다.</p>
+<h2 id="b-기호">B) &quot;+&quot; 기호</h2>
+<p>독립변수를 <code>wt</code> 뿐만 아니라 <code>cyl</code> 변수까지 고려하는 다중회귀분석을 하고 싶다면 &quot;+&quot; 기호를 이용해 고려대상이 되는 변수를 추가시킬 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>wt +<span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ wt + cyl, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt          cyl  
+##      39.686       -3.191       -1.508</code></pre>
+<p>그런데 만약 자신이 가지고 있는 데이터셋에 종속변수를 설명시킬 독립변수들이 이미 모두 포진되어있는 상태라면, 그리고 그 독립변수들을 모두 고려한 다중회귀적합을 시키고 싶다면 어떻게 해야 할까?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>cyl +<span class="st"> </span>disp +<span class="st"> </span>hp +<span class="st"> </span>drat +<span class="st"> </span>wt +<span class="st"> </span>qsec +<span class="st"> </span>vs +<span class="st"> </span>am +<span class="st"> </span>gear +<span class="st"> </span>carb, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ cyl + disp + hp + drat + wt + qsec + vs + 
+##     am + gear + carb, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)          cyl         disp           hp         drat  
+##    12.30337     -0.11144      0.01334     -0.02148      0.78711  
+##          wt         qsec           vs           am         gear  
+##    -3.71530      0.82104      0.31776      2.52023      0.65541  
+##        carb  
+##    -0.19942</code></pre>
+<p>이런 식으로 고려대상이 되는 독립변수의 명칭을 모두 적은 다음<br />
+사이사이에 &quot;+&quot; 기호를 무식하게 넣어주어야 하는 상황이다.<br />
+하지만 위의 코딩은 매우 비효율적 🙄 손이 아파올 수 있다.</p>
+<h2 id="c-.-기호">C) &quot;.&quot; 기호</h2>
+<p>이를 대비해 특수하게 약속된 &quot;.&quot; 기호를 이용하면 좋다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>., <span class="dt">data =</span> mtcars)  </code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ ., data = mtcars)
+## 
+## Coefficients:
+## (Intercept)          cyl         disp           hp         drat  
+##    12.30337     -0.11144      0.01334     -0.02148      0.78711  
+##          wt         qsec           vs           am         gear  
+##    -3.71530      0.82104      0.31776      2.52023      0.65541  
+##        carb  
+##    -0.19942</code></pre>
+<p>&quot;.&quot; 기호는 &quot;전부&quot; 의 의미를 가진다.<br />
+위의 코드는 종속변수로 이미 배정된 mpg 이외의 모든 변수들을 독립변수로 고려하라 라는 의미가 된다.</p>
+<h2 id="d---기호">D) &quot;-&quot; 기호</h2>
+<p>&quot;+&quot; 기호의 반대는 &quot;-&quot; 이다. 의미 역시 반대이다.<br />
+고려대상에서 추가하는 &quot;+&quot; 와 다르게 &quot;-&quot; 는 고려대상에서 제외시킨다.<br />
+&quot;.&quot; 기호를 통해 모든 독립변수를 배정했는데, 여기서 <code>cyl</code> 변수만은 독립변수에서 제외하고 싶을 경우</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>. -<span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ . - cyl, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)         disp           hp         drat           wt  
+##    10.96007      0.01283     -0.02191      0.83520     -3.69251  
+##        qsec           vs           am         gear         carb  
+##     0.84244      0.38975      2.57743      0.71155     -0.21958</code></pre>
+<p>이렇게 &quot;-&quot; 기호를 활용하면 된다.</p>
+<p>한가지 덧붙이자면 회귀적합시 기본적으로 절편(intercept)을 고려하는 회귀적합을 하게 되는데, 절편이 0인 모델로 적합하고 싶은 경우 절편항을 제외시켜야 할 것이다.<br />
+&quot;-&quot; 기호를 아래와 같이 이용하면 된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>. -<span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ . - 1, data = mtcars)
+## 
+## Coefficients:
+##      cyl      disp        hp      drat        wt      qsec        vs  
+##  0.35083   0.01354  -0.02055   1.24158  -3.82613   1.19140   0.18972  
+##       am      gear      carb  
+##  2.83222   1.05426  -0.26321</code></pre>
+<p>결과를 확인해 보면 항시 언급되었던 절편항 &quot;(Intercept)&quot; 이 없어진 것을 확인할 수 있다.<br />
+참고로 아래와 같이 해도 절편항을 제외한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>. +<span class="st"> </span><span class="dv">0</span>, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ . + 0, data = mtcars)
+## 
+## Coefficients:
+##      cyl      disp        hp      drat        wt      qsec        vs  
+##  0.35083   0.01354  -0.02055   1.24158  -3.82613   1.19140   0.18972  
+##       am      gear      carb  
+##  2.83222   1.05426  -0.26321</code></pre>
+<h2 id="e-기호">E) &quot;:&quot; 기호</h2>
+<p>회귀적합에서 상호작용에 대해 고려한다면 &quot;:&quot; 기호를 이용하여 상호작용항을 부여할 수 있다.<br />
+만약 종속변수 <code>mpg</code> 에 대해 설명하는 독립변수를 <code>wt</code>, <code>cyl</code> 2개 설정하고,<br />
+이 두 변수의 상호작용까지 고려하고자 한다면 이렇게 하면된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>wt +<span class="st"> </span>cyl +<span class="st"> </span>wt:cyl, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ wt + cyl + wt:cyl, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt          cyl       wt:cyl  
+##     54.3068      -8.6556      -3.8032       0.8084</code></pre>
+<p>그런데 고려대상인 독립변수가 3개 이상, 그리고 독립변수의 조합별 상호작용을 고려하게 된다면 골치가 아플 수 있다.<br />
+예를들어 <code>mpg</code> 에 대해 설명하는 독립변수를 <code>wt</code>, <code>cyl</code>, <code>gear</code> 3개이고, 3개의 모든조합에 대해 상호작용을 고려한다면 <code>formula</code> 인자값이 아래처럼 매우 길게된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>wt +<span class="st"> </span>cyl +<span class="st"> </span>gear +<span class="st"> </span>wt:cyl +<span class="st"> </span>wt:gear +<span class="st"> </span>cyl:gear +<span class="st"> </span>wt:cyl:gear, <span class="dt">data =</span> mtcars)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ wt + cyl + gear + wt:cyl + wt:gear + cyl:gear + 
+##     wt:cyl:gear, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt          cyl         gear       wt:cyl  
+##     47.3853     -10.4502      -0.8957       2.2704       0.5459  
+##     wt:gear     cyl:gear  wt:cyl:gear  
+##      0.3527      -0.8794       0.1001</code></pre>
+<h2 id="f-기호">F) &quot;*&quot; 기호</h2>
+<p>상호작용항을 고려하되 각 개별항과 상호작용항이 될 수 있는 모든 조합을 알아서 배정시키는<br />
+약속된 기호가 바로 &quot;*&quot; 이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>wt *<span class="st"> </span>cyl *<span class="st"> </span>gear, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ wt * cyl * gear, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt          cyl         gear       wt:cyl  
+##     47.3853     -10.4502      -0.8957       2.2704       0.5459  
+##     wt:gear     cyl:gear  wt:cyl:gear  
+##      0.3527      -0.8794       0.1001</code></pre>
+<p>위의<br />
+<code>mpg ~ wt * cyl * gear</code><br />
+는<br />
+<code>mpg ~ wt + cyl + gear + wt:cyl + wt:gear + cyl:gear + wt:cyl:gear</code><br />
+와 동일한 것이다.<br />
+따라서 실행된 코드의 출력결과도 비교해 보면 같은것을 확인할 수 있다.</p>
+<h2 id="g-i-함수">G) <code>I()</code> 함수</h2>
+<p>만약 분석자 나름대로 다변수들의 정보를 하나로 압축시킨 파생변수로 회귀적합을 하고싶다면 어떻게 해아 할까?<br />
+예를 들어 <code>hp</code> 변수값과 루트를 씌운 <code>wt</code>변수값을 더하고 <code>carb</code> 변수의 값을 뺀 값을 독립변수로 설정하여 단순회귀적합을 하고 싶다고 가정해보자. (일부러 의미없이 복잡하게 설정해 봄)</p>
+<p>일단 떠오르는 방법은 <code>mtcars</code> 에 새로운 변수열을 만들어 위의 상황대로</p>
+<p>hp + sqrt(wt) - carb</p>
+<p>를 계산한 새로운 변수를 만들어 이 변수열과 회귀적합을 하면 될 것이다.<br />
+하지만 <code>I()</code> 함수를 알게 된다면 새로운 변수를 직접 만들필요가 없다. 이렇게 하면 된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span><span class="kw">I</span>(hp +<span class="st"> </span><span class="kw">sqrt</span>(wt) -<span class="st"> </span>carb), <span class="dt">data =</span> mtcars)  </code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ I(hp + sqrt(wt) - carb), data = mtcars)
+## 
+## Coefficients:
+##             (Intercept)  I(hp + sqrt(wt) - carb)  
+##                30.20584                 -0.06945</code></pre>
+<p>그런데 한가지 의문이 생길 수 있다.<br />
+만약 <code>I()</code> 함수를 이용하지 않고 <code>formula</code> 에 <code>hp + sqrt(wt) - carb</code> 의 날것의 형태로 입력하면 되지 않을까? 라는 의문이다.<br />
+실행해보면 다음과 같다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>hp +<span class="st"> </span><span class="kw">sqrt</span>(wt) -<span class="st"> </span>carb, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ hp + sqrt(wt) - carb, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           hp     sqrt(wt)  
+##    50.42823     -0.02908    -14.70273</code></pre>
+<p>우리가 줄곧 배운 <code>formula</code> 의 입력값은 특정한 기호에 의해 약속된 문법을 따른다.<br />
+따라서 <code>hp + sqrt(wt) - carb</code> 의 형태는 우리가 원하는 파생변수를 만들어 적합시키지 않는다.</p>
+<p><code>hp</code> 값에 <code>sqrt(wt)</code> 값이 더해진 후 <code>carb</code> 변수값이 차감된것을 원하지만,<br />
+독립변수에 <code>hp</code>, <code>sqrt(wt)</code> 가 따로따로 고려되고 <code>carb</code> 변수가 독립변수로 제외됨을 명시할 뿐이다.</p>
+<p>다시 <code>I()</code> 함수를 이용한 결과로 돌아가 보면 <code>I()</code> 의 쓰임은 결국 <code>formula</code> 인자의 약속된 문법을 escape 하는 역할로 볼 수도 있겠다.</p>
+<hr />
+<p>formula type 에 대한 사용방법과 기호의 의미를 정리해 보았다.<br />
+위의 내용 외에도 더 많은 팁과 기호들의 조합을 생각해 볼 수 있을 것이다.</p>
+</div>
+    <div class="share-page">
+    <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/12/06/formula_usage.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/11/13/forcats_package.html">R에서 factor 형 자료 처리를 위한 forcats package 에 대해</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/10/18/ggmap.html">R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/10/14/Choropleth_map_basic.html">R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/09/18/lubridate_package.html">R에서 lubridate package 에 대해</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html">회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/07/23/Crawling_image.html">R에서 특정 웹페이지의 이미지 파일 Crawling 하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/r/2016/11/13/forcats_package.html">&laquo; R에서 factor 형 자료 처리를 위한 forcats package 에 대해</a>
+  
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+
+        var disqus_shortname = "lovetoken";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰";
+        var disqus_title = "R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    /* ]]> */
+    </script>
+</div>
+
+                <footer>
+                    Copyleft by Lovetoken
+                     
+                    - <a href="https://github.com/lovetoken">https://github.com/lovetoken</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>                    
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>
