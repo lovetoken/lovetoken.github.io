@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 06 Dec 2016 20:14:59 +0900</pubDate>
-    <lastBuildDate>Tue, 06 Dec 2016 20:14:59 +0900</lastBuildDate>
+    <pubDate>Tue, 06 Dec 2016 21:14:18 +0900</pubDate>
+    <lastBuildDate>Tue, 06 Dec 2016 21:14:18 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -1356,7 +1356,12 @@ Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르�
     
       <item>
         <title>Blog 의 이전 (Wordpress 에서 Jekyll 로)</title>
-        <description>&lt;h2 id=&quot;blog-를-이전했다&quot;&gt;Blog 를 이전했다!&lt;/h2&gt;
+        <description>&lt;br&gt;&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/jekyllchange.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;blog-를-이전했다&quot;&gt;Blog 를 이전했다!&lt;/h2&gt;
 &lt;p&gt;기존의 블로그는 &lt;a href=&quot;https://ko.wordpress.org/&quot;&gt;Wordpress&lt;/a&gt;를 기반으로 하였고 국내 외부 호스팅 서비스를 이용하였었는데, 사실 그때의 블로그가 내생에 처음으로 만들어본 블로그이자 새로운 도전이었었다.&lt;br /&gt;
 따라서 첫 블로그를 제작하는 과정이 신기하였고 들떠 있었으며, 워드프레스의 다양한 기능들과 플러그인 및 가능성들을 맛보며 두서없이 설계를 시작했었다.&lt;br /&gt;
 그 과정이 상당히 재미있었는데 이 때문에 지인의 &amp;quot;Welcome to Jekyll!&amp;quot; 의 문장은 한 귀로 흘려버렸고 오로지 워드프레스 하나만을 의존하여 블로그를 기어코 완성시켰었다.&lt;/p&gt;
