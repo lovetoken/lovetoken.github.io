@@ -5,14 +5,14 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 06 Dec 2016 14:08:50 +0900</pubDate>
-    <lastBuildDate>Tue, 06 Dec 2016 14:08:50 +0900</lastBuildDate>
+    <pubDate>Tue, 06 Dec 2016 20:14:59 +0900</pubDate>
+    <lastBuildDate>Tue, 06 Dec 2016 20:14:59 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
         <title>R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰</title>
-        <description>&lt;p&gt;R을 이용한 모델링을 할 때 &lt;code&gt;formula&lt;/code&gt; 인자값을 어떤식으로 입력해야 하는지 하는지 정리해 볼 필요가 있다.&lt;br /&gt;
-대표적으로 &lt;code&gt;lm()&lt;/code&gt; 함수의 첫번째 인자에 대한 입력값을 예로 들 수 있을 것이다.&lt;br /&gt;
+        <description>&lt;p&gt;R을 이용한 모델링을 할 때 &lt;code&gt;formula&lt;/code&gt; 인자값을 어떤 식으로 입력해야 하는지 정리해 볼 필요가 있다.&lt;br /&gt;
+대표적으로 &lt;code&gt;lm()&lt;/code&gt; 함수의 첫 번째 인자에 대한 입력값을 예로 들 수 있을 것이다.&lt;br /&gt;
 이 인자값에는 약속에 의해 정해진 기호(operator)를 이용하여 모델의 뼈대를 설정할 수 있다.&lt;br /&gt;
 몇가지의 기호만 알고 이를 조합한다면 일반적인 뼈대를 구성하는데 문제가 생기진 않을 것이다.&lt;/p&gt;
 &lt;p&gt;(본 글에서 사용될 기초데이터는 &lt;code&gt;mtcars&lt;/code&gt; 이다.)&lt;/p&gt;
@@ -36,8 +36,8 @@
 ## (Intercept)           wt  
 ##      37.285       -5.344&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;위의 단순선형회귀적합 코드를 살펴보자.&lt;br /&gt;
-&lt;code&gt;lm()&lt;/code&gt; 함수의 첫번째 인자입력값을 보면 &lt;code&gt;mpg ~ wt&lt;/code&gt; 로 되어있다.&lt;br /&gt;
-왼쪽 맨앞의 &lt;code&gt;mpg&lt;/code&gt; 는 종속변수로 지정하고, 오른쪽 뒤에 있는 &lt;code&gt;wt&lt;/code&gt; 는 독립변수로 지정하겠다는 의미가 된다.&lt;/p&gt;
+&lt;code&gt;lm()&lt;/code&gt; 함수의 첫 번째 인자입력값을 보면 &lt;code&gt;mpg ~ wt&lt;/code&gt; 로 되어있다.&lt;br /&gt;
+왼쪽 맨 앞의 &lt;code&gt;mpg&lt;/code&gt; 는 종속변수로 지정하고, 오른쪽 뒤에 있는 &lt;code&gt;wt&lt;/code&gt; 는 독립변수로 지정하겠다는 의미가 된다.&lt;/p&gt;
 &lt;h2 id=&quot;b-기호&quot;&gt;B) &amp;quot;+&amp;quot; 기호&lt;/h2&gt;
 &lt;p&gt;독립변수를 &lt;code&gt;wt&lt;/code&gt; 뿐만 아니라 &lt;code&gt;cyl&lt;/code&gt; 변수까지 고려하는 다중회귀분석을 하고 싶다면 &amp;quot;+&amp;quot; 기호를 이용해 고려대상이 되는 변수를 추가시킬 수 있다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -64,7 +64,7 @@
 ##    -0.19942&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;이런 식으로 고려대상이 되는 독립변수의 명칭을 모두 적은 다음&lt;br /&gt;
 사이사이에 &amp;quot;+&amp;quot; 기호를 무식하게 넣어주어야 하는 상황이다.&lt;br /&gt;
-하지만 위의 코딩은 매우 비효율적 🙄 손이 아파올 수 있다.&lt;/p&gt;
+하지만 위의 코딩은 매우 비효율적 🙄 손이 아파질 수 있다.&lt;/p&gt;
 &lt;h2 id=&quot;c-.-기호&quot;&gt;C) &amp;quot;.&amp;quot; 기호&lt;/h2&gt;
 &lt;p&gt;이를 대비해 특수하게 약속된 &amp;quot;.&amp;quot; 기호를 이용하면 좋다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -80,7 +80,7 @@
 ##        carb  
 ##    -0.19942&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&amp;quot;.&amp;quot; 기호는 &amp;quot;전부&amp;quot; 의 의미를 가진다.&lt;br /&gt;
-위의 코드는 종속변수로 이미 배정된 mpg 이외의 모든 변수들을 독립변수로 고려하라 라는 의미가 된다.&lt;/p&gt;
+위의 코드는 종속변수로 이미 배정된 mpg 이외의 모든 변수를 독립변수로 고려하라 라는 의미가 된다.&lt;/p&gt;
 &lt;h2 id=&quot;d---기호&quot;&gt;D) &amp;quot;-&amp;quot; 기호&lt;/h2&gt;
 &lt;p&gt;&amp;quot;+&amp;quot; 기호의 반대는 &amp;quot;-&amp;quot; 이다. 의미 역시 반대이다.&lt;br /&gt;
 고려대상에서 추가하는 &amp;quot;+&amp;quot; 와 다르게 &amp;quot;-&amp;quot; 는 고려대상에서 제외시킨다.&lt;br /&gt;
@@ -96,7 +96,7 @@
 ##        qsec           vs           am         gear         carb  
 ##     0.84244      0.38975      2.57743      0.71155     -0.21958&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;이렇게 &amp;quot;-&amp;quot; 기호를 활용하면 된다.&lt;/p&gt;
-&lt;p&gt;한가지 덧붙이자면 회귀적합시 기본적으로 절편(intercept)을 고려하는 회귀적합을 하게 되는데, 절편이 0인 모델로 적합하고 싶은 경우 절편항을 제외시켜야 할 것이다.&lt;br /&gt;
+&lt;p&gt;한 가지 덧붙이자면 회귀적합시 기본적으로 절편(intercept)을 고려하는 회귀적합을 하게 되는데, 절편이 0인 모델로 적합하고 싶은 경우 절편항을 제외시켜야 할 것이다.&lt;br /&gt;
 &amp;quot;-&amp;quot; 기호를 아래와 같이 이용하면 된다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;. -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## 
@@ -123,7 +123,7 @@
 &lt;h2 id=&quot;e-기호&quot;&gt;E) &amp;quot;:&amp;quot; 기호&lt;/h2&gt;
 &lt;p&gt;회귀적합에서 상호작용에 대해 고려한다면 &amp;quot;:&amp;quot; 기호를 이용하여 상호작용항을 부여할 수 있다.&lt;br /&gt;
 만약 종속변수 &lt;code&gt;mpg&lt;/code&gt; 에 대해 설명하는 독립변수를 &lt;code&gt;wt&lt;/code&gt;, &lt;code&gt;cyl&lt;/code&gt; 2개 설정하고,&lt;br /&gt;
-이 두 변수의 상호작용까지 고려하고자 한다면 이렇게 하면된다.&lt;/p&gt;
+이 두 변수의 상호작용까지 고려하고자 한다면 이렇게 하면 된다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt:cyl, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## 
 ## Call:
@@ -133,7 +133,7 @@
 ## (Intercept)           wt          cyl       wt:cyl  
 ##     54.3068      -8.6556      -3.8032       0.8084&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;그런데 고려대상인 독립변수가 3개 이상, 그리고 독립변수의 조합별 상호작용을 고려하게 된다면 골치가 아플 수 있다.&lt;br /&gt;
-예를들어 &lt;code&gt;mpg&lt;/code&gt; 에 대해 설명하는 독립변수를 &lt;code&gt;wt&lt;/code&gt;, &lt;code&gt;cyl&lt;/code&gt;, &lt;code&gt;gear&lt;/code&gt; 3개이고, 3개의 모든조합에 대해 상호작용을 고려한다면 &lt;code&gt;formula&lt;/code&gt; 인자값이 아래처럼 매우 길게된다.&lt;/p&gt;
+예를 들어 &lt;code&gt;mpg&lt;/code&gt; 에 대해 설명하는 독립변수를 &lt;code&gt;wt&lt;/code&gt;, &lt;code&gt;cyl&lt;/code&gt;, &lt;code&gt;gear&lt;/code&gt; 3개이고, 3개의 모든 조합에 대해 상호작용을 고려한다면 &lt;code&gt;formula&lt;/code&gt; 인자값이 아래처럼 매우 길게 된다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;gear +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt:cyl +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt:gear +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl:gear +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt:cyl:gear, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## 
 ## Call:
@@ -163,14 +163,14 @@
 는&lt;br /&gt;
 &lt;code&gt;mpg ~ wt + cyl + gear + wt:cyl + wt:gear + cyl:gear + wt:cyl:gear&lt;/code&gt;&lt;br /&gt;
 와 동일한 것이다.&lt;br /&gt;
-따라서 실행된 코드의 출력결과도 비교해 보면 같은것을 확인할 수 있다.&lt;/p&gt;
+따라서 실행된 코드의 출력결과도 비교해 보면 같은 것을 확인할 수 있다.&lt;/p&gt;
 &lt;h2 id=&quot;g-i-함수&quot;&gt;G) &lt;code&gt;I()&lt;/code&gt; 함수&lt;/h2&gt;
-&lt;p&gt;만약 분석자 나름대로 다변수들의 정보를 하나로 압축시킨 파생변수로 회귀적합을 하고싶다면 어떻게 해아 할까?&lt;br /&gt;
-예를 들어 &lt;code&gt;hp&lt;/code&gt; 변수값과 루트를 씌운 &lt;code&gt;wt&lt;/code&gt;변수값을 더하고 &lt;code&gt;carb&lt;/code&gt; 변수의 값을 뺀 값을 독립변수로 설정하여 단순회귀적합을 하고 싶다고 가정해보자. (일부러 의미없이 복잡하게 설정해 봄)&lt;/p&gt;
+&lt;p&gt;만약 분석자 나름대로 다변수들의 정보를 하나로 압축시킨 파생변수로 회귀적합을 하고 싶다면 어떻게 해야 할까?&lt;br /&gt;
+예를 들어 &lt;code&gt;hp&lt;/code&gt; 변수값과 루트를 씌운 &lt;code&gt;wt&lt;/code&gt;변수값을 더하고 &lt;code&gt;carb&lt;/code&gt; 변수의 값을 뺀 값을 독립변수로 설정하여 단순회귀적합을 하고 싶다고 가정해보자. (일부러 의미 없이 복잡하게 설정해 봄)&lt;/p&gt;
 &lt;p&gt;일단 떠오르는 방법은 &lt;code&gt;mtcars&lt;/code&gt; 에 새로운 변수열을 만들어 위의 상황대로&lt;/p&gt;
 &lt;p&gt;hp + sqrt(wt) - carb&lt;/p&gt;
 &lt;p&gt;를 계산한 새로운 변수를 만들어 이 변수열과 회귀적합을 하면 될 것이다.&lt;br /&gt;
-하지만 &lt;code&gt;I()&lt;/code&gt; 함수를 알게 된다면 새로운 변수를 직접 만들필요가 없다. 이렇게 하면 된다.&lt;/p&gt;
+하지만 &lt;code&gt;I()&lt;/code&gt; 함수를 알게 된다면 새로운 변수를 직접 만들 필요가 없다. 이렇게 하면 된다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;I&lt;/span&gt;(hp +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;sqrt&lt;/span&gt;(wt) -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;carb), &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## 
 ## Call:
@@ -179,7 +179,7 @@
 ## Coefficients:
 ##             (Intercept)  I(hp + sqrt(wt) - carb)  
 ##                30.20584                 -0.06945&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;그런데 한가지 의문이 생길 수 있다.&lt;br /&gt;
+&lt;p&gt;그런데 한 가지 의문이 생길 수 있다.&lt;br /&gt;
 만약 &lt;code&gt;I()&lt;/code&gt; 함수를 이용하지 않고 &lt;code&gt;formula&lt;/code&gt; 에 &lt;code&gt;hp + sqrt(wt) - carb&lt;/code&gt; 의 날것의 형태로 입력하면 되지 않을까? 라는 의문이다.&lt;br /&gt;
 실행해보면 다음과 같다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;hp +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;sqrt&lt;/span&gt;(wt) -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;carb, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -192,11 +192,10 @@
 ##    50.42823     -0.02908    -14.70273&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;우리가 줄곧 배운 &lt;code&gt;formula&lt;/code&gt; 의 입력값은 특정한 기호에 의해 약속된 문법을 따른다.&lt;br /&gt;
 따라서 &lt;code&gt;hp + sqrt(wt) - carb&lt;/code&gt; 의 형태는 우리가 원하는 파생변수를 만들어 적합시키지 않는다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;hp&lt;/code&gt; 값에 &lt;code&gt;sqrt(wt)&lt;/code&gt; 값이 더해진 후 &lt;code&gt;carb&lt;/code&gt; 변수값이 차감된것을 원하지만,&lt;br /&gt;
+&lt;p&gt;&lt;code&gt;hp&lt;/code&gt; 값에 &lt;code&gt;sqrt(wt)&lt;/code&gt; 값이 더해진 후 &lt;code&gt;carb&lt;/code&gt; 변수값이 차감된 것을 원하지만,&lt;br /&gt;
 독립변수에 &lt;code&gt;hp&lt;/code&gt;, &lt;code&gt;sqrt(wt)&lt;/code&gt; 가 따로따로 고려되고 &lt;code&gt;carb&lt;/code&gt; 변수가 독립변수로 제외됨을 명시할 뿐이다.&lt;/p&gt;
 &lt;p&gt;다시 &lt;code&gt;I()&lt;/code&gt; 함수를 이용한 결과로 돌아가 보면 &lt;code&gt;I()&lt;/code&gt; 의 쓰임은 결국 &lt;code&gt;formula&lt;/code&gt; 인자의 약속된 문법을 escape 하는 역할로 볼 수도 있겠다.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;formula type 에 대한 사용방법과 기호의 의미를 정리해 보았다.&lt;br /&gt;
+&lt;p&gt;&lt;code&gt;formula&lt;/code&gt; 인자에 입력할 값의 사용방법과 기호의 의미를 정리해 보았다.&lt;br /&gt;
 위의 내용 외에도 더 많은 팁과 기호들의 조합을 생각해 볼 수 있을 것이다.&lt;/p&gt;
 </description>
         <pubDate>Tue, 06 Dec 2016 00:00:00 +0900</pubDate>
