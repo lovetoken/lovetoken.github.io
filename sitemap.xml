@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 06 Dec 2016 21:14:18 +0900</pubDate>
-    <lastBuildDate>Tue, 06 Dec 2016 21:14:18 +0900</lastBuildDate>
+    <pubDate>Wed, 07 Dec 2016 11:27:25 +0900</pubDate>
+    <lastBuildDate>Wed, 07 Dec 2016 11:27:25 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -1697,7 +1697,10 @@ data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenc
         <description>&lt;p&gt;내가 고등학교 이과생으로서 지낸 2학년 기억을 돌이켜 보면 적분의 방법은 이렇게 배웠던 것 같다.&lt;br /&gt;
 넓이 계산이 쉬운 사각형을 함수와 x축 사이에 강제로 끼워 맞춤으로써 넓이를 근사시키는 과정을 밟았고,&lt;br /&gt;
 특히 x축 기준 사각형을 등간격으로 잘게 잘게 쪼개는 과정을 무한대로 취함으로써 적분 값을 완벽히 근사시키는 법으로 구한다고 말이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;fun &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x) x^&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt; -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;*x^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt; +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;13&lt;/span&gt;*x +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;12&lt;/span&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(ggplot2)
+
+fun &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x) x^&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt; -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;*x^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt; +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;13&lt;/span&gt;*x +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;12&lt;/span&gt;
+
 fun_forarea &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x){
     res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;fun&lt;/span&gt;(x)
     res[ x&amp;lt;&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt; |&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;x&amp;gt;&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt; ] &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;ot&quot;&gt;NA&lt;/span&gt;
@@ -1711,15 +1714,17 @@ P &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;k
 &lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;theme_bw&lt;/span&gt;()
 
 P&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;figure&gt;
-&lt;img src=&quot;/assets/integrate-1.png&quot; /&gt;
-&lt;/figure&gt;
-&lt;video   controls loop&gt;
-&lt;source src=&quot;/assets/integrate_ani-.webm&quot; /&gt;
+&lt;center&gt;
+&lt;br&gt;&lt;img src=&quot;/assets/integrate-1.png&quot; /&gt;&lt;br&gt;
+&lt;/center&gt;
+&lt;center&gt;
+&lt;br&gt;&lt;video   controls loop&gt;&lt;source src=&quot;/assets/integrate_ani-.webm&quot; /&gt;
 &lt;p&gt;
 video of chunk integrate_ani
 &lt;/p&gt;
 &lt;/video&gt;
+&lt;br&gt;
+&lt;/center&gt;
 &lt;p&gt;이러한 형태로 넓이를 구하기 힘든 곡선모형의 넓이를 구하기 위해&lt;br /&gt;
 충분히 작은 n개의 기본도형으로 나누어 끼워 맞춘 후 넓이를 구한 것을 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;S&lt;/em&gt;&lt;sub&gt;&lt;em&gt;n&lt;/em&gt;&lt;/sub&gt;&lt;/span&gt; 이라 할 때&lt;br /&gt;
 기본도형을 더 작은 단위로 하여 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;n&lt;/em&gt;&lt;/span&gt; 을 극한으로 보냄으로써 넓이를 근사시키는 것을 &lt;strong&gt;구분구적법&lt;/strong&gt;이라 한다.&lt;br /&gt;
@@ -2305,13 +2310,17 @@ for(i in &lt;span class=&quot;kw&quot;&gt;seq&lt;/span&gt;(&lt;span class=&quot;
 이것이 가장 기본적인 사용방법이다.&lt;/p&gt;
 &lt;p&gt;실행해보면 R console 에 다음과 같이 진행표시줄이 나타나고, 점진적으로 진행되는 에니메이션을 볼 수 있다.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;터미널 에서 실행시킨 결과&lt;/em&gt;&lt;/p&gt;
-&lt;figure&gt;
+&lt;br&gt;
+&lt;center&gt;
 &lt;img src=&quot;/assets/Progressbar_1.png&quot; /&gt;
-&lt;/figure&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;R studio 에서 실행시킨 결과&lt;/em&gt;&lt;/p&gt;
-&lt;figure&gt;
+&lt;br&gt;
+&lt;center&gt;
 &lt;img src=&quot;/assets/Progressbar_2.png&quot; /&gt;
-&lt;/figure&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;추가된 2줄 코드의 문법형태가 Python을 사용하는 것처럼 닮았다.&lt;br /&gt;
 R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자유롭게 조절하여 사용 할 수 있는 듯 하다.&lt;br /&gt;
 그 방법에 대해선 &lt;code&gt;?progress_bar&lt;/code&gt; 를 통해 확인할 수 있으며, 예제코드들을 활용하면 상황에 맞게 커스터마이징도 가능할 듯 싶다.&lt;/p&gt;
@@ -2731,9 +2740,11 @@ date &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quo
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data=&lt;/span&gt;College, &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;grey&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;pch=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;21&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(College$Grad.Rate), &lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(reg_fit)), &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;grid&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;figure&gt;
+&lt;br&gt;
+&lt;center&gt;
 &lt;img src=&quot;/assets/step_1.png&quot; /&gt;
-&lt;/figure&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;분명 학교의 졸업률이 높으면 높을수록 대학교의 인기가 높은 것인지 해당학교의 지원자가 많아지는 경향을 plotting 결과물에서 볼 수 있다.&lt;br /&gt;
 &lt;code&gt;Grad.Rate&lt;/code&gt; 의 회귀계수 또한 베타계수가 0이라는 귀무가설을 기각시키는 P-value 이다.&lt;/p&gt;
 &lt;h1 id=&quot;b-step-function-model&quot;&gt;B) Step function model&lt;/h1&gt;
@@ -2767,9 +2778,11 @@ date &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quo
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data=&lt;/span&gt;College, &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;grey&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;pch=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;21&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(College$Grad.Rate), &lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(step_fit)), &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;grid&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;figure&gt;
+&lt;br&gt;
+&lt;center&gt;
 &lt;img src=&quot;/assets/step_2.png&quot; /&gt;
-&lt;/figure&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;Grad.Rate 의 값이 낮은 그룹, 즉 졸업률이 64% 이하인 그룹은 2493.99회로, 64% 이상인 그룹은 3463.13회로 예측이 되는 모델인 것이다.&lt;/p&gt;
 &lt;p&gt;이처럼 모델의 형태가 계단(Step)의 형태로 적합 시키며 독립변수의 구간을 계단처럼 구분지은후 각 그룹구간별 종속변수의 값을 예측하게 되는 특성을 가진다.&lt;/p&gt;
 &lt;p&gt;step function model 을 구현하기 위한 방법은 위의 예제처럼 R에서 &lt;code&gt;cut()&lt;/code&gt; 함수를 통해 간단히 구현할 수 있다.&lt;br /&gt;
@@ -2783,9 +2796,11 @@ step_fit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class
 &lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data=&lt;/span&gt;College, &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;grey&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;pch=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;21&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(College$Grad.Rate), &lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(step_fit3)), &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;grid&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;figure&gt;
+&lt;br&gt;
+&lt;center&gt;
 &lt;img src=&quot;/assets/step_3.png&quot; /&gt;
-&lt;/figure&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;이번엔 4개로 해보면?&lt;br /&gt;
 다음과 같다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;step_fit4 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;update&lt;/span&gt;(step_fit, Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;cut&lt;/span&gt;(Grad.Rate, &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;))
@@ -2793,9 +2808,11 @@ step_fit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class
 &lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data=&lt;/span&gt;College, &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;grey&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;pch=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;21&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(College$Grad.Rate), &lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(step_fit4)), &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;grid&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;figure&gt;
+&lt;br&gt;
+&lt;center&gt;
 &lt;img src=&quot;/assets/step_4.png&quot; /&gt;
-&lt;/figure&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 25 Jan 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/01/25/Step_function_modeling.html</link>
@@ -2974,11 +2991,15 @@ C^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/d
     
       <item>
         <title>Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축</title>
-        <description>&lt;p&gt;Amazon Web Service (AWS) 를 이용하여 미리 구축된 Rstudio Server AMI &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; 를 배포해주는 &lt;a href=&quot;http://www.louisaslett.com/&quot;&gt;사이트&lt;/a&gt;가 있다.&lt;/p&gt;
+        <description>&lt;blockquote&gt;
 &lt;p&gt;&lt;a href=&quot;http://www.louisaslett.com&quot; class=&quot;uri&quot;&gt;http://www.louisaslett.com&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Amazon Web Service (AWS) 를 이용하여 미리 구축된 Rstudio Server AMI &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; 를 배포해주는 &lt;a href=&quot;http://www.louisaslett.com/&quot;&gt;사이트&lt;/a&gt;가 있다.&lt;/p&gt;
 &lt;p&gt;이 AMI를 이용해 직접 여러대의 Rstudio Server 를 손쉽게 구축시킬 수 있다.&lt;/p&gt;
 &lt;p&gt;관련된 정보는 &lt;a href=&quot;https://www.youtube.com/watch?v=NQu3ugUkYTk&quot;&gt;아래링크&lt;/a&gt;를 통해 참고하여 알게 되었고 튜토리얼 형태로 이용할 수 있는 방법에 대한 영상까지 있다.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=NQu3ugUkYTk&quot;&gt;Brief guide about Rstudio Server&#39;s Web interface on AWS : https://www.youtube.com/watch?v=NQu3ugUkYTk&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=NQu3ugUkYTk&quot;&gt;출처 : Youtube (Brief guide about Rstudio Server&#39;s Web interface on AWS)&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;iframe width=&quot;100%&quot; height=&quot;400&quot; src=&quot;https://www.youtube.com/embed/NQu3ugUkYTk&quot; frameborder=&quot;0&quot; allowfullscreen&gt;
 &lt;/iframe&gt;
 &lt;p&gt;AWS 를 프리티어로 공짜로 이용하던 이전시절 이영상을 보고 그대로 따라하여 Rstudio Server 를 구축 시켜 봤었다.&lt;br /&gt;
@@ -2987,9 +3008,11 @@ C^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/d
 &lt;em&gt;P.W : rstudio&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;로 로그인하여 자유자재로 웹에서 사용할 수 있게 된다.&lt;br /&gt;
 물론 초기 로그인시 아이디와 패스워드는 저렇지만 추후에 다른 패스워드로, 그리고 다른 아이디를 만들어 사용할 수도 있겠다.&lt;/p&gt;
-&lt;figure&gt;
+&lt;br&gt;
+&lt;center&gt;
 &lt;img src=&quot;/assets/AWSAMI-1.png&quot; /&gt;
-&lt;/figure&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;실질적으로 사용하고자 한다면 AWS EC2 사용 과금을 고려해야하며,&lt;br /&gt;
 AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴스를 활성화 시킨다면&lt;br /&gt;
 성능, 속도측면에서 기대하지 않는것이 좋을것이다.&lt;/p&gt;

@@ -138,7 +138,10 @@
     <div class="post"><p>내가 고등학교 이과생으로서 지낸 2학년 기억을 돌이켜 보면 적분의 방법은 이렇게 배웠던 것 같다.<br />
 넓이 계산이 쉬운 사각형을 함수와 x축 사이에 강제로 끼워 맞춤으로써 넓이를 근사시키는 과정을 밟았고,<br />
 특히 x축 기준 사각형을 등간격으로 잘게 잘게 쪼개는 과정을 무한대로 취함으로써 적분 값을 완벽히 근사시키는 법으로 구한다고 말이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fun &lt;-<span class="st"> </span>function(x) x^<span class="dv">3</span> -<span class="st"> </span><span class="dv">7</span>*x^<span class="dv">2</span> +<span class="st"> </span><span class="dv">13</span>*x +<span class="st"> </span><span class="dv">12</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+
+fun &lt;-<span class="st"> </span>function(x) x^<span class="dv">3</span> -<span class="st"> </span><span class="dv">7</span>*x^<span class="dv">2</span> +<span class="st"> </span><span class="dv">13</span>*x +<span class="st"> </span><span class="dv">12</span>
+
 fun_forarea &lt;-<span class="st"> </span>function(x){
     res &lt;-<span class="st"> </span><span class="kw">fun</span>(x)
     res[ x&lt;<span class="dv">0</span> |<span class="st"> </span>x&gt;<span class="dv">5</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span>
@@ -152,15 +155,17 @@ P &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">
 <span class="st">    </span><span class="kw">theme_bw</span>()
 
 P</code></pre></div>
-<figure>
-<img src="/assets/integrate-1.png" />
-</figure>
-<video   controls loop>
-<source src="/assets/integrate_ani-.webm" />
+<center>
+<br><img src="/assets/integrate-1.png" /><br>
+</center>
+<center>
+<br><video   controls loop><source src="/assets/integrate_ani-.webm" />
 <p>
 video of chunk integrate_ani
 </p>
 </video>
+<br>
+</center>
 <p>이러한 형태로 넓이를 구하기 힘든 곡선모형의 넓이를 구하기 위해<br />
 충분히 작은 n개의 기본도형으로 나누어 끼워 맞춘 후 넓이를 구한 것을 <span class="math inline"><em>S</em><sub><em>n</em></sub></span> 이라 할 때<br />
 기본도형을 더 작은 단위로 하여 <span class="math inline"><em>n</em></span> 을 극한으로 보냄으로써 넓이를 근사시키는 것을 <strong>구분구적법</strong>이라 한다.<br />
