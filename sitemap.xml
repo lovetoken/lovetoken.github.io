@@ -5,9 +5,235 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 07 Dec 2016 21:08:50 +0900</pubDate>
-    <lastBuildDate>Wed, 07 Dec 2016 21:08:50 +0900</lastBuildDate>
+    <pubDate>Sun, 11 Dec 2016 10:54:11 +0900</pubDate>
+    <lastBuildDate>Sun, 11 Dec 2016 10:54:11 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>Getting Started StackOverflow</title>
+        <description>&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/SO_logo.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;이 글을 쓰는 시점으로부터 스택오버플로우&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; 를 눈팅만 한지 2년 가까이 되었다.&lt;br /&gt;
+나는 굳이 분류하자면 개발군과 비개발군 중 비개발군에 속하는 사람이다.&lt;br /&gt;
+따라서 스택오버플로우에 있는 글들을 눈팅만 해도 충분하게 넘칠 정도로 얻어갔다.&lt;/p&gt;
+&lt;p&gt;그런데 요즘시대 개발, 비개발 분류하는것이 의미가 없어질 정도로 다양하게 섭렵해야 하는 시대가 아닌가?&lt;br /&gt;
+다양한 컴퓨터언어와 오픈소스도구들을 이것저것 만지작하면서 최소한 개발자들과의 협업이 가능한 수준의 배경지식과 개발능력을 함양할 필요가 있다고 생각이 바뀌기 시작했다.&lt;br /&gt;
+그리고 눈팅만 2년째 하다 보니 입문자 입장에서의(나를 위한) 얼토당토않은 낮은 수준의 질문글이 보이지 않는다는 것을 느끼게 되었다.&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;br /&gt;
+그래서 내가 생각하는 낮은 수준의 질문을 발번역해 영어로 작문하고, 작성된 글을 올리기 위하여 스택오버플로우에 로그인하였다.&lt;a href=&quot;#fn3&quot; class=&quot;footnoteRef&quot; id=&quot;fnref3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;이때부터 스택오버플로우의 사용방법과, 생태계의 메커니즘을 좀 정확히 알고 싶은 마음이 생겼는데&lt;br /&gt;
+이를 계기로 이글을 작성한 다음 적극적으로 애용해보려 한다.&lt;/p&gt;
+&lt;h2 id=&quot;a-스택오버플로우-간단-소개&quot;&gt;A) 스택오버플로우 간단 소개&lt;/h2&gt;
+&lt;p&gt;스택오버플로우는 2008년경에 만들어진 프로그래머들 사이의 질문/답변 커뮤니케이션 사이트이다.&lt;br /&gt;
+조엘 스폴스키 등 2명이 기존의 있던 Q&amp;amp;A 사이트인 Experts_Exchange를 더 개방시킨 웹사이트로서 만들어진 사이트라고 한다.&lt;br /&gt;
+만들어진지 8년만에 개발관련된 구글링을 하면 절반이 넘는 게시글이 스택오버플로우로 연결되어 있을 정도로 아주 중요한 웹사이트가 되었다.(&lt;a href=&quot;https://en.wikipedia.org/wiki/Stack_Overflow&quot;&gt;wiki 참고&lt;/a&gt;)&lt;/p&gt;
+&lt;h2 id=&quot;b-스택오버플로우의-운영-원리&quot;&gt;B) 스택오버플로우의 운영 원리&lt;/h2&gt;
+&lt;p&gt;스택오버플로우는 reputation 즉 명성도라는 것을 이용한다. (평판이라고도 한다)&lt;br /&gt;
+평판제도는 스택오버플로우를 사용할 때 특정 자격을 부여하는 등 사용 동기부여를 주기도 한다.&lt;br /&gt;
+이 제도 때문에 사용자들이 좀 더 정확한 질문, 그에 대한 알찬 답변을 상호적으로 주고 받을 수 있는 좋은 메커니즘으로 작용하고 있고, 자연스럽게 주제와 벗어난 질문과 글들이 필터링 되는 좋은 인프라가 뿌리잡았다고 생각한다.&lt;br /&gt;
+나도 특정 커뮤니티를 운영하는 사람으로서 부러운, 그리고 여러모로 본받고싶은 생태계이다.&lt;/p&gt;
+&lt;p&gt;명성도를 얻는 방법은 구체적인 방법을 뒤에 작성할 것이지만, 결국은 질문과 답변을 주고받으면 자연스럽게 오르는 규칙이다.&lt;br /&gt;
+우선 최초 가입시점 자신의 명성도는 1점으로 시작한다. 아래 그림은 Profile로 들어가본 모습이다. &lt;a href=&quot;#fn4&quot; class=&quot;footnoteRef&quot; id=&quot;fnref4&quot;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/SO_1.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;명성도 외에도 또 다른 숫자가 점과 함께 표기되어 있다.&lt;br /&gt;
+이건 배지(Badge)의 개수를 의미한다.&lt;br /&gt;
+배지는 있어도 그만 없어도 그만이지만 있으면 기분이 흡족해지는 그런 물건이 아닌가?&lt;br /&gt;
+평판도와 함께 각 배지 종류별 갯수도 함께 표시되어진다.&lt;br /&gt;
+배지의 종류는 골드, 실버, 브론즈로 3가지가 나뉘는데 지금 나는 브론즈 배지가 2개가 있다는 것을 의미한다.&lt;br /&gt;
+활동을 열심히 해서 평판도와 여러 가지 종류의 배지를 획득하게 되면 Profile 은 이런식으로 발전하게 될 것이다. (R의 knitr 패키지 개발자 Yihui Xie 의 Profile 을 예로 들어보았다)&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/SO_2.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;배지와는 다르게 명성도는 스택오버플로우 이용에 직접적인 영향을 끼친다.&lt;br /&gt;
+직접적인 영향이라고 해서 차별이 있는 것이 아니다.&lt;br /&gt;
+명성도가 없어도 스택오버플로우를 이용하는데 전혀 문제가 없다.&lt;br /&gt;
+다만 일종의 특권(Privilege)이 생기는 것으로 생각하는 게 좋다.&lt;/p&gt;
+&lt;p&gt;특권은 명성도가 일정치를 초과했을 시점부터 생긴다.&lt;br /&gt;
+표로 정리해보면 이렇다. (지금상황에서 무슨 의미인지 정확하게 모르는 특권은 번역하지 않고 영어로 그대로 놔두었는데, 알게 되면 번역하겠다)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;http://stackoverflow.com/help/privileges?tab=all&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;table&gt;
+&lt;colgroup&gt;
+&lt;col style=&quot;width: 8%&quot; /&gt;
+&lt;col style=&quot;width: 91%&quot; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr class=&quot;header&quot;&gt;
+&lt;th style=&quot;text-align: left;&quot;&gt;명성도&lt;/th&gt;
+&lt;th style=&quot;text-align: left;&quot;&gt;특권내용&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;25,000&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;스택오버플로우 사이트의 내부분석을 위한 Google analytics 접근이 가능&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;20,000&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;신뢰할 수 있는 사용자로 판단되어 스택오버플로우의 모든 질문글에 대해 편집, 삭제 권한이 부여됨&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;15,000&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;보호된 질문을 사용할 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;10,000&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;access to moderator tools : Access reports, delete questions, review reviews&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;5,000&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;모든 글에 대해 태그를 수정할 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;3,000&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;cast close and reopen votes : Help decide whether posts are off-topic or duplicates&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;2,500&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;어떤 태그가 다른것과 동일한 의미를 가지는지 결정할 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;2,000&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;이미 올려진 질문, 질문에 대한 답변을 즉시 편집할 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;1,500&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;새로운 태그를 만들 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;1,000&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;established user : You&#39;ve been around for a while; see vote counts&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;1,000&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;특정한 사람들과 대화할 수 있는 대화방을 만들 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;500&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;access review queues : Access first posts and late answers review queues&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;250&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;자신의 질문글에 대한 투표를 종료할 수 있고, 이후에 종료된 것을 다시 열 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;200&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;광고를 줄일 수 있는 옵션을 사용할 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;125&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;질문과 질문의 답변글에 대해 upvote 외에도 downvote 를 할 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;100&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;위키 커뮤니티에 협업할 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;100&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;대화방을 만들 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;100&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;문서에 대하여 제안된 변경사항에 대하여 승인 및 거부할 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;75&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;자신의 명성을 보상으로 걸 수 있는 질문을 할 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;50&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;다른 사람의 게시물에 댓글을 달 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;20&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;대화방에 참석이 가능&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;15&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;신고기능(Flag)을 이용할 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;15&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;답변글에 대해 투표가 가능, 단 upvote 만 할 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;10&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;신규유저에 대한 제한처리 기능 해제&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;10&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;create wiki posts : Create answers that can be easily edited by most users&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;5&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;participate in meta : Discuss the site itself: bugs, feedback, and governance&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;질문 혹은 답변글을 작성할 수 있음&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;지금 명성도가 1인 나는 질문과 답변글을 작성할 수 있다.&lt;br /&gt;
+그런데 예를들어 질문을 열심히하고 답변을 주고받으며 명성도가 15점 이상 되면 다른 질문과 답변에 대해서 투표를 할 수 있다.&lt;br /&gt;
+정확히 말하면 upvote 가 가능한데 좋은 Q&amp;amp;A 글이라 생각되는 것에 대해서 점수를 준다고 생각하면 된다.&lt;br /&gt;
+그리고 upvote 를 받은 글의 주인은 명성도가 오르게 된다.&lt;br /&gt;
+반대로 downvote 도 가능하다. (단 명성도 125 필요)&lt;br /&gt;
+스택오버플로우는 이렇게 투표를 받은 질문글이 상위로 노출되어 좀 더 가치 있는 질문글과 답변으로 자가발전하게 되는 식이다.&lt;/p&gt;
+&lt;p&gt;명성도를 얻는 방법은 다음과 같다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;내가 작성한 질문에 upvote 가 되면 +5&lt;/li&gt;
+&lt;li&gt;내가 작성한 답변에 upvote 가 되면 +10&lt;/li&gt;
+&lt;li&gt;내가 작성한 답변이 질문자에 의해 승인이 되면 +15&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;c-see-also&quot;&gt;C) See also&lt;/h2&gt;
+&lt;p&gt;스택오버플로우의 가장 아쉬운 점은 영어를 사용해야 한다는 점이다.&lt;br /&gt;
+개발 및 코드와 함께 작성될 질문글은 많은 부가적인 설명과 함께 작성하게 될 가능성이 높은데&lt;br /&gt;
+영어를 완벽하게 구사하지 못한다면 자신이 표출하고 싶은 의미를 서술하기 힘들 것이다.&lt;/p&gt;
+&lt;p&gt;이런 이유때문에 아마도 눈팅만 2년째이었을 수도 있다.&lt;br /&gt;
+여하튼 이런 애로사항을 많은 사람이 가지고 있었다는 걸 StackOverflow in Korean (이하 &lt;a href=&quot;(http://stackoverflow-in-korean.github.io/)&quot;&gt;SOK&lt;/a&gt;) 를 통해 알 수 있었다.&lt;br /&gt;
+스택오버플로우는 내부적으로 Non-english 를 위한 베타버전을 운용하고 있는데&lt;br /&gt;
+한국을 위한 스택오버플로우를 만들기위해 SOK 에서 열심히 온라인 활동을 했었지만&lt;a href=&quot;http://stackoverflow-in-korean.github.io/docs/%EC%97%B0%ED%98%81/&quot;&gt;기각&lt;/a&gt;되었다고 한다.&lt;br /&gt;
+진작에 이런 활동을 알고 있었다면 부족하게나마 도움을 주었을텐데 하는 아쉬움이 많이 든다.&lt;/p&gt;
+&lt;p&gt;하지만 해결되지 않은 이 애로사항을 속으로 애타게 해결하고자 하는 분들이 많았을 것이라 본다.&lt;br /&gt;
+때문에 이러한 사이트들이 이후에 생긴 게 아닐까?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://dolgo.net/&quot;&gt;돌고넷&lt;/a&gt; (http://dolgo.net)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://hashcode.co.kr&quot;&gt;Hashcode&lt;/a&gt; (http://hashcode.co.kr)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://stackoverflow-in-korean.github.io/&quot;&gt;StackOverflow in Korean&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/tour&quot;&gt;Welcome to Stack Overflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;StackOverflow 줄여서 SO라고들 많이 표현한다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;이렇게 느끼게 된 이유는 무엇일까? 아마도 모른다는 것을 모르는 단계에서, 모르는걸 알게 된 단계로 바뀌어서 그런 걸까!&lt;a href=&quot;#fnref2&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn3&quot;&gt;&lt;p&gt;눈팅시절 가입도 안하고 비로그인 상태에서 스택오버플로우를 이용했었다&lt;a href=&quot;#fnref3&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn4&quot;&gt;&lt;p&gt;굳이 Profile 로 들어가서 확인하지 않아도 스택오버플로우의 최상단 배너에 명성도를 확인할 수 있다&lt;a href=&quot;#fnref4&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Sun, 11 Dec 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/etc/2016/12/11/StackOverflow.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/etc/2016/12/11/StackOverflow.html</guid>
+        
+        
+        <category>etc</category>
+        
+      </item>
     
       <item>
         <title>R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰</title>
