@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색" />
-        <meta name="keywords" content="Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색, , etc" />
+        <meta name="description" content="Google 에서 사용하는 R Code conventions (코딩 스타일 규약)" />
+        <meta name="keywords" content="Google 에서 사용하는 R Code conventions (코딩 스타일 규약), , R" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색" property="og:title">
+          <meta content="Google 에서 사용하는 R Code conventions (코딩 스타일 규약)" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/etc/2016/10/23/naver_search_query.html" property="og:url">
+          <meta content="https://lovetoken.github.io/r/2016/12/18/RCodeConventions.html" property="og:url">
         
         
-          <meta content="2016-10-23T00:00:00+09:00" property="article:published_time">
+          <meta content="2016-12-18T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -35,7 +35,7 @@
         
         
           
-          <meta content="etc" property="article:section">
+          <meta content="R" property="article:section">
           
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색">
+          <meta name="twitter:title" content="Google 에서 사용하는 R Code conventions (코딩 스타일 규약)">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/etc/2016/10/23/naver_search_query.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/12/18/RCodeConventions.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,65 +126,36 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색</h1>
-<span class="time">23 Oct 2016</span>
+                <h1>Google 에서 사용하는 R Code conventions (코딩 스타일 규약)</h1>
+<span class="time">18 Dec 2016</span>
 
 <span class="categories">
-    &raquo; <a href="/category/etc">etc</a>
+    &raquo; <a href="/category/R">R</a>
 </span>
 
 
 <div class="content">
-    <div class="post"><figure>
-<img src="/assets/alfred_1.png" />
-</figure>
-<p>Mac에서 Spotlight 대용으로 <a href="https://www.alfredapp.com/">Alfred</a> 를 사용 중이며 최대한 다양한 기능들을 이용해 보고 있었다.<br />
-개인적으로 가장 생산성이 높은, 그리고 자주 사용하는 기능은 검색쿼리를 등록해 한방에 검색하는 편의를 가장 많이 느끼고 있었다.</p>
-<h2 id="a-alfred-검색쿼리-기능">A) Alfred 검색쿼리 기능</h2>
-<p>부연설명을 하자면 아래와 같다.<br />
-만약 영어를 잘하고 싶어서 네이버에 &quot;영어를 잘하는 법&quot; 이라는 검색어로 검색을 원할 때 보통 아래와 같은 과정일 것이다. <br><br></p>
-<p><strong>네이버 웹페이지가 뜨는 것을 기다린 후, <code>영어를 잘하는 법</code> 으로 검색바에 타자를 치고 엔터를 누름</strong> <br><br></p>
-<p>그런데 여기서 네이버라는 특정 검색 서비스 웹페이지를 들어가는 과정이 번거로울 수 있다.<br />
-네이버를 Alfred 에 검색 키워드로 등록하고 (예를 들어 <code>na</code> 라고 등록한다면) 검색쿼리 설정을 해놓으면 <br><br></p>
-<p><strong><kbd>⌥</kbd> + <kbd>Space</kbd> 로 Alfred 실행 후 <code>na 영어를 잘하는 법</code> 타자 치고 엔터를 누름</strong> <br><br></p>
-<p>이란 과정으로 검색을 간편하게 할 수 있을 것이다.</p>
-<h2 id="b-alfred-검색쿼리-등록방법-alfred-v3.1.1-을-기준">B) Alfred 검색쿼리 등록방법 (Alfred v3.1.1 을 기준)</h2>
-<p>등록방법을 구구절절 쓰는 것 보다 스크린캐스트를 보는 것이 좋을 것 같다.<br />
-아래 영상처럼 하면 된다.<br />
-이 영상은 Alfred 에 Github 검색쿼리를 등록한 후 테스트하는 영상이 되겠다.</p>
-<iframe width="100%" height="400" src="https://www.youtube.com/embed/eG_Z5INGfsM" frameborder="0" allowfullscreen>
-</iframe>
-<h2 id="c-alfred-검색쿼리-예시">C) Alfred 검색쿼리 예시</h2>
-<p>최근에 나는 Alfred 가 3.X 버전을 출시하면서 이전 1.X 버전을 생각 없이 지웠는데<br />
-아쉽게도 1.X 버전에 커스터마이징 된 환경들이 싹 날라가 버렸다. 😓</p>
-<p>특히 검색쿼리를 다시 찾고 세팅하는 것이 번거로웠는데<br />
-이참에 글로 쫙 정리해놓아야 겠다는 생각이 들었다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
-<ul>
-<li><a href="http://www.naver.com/">Naver</a></li>
-</ul>
-<pre><code>http://search.naver.com/search.naver?query={query}</code></pre>
-<ul>
-<li><a href="http://endic.naver.com/?sLn=kr">Naver 영어사전</a></li>
-</ul>
-<pre><code>http://endic.naver.com/search.nhn?sLn=kr&amp;query={query}</code></pre>
-<ul>
-<li><a href="https://soundcloud.com">Soundcloud</a></li>
-</ul>
-<pre><code>https://soundcloud.com/search?q={query}</code></pre>
-<ul>
-<li><a href="https://github.com/">Github</a></li>
-</ul>
-<pre><code>https://github.com/search?q={query}</code></pre>
-<ul>
-<li><a href="https://www.r-bloggers.com/">R-bloggers</a></li>
-</ul>
-<pre><code>https://www.r-bloggers.com/search/{query}/</code></pre>
-<section class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>필자가 자주 이용하는 웹페이지를 기준으로 정리했다. Alfred 에서 기본적으로 지원해주는 구글, 위키, 트위터, 페이스북등의 쿼리를 제외하고 내가 자주 사용하는 사이트들에 대한 부분이다.<a href="#fnref1">↩</a></p></li>
+    <div class="post"><p>구글에서는 코드를 작성할 때 아래 링크로 정리된 규약을 따라 프로그램을 작성한다고 한다.</p>
+<blockquote>
+<p><a href="https://google.github.io/styleguide/Rguide.xml">Google's R Style Guide</a></p>
+</blockquote>
+<p>여러가지 규칙이 있고 이에 대한 예제가 상세히 제시되어 있다.<br />
+간단하게 주요 10가지 사항만 정리해 보면</p>
+<ol type="1">
+<li>한 줄에 80자 이상을 작성하지 않는다.</li>
+<li>단일명령문에는 중괄호 <code>{}</code> 를 사용하지 않는다.</li>
+<li>모든 연산자에는 양 좌, 우에 띄어쓰기를 하여 자간을 맞춘다.</li>
+<li>쉼표 <code>,</code> 는 앞에 공백을 두지 않고 뒤에만 넣는다.</li>
+<li>들여쓰기는 Space를 이용해 2칸으로 정한다. Tab 을 사용하지 않는다.</li>
+<li>괄호와 대괄호에서 여는곳과 닫는곳에 공백을 넣지 않는다.</li>
+<li>할당연산자는 <code>&lt;-</code> 를 사용한다. <code>=</code> 를 사용하지 않는다.</li>
+<li>함수의 정의에서 인수를 설정할 땐 기본값이 없는 인수를 먼저 나열하고, 그 뒤에 기본값을 갖는 인수를 나열한다.</li>
+<li>프로그램에선 오류를 만들 가능성이 있는 <code>attach()</code> 를 사용하지 않는다.</li>
+<li>(구글은 일관성을 위하여 세미콜론을 불필요하다고 판단했다) 세미콜론 <code>;</code> 으로 줄을 끝내거나 같은 줄에 둘 이상의 명령을 넣지 않는다.</li>
 </ol>
-</section>
+<p>정도가 된다.</p>
+<p>나름대로 정리된 코드컨벤션을 읽지 않았을 이전에는 항상 R 스크립트가 뒤죽박죽인 면이 있었는데 앞으론 통일시킬 수 있을 것 같다.<br />
+무엇보다 중요한 건 코딩시 생기는 불필요한 코딩 스타일의 선택에 대한 고민을 줄여 줄 수 있을 거라 생각된다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -198,7 +169,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/etc/2016/10/23/naver_search_query.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/12/18/RCodeConventions.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -223,15 +194,39 @@
     
         
             
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>Related Posts</h4>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/etc/2016/12/11/StackOverflow.html">Getting Started StackOverflow</a>
+                    <a href="https://lovetoken.github.io/r/2016/12/06/formula_usage.html">R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰</a>
                     
-                        (Categories: <a href="/category/etc">etc</a>)
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/11/13/forcats_package.html">R에서 factor 형 자료 처리를 위한 forcats package 에 대해</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
                     
                 </li>
                 
@@ -251,12 +246,15 @@
     
         
             
-        
-    
-
-    
-    
-        
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/10/18/ggmap.html">R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
             
         
     
@@ -265,12 +263,15 @@
     
         
             
-        
-    
-
-    
-    
-        
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/10/14/Choropleth_map_basic.html">R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
             
         
     
@@ -279,12 +280,32 @@
     
         
             
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/09/18/lubridate_package.html">R에서 lubridate package 에 대해</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
         
     
 
     
     
         
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html">회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
             
         
     
@@ -436,10 +457,8 @@
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/r/2016/10/18/ggmap.html">&laquo; R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제</a>
+    <a class="prev" href="/etc/2016/12/11/StackOverflow.html">&laquo; Getting Started StackOverflow</a>
   
-  
-    <a class="next" href="/r/2016/11/13/forcats_package.html">R에서 factor 형 자료 처리를 위한 forcats package 에 대해 &raquo;</a>
   
 </div>
 
@@ -450,8 +469,8 @@
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색";
-        var disqus_title = "Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색";
+        var disqus_identifier = "https://lovetoken.github.io_Google 에서 사용하는 R Code conventions (코딩 스타일 규약)";
+        var disqus_title = "Google 에서 사용하는 R Code conventions (코딩 스타일 규약)";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

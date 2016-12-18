@@ -5,9 +5,42 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 16 Dec 2016 23:08:49 +0900</pubDate>
-    <lastBuildDate>Fri, 16 Dec 2016 23:08:49 +0900</lastBuildDate>
+    <pubDate>Sun, 18 Dec 2016 21:01:26 +0900</pubDate>
+    <lastBuildDate>Sun, 18 Dec 2016 21:01:26 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>Google 에서 사용하는 R Code conventions (코딩 스타일 규약)</title>
+        <description>&lt;p&gt;구글에서는 코드를 작성할 때 아래 링크로 정리된 규약을 따라 프로그램을 작성한다고 한다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://google.github.io/styleguide/Rguide.xml&quot;&gt;Google&#39;s R Style Guide&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;여러가지 규칙이 있고 이에 대한 예제가 상세히 제시되어 있다.&lt;br /&gt;
+간단하게 주요 10가지 사항만 정리해 보면&lt;/p&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;한 줄에 80자 이상을 작성하지 않는다.&lt;/li&gt;
+&lt;li&gt;단일명령문에는 중괄호 &lt;code&gt;{}&lt;/code&gt; 를 사용하지 않는다.&lt;/li&gt;
+&lt;li&gt;모든 연산자에는 양 좌, 우에 띄어쓰기를 하여 자간을 맞춘다.&lt;/li&gt;
+&lt;li&gt;쉼표 &lt;code&gt;,&lt;/code&gt; 는 앞에 공백을 두지 않고 뒤에만 넣는다.&lt;/li&gt;
+&lt;li&gt;들여쓰기는 Space를 이용해 2칸으로 정한다. Tab 을 사용하지 않는다.&lt;/li&gt;
+&lt;li&gt;괄호와 대괄호에서 여는곳과 닫는곳에 공백을 넣지 않는다.&lt;/li&gt;
+&lt;li&gt;할당연산자는 &lt;code&gt;&amp;lt;-&lt;/code&gt; 를 사용한다. &lt;code&gt;=&lt;/code&gt; 를 사용하지 않는다.&lt;/li&gt;
+&lt;li&gt;함수의 정의에서 인수를 설정할 땐 기본값이 없는 인수를 먼저 나열하고, 그 뒤에 기본값을 갖는 인수를 나열한다.&lt;/li&gt;
+&lt;li&gt;프로그램에선 오류를 만들 가능성이 있는 &lt;code&gt;attach()&lt;/code&gt; 를 사용하지 않는다.&lt;/li&gt;
+&lt;li&gt;(구글은 일관성을 위하여 세미콜론을 불필요하다고 판단했다) 세미콜론 &lt;code&gt;;&lt;/code&gt; 으로 줄을 끝내거나 같은 줄에 둘 이상의 명령을 넣지 않는다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;정도가 된다.&lt;/p&gt;
+&lt;p&gt;나름대로 정리된 코드컨벤션을 읽지 않았을 이전에는 항상 R 스크립트가 뒤죽박죽인 면이 있었는데 앞으론 통일시킬 수 있을 것 같다.&lt;br /&gt;
+무엇보다 중요한 건 코딩시 생기는 불필요한 코딩 스타일의 선택에 대한 고민을 줄여 줄 수 있을 거라 생각된다.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 18 Dec 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2016/12/18/RCodeConventions.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/12/18/RCodeConventions.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>Getting Started StackOverflow</title>
