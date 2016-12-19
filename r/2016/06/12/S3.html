@@ -149,12 +149,11 @@
 때문에 R의 S3 가 무엇인지 빠르게 체감할 수 있는 나만의 아주 간단한 self 코드를 만들어 보았다.<br />
 최소재현예제 이므로 코드실행에 5분만 투자한다면 큰 체감을 얻을 수 있을것으로 예상된다.<br />
 어떠한 부가설명도 없는 코드를 아래와 같이 공유하고자 한다.</p>
-<h2 id="s3-최소재현예제">S3 최소재현예제</h2>
-<h3 id="generic-function">generic function</h3>
+<h3 id="generic-function">Generic function</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lovetoken &lt;-<span class="st"> </span>function(x){
   <span class="kw">UseMethod</span>(<span class="st">&quot;lovetoken&quot;</span>)
 }</code></pre></div>
-<h3 id="method">method</h3>
+<h3 id="method">Method</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lovetoken.default &lt;-<span class="st"> </span>function(x){
   x
 }</code></pre></div>
@@ -164,7 +163,7 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lovetoken.class2 &lt;-<span class="st"> </span>function(x){
   <span class="kw">c</span>(<span class="kw">var</span>(x), <span class="kw">sd</span>(x))
 }</code></pre></div>
-<h3 id="class">class</h3>
+<h3 id="class">Class</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test &lt;-<span class="st"> </span><span class="dv">0</span>:<span class="dv">10</span>
 <span class="kw">lovetoken</span>(test) <span class="co"># `lovetoken.default(test)` 를 실행하는 것과 동일</span></code></pre></div>
 <pre><code>##  [1]  0  1  2  3  4  5  6  7  8  9 10</code></pre>

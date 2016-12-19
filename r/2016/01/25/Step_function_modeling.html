@@ -212,7 +212,7 @@
 <p><br></p>
 <p>분명 학교의 졸업률이 높으면 높을수록 대학교의 인기가 높은 것인지 해당학교의 지원자가 많아지는 경향을 plotting 결과물에서 볼 수 있다.<br />
 <code>Grad.Rate</code> 의 회귀계수 또한 베타계수가 0이라는 귀무가설을 기각시키는 P-value 이다.</p>
-<h1 id="b-step-function-model">B) Step function model</h1>
+<h2 id="b-step-function-model">B) Step function model</h2>
 <p>자 그러면 이제 언급할 Step function model 은 위의 일반적인 선형회귀적합과 무엇의 차이가 있을까?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">step_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(Apps ~<span class="st"> </span><span class="kw">cut</span>(Grad.Rate, <span class="dv">2</span>), <span class="dt">data=</span>College)
 <span class="kw">summary</span>(step_fit)</code></pre></div>
@@ -253,7 +253,7 @@
 <p>step function model 을 구현하기 위한 방법은 위의 예제처럼 R에서 <code>cut()</code> 함수를 통해 간단히 구현할 수 있다.<br />
 <code>lm()</code> 함수를 이용한 적합은 그대로 두고, formula 인자부분만 알맞게 조정하면 되는데<br />
 범주화를 시키고자 하는 독립변수에 <code>cut()</code> 함수를 씌우고 범주화 개수를 지정시키면 된다. (더 특수하게 범주화시키고자 한다면 <code>cut()</code> 함수의 도움말을 이용해 응용해 볼 수도 있겠다)</p>
-<h2 id="b-1-example-step-function-model">B-1) Example step function model</h2>
+<h3 id="b-1-example-step-function-model">B-1) Example step function model</h3>
 <p>2개가 아닌 3개의 그룹으로 나누어 step function 적합한 경우의 코드 및 결과이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using update() function</span>
 step_fit3 &lt;-<span class="st"> </span><span class="kw">update</span>(step_fit, Apps ~<span class="st"> </span><span class="kw">cut</span>(Grad.Rate, <span class="dv">3</span>))

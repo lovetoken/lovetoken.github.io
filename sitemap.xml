@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 18 Dec 2016 21:01:26 +0900</pubDate>
-    <lastBuildDate>Sun, 18 Dec 2016 21:01:26 +0900</lastBuildDate>
+    <pubDate>Mon, 19 Dec 2016 17:08:56 +0900</pubDate>
+    <lastBuildDate>Mon, 19 Dec 2016 17:08:56 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -44,11 +44,11 @@
     
       <item>
         <title>Getting Started StackOverflow</title>
-        <description>&lt;br&gt;
+        <description>&lt;a href=&quot;http://stackoverflow.com/&quot;&gt;&lt;br&gt;
 &lt;center&gt;
 &lt;img src=&quot;/assets/SO_logo.png&quot; /&gt;
 &lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;이 글을 쓰는 시점 스택오버플로우&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;를 눈팅만 한지 2년 가까이 되었다.&lt;br /&gt;
 나는 굳이 분류하자면 개발군과 비개발군 중 비개발군에 속하는 사람이다.&lt;br /&gt;
 따라서 스택오버플로우에 있는 글들을 눈팅만 해도 충분하게 넘칠 정도로 얻어갔다.&lt;/p&gt;
@@ -713,9 +713,11 @@ gss_cat %&amp;gt;%
     
       <item>
         <title>Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색</title>
-        <description>&lt;figure&gt;
+        <description>&lt;a href=&quot;https://www.alfredapp.com/&quot;&gt;&lt;br&gt;
+&lt;center&gt;
 &lt;img src=&quot;/assets/alfred_1.png&quot; /&gt;
-&lt;/figure&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Mac에서 Spotlight 대용으로 &lt;a href=&quot;https://www.alfredapp.com/&quot;&gt;Alfred&lt;/a&gt; 를 사용 중이며 최대한 다양한 기능들을 이용해 보고 있었다.&lt;br /&gt;
 개인적으로 가장 생산성이 높은, 그리고 자주 사용하는 기능은 검색쿼리를 등록해 한방에 검색하는 편의를 가장 많이 느끼고 있었다.&lt;/p&gt;
 &lt;h2 id=&quot;a-alfred-검색쿼리-기능&quot;&gt;A) Alfred 검색쿼리 기능&lt;/h2&gt;
@@ -765,8 +767,8 @@ gss_cat %&amp;gt;%
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 23 Oct 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/etc/2016/10/23/naver_search_query.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/etc/2016/10/23/naver_search_query.html</guid>
+        <link>https://lovetoken.github.io/etc/2016/10/23/Alfred_SearchQuery.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/etc/2016/10/23/Alfred_SearchQuery.html</guid>
         
         
         <category>etc</category>
@@ -1568,11 +1570,11 @@ Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르�
 &lt;p&gt;여행 초보인 내가 지금 고민하는 것은 여행일정표를 여행 동료들과 어떻게 공유하는 게 좋을까 고민하고 있다.&lt;br /&gt;
 여행계획이라는 것이 상당히 즉흥적일 수도 있고, 시시각각 변할 수 있는 변덕쟁이이기 때문에 쉽게 수정할 수 있어야 하고, 수정된 것이 바로 적용되어 공유될 수 있어야 편리하다고 생각했다.&lt;br /&gt;
 이 고민이 최근에 &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 라는 오픈소스를 발견하는 계기가 되었다.&lt;/p&gt;
-&lt;br&gt;
+&lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;&lt;br&gt;
 &lt;center&gt;
 &lt;img src=&quot;/assets/TimelineJS1.png&quot; /&gt;
 &lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;본 포스팅 글은 &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 의 간단한 소개와 사용방법을 내 여행계획과 함께 정리해 보고자 한다.&lt;br /&gt;
 (※ 참고로 여행을 갈 당일이 되기까지 이글은 계속해서 변경될 것 같다!)&lt;/p&gt;
 &lt;h2 id=&quot;a-timeline-js&quot;&gt;A) &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt;&lt;/h2&gt;
@@ -1911,12 +1913,11 @@ data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenc
 때문에 R의 S3 가 무엇인지 빠르게 체감할 수 있는 나만의 아주 간단한 self 코드를 만들어 보았다.&lt;br /&gt;
 최소재현예제 이므로 코드실행에 5분만 투자한다면 큰 체감을 얻을 수 있을것으로 예상된다.&lt;br /&gt;
 어떠한 부가설명도 없는 코드를 아래와 같이 공유하고자 한다.&lt;/p&gt;
-&lt;h2 id=&quot;s3-최소재현예제&quot;&gt;S3 최소재현예제&lt;/h2&gt;
-&lt;h3 id=&quot;generic-function&quot;&gt;generic function&lt;/h3&gt;
+&lt;h3 id=&quot;generic-function&quot;&gt;Generic function&lt;/h3&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lovetoken &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x){
   &lt;span class=&quot;kw&quot;&gt;UseMethod&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;lovetoken&amp;quot;&lt;/span&gt;)
 }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;method&quot;&gt;method&lt;/h3&gt;
+&lt;h3 id=&quot;method&quot;&gt;Method&lt;/h3&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lovetoken.default &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x){
   x
 }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -1926,7 +1927,7 @@ data.table 에 대한 join 수행시간을 간편하게 측정하기위해 rbenc
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;lovetoken.class2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x){
   &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;var&lt;/span&gt;(x), &lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(x))
 }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;class&quot;&gt;class&lt;/h3&gt;
+&lt;h3 id=&quot;class&quot;&gt;Class&lt;/h3&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;test &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;
 &lt;span class=&quot;kw&quot;&gt;lovetoken&lt;/span&gt;(test) &lt;span class=&quot;co&quot;&gt;# `lovetoken.default(test)` 를 실행하는 것과 동일&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##  [1]  0  1  2  3  4  5  6  7  8  9 10&lt;/code&gt;&lt;/pre&gt;
@@ -2689,7 +2690,7 @@ R의 객체를 특히 list, data.frame 등을 JSON 형으로 변환시킨다.&lt
         <description>&lt;p&gt;특정 코드를 반복해서 실행하는 방법들은 반복문을 이용하면 간단히 구현가능하다.&lt;br /&gt;
 그런데 반복문의 주안점이 만약 반복된 모든 결과들을 저장해야 한다는 것에 있다면 통상적인 반복문에선 오묘한 방법을 통해 이를 구현한다.&lt;/p&gt;
 &lt;p&gt;for 문을 이용한 간단한 예시 코드를 보면&lt;/p&gt;
-&lt;h3 id=&quot;for문을-이용한-주사위-100회-던지기&quot;&gt;for문을 이용한 주사위 100회 던지기&lt;/h3&gt;
+&lt;h2 id=&quot;a-for문을-이용한-주사위-100회-던지기&quot;&gt;A) for문을 이용한 주사위 100회 던지기&lt;/h2&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;()
 for(i in &lt;span class=&quot;kw&quot;&gt;seq&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;)) res[i] &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;)
 res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -2699,7 +2700,7 @@ res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;이 코드는 주사위를 100번 던진 후 그 결과를 &lt;code&gt;res&lt;/code&gt; 라는 객체에 벡터형태로 저장하는 코드로 볼 수 있다.&lt;/p&gt;
 &lt;p&gt;반복문 방식을 바꿔보겠다.&lt;br /&gt;
 위 예시를 &lt;code&gt;apply()&lt;/code&gt; 를 이용해본 코드이다.&lt;/p&gt;
-&lt;h3 id=&quot;apply를-이용한-주사위-100회-던지기&quot;&gt;&lt;code&gt;apply()&lt;/code&gt;를 이용한 주사위 100회 던지기&lt;/h3&gt;
+&lt;h2 id=&quot;b-apply를-이용한-주사위-100회-던지기&quot;&gt;B) &lt;code&gt;apply()&lt;/code&gt;를 이용한 주사위 100회 던지기&lt;/h2&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;apply&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;matrix&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;), &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, function(x) &lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(x, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;))
 res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##   [1] 3 1 1 6 4 5 1 2 4 1 2 4 2 4 6 2 5 6 1 1 4 1 2 4 3 4 2 2 5 5 2 6 4 1 3
@@ -2719,6 +2720,7 @@ res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 보통 복잡도는 지수적으로 늘어나기 때문에 이 오묘한 방법이 실전에서 코딩의 비효율로 일어날 수 있다고 생각한다.&lt;/p&gt;
 &lt;p&gt;만약 그러한 복잡한 상황일 때,&lt;br /&gt;
 위의 예제에들의 로직을 그대로 가지고 있으되 사전준비의 부담을 덜 수 있는 함축된 함수가 있다고 생각하는데 &lt;code&gt;replicate()&lt;/code&gt; 함수 이다.&lt;/p&gt;
+&lt;h2 id=&quot;c-replicate-를-이용한-주사위-100회-던지기&quot;&gt;C) &lt;code&gt;replicate()&lt;/code&gt; 를 이용한 주사위 100회 던지기&lt;/h2&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;replicate&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;, &lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;))
 res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##   [1] 2 3 5 4 1 5 6 5 6 3 4 5 3 3 1 2 5 6 2 3 5 4 3 6 4 2 5 5 5 4 4 1 5 4 5
@@ -3006,7 +3008,7 @@ date &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quo
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;분명 학교의 졸업률이 높으면 높을수록 대학교의 인기가 높은 것인지 해당학교의 지원자가 많아지는 경향을 plotting 결과물에서 볼 수 있다.&lt;br /&gt;
 &lt;code&gt;Grad.Rate&lt;/code&gt; 의 회귀계수 또한 베타계수가 0이라는 귀무가설을 기각시키는 P-value 이다.&lt;/p&gt;
-&lt;h1 id=&quot;b-step-function-model&quot;&gt;B) Step function model&lt;/h1&gt;
+&lt;h2 id=&quot;b-step-function-model&quot;&gt;B) Step function model&lt;/h2&gt;
 &lt;p&gt;자 그러면 이제 언급할 Step function model 은 위의 일반적인 선형회귀적합과 무엇의 차이가 있을까?&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;step_fit &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;cut&lt;/span&gt;(Grad.Rate, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;data=&lt;/span&gt;College)
 &lt;span class=&quot;kw&quot;&gt;summary&lt;/span&gt;(step_fit)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -3047,7 +3049,7 @@ date &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quo
 &lt;p&gt;step function model 을 구현하기 위한 방법은 위의 예제처럼 R에서 &lt;code&gt;cut()&lt;/code&gt; 함수를 통해 간단히 구현할 수 있다.&lt;br /&gt;
 &lt;code&gt;lm()&lt;/code&gt; 함수를 이용한 적합은 그대로 두고, formula 인자부분만 알맞게 조정하면 되는데&lt;br /&gt;
 범주화를 시키고자 하는 독립변수에 &lt;code&gt;cut()&lt;/code&gt; 함수를 씌우고 범주화 개수를 지정시키면 된다. (더 특수하게 범주화시키고자 한다면 &lt;code&gt;cut()&lt;/code&gt; 함수의 도움말을 이용해 응용해 볼 수도 있겠다)&lt;/p&gt;
-&lt;h2 id=&quot;b-1-example-step-function-model&quot;&gt;B-1) Example step function model&lt;/h2&gt;
+&lt;h3 id=&quot;b-1-example-step-function-model&quot;&gt;B-1) Example step function model&lt;/h3&gt;
 &lt;p&gt;2개가 아닌 3개의 그룹으로 나누어 step function 적합한 경우의 코드 및 결과이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# using update() function&lt;/span&gt;
 step_fit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;update&lt;/span&gt;(step_fit, Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;cut&lt;/span&gt;(Grad.Rate, &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;))

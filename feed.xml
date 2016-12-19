@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 18 Dec 2016 21:01:26 +0900</pubDate>
-    <lastBuildDate>Sun, 18 Dec 2016 21:01:26 +0900</lastBuildDate>
+    <pubDate>Mon, 19 Dec 2016 17:08:56 +0900</pubDate>
+    <lastBuildDate>Mon, 19 Dec 2016 17:08:56 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -44,11 +44,11 @@
     
       <item>
         <title>Getting Started StackOverflow</title>
-        <description>&lt;br&gt;
+        <description>&lt;a href=&quot;http://stackoverflow.com/&quot;&gt;&lt;br&gt;
 &lt;center&gt;
 &lt;img src=&quot;/assets/SO_logo.png&quot; /&gt;
 &lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;이 글을 쓰는 시점 스택오버플로우&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;를 눈팅만 한지 2년 가까이 되었다.&lt;br /&gt;
 나는 굳이 분류하자면 개발군과 비개발군 중 비개발군에 속하는 사람이다.&lt;br /&gt;
 따라서 스택오버플로우에 있는 글들을 눈팅만 해도 충분하게 넘칠 정도로 얻어갔다.&lt;/p&gt;
@@ -713,9 +713,11 @@ gss_cat %&amp;gt;%
     
       <item>
         <title>Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색</title>
-        <description>&lt;figure&gt;
+        <description>&lt;a href=&quot;https://www.alfredapp.com/&quot;&gt;&lt;br&gt;
+&lt;center&gt;
 &lt;img src=&quot;/assets/alfred_1.png&quot; /&gt;
-&lt;/figure&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Mac에서 Spotlight 대용으로 &lt;a href=&quot;https://www.alfredapp.com/&quot;&gt;Alfred&lt;/a&gt; 를 사용 중이며 최대한 다양한 기능들을 이용해 보고 있었다.&lt;br /&gt;
 개인적으로 가장 생산성이 높은, 그리고 자주 사용하는 기능은 검색쿼리를 등록해 한방에 검색하는 편의를 가장 많이 느끼고 있었다.&lt;/p&gt;
 &lt;h2 id=&quot;a-alfred-검색쿼리-기능&quot;&gt;A) Alfred 검색쿼리 기능&lt;/h2&gt;
@@ -765,8 +767,8 @@ gss_cat %&amp;gt;%
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 23 Oct 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/etc/2016/10/23/naver_search_query.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/etc/2016/10/23/naver_search_query.html</guid>
+        <link>https://lovetoken.github.io/etc/2016/10/23/Alfred_SearchQuery.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/etc/2016/10/23/Alfred_SearchQuery.html</guid>
         
         
         <category>etc</category>
@@ -1568,11 +1570,11 @@ Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르�
 &lt;p&gt;여행 초보인 내가 지금 고민하는 것은 여행일정표를 여행 동료들과 어떻게 공유하는 게 좋을까 고민하고 있다.&lt;br /&gt;
 여행계획이라는 것이 상당히 즉흥적일 수도 있고, 시시각각 변할 수 있는 변덕쟁이이기 때문에 쉽게 수정할 수 있어야 하고, 수정된 것이 바로 적용되어 공유될 수 있어야 편리하다고 생각했다.&lt;br /&gt;
 이 고민이 최근에 &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 라는 오픈소스를 발견하는 계기가 되었다.&lt;/p&gt;
-&lt;br&gt;
+&lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;&lt;br&gt;
 &lt;center&gt;
 &lt;img src=&quot;/assets/TimelineJS1.png&quot; /&gt;
 &lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;본 포스팅 글은 &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 의 간단한 소개와 사용방법을 내 여행계획과 함께 정리해 보고자 한다.&lt;br /&gt;
 (※ 참고로 여행을 갈 당일이 되기까지 이글은 계속해서 변경될 것 같다!)&lt;/p&gt;
 &lt;h2 id=&quot;a-timeline-js&quot;&gt;A) &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt;&lt;/h2&gt;
