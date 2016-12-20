@@ -5,9 +5,72 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 19 Dec 2016 17:08:56 +0900</pubDate>
-    <lastBuildDate>Mon, 19 Dec 2016 17:08:56 +0900</lastBuildDate>
+    <pubDate>Tue, 20 Dec 2016 23:36:34 +0900</pubDate>
+    <lastBuildDate>Tue, 20 Dec 2016 23:36:34 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 Startup option 설정하기 (on Mac)</title>
+        <description>&lt;p&gt;만약 R에서 꾸준히 + 자주자주 + 빈번하게 활용하는 패키지가 있다면 매번 &lt;code&gt;library()&lt;/code&gt; 로 호출하는 것이 귀찮을 수 있다.&lt;br /&gt;
+나의 경우 dplyr package 를 항시 사용하는 편이어서 R이 켜질 때 자동으로 &lt;code&gt;library(dplyr)&lt;/code&gt; 이 실행됐으면 했는데 찾아보니 R은 이런 경우를 생각해 Startup option 들을 제공하고 있다는 것을 알았다.&lt;/p&gt;
+&lt;p&gt;여러 방법이 있지만 내가 볼 때 가장 간편한 방법은&lt;br /&gt;
+자신의 홈 디렉토리에 &amp;quot;.Rprofile&amp;quot; 이란 숨김파일을 만든 후&lt;br /&gt;
+이안에 자주 활용하는 패키지를 호출하는 명령어를 미리 적어 놓는 것이다.&lt;/p&gt;
+&lt;p&gt;자세히 정리하면 아래와 같다.&lt;/p&gt;
+&lt;h2 id=&quot;a-홈-디렉토리로-들어가-.rprofile-숨김파일-만들기&quot;&gt;A) 홈 디렉토리로 들어가 &amp;quot;.Rprofile&amp;quot; 숨김파일 만들기&lt;/h2&gt;
+&lt;p&gt;쉘에서 틸드(~)문자는 사용자의 홈 디렉토리를 의미하는 특별한 기호이다.&lt;br /&gt;
+터미널을 실행한 후 틸드문자를 이용해 사용자 홈디렉토리로 이동한다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ~&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;아마도 &amp;quot;.Rprofile&amp;quot; 파일이 존재할 수도 있다. 물론 없을 수도 있고 상황에 따라 다르다.&lt;br /&gt;
+상관없이 텍스트에디터를 이용해 &amp;quot;.Rprofile&amp;quot; 를 수정하거나 새로 만들면 되겠다.&lt;br /&gt;
+간편히 nano 를 이용한다고 치면&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;nano .Rprofile&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;를 통해 &amp;quot;.Rprofile&amp;quot; 를 열거나 새로 만들게 된다.&lt;/p&gt;
+&lt;h2 id=&quot;b-startup-커멘드-및-옵션들-작성하기&quot;&gt;B) Startup 커멘드 및 옵션들 작성하기&lt;/h2&gt;
+&lt;p&gt;&amp;quot;.Rprofile&amp;quot; 에 무언가를 작성할 것인데&lt;br /&gt;
+바로 이곳에 &lt;code&gt;library(dplyr)&lt;/code&gt; 과 같은 것을 적고 저장시키면&lt;br /&gt;
+앞으로 R을 실행하자마자 &lt;code&gt;library(dplyr)&lt;/code&gt; 명령어가 자동으로 실행된다.&lt;br /&gt;
+이러한 간단한 원리를 이용해 패키지 자동호출 외에도 &lt;code&gt;options()&lt;/code&gt; set 을 미리 지정하는 것도 매우 좋은 Tip이 될 수 있겠다.&lt;/p&gt;
+&lt;p&gt;나의 &amp;quot;.Rprofile&amp;quot; 을 소개하자면 이렇다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;options&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;help_type =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;html&amp;quot;&lt;/span&gt;) ## 1
+&lt;span class=&quot;kw&quot;&gt;options&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;stringsAsFactors =&lt;/span&gt; &lt;span class=&quot;ot&quot;&gt;FALSE&lt;/span&gt;) ## 2
+
+pacman::&lt;span class=&quot;kw&quot;&gt;p_load&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;useful.lovetoken&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;knitr&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;dplyr&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;ggplot2&amp;quot;&lt;/span&gt;) ## 3
+
+opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;fig.path =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;output/figure/&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;fig.align =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;center&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;out.width =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;80%&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;warning =&lt;/span&gt; F, &lt;span class=&quot;dt&quot;&gt;message =&lt;/span&gt; F) ## 4
+
+&lt;span class=&quot;kw&quot;&gt;theme_set&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;theme_bw&lt;/span&gt;()) ## 5&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;함수 도움말을 볼 때 기본적으로 html 포맷의 형태에 문서가 열리는걸로 고정시켰다&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;read.csv()&lt;/code&gt; 와 같은 함수에서 &lt;code&gt;stringsAsFactors&lt;/code&gt; 인자값이 &lt;code&gt;getOption(&amp;quot;stringsAsFactors&amp;quot;)&lt;/code&gt; 에 의존되는데 이를 &lt;code&gt;FALSE&lt;/code&gt; 로 고정시켰다&lt;/li&gt;
+&lt;li&gt;필자가 자주쓰는 패키지로 R을 실행할 때 무조건 호출될 패키지 4개를 pacman 을 통해 호출했다&lt;/li&gt;
+&lt;li&gt;Rmarkdown 을 쓰는 경우 knitr 패키지를 통해 코드청크 글로벌 옵션들을 지정시켰다&lt;/li&gt;
+&lt;li&gt;ggplot2 의 메인테마에 대한 설정이다&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;여러분도 여러분 나름의 &amp;quot;.Rprofile&amp;quot; 를 작성해 보시길 🙃&lt;br /&gt;
+그리고 본 글은 Mac OS X 를 기준으로 작성한 경우이지만, 리눅스이어도 홈 디렉토리의 경로만 약간 다를 뿐 틸드문자를 이용한 방법은 똑같다고 보면 되겠다.&lt;br /&gt;
+윈도우의 경우는 R이 설치된 &amp;quot;C:\Program Files\R\R-***\etc\&amp;quot; 이곳에 &amp;quot;.Rprofile&amp;quot; 를 작성하면 되겠다.&lt;/p&gt;
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.onthelambda.com/2014/09/17/fun-with-rprofile-and-customizing-r-startup/&quot;&gt;Fun with .Rprofile and customizing R startup&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html&quot;&gt;&lt;code&gt;?Startup&lt;/code&gt; in R&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;vi, vim 들도 있지만 이걸 아시는분들을 위한 글은 아닐수도... 있을것 같다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;IDE 에 따라 도움말 포맷이 유동적으로 설정된다. 이걸 무조건 html type 으로만 열리게 고정시킨 경우이다&lt;a href=&quot;#fnref2&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Tue, 20 Dec 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2016/12/20/RStartup_Option.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/12/20/RStartup_Option.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>Google 에서 사용하는 R Code conventions (코딩 스타일 규약)</title>
@@ -1560,58 +1623,6 @@ Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르�
         
         
         <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>Timeline JS 소개 (with 나의 일본 여행계획)</title>
-        <description>&lt;p&gt;10월에 친구들과 일본으로 여행을 갈 계획이다.&lt;br /&gt;
-2개월이란 시간이 남아있는데 나에겐 첫 해외여행이어서 여러 가지를 신경 쓰고 준비해 보려고 한다.&lt;/p&gt;
-&lt;p&gt;여행 초보인 내가 지금 고민하는 것은 여행일정표를 여행 동료들과 어떻게 공유하는 게 좋을까 고민하고 있다.&lt;br /&gt;
-여행계획이라는 것이 상당히 즉흥적일 수도 있고, 시시각각 변할 수 있는 변덕쟁이이기 때문에 쉽게 수정할 수 있어야 하고, 수정된 것이 바로 적용되어 공유될 수 있어야 편리하다고 생각했다.&lt;br /&gt;
-이 고민이 최근에 &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 라는 오픈소스를 발견하는 계기가 되었다.&lt;/p&gt;
-&lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;&lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/TimelineJS1.png&quot; /&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;본 포스팅 글은 &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 의 간단한 소개와 사용방법을 내 여행계획과 함께 정리해 보고자 한다.&lt;br /&gt;
-(※ 참고로 여행을 갈 당일이 되기까지 이글은 계속해서 변경될 것 같다!)&lt;/p&gt;
-&lt;h2 id=&quot;a-timeline-js&quot;&gt;A) &lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;백문이 불여일견..&lt;br /&gt;
-구구절절 소개하는 것보단 Timeline JS 로 만들 수 있는 것은 아래와 같은 애플리케이션이다.&lt;/p&gt;
-&lt;iframe src=&quot;https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1mgvNplYZJEfYU8q5_-ML9w4GjJcUH-CuMKSmUU4nI4k&amp;amp;font=Default&amp;amp;lang=en&amp;amp;initial_zoom=2&amp;amp;height=650&quot; width=&quot;100%&quot; height=&quot;650&quot; frameborder=&quot;0&quot;&gt;
-&lt;/iframe&gt;
-&lt;p&gt;이처럼 인터렉티브한 시간흐름표(Timeline)를 만들 수 있는 오픈소스 도구이다.&lt;br /&gt;
-초보자를 위해 Timeline 에 대한 정보를 Google spreadsheet 에 잘 정리해 놓고 연동시키기만 하면 누구든지 만들 수 있다.&lt;br /&gt;
-(전문가들을 위한 JSON 스킬을 이용하면 더 핵심적이고 다방면적인 기능들을 활용할 수 있다고 추가로 홈페이지에 소개되어 있다.)&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 는 이처럼 &lt;strong&gt;연대기적 성격을 가진 정보를 쉽게 시각적으로 표현할 수 있는 훌륭한 도구&lt;/strong&gt;이다.&lt;br /&gt;
-그리고 여러 장점이 있겠지만 무엇보다도 웹기반 애플리케이션이기 때문에 쉬운 공유가 가능하고, 다양한 타 애플리케이션과의 연동이 가능하다는 잠재력을 가지고 있다.&lt;/p&gt;
-&lt;p&gt;위의 여행계획 정보가 담겨있는 Google spreadsheet 역시 웹을 통해 언제든지 수정, 편집이 가능하므로 Timeline 애플리케이션을 나뿐만 아니라 여행 동료들이 마음껏 수정할 수 있다.&lt;/p&gt;
-&lt;p&gt;위의 Timeline 을 만들기 위해서 사용한 Google spreadsheet 는 아래와 같다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;img src=&quot;/assets/TimelineJS2.png&quot; /&gt;&lt;br&gt;&lt;/p&gt;
-&lt;center&gt;
-&lt;a href=&quot;https://docs.google.com/spreadsheets/d/1mgvNplYZJEfYU8q5_-ML9w4GjJcUH-CuMKSmUU4nI4k/edit#gid=0&quot; class=&quot;uri&quot;&gt;https://docs.google.com/spreadsheets/d/1mgvNplYZJEfYU8q5_-ML9w4GjJcUH-CuMKSmUU4nI4k/edit#gid=0&lt;/a&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;Timeline JS 홈페이지에서 기본적으로 &lt;a href=&quot;https://drive.google.com/previewtemplate?id=1pHBvXN7nmGkiG8uQSUB82eNlnL8xHu6kydzH_-eguHQ&amp;amp;mode=public&quot;&gt;템플릿&lt;/a&gt;을 제공해 주는데 이를 가져온 후 항목별로 나와 여행 동료들이 값을 수정한 것 이다.&lt;/p&gt;
-&lt;h2 id=&quot;b-튜토리얼&quot;&gt;B) 튜토리얼&lt;/h2&gt;
-&lt;p&gt;직접 만들어 보고 싶은 욕구가 생기면?&lt;br /&gt;
-행동으로 옮기기만 하면 된다.&lt;br /&gt;
-&lt;a href=&quot;https://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt; 홈페이지에서 제공하는 튜토리얼 영상을 보면 내가 소개한 이야기들의 구체적인 방법들이 스크린캐스트로 담겨 있다.&lt;/p&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;iframe src=&quot;https://player.vimeo.com/video/143407878&quot; width=&quot;100%&quot; height=&quot;400&quot; frameborder=&quot;0&quot; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;
-&lt;/iframe&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-</description>
-        <pubDate>Mon, 15 Aug 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/open_source_tool/2016/08/15/Itinerary_Japan.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/open_source_tool/2016/08/15/Itinerary_Japan.html</guid>
-        
-        
-        <category>Open_source_tool</category>
         
       </item>
     
