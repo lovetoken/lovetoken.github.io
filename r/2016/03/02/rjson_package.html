@@ -163,7 +163,7 @@ rjson 라는 패키지가 이를 도와주는데 이 안에 있는 함수 <code>
 <h3 id="b-1-fromjson">B-1) <code>fromJSON()</code></h3>
 <p>우선 <code>fromJSON()</code> 함수를 알아보자.<br />
 JSON 형 데이터를 R에서 가공할 수 있도록 형태를 변환하여 준다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(<span class="dt">file=</span><span class="st">&quot;test.json&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(<span class="dt">file =</span> <span class="st">&quot;test.json&quot;</span>)
 data</code></pre></div>
 <pre><code>## [[1]]
 ## [[1]]$Name
@@ -195,7 +195,7 @@ R의 객체를 특히 list, data.frame 등을 JSON 형으로 변환시킨다.<br
 <pre><code>## [1] &quot;{\&quot;Name\&quot;:\&quot;Test\&quot;,\&quot;Age\&quot;:25,\&quot;Sex\&quot;:\&quot;F\&quot;,\&quot;Address\&quot;:\&quot;Seoul\&quot;,\&quot;Hobby\&quot;:\&quot;Basketball\&quot;}&quot;</code></pre>
 <p>로 하면된다.</p>
 <p>rjson package 말고도 간단히 이용할 수 있는 jsonlite package 도 있는데 이 패키지의 <code>toJSON()</code> 함수는 pretty 하게 반환하는 기능을 가지고 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">jsonlite::<span class="kw">toJSON</span>(dataframe, <span class="dt">pretty=</span>T)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">jsonlite::<span class="kw">toJSON</span>(dataframe, <span class="dt">pretty =</span> T)</code></pre></div>
 <pre><code>## [
 ##   {
 ##     &quot;Name&quot;: &quot;Test&quot;,

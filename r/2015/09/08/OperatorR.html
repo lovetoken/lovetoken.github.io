@@ -135,7 +135,7 @@
 
 
 <div class="content">
-    <div class="post"><h2 id="a-operator-in-r">A) Operator in R</h2>
+    <div class="post"><h2 id="a-연산자-종">A) 연산자 종</h2>
 <p>R은 다양한 연산자(Operator)를 가지고 있다.<br />
 사칙연산 시 사용되는 <code>-</code>, <code>+</code>, <code>*</code>, <code>/</code> 뿐만 아니라<br />
 <code>==</code>, <code>!=</code>, <code>&lt;=</code>, <code>&gt;=</code> 와 같은 비교연산자,<br />
@@ -148,7 +148,7 @@
 이처럼 R의 다양한 연산자들이 조합될 때 계산의 순서를 결정짓는 우선순위를 알고싶다면 <code>?Syntax</code> 로 열리는 도움말을 참고한다.<br />
 아래의 그림이 도움말을 연 경우인데 맨 위의 연산자가 가장 높은 순으로 계산수행이 시작된다.</p>
 <p><br><img src="/assets/operatorR1.png" /><br></p>
-<h2 id="b-question">B) Question</h2>
+<h2 id="b-궁금증">B) 궁금증</h2>
 <p>연산자에 대한 빈번한 궁금증과 질문들을 접하는데<br />
 대표적으로 몇 개만 나열해 보았다.<br />
 만약 위의 연산자의 우선순위에 대해 정확히 알게 된다면 바로 해결되는 문제이며 그렇게 대단한 문제도 아니다.</p>
@@ -176,8 +176,8 @@ A &lt;-<span class="st"> </span>B &lt;-<span class="st"> </span><span class="dv"
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">-<span class="dv">10</span>^<span class="dv">2</span></code></pre></div>
 <pre><code>## [1] -100</code></pre>
 <p>-10 의 제곱은 100이지만,<br />
-위의 코드가 100이 반환되기를 기대한 순간 <code>?Syntax</code> 를 다시 참고할 시간인 것이다. 🙄<br />
-나는 항상 100이 되길 기대하기 때문에 빈번히 <code>?Syntax</code> 도움말을 조회한다.</p>
+위의 코드가 100이 반환되기를 기대한 순간 <code>?Syntax</code> 를 다시 참고할 시간인 것이다.<br />
+나는 항상 100이 되길 기대하기 때문에 빈번히 <code>?Syntax</code> 도움말을 조회한다. 🤧</p>
 <p><strong><code>-</code>보다 <code>^</code>이 먼저 수행되는 문제를 괄호를 통해 해결</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(-<span class="dv">10</span>)^<span class="dv">2</span></code></pre></div>
 <pre><code>## [1] 100</code></pre>
@@ -185,9 +185,9 @@ A &lt;-<span class="st"> </span>B &lt;-<span class="st"> </span><span class="dv"
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">C &lt;-<span class="st"> </span>-<span class="dv">10</span>
 C^<span class="dv">2</span></code></pre></div>
 <pre><code>## [1] 100</code></pre>
-<h3 id="b-3-seq2-20-by2-를-연산자를-통하여-더-간단한-코드로-만들고-싶습니다.">B-3) <code>seq(2, 20, by=2)</code> 를 <code>:</code> 연산자를 통하여 더 간단한 코드로 만들고 싶습니다.</h3>
-<p><code>seq(2, 20, by=2)</code> 의 결과를 잘 살펴보면</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dt">by=</span><span class="dv">2</span>)</code></pre></div>
+<h3 id="b-3-seq2-20-by-2-를-연산자를-통하여-더-간단한-코드로-만들고-싶습니다.">B-3) <code>seq(2, 20, by = 2)</code> 를 <code>:</code> 연산자를 통하여 더 간단한 코드로 만들고 싶습니다.</h3>
+<p><code>seq(2, 20, by = 2)</code> 의 결과를 잘 살펴보면</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dt">by =</span> <span class="dv">2</span>)</code></pre></div>
 <pre><code>##  [1]  2  4  6  8 10 12 14 16 18 20</code></pre>
 <p><code>1:10</code> 의 모든 결과값에</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>:<span class="dv">10</span></code></pre></div>
@@ -195,8 +195,8 @@ C^<span class="dv">2</span></code></pre></div>
 <p>2를 곱한 것과 같다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">1</span>:<span class="dv">10</span>)*<span class="dv">2</span></code></pre></div>
 <pre><code>##  [1]  2  4  6  8 10 12 14 16 18 20</code></pre>
-<p>그런데 <code>(1:10)*2</code> 의 코드가 사실 가장 간단히 구현된 코드가 아니었다.<br />
-연산자 우선순위를 잘 알지 못한다면 습관적으로 <code>1:10</code>이 먼저 수행되어야 한다는 생각에 괄호를 본능적으로 둘러싸게 될 텐데,<br />
+<p>그런데 <code>(1:10)*2</code> 의 코드가 가장 간단히 구현된 코드가 아니다.<br />
+습관적으로 <code>1:10</code>이 먼저 수행되어야 한다는 생각에 괄호를 본능적으로 둘러싸게 되었는데,<br />
 그렇지 않더라도 <code>:</code> 연산자는 <code>*</code> 보다 우위에 있으므로 <code>1:10</code> 을 먼저 계산 이후에 곱 연산 <code>*</code> 을 수행한다.<br />
 따라서 괄호를 생략하고 아래와 같이 코드를 작성해도 된다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>:<span class="dv">10</span>*<span class="dv">2</span></code></pre></div>
@@ -220,8 +220,8 @@ C^<span class="dv">2</span></code></pre></div>
 <section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>사실 할당연산자 중 <code>-&gt;</code> 도 존재하지만 이는 아예 모르는게 약이라고 개인적으로 생각한다. 😎<br />
-<code>&lt;&lt;-</code> 와 같은 할당연산자도 있는데 할당을 어떤상황이든 전역환경(global environment)으로 지정하여 할당하는 특수한 할당연산자이다.<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>사실 할당연산자 중 <code>-&gt;</code> 도 존재하지만 이는 아예 모르는게 약일수도 있다 생각된다. 그만큼 잘 쓰지 않지만 파이프 연산자 <code>%&gt;%</code> 와 종종 조화되어 사용되곤 한다.<br />
+<code>&lt;&lt;-</code>, <code>-&gt;&gt;</code> 와 같은 할당연산자도 있는데 상위환경에 대해 할당한다. 이 특성을 이용해 일반적으로 함수내 런타임환경(runtime environment)에서 전역환경(global environment)으로 지정하여 할당하는 것 외에는 일반적으로 사용하지 않는 특수한 할당연산자이다.<a href="#fnref1">↩</a></p></li>
 </ol>
 </section>
 </div>

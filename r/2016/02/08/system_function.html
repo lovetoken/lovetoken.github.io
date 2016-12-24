@@ -139,7 +139,7 @@
 <p>Shell command 로 출력되는 것을 R에서 보기 위한 방법은 없을까?<br />
 예를 들어 워킹디렉토리의 파일리스트를 출력하기 위해선 쉘에서 간단히 <code>ls</code>, 아니면 <code>ls -al</code> 등으로 참조할 수 있지만 Rstudio 를 사용하고 있는 상황이 아니고선 R command 상황에서 파일리스트를 참조하기는 좀 그렇다.</p>
 <p>굳이 찾아본다면 Shell 의 <code>ls -al</code> 와 같은 R코드는</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">file.info</span>(<span class="kw">list.files</span>(<span class="dt">all.files=</span>T))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">file.info</span>(<span class="kw">list.files</span>(<span class="dt">all.files =</span> T))</code></pre></div>
 <pre><code>##                  size isdir mode               mtime               ctime
 ## .                 238  TRUE  755 2016-02-17 13:21:12 2016-02-17 13:21:12
 ## ..               1360  TRUE  755 2016-02-11 16:50:19 2016-02-11 16:50:19

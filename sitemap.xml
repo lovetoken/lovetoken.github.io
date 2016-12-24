@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 20 Dec 2016 23:36:34 +0900</pubDate>
-    <lastBuildDate>Tue, 20 Dec 2016 23:36:34 +0900</lastBuildDate>
+    <pubDate>Fri, 23 Dec 2016 14:59:01 +0900</pubDate>
+    <lastBuildDate>Fri, 23 Dec 2016 14:59:01 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -2617,7 +2617,7 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
 &lt;p&gt;progress package 를 로드&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;한다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;progress&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;그 다음 위의 예제코드에 몇 가지 코드를 덧붙인다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;pb &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;progress_bar$&lt;span class=&quot;kw&quot;&gt;new&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;total=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;)
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;pb &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;progress_bar$&lt;span class=&quot;kw&quot;&gt;new&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;total =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;)
 
 for(i in &lt;span class=&quot;kw&quot;&gt;seq&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;)){
 
@@ -2695,7 +2695,7 @@ rjson 라는 패키지가 이를 도와주는데 이 안에 있는 함수 &lt;co
 &lt;h3 id=&quot;b-1-fromjson&quot;&gt;B-1) &lt;code&gt;fromJSON()&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;우선 &lt;code&gt;fromJSON()&lt;/code&gt; 함수를 알아보자.&lt;br /&gt;
 JSON 형 데이터를 R에서 가공할 수 있도록 형태를 변환하여 준다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;data &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;fromJSON&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;file=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;test.json&amp;quot;&lt;/span&gt;)
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;data &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;fromJSON&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;file =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;test.json&amp;quot;&lt;/span&gt;)
 data&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [[1]]
 ## [[1]]$Name
@@ -2727,7 +2727,7 @@ R의 객체를 특히 list, data.frame 등을 JSON 형으로 변환시킨다.&lt
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;{\&amp;quot;Name\&amp;quot;:\&amp;quot;Test\&amp;quot;,\&amp;quot;Age\&amp;quot;:25,\&amp;quot;Sex\&amp;quot;:\&amp;quot;F\&amp;quot;,\&amp;quot;Address\&amp;quot;:\&amp;quot;Seoul\&amp;quot;,\&amp;quot;Hobby\&amp;quot;:\&amp;quot;Basketball\&amp;quot;}&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;로 하면된다.&lt;/p&gt;
 &lt;p&gt;rjson package 말고도 간단히 이용할 수 있는 jsonlite package 도 있는데 이 패키지의 &lt;code&gt;toJSON()&lt;/code&gt; 함수는 pretty 하게 반환하는 기능을 가지고 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;jsonlite::&lt;span class=&quot;kw&quot;&gt;toJSON&lt;/span&gt;(dataframe, &lt;span class=&quot;dt&quot;&gt;pretty=&lt;/span&gt;T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;jsonlite::&lt;span class=&quot;kw&quot;&gt;toJSON&lt;/span&gt;(dataframe, &lt;span class=&quot;dt&quot;&gt;pretty =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [
 ##   {
 ##     &amp;quot;Name&amp;quot;: &amp;quot;Test&amp;quot;,
@@ -2889,7 +2889,7 @@ Error: object &amp;#39;bsid&amp;#39; not found&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Shell command 로 출력되는 것을 R에서 보기 위한 방법은 없을까?&lt;br /&gt;
 예를 들어 워킹디렉토리의 파일리스트를 출력하기 위해선 쉘에서 간단히 &lt;code&gt;ls&lt;/code&gt;, 아니면 &lt;code&gt;ls -al&lt;/code&gt; 등으로 참조할 수 있지만 Rstudio 를 사용하고 있는 상황이 아니고선 R command 상황에서 파일리스트를 참조하기는 좀 그렇다.&lt;/p&gt;
 &lt;p&gt;굳이 찾아본다면 Shell 의 &lt;code&gt;ls -al&lt;/code&gt; 와 같은 R코드는&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;file.info&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;list.files&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;all.files=&lt;/span&gt;T))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;file.info&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;list.files&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;all.files =&lt;/span&gt; T))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##                  size isdir mode               mtime               ctime
 ## .                 238  TRUE  755 2016-02-17 13:21:12 2016-02-17 13:21:12
 ## ..               1360  TRUE  755 2016-02-11 16:50:19 2016-02-11 16:50:19
@@ -3214,7 +3214,7 @@ step_fit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class
     
       <item>
         <title>R에서 연산자의 우선순위</title>
-        <description>&lt;h2 id=&quot;a-operator-in-r&quot;&gt;A) Operator in R&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;a-연산자-종&quot;&gt;A) 연산자 종&lt;/h2&gt;
 &lt;p&gt;R은 다양한 연산자(Operator)를 가지고 있다.&lt;br /&gt;
 사칙연산 시 사용되는 &lt;code&gt;-&lt;/code&gt;, &lt;code&gt;+&lt;/code&gt;, &lt;code&gt;*&lt;/code&gt;, &lt;code&gt;/&lt;/code&gt; 뿐만 아니라&lt;br /&gt;
 &lt;code&gt;==&lt;/code&gt;, &lt;code&gt;!=&lt;/code&gt;, &lt;code&gt;&amp;lt;=&lt;/code&gt;, &lt;code&gt;&amp;gt;=&lt;/code&gt; 와 같은 비교연산자,&lt;br /&gt;
@@ -3227,7 +3227,7 @@ step_fit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class
 이처럼 R의 다양한 연산자들이 조합될 때 계산의 순서를 결정짓는 우선순위를 알고싶다면 &lt;code&gt;?Syntax&lt;/code&gt; 로 열리는 도움말을 참고한다.&lt;br /&gt;
 아래의 그림이 도움말을 연 경우인데 맨 위의 연산자가 가장 높은 순으로 계산수행이 시작된다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;img src=&quot;/assets/operatorR1.png&quot; /&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;b-question&quot;&gt;B) Question&lt;/h2&gt;
+&lt;h2 id=&quot;b-궁금증&quot;&gt;B) 궁금증&lt;/h2&gt;
 &lt;p&gt;연산자에 대한 빈번한 궁금증과 질문들을 접하는데&lt;br /&gt;
 대표적으로 몇 개만 나열해 보았다.&lt;br /&gt;
 만약 위의 연산자의 우선순위에 대해 정확히 알게 된다면 바로 해결되는 문제이며 그렇게 대단한 문제도 아니다.&lt;/p&gt;
@@ -3255,8 +3255,8 @@ A &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;B &amp;lt;-&lt;span cl
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;-&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] -100&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;-10 의 제곱은 100이지만,&lt;br /&gt;
-위의 코드가 100이 반환되기를 기대한 순간 &lt;code&gt;?Syntax&lt;/code&gt; 를 다시 참고할 시간인 것이다. 🙄&lt;br /&gt;
-나는 항상 100이 되길 기대하기 때문에 빈번히 &lt;code&gt;?Syntax&lt;/code&gt; 도움말을 조회한다.&lt;/p&gt;
+위의 코드가 100이 반환되기를 기대한 순간 &lt;code&gt;?Syntax&lt;/code&gt; 를 다시 참고할 시간인 것이다.&lt;br /&gt;
+나는 항상 100이 되길 기대하기 때문에 빈번히 &lt;code&gt;?Syntax&lt;/code&gt; 도움말을 조회한다. 🤧&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;-&lt;/code&gt;보다 &lt;code&gt;^&lt;/code&gt;이 먼저 수행되는 문제를 괄호를 통해 해결&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;(-&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;)^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] 100&lt;/code&gt;&lt;/pre&gt;
@@ -3264,9 +3264,9 @@ A &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;B &amp;lt;-&lt;span cl
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;C &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;-&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;
 C^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] 100&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;b-3-seq2-20-by2-를-연산자를-통하여-더-간단한-코드로-만들고-싶습니다.&quot;&gt;B-3) &lt;code&gt;seq(2, 20, by=2)&lt;/code&gt; 를 &lt;code&gt;:&lt;/code&gt; 연산자를 통하여 더 간단한 코드로 만들고 싶습니다.&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;seq(2, 20, by=2)&lt;/code&gt; 의 결과를 잘 살펴보면&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;seq&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;20&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;by=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;b-3-seq2-20-by-2-를-연산자를-통하여-더-간단한-코드로-만들고-싶습니다.&quot;&gt;B-3) &lt;code&gt;seq(2, 20, by = 2)&lt;/code&gt; 를 &lt;code&gt;:&lt;/code&gt; 연산자를 통하여 더 간단한 코드로 만들고 싶습니다.&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;seq(2, 20, by = 2)&lt;/code&gt; 의 결과를 잘 살펴보면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;seq&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;20&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;by =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##  [1]  2  4  6  8 10 12 14 16 18 20&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;1:10&lt;/code&gt; 의 모든 결과값에&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -3274,8 +3274,8 @@ C^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/d
 &lt;p&gt;2를 곱한 것과 같다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;)*&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##  [1]  2  4  6  8 10 12 14 16 18 20&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;그런데 &lt;code&gt;(1:10)*2&lt;/code&gt; 의 코드가 사실 가장 간단히 구현된 코드가 아니었다.&lt;br /&gt;
-연산자 우선순위를 잘 알지 못한다면 습관적으로 &lt;code&gt;1:10&lt;/code&gt;이 먼저 수행되어야 한다는 생각에 괄호를 본능적으로 둘러싸게 될 텐데,&lt;br /&gt;
+&lt;p&gt;그런데 &lt;code&gt;(1:10)*2&lt;/code&gt; 의 코드가 가장 간단히 구현된 코드가 아니다.&lt;br /&gt;
+습관적으로 &lt;code&gt;1:10&lt;/code&gt;이 먼저 수행되어야 한다는 생각에 괄호를 본능적으로 둘러싸게 되었는데,&lt;br /&gt;
 그렇지 않더라도 &lt;code&gt;:&lt;/code&gt; 연산자는 &lt;code&gt;*&lt;/code&gt; 보다 우위에 있으므로 &lt;code&gt;1:10&lt;/code&gt; 을 먼저 계산 이후에 곱 연산 &lt;code&gt;*&lt;/code&gt; 을 수행한다.&lt;br /&gt;
 따라서 괄호를 생략하고 아래와 같이 코드를 작성해도 된다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;*&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -3299,8 +3299,8 @@ C^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/d
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
-&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;사실 할당연산자 중 &lt;code&gt;-&amp;gt;&lt;/code&gt; 도 존재하지만 이는 아예 모르는게 약이라고 개인적으로 생각한다. 😎&lt;br /&gt;
-&lt;code&gt;&amp;lt;&amp;lt;-&lt;/code&gt; 와 같은 할당연산자도 있는데 할당을 어떤상황이든 전역환경(global environment)으로 지정하여 할당하는 특수한 할당연산자이다.&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;사실 할당연산자 중 &lt;code&gt;-&amp;gt;&lt;/code&gt; 도 존재하지만 이는 아예 모르는게 약일수도 있다 생각된다. 그만큼 잘 쓰지 않지만 파이프 연산자 &lt;code&gt;%&amp;gt;%&lt;/code&gt; 와 종종 조화되어 사용되곤 한다.&lt;br /&gt;
+&lt;code&gt;&amp;lt;&amp;lt;-&lt;/code&gt;, &lt;code&gt;-&amp;gt;&amp;gt;&lt;/code&gt; 와 같은 할당연산자도 있는데 상위환경에 대해 할당한다. 이 특성을 이용해 일반적으로 함수내 런타임환경(runtime environment)에서 전역환경(global environment)으로 지정하여 할당하는 것 외에는 일반적으로 사용하지 않는 특수한 할당연산자이다.&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/section&gt;
 </description>
