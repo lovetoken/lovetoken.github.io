@@ -5,15 +5,13 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 12 Jan 2017 12:24:13 +0900</pubDate>
-    <lastBuildDate>Thu, 12 Jan 2017 12:24:13 +0900</lastBuildDate>
+    <pubDate>Thu, 12 Jan 2017 12:27:36 +0900</pubDate>
+    <lastBuildDate>Thu, 12 Jan 2017 12:27:36 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
         <title>R에서 다수의 패키지 편하게 불러오기</title>
-        <description>&lt;style type=&quot;text/css&quot;&gt;@import url(&quot;https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css&quot;)&lt;/style&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;a-상황&quot;&gt;A) 상황&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;a-상황&quot;&gt;A) 상황&lt;/h2&gt;
 &lt;p&gt;R 에서 여러 개의 패키지를 사용해야 하는 프로그램을 작성해야 한다면 &lt;code&gt;library()&lt;/code&gt; 함수로 사용하는 패키지를 불러오는 코드를 서두에 작성하는 전략을 사용할 것이다. &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;package1&amp;quot;&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;package2&amp;quot;&lt;/span&gt;)
