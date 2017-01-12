@@ -5,9 +5,64 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 31 Dec 2016 11:19:39 +0900</pubDate>
-    <lastBuildDate>Sat, 31 Dec 2016 11:19:39 +0900</lastBuildDate>
+    <pubDate>Thu, 12 Jan 2017 12:24:13 +0900</pubDate>
+    <lastBuildDate>Thu, 12 Jan 2017 12:24:13 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 다수의 패키지 편하게 불러오기</title>
+        <description>&lt;style type=&quot;text/css&quot;&gt;@import url(&quot;https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css&quot;)&lt;/style&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;a-상황&quot;&gt;A) 상황&lt;/h2&gt;
+&lt;p&gt;R 에서 여러 개의 패키지를 사용해야 하는 프로그램을 작성해야 한다면 &lt;code&gt;library()&lt;/code&gt; 함수로 사용하는 패키지를 불러오는 코드를 서두에 작성하는 전략을 사용할 것이다. &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;package1&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;package2&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;package3&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;package4&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;package5&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이처 5개의 패키지를 로드하는 코드로 볼 수 있는데, 만약 필요로 하는 패키지의 수가 5개가 아닌 수십 개가 된다면 수십개의 &lt;code&gt;library()&lt;/code&gt; 함수를 작성하게 될 것이다.&lt;br /&gt;
+아쉽게도 &lt;code&gt;library()&lt;/code&gt; 함수는 불러올 대상이 되는 패키지를 복수개로 입력할 수 없어&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;package1&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;package2&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;package3&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;package4&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;package5&amp;quot;&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;Error : 
+  &amp;#39;package&amp;#39;는 반드시 길이가 1이어야 합니다&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;와 같은 꼴로는 사용할 수 없기 때문에 코드가 불필요하게 길어진다.&lt;br /&gt;
+반복문을 이용해 굳이 해결책을 찾자면 벡터형 문자열을 이용할 수 있을 것인데&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;for(i in &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;package1&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;package2&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;package3&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;package4&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;package5&amp;quot;&lt;/span&gt;)){
+  &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(i, &lt;span class=&quot;dt&quot;&gt;character.only =&lt;/span&gt; T)
+} &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;중간에 패키지 로드가 실패했을 경우 (예를 들어 &amp;quot;package3&amp;quot; 호출이 실패)&lt;br /&gt;
+이후의 패키지들 (&amp;quot;package4&amp;quot;, &amp;quot;package5&amp;quot;) 이 로드되지 않는 등 실제로 사용하기엔 불편한 점들이 있을 것이다.&lt;/p&gt;
+&lt;p&gt;또한, 위에 제시한 어떠한 방법이든&lt;br /&gt;
+자신이 만든 프로그램이 다수의 패키지에 의존되면 의존될수록 타인이 자신의 프로그램을 이용할 때 오류가 일어날 가능성도 커진다.&lt;br /&gt;
+타인은 프로그램에 의존된 패키지가 모두 설치되어 있을 리 없다.&lt;/p&gt;
+&lt;h2 id=&quot;b-pacman-패키지의-p_load-함수&quot;&gt;B) pacman 패키지의 &lt;code&gt;p_load()&lt;/code&gt; 함수&lt;/h2&gt;
+&lt;p&gt;이처럼 재현 가능한 연구를 방해하는 요소들을 없애기 위해 고민하다가 pacman package 를 알게 되었고&lt;br /&gt;
+pacman 패키지에서 제공되는 여러 함수 중 &lt;code&gt;p_load()&lt;/code&gt; 함수의 도움을 가장 많이 받고 있다.&lt;br /&gt;
+일반적인 상황에서 &lt;code&gt;p_load()&lt;/code&gt; 함수는 위에 제시한 불편한 문제들을 잘 해결해 준다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;pacman::&lt;span class=&quot;kw&quot;&gt;p_load&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;package1&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;package2&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;package3&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;package4&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;package5&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;&lt;p&gt;다수의 패키지를 불러올 때 복수의 문자열 벡터를 입력받을 수 있어 코드 길이를 줄일 수 있다.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;불러오길 희망하는 다수의 패키지 중에&lt;br /&gt;
+설치가 되지 않은 패키지가 있어도 알아서 설치를 진행한 후 설치가 잘 완료되면 불러오는 기능이 한 번에 수행된다.&lt;br /&gt;
+예를 들어 &amp;quot;package3&amp;quot; 이란 패키지가 설치되어있지 않은 상황이라 하더라도&lt;br /&gt;
+오류와 함께 코드실행이 멈추는 것이 아니라 CRAN 에 &amp;quot;package3&amp;quot; 을 찾은 후 패키지 설치완료 후 불러온다.&lt;br /&gt;
+CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 &lt;code&gt;p_load()&lt;/code&gt; 함수로 패키지를 로드할 때 오류가 날 일은 거의 없을 것이다.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;코드 중간중간 필요한 시점에서 &lt;code&gt;library()&lt;/code&gt; 호출을 할 수 도 있겠으나, 프로젝트를 시작하기 앞서 필요한 모든 패키지를 보여주기 위해 보통 서두에 몰아 패키지를 호출하는 경우가 많은것 같다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Thu, 12 Jan 2017 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2017/01/12/multiple_load_packages.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2017/01/12/multiple_load_packages.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>R에서 Startup option 설정하기 (on Mac)</title>
