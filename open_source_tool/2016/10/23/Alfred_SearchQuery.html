@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset" />
-        <meta name="keywords" content="회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset, , R" />
+        <meta name="description" content="Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색" />
+        <meta name="keywords" content="Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색, , Open_Source_Tool" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset" property="og:title">
+          <meta content="Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html" property="og:url">
+          <meta content="https://lovetoken.github.io/open_source_tool/2016/10/23/Alfred_SearchQuery.html" property="og:url">
         
         
-          <meta content="2016-09-16T00:00:00+09:00" property="article:published_time">
+          <meta content="2016-10-23T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -35,7 +35,7 @@
         
         
           
-          <meta content="R" property="article:section">
+          <meta content="Open_Source_Tool" property="article:section">
           
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset">
+          <meta name="twitter:title" content="Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/open_source_tool/2016/10/23/Alfred_SearchQuery.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,51 +126,65 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset</h1>
-<span class="time">16 Sep 2016</span>
+                <h1>Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색</h1>
+<span class="time">23 Oct 2016</span>
 
 <span class="categories">
-    &raquo; <a href="/category/R">R</a>
+    &raquo; <a href="/category/Open_Source_Tool">Open_Source_Tool</a>
 </span>
 
 
 <div class="content">
-    <div class="post"><p>회귀분석을 공부하게 되면<br />
-책이나 인터넷의 포스팅된 글에서 모델적합성의 중요성을 부각시키는 아래의 데이터 시각화 예제를 많이 보았을 것이다.</p>
-<br>
+    <div class="post"><a href="https://www.alfredapp.com/"><br>
 <center>
-<img src="/assets/anscombe1.png" />
+<img src="/assets/alfred_1.png" />
 </center>
-<p><br></p>
-<p>요즘에는 데이터시각화의 중요성을 부각시키는 예제로도 자주 활용되는데<br />
-그만큼 눈으로 직접 보는것이 힘이다.</p>
-<p>나는 종종 이 예제를 활용하고 싶을때가 많았는데<br />
-이 데이터셋을 구하기 전 처음에는 데이터셋의 이름을 모르고 있어서<br />
-직접 눈대중으로 만들려는 멍청한 짓을 한적이 있었다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
-<p>하지만 위에 사용된 데이터셋 이름이 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's quartet</a> 임을 알고는 구글링을 통해 손쉽게 얻을 수 있었다.</p>
-<p>그런데 또 뒤늦게<br />
-오늘 알아 챈 것이 있는데 R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's quartet</a> 데이터셋이 빌트인 되어 있었다는 것이다.<br />
-데이터셋을 호출하기 위해선 <code>anscombe</code> 만 치면 됬었다...</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">anscombe</code></pre></div>
-<pre><code>##    x1 x2 x3 x4    y1   y2    y3    y4
-## 1  10 10 10  8  8.04 9.14  7.46  6.58
-## 2   8  8  8  8  6.95 8.14  6.77  5.76
-## 3  13 13 13  8  7.58 8.74 12.74  7.71
-## 4   9  9  9  8  8.81 8.77  7.11  8.84
-## 5  11 11 11  8  8.33 9.26  7.81  8.47
-## 6  14 14 14  8  9.96 8.10  8.84  7.04
-## 7   6  6  6  8  7.24 6.13  6.08  5.25
-## 8   4  4  4 19  4.26 3.10  5.39 12.50
-## 9  12 12 12  8 10.84 9.13  8.15  5.56
-## 10  7  7  7  8  4.82 7.26  6.42  7.91
-## 11  5  5  5  8  5.68 4.74  5.73  6.89</code></pre>
-<p>으악.. 허무하다..<br />
-<code>?anscombe</code> 를 하고 나서 예제코드가 잘 준비된 것을 보니 지금까지 과정들이 헛수고임을 깨닫게 되었다...<br />
-그 충격에 이렇게 블로그 글로 포스팅을 하게 되었다. 😅</p>
+<p><br></a></p>
+<p>Mac에서 Spotlight 대용으로 <a href="https://www.alfredapp.com/">Alfred</a> 를 사용 중이며 최대한 다양한 기능들을 이용해 보고 있었다.<br />
+개인적으로 가장 생산성이 높은, 그리고 자주 사용하는 기능은 검색쿼리를 등록해 한방에 검색하는 편의를 가장 많이 느끼고 있었다.</p>
+<h2 id="a-alfred-검색쿼리-기능">A) Alfred 검색쿼리 기능</h2>
+<p>부연설명을 하자면 아래와 같다.<br />
+만약 영어를 잘하고 싶어서 네이버에 &quot;영어를 잘하는 법&quot; 이라는 검색어로 검색을 원할 때 보통 아래와 같은 과정일 것이다. <br><br></p>
+<p><strong>네이버 웹페이지가 뜨는 것을 기다린 후, <code>영어를 잘하는 법</code> 으로 검색바에 타자를 치고 엔터를 누름</strong> <br><br></p>
+<p>그런데 여기서 네이버라는 특정 검색 서비스 웹페이지를 들어가는 과정이 번거로울 수 있다.<br />
+네이버를 Alfred 에 검색 키워드로 등록하고 (예를 들어 <code>na</code> 라고 등록한다면) 검색쿼리 설정을 해놓으면 <br><br></p>
+<p><strong><kbd>⌥</kbd> + <kbd>Space</kbd> 로 Alfred 실행 후 <code>na 영어를 잘하는 법</code> 타자 치고 엔터를 누름</strong> <br><br></p>
+<p>이란 과정으로 검색을 간편하게 할 수 있을 것이다.</p>
+<h2 id="b-alfred-검색쿼리-등록방법-alfred-v3.1.1-을-기준">B) Alfred 검색쿼리 등록방법 (Alfred v3.1.1 을 기준)</h2>
+<p>등록방법을 구구절절 쓰는 것 보다 스크린캐스트를 보는 것이 좋을 것 같다.<br />
+아래 영상처럼 하면 된다.<br />
+이 영상은 Alfred 에 Github 검색쿼리를 등록한 후 테스트하는 영상이 되겠다.</p>
+<iframe width="100%" height="400" src="https://www.youtube.com/embed/eG_Z5INGfsM" frameborder="0" allowfullscreen>
+</iframe>
+<h2 id="c-alfred-검색쿼리-예시">C) Alfred 검색쿼리 예시</h2>
+<p>최근에 나는 Alfred 가 3.X 버전을 출시하면서 이전 1.X 버전을 생각 없이 지웠는데<br />
+아쉽게도 1.X 버전에 커스터마이징 된 환경들이 싹 날라가 버렸다. 😓</p>
+<p>특히 검색쿼리를 다시 찾고 세팅하는 것이 번거로웠는데<br />
+이참에 글로 쫙 정리해놓아야 겠다는 생각이 들었다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<ul>
+<li><a href="http://www.naver.com/">Naver</a></li>
+</ul>
+<pre><code>http://search.naver.com/search.naver?query={query}</code></pre>
+<ul>
+<li><a href="http://endic.naver.com/?sLn=kr">Naver 영어사전</a></li>
+</ul>
+<pre><code>http://endic.naver.com/search.nhn?sLn=kr&amp;query={query}</code></pre>
+<ul>
+<li><a href="https://soundcloud.com">Soundcloud</a></li>
+</ul>
+<pre><code>https://soundcloud.com/search?q={query}</code></pre>
+<ul>
+<li><a href="https://github.com/">Github</a></li>
+</ul>
+<pre><code>https://github.com/search?q={query}</code></pre>
+<ul>
+<li><a href="https://www.r-bloggers.com/">R-bloggers</a></li>
+</ul>
+<pre><code>https://www.r-bloggers.com/search/{query}/</code></pre>
 <section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>이 멍청한 짓 마저 의외로 엄청 어려워 실패 😓<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>필자가 자주 이용하는 웹페이지를 기준으로 정리했다. Alfred 에서 기본적으로 지원해주는 구글, 위키, 트위터, 페이스북등의 쿼리를 제외하고 내가 자주 사용하는 사이트들에 대한 부분이다.<a href="#fnref1">↩</a></p></li>
 </ol>
 </section>
 </div>
@@ -186,7 +200,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/open_source_tool/2016/10/23/Alfred_SearchQuery.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -204,15 +218,104 @@
     
         
             
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>Related Posts</h4>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2017/01/12/multiple_load_packages.html">R에서 다수의 패키지 편하게 불러오기</a>
+                    <a href="https://lovetoken.github.io/open_source_tool/2016/08/15/Itinerary_Japan.html">Timeline JS 소개 (with 나의 일본 여행계획)</a>
                     
-                        (Categories: <a href="/category/R">R</a>)
+                        (Categories: <a href="/category/Open_Source_Tool">Open_Source_Tool</a>)
                     
                 </li>
                 
@@ -222,96 +325,18 @@
     
 
     
+    
+        
+            
+        
     
         
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/12/20/RStartup_Option.html">R에서 Startup option 설정하기 (on Mac)</a>
+                    <a href="https://lovetoken.github.io/diary/open_source_tool/2016/07/23/Welcome_to_Jekyll.html">Blog 의 이전 (Wordpress 에서 Jekyll 로)</a>
                     
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/12/18/RCodeConventions.html">Google 에서 사용하는 R Code conventions (코딩 스타일 규약)</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/12/06/formula_usage.html">R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/11/13/forcats_package.html">R에서 factor 형 자료 처리를 위한 forcats package 에 대해</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2016/10/18/ggmap.html">R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
+                        (Categories: <a href="/category/Diary">Diary</a>, <a href="/category/Open_Source_Tool">Open_Source_Tool</a>)
                     
                 </li>
                 
@@ -360,37 +385,6 @@
         
             
         
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
     
         
             
@@ -488,10 +482,10 @@
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/open_source_tool/2016/08/15/Itinerary_Japan.html">&laquo; Timeline JS 소개 (with 나의 일본 여행계획)</a>
+    <a class="prev" href="/r/data_visualization/2016/10/18/ggmap.html">&laquo; R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제</a>
   
   
-    <a class="next" href="/r/2016/09/18/lubridate_package.html">R에서 lubridate package 에 대해 &raquo;</a>
+    <a class="next" href="/r/2016/11/13/forcats_package.html">R에서 factor 형 자료 처리를 위한 forcats package 에 대해 &raquo;</a>
   
 </div>
 
@@ -502,8 +496,8 @@
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset";
-        var disqus_title = "회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset";
+        var disqus_identifier = "https://lovetoken.github.io_Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색";
+        var disqus_title = "Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

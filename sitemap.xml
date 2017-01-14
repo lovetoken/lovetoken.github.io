@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 12 Jan 2017 12:27:36 +0900</pubDate>
-    <lastBuildDate>Thu, 12 Jan 2017 12:27:36 +0900</lastBuildDate>
+    <pubDate>Sat, 14 Jan 2017 21:05:16 +0900</pubDate>
+    <lastBuildDate>Sat, 14 Jan 2017 21:05:16 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -883,11 +883,11 @@ gss_cat %&amp;gt;%
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 23 Oct 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/etc/2016/10/23/Alfred_SearchQuery.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/etc/2016/10/23/Alfred_SearchQuery.html</guid>
+        <link>https://lovetoken.github.io/open_source_tool/2016/10/23/Alfred_SearchQuery.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/open_source_tool/2016/10/23/Alfred_SearchQuery.html</guid>
         
         
-        <category>etc</category>
+        <category>Open_Source_Tool</category>
         
       </item>
     
@@ -1059,11 +1059,13 @@ p7 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;
 &lt;/section&gt;
 </description>
         <pubDate>Tue, 18 Oct 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2016/10/18/ggmap.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/10/18/ggmap.html</guid>
+        <link>https://lovetoken.github.io/r/data_visualization/2016/10/18/ggmap.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/data_visualization/2016/10/18/ggmap.html</guid>
         
         
         <category>R</category>
+        
+        <category>Data_Visualization</category>
         
       </item>
     
@@ -1194,11 +1196,13 @@ choropleth map 이라고 할 수 없는 상태이다.&lt;br /&gt;
 위의 결과물과 맨 첫 번째 소개했던 결과물이 같은 것을 확인할 수 있다.&lt;/p&gt;
 </description>
         <pubDate>Fri, 14 Oct 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2016/10/14/Choropleth_map_basic.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/10/14/Choropleth_map_basic.html</guid>
+        <link>https://lovetoken.github.io/r/data_visualization/2016/10/14/Choropleth_map_basic.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/data_visualization/2016/10/14/Choropleth_map_basic.html</guid>
         
         
         <category>R</category>
+        
+        <category>Data_Visualization</category>
         
       </item>
     
@@ -1671,11 +1675,13 @@ Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르�
 &lt;/section&gt;
 </description>
         <pubDate>Fri, 16 Sep 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/09/16/Anscombe_dataset.html</guid>
+        <link>https://lovetoken.github.io/r/data_visualization/2016/09/16/Anscombe_dataset.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/data_visualization/2016/09/16/Anscombe_dataset.html</guid>
         
         
         <category>R</category>
+        
+        <category>Data_Visualization</category>
         
       </item>
     
@@ -1727,7 +1733,7 @@ Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르�
         <guid isPermaLink="true">https://lovetoken.github.io/open_source_tool/2016/08/15/Itinerary_Japan.html</guid>
         
         
-        <category>Open_source_tool</category>
+        <category>Open_Source_Tool</category>
         
       </item>
     
@@ -1758,11 +1764,13 @@ Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르�
 때문에 블로그 이전과 동시에 &amp;quot;통계 R 프로그래밍&amp;quot; 커뮤니티 카페와 독립을 꾀하고자 한다.&lt;/p&gt;
 </description>
         <pubDate>Sat, 23 Jul 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/diary/2016/07/23/Welcome_to_Jekyll.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/diary/2016/07/23/Welcome_to_Jekyll.html</guid>
+        <link>https://lovetoken.github.io/diary/open_source_tool/2016/07/23/Welcome_to_Jekyll.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/diary/open_source_tool/2016/07/23/Welcome_to_Jekyll.html</guid>
         
         
         <category>Diary</category>
+        
+        <category>Open_Source_Tool</category>
         
       </item>
     
@@ -2265,11 +2273,13 @@ verbatim 모드로 Rmarkdown 코드청크 전체를 보여주면 아래와 같�
 그렇지 않으면 많은 인내심이 요구될 수 있다.&lt;/p&gt;
 </description>
         <pubDate>Thu, 26 May 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2016/05/26/CLT.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/05/26/CLT.html</guid>
+        <link>https://lovetoken.github.io/r/data_visualization/2016/05/26/CLT.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/data_visualization/2016/05/26/CLT.html</guid>
         
         
         <category>R</category>
+        
+        <category>Data_Visualization</category>
         
       </item>
     
