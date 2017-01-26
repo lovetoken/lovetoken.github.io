@@ -142,7 +142,7 @@
 <span class="kw">library</span>(<span class="st">&quot;package3&quot;</span>)
 <span class="kw">library</span>(<span class="st">&quot;package4&quot;</span>)
 <span class="kw">library</span>(<span class="st">&quot;package5&quot;</span>)</code></pre></div>
-<p>이처 5개의 패키지를 로드하는 코드로 볼 수 있는데, 만약 필요로 하는 패키지의 수가 5개가 아닌 수십 개가 된다면 수십개의 <code>library()</code> 함수를 작성하게 될 것이다.<br />
+<p>위의 코드는 5개의 패키지를 로드하는 코드로 볼 수 있는데, 만약 필요로 하는 패키지의 수가 5개가 아닌 수십 개가 된다면 수십개의 <code>library()</code> 함수를 작성하게 될 것이다.<br />
 아쉽게도 <code>library()</code> 함수는 불러올 대상이 되는 패키지를 복수개로 입력할 수 없어</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="kw">c</span>(<span class="st">&quot;package1&quot;</span>, <span class="st">&quot;package2&quot;</span>, <span class="st">&quot;package3&quot;</span>, <span class="st">&quot;package4&quot;</span>, <span class="st">&quot;package5&quot;</span>))</code></pre></div>
 <pre><code>Error : 
