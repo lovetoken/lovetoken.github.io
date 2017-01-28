@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 28 Jan 2017 23:18:55 +0900</pubDate>
-    <lastBuildDate>Sat, 28 Jan 2017 23:18:55 +0900</lastBuildDate>
+    <pubDate>Sat, 28 Jan 2017 23:23:38 +0900</pubDate>
+    <lastBuildDate>Sat, 28 Jan 2017 23:23:38 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -14,7 +14,7 @@
         <description>&lt;p&gt;가상머신보다 경량화된 &lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker&lt;/a&gt; 기술을 이것저것 만져보며 차차 공부중에 있다.&lt;br /&gt;
 Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 설명하지 못한다.&lt;br /&gt;
 가상머신상에서 실험했을 당시 불편한 점들과 만족스럽지 못한 성능을 대체할만한 기술 중 Docker 라는 것이 있다는 소문을 듣고 추천을 받았으며 인기가 매우 높다는 정도만 알고 있다.&lt;/p&gt;
-&lt;p&gt;우선 본 글은 Docker를 이용해 Rstudio server를 띄움으로써 &amp;quot;Hello Docker!&amp;quot; 를 외치는 것이 목표라 하겠다.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;우선 본 글은 Docker를 이용해 Rstudio server를 띄움으로써 &amp;quot;Hello Docker!&amp;quot; 를 외치는 것이 목표라 하겠다.&lt;/strong&gt;&lt;/p&gt;
 &lt;h2 id=&quot;a-docker-준비&quot;&gt;A) Docker 준비&lt;/h2&gt;
 &lt;p&gt;Docker 을 OSX 에서 설치하는 방법은 다양하다.&lt;br /&gt;
 &lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker 공식홈페이지&lt;/a&gt;의 튜토리얼 대로 설치하는 것이 가장 정석의 방법이고,&lt;br /&gt;
@@ -100,7 +100,7 @@ Boot2Docker version 1.8.0, build master : 7f12e95 - Tue Aug 11 17:55:16 UTC 2015
 Docker version 1.8.0, build 0d03096
 docker@boot2docker:~$&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;docker VM 에 접속되며 호스트 OS 가 아닌 bash 인것을 확인할 수 있다.&lt;br /&gt;
-저 고래의 모습이 터미널에 출력되면 docker를 본격적으로 이용할 수 있는 모든 준비가 되었다는 것으로 이해해도 좋다.&lt;/p&gt;
+저 고래의 모습이 터미널에 출력되면 docker를 본격적으로 이용할 수 있는 모든 준비가 되었다는 것으로 이해해도 좋다. 🐳🐳🐳&lt;/p&gt;
 &lt;h2 id=&quot;c-hello-docker-를-위한-rstudio-server-띄우기&quot;&gt;C) Hello Docker! 를 위한 Rstudio server 띄우기&lt;/h2&gt;
 &lt;p&gt;Docker 의 장점은 여러가지가 있다고 하는데 대표적으로 내세우는 장점이 배포성이라고 한다.&lt;br /&gt;
 &lt;a href=&quot;https://hub.docker.com/&quot;&gt;Docker Hub&lt;/a&gt; 는 개발환경 세팅이 끝난 이미지들을 공유하는 곳인데,&lt;br /&gt;
