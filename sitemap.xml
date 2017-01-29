@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 29 Jan 2017 16:55:23 +0900</pubDate>
-    <lastBuildDate>Sun, 29 Jan 2017 16:55:23 +0900</lastBuildDate>
+    <pubDate>Sun, 29 Jan 2017 22:10:27 +0900</pubDate>
+    <lastBuildDate>Sun, 29 Jan 2017 22:10:27 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -81,7 +81,7 @@ $ boot2docker up&lt;/code&gt;&lt;/pre&gt;
 Started.&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;그 이후에&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ boot2docker ssh&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;를 실행하여 접속하&lt;/p&gt;
+&lt;p&gt;를 실행하여 접속하면&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ boot2docker ssh
 
                         ##         .
@@ -105,7 +105,7 @@ docker@boot2docker:~$&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&quot;c-hello-docker-를-위한-rstudio-server-띄우기&quot;&gt;C) Hello Docker! 를 위한 Rstudio server 띄우기&lt;/h2&gt;
 &lt;p&gt;Docker 의 장점은 여러가지가 있다고 하는데 대표적으로 내세우는 장점이 배포성이라고 한다.&lt;br /&gt;
 &lt;a href=&quot;https://hub.docker.com/&quot;&gt;Docker Hub&lt;/a&gt; 는 개발환경 세팅이 끝난 이미지들을 공유하는 곳인데,&lt;br /&gt;
-지금 예로 들을 Rstudio server 환경세팅이 끝난 이미지를 찾아 바로 이용할 수 있다.&lt;br /&gt;
+지금 예로 들을 Rstudio server 의 경우도 환경세팅이 끝난 이미지를 찾아 바로 이용할 수 있다.&lt;br /&gt;
 이 말은 Rstudio server 구축에 필요한 과정들을 쓸데없이 재발명하지 않고 사용할 수 있다는 것이다.&lt;br /&gt;
 실제로 Rstudio server 구축은 어려우면 어렵지 쉬운 과제가 아니다.&lt;/p&gt;
 &lt;p&gt;docker VM 에 접속된 상황에서&lt;/p&gt;
@@ -125,7 +125,7 @@ mjmg/fedora-rstudio-opencpu-server       Latest FEDORA with rstudi...  0        
 davislaboratory/docker-rstudio-serve...  rstudio server for Docker...  0                [OK]
 mjmg/fedora-rstudio-server               Latest Fedora with rstudi...  0                [OK]
 mjmg/centos-rstudio-opencpu-shiny-se...  Latest CENTOS with rstudi...  0                [OK]&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;잘 보면 3번째 열에 STARS 라는 것이 있는데 Docker 사용자가 추천한 횟수를 의미한다.&lt;br /&gt;
+&lt;p&gt;잘 보면 3번째 열에 &amp;quot;STARS&amp;quot; 라는 것이 있는데 Docker 사용자가 추천한 횟수를 의미한다.&lt;br /&gt;
 가장 높은 별을 받은 첫번째 이미지를 우리 예제로 이용해 볼 것이다.&lt;/p&gt;
 &lt;p&gt;첫번째 이미지의 명칭은 &amp;quot;rocker/rstudio&amp;quot; 이다.&lt;br /&gt;
 이 이미지를 받고 컨테이너를 생성하여(&lt;em&gt;docker VM 에 Rstudio server 를 설치한다고 이해해도 좋다&lt;/em&gt;) Rstudio server 를 실행해 보겠다.&lt;br /&gt;

@@ -205,7 +205,7 @@ $ boot2docker up</code></pre>
 Started.</code></pre>
 <p>그 이후에</p>
 <pre><code>$ boot2docker ssh</code></pre>
-<p>를 실행하여 접속하</p>
+<p>를 실행하여 접속하면</p>
 <pre><code>$ boot2docker ssh
 
                         ##         .
@@ -229,7 +229,7 @@ docker@boot2docker:~$</code></pre>
 <h2 id="c-hello-docker-를-위한-rstudio-server-띄우기">C) Hello Docker! 를 위한 Rstudio server 띄우기</h2>
 <p>Docker 의 장점은 여러가지가 있다고 하는데 대표적으로 내세우는 장점이 배포성이라고 한다.<br />
 <a href="https://hub.docker.com/">Docker Hub</a> 는 개발환경 세팅이 끝난 이미지들을 공유하는 곳인데,<br />
-지금 예로 들을 Rstudio server 환경세팅이 끝난 이미지를 찾아 바로 이용할 수 있다.<br />
+지금 예로 들을 Rstudio server 의 경우도 환경세팅이 끝난 이미지를 찾아 바로 이용할 수 있다.<br />
 이 말은 Rstudio server 구축에 필요한 과정들을 쓸데없이 재발명하지 않고 사용할 수 있다는 것이다.<br />
 실제로 Rstudio server 구축은 어려우면 어렵지 쉬운 과제가 아니다.</p>
 <p>docker VM 에 접속된 상황에서</p>
@@ -249,7 +249,7 @@ mjmg/fedora-rstudio-opencpu-server       Latest FEDORA with rstudi...  0        
 davislaboratory/docker-rstudio-serve...  rstudio server for Docker...  0                [OK]
 mjmg/fedora-rstudio-server               Latest Fedora with rstudi...  0                [OK]
 mjmg/centos-rstudio-opencpu-shiny-se...  Latest CENTOS with rstudi...  0                [OK]</code></pre>
-<p>잘 보면 3번째 열에 STARS 라는 것이 있는데 Docker 사용자가 추천한 횟수를 의미한다.<br />
+<p>잘 보면 3번째 열에 &quot;STARS&quot; 라는 것이 있는데 Docker 사용자가 추천한 횟수를 의미한다.<br />
 가장 높은 별을 받은 첫번째 이미지를 우리 예제로 이용해 볼 것이다.</p>
 <p>첫번째 이미지의 명칭은 &quot;rocker/rstudio&quot; 이다.<br />
 이 이미지를 받고 컨테이너를 생성하여(<em>docker VM 에 Rstudio server 를 설치한다고 이해해도 좋다</em>) Rstudio server 를 실행해 보겠다.<br />
