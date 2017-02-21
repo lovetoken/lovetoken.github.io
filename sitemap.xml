@@ -5,9 +5,159 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 29 Jan 2017 22:10:27 +0900</pubDate>
-    <lastBuildDate>Sun, 29 Jan 2017 22:10:27 +0900</lastBuildDate>
+    <pubDate>Wed, 22 Feb 2017 00:42:23 +0900</pubDate>
+    <lastBuildDate>Wed, 22 Feb 2017 00:42:23 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 의미가 있었던 프로파일링 모음</title>
+        <description>&lt;p&gt;훌륭한진 못해도 좋은 프로그래머가 되고 싶다는 생각이 많이 든다.&lt;br /&gt;
+좋은 코드를 짜기 위해 노력중이다.&lt;br /&gt;
+좋은 코드에 필요한 요소들은 여러가지가 있겠지만, 지금 가장 큰 흥미를 가지고 관심가지는 것은 효율성이다.&lt;br /&gt;
+효율성에서도 여러 가지 측면이 있겠지만 코드수행시간에 특히 민감해 하고 있다.&lt;br /&gt;
+코드수행시간의 비교를 위한 &lt;a href=&quot;https://en.wikipedia.org/wiki/Profiling_(computer_programming)&quot;&gt;Profiling&lt;/a&gt; 을 통해 이런저런 실험들을 해보고 있고, 그 중 나름 유의미했던 실험들을 정리해 보고자 한다.&lt;/p&gt;
+&lt;p&gt;프로파일링에 사용한 도구는 rbenchmark package 의 &lt;code&gt;benchmark()&lt;/code&gt; 함수로 통일 하였다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;lapply-vs-parallelmclapply&quot;&gt;&lt;code&gt;lapply()&lt;/code&gt; VS &lt;code&gt;parallel::mclapply()&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&amp;quot;parallel&amp;quot; package 에 있는 &lt;code&gt;mclapply()&lt;/code&gt; 함수는 &lt;code&gt;lapply()&lt;/code&gt; 함수와 기능이 똑같다.&lt;br /&gt;
+다만 &lt;code&gt;mc.cores&lt;/code&gt; 인자를 가지고 있고 멀티코어 개수를 지정하여 병렬처리를 간편하게 수행할 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(parallel)
+
+&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
+  &lt;span class=&quot;kw&quot;&gt;lapply&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;9999&lt;/span&gt;, rnorm),
+  &lt;span class=&quot;kw&quot;&gt;mclapply&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;9999&lt;/span&gt;, rnorm, &lt;span class=&quot;dt&quot;&gt;mc.cores =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;)
+)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;                                 test replications elapsed relative 
+2 mclapply(1000:9999, rnorm, mc.c ...          100 289.162    1.000 
+1                 lapply(1000:999 ...          100 464.604    1.607 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위의 실험은 표준정규분포에서 난수발생을 1000번부터 9999번까지 수행하는 것을 100번&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; 반복시킨 후 수행시간을 평가하는 코드이다.&lt;br /&gt;
+&lt;code&gt;mclapply()&lt;/code&gt; 함수로 실행한 결과가 평균 289초, &lt;code&gt;lapply()&lt;/code&gt; 함수로 실행한 결과가 평균 464초 걸렸고 상대적으로 &lt;code&gt;lapply()&lt;/code&gt; 를 사용한 코드가 &lt;code&gt;mclapply()&lt;/code&gt; 로 사용한 코드보다 1.607배 많은 시간이 소요됨을 알 수 있다.&lt;/p&gt;
+&lt;p&gt;반면에 난수발생을 적게 시킬 경우 &lt;code&gt;mclapply()&lt;/code&gt; 는 &lt;code&gt;lapply()&lt;/code&gt; 보다 멍청해(?) 지는 것을 볼 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
+  &lt;span class=&quot;kw&quot;&gt;lapply&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;99&lt;/span&gt;, rnorm),
+  &lt;span class=&quot;kw&quot;&gt;mclapply&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;99&lt;/span&gt;, rnorm, &lt;span class=&quot;dt&quot;&gt;mc.cores =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;)
+)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##                              test replications elapsed relative 
+## 1                 lapply(10:9 ...          100   0.118    1.000 
+## 2 mclapply(10:99, rnorm, mc.c ...          100   1.994   16.898 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;filtering-data.table-data.frame-dplyrfilter&quot;&gt;Filtering data.table, data.frame + &lt;code&gt;dplyr::filter()&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;이번에 수행한 프로파일링은 &lt;a href=&quot;http://using.tistory.com/81&quot;&gt;빵군님의 블로그 글&lt;/a&gt;을 보다가 추가로 생긴 궁금증에 몇 개를 더 추가해 본 경우이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(data.table)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(dplyr)
+
+DF &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;runif&lt;/span&gt;(&lt;span class=&quot;fl&quot;&gt;2.6e+07&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;y =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;rep&lt;/span&gt;(LETTERS, &lt;span class=&quot;dt&quot;&gt;each =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;10000&lt;/span&gt;))
+
+DT &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;as.data.table&lt;/span&gt;(DF)
+&lt;span class=&quot;kw&quot;&gt;setkey&lt;/span&gt;(DT, y) 
+
+&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
+  DF[DF$y ==&lt;span class=&quot;st&quot;&gt; &amp;quot;D&amp;quot;&lt;/span&gt;, ],
+  DT[&lt;span class=&quot;kw&quot;&gt;J&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;D&amp;quot;&lt;/span&gt;), ],
+  DF %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;dplyr::&lt;span class=&quot;kw&quot;&gt;filter&lt;/span&gt;(y ==&lt;span class=&quot;st&quot;&gt; &amp;quot;D&amp;quot;&lt;/span&gt;),
+  DT %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;dplyr::&lt;span class=&quot;kw&quot;&gt;filter&lt;/span&gt;(y ==&lt;span class=&quot;st&quot;&gt; &amp;quot;D&amp;quot;&lt;/span&gt;)
+)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##                             test replications elapsed relative
+## 2                   DT[J(&amp;quot;D&amp;quot;), ]          100   2.500    1.000
+## 4 DT %&amp;gt;% dplyr::filter(y == &amp;quot;D&amp;quot;)          100  23.083    9.233
+## 3 DF %&amp;gt;% dplyr::filter(y == &amp;quot;D&amp;quot;)          100  23.248    9.299
+## 1              DF[DF$y == &amp;quot;D&amp;quot;, ]          100  38.298   15.319&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;비교대상은 4가지이다.&lt;/p&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;&lt;code&gt;data.frame&lt;/code&gt; 형에서 필터링&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data.table&lt;/code&gt; 형에서 필터링&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data.frame&lt;/code&gt; 형에서 &lt;code&gt;dplyr::filter()&lt;/code&gt; 를 이용한 필터링&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data.table&lt;/code&gt; 형에서 &lt;code&gt;dplyr::filter()&lt;/code&gt; 를 이용한 필터링&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;결과는 J표현식을 사용한 data.table 이 가장 우월하다는 것을 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;sqldf-package-를-통해-join-작업을-하다가-생긴-의문&quot;&gt;sqldf package 를 통해 Join 작업을 하다가 생긴 의문&lt;/h2&gt;
+&lt;p&gt;R에서 SQL 문을 통해 data.frame 형을 처리하기 위한 대표적인 패키지가 &lt;a href=&quot;https://cran.r-project.org/web/packages/sqldf/index.html&quot;&gt;sqldf&lt;/a&gt; 이지 않을까?&lt;br /&gt;
+필요에 따라서 R에서 SQL 을 통해 data.frame 을 핸들링 하는 확장성을 이용할 수 있다.&lt;/p&gt;
+&lt;p&gt;하지만 문득 이런 생각이 드는 것도 사실이다.&lt;br /&gt;
+R에서 굳이 다른 문법(SQL)을 이용하는 것은&lt;br /&gt;
+영국 가서 미국발음으로 영어하고, 미국 가서 영국발음으로 영어 하는 것으로 비유해 보고 싶다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;merge()&lt;/code&gt;, &lt;code&gt;dplyr::left_join()&lt;/code&gt;, &lt;code&gt;sqldf()&lt;/code&gt; 3가지 함수를 통해 left join 을 하는 예제로 프로파일링을 해보았는데&lt;br /&gt;
+그 이후 SQL 문법을 불필요하게 남용하지 않아야 겠다는 생각을 가졌다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(sqldf)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(dplyr)
+
+df1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;Key =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;), 
+                  &lt;span class=&quot;dt&quot;&gt;Var1 =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;a&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;b&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;c&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;c&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;b&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;c&amp;quot;&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;stringsAsFactors =&lt;/span&gt; F)
+df2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;Key =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;8&lt;/span&gt;), 
+                  &lt;span class=&quot;dt&quot;&gt;Var2 =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;x&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;y&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;z&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;xx&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;yy&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;zz&amp;quot;&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;stringsAsFactors =&lt;/span&gt; F)
+
+&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
+  df1 %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;merge&lt;/span&gt;(df2, &lt;span class=&quot;dt&quot;&gt;by =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;Key&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;all.x =&lt;/span&gt; T),
+  df1 %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;dplyr::&lt;span class=&quot;kw&quot;&gt;left_join&lt;/span&gt;(df2, &lt;span class=&quot;dt&quot;&gt;by =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;Key&amp;quot;&lt;/span&gt;),
+  &lt;span class=&quot;kw&quot;&gt;sqldf&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;SELECT df1.Key, Var1, Var2 FROM df1 LEFT JOIN df2 on df1.Key=df2.Key&amp;quot;&lt;/span&gt;)
+)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##                                                 test replications elapsed relative 
+## 2                                     df1 %&amp;gt;% dp ...          100   0.033    1.000 
+## 1                                     df1 %&amp;gt;% me ...          100   0.089    2.697 
+## 3 sqldf(&amp;quot;SELECT df1.Key, Var1, Var2 FROM df1 LEF ...          100   2.361   71.545 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;sqldf()&lt;/code&gt; 을 통한 join 이 다른방법보다 71배 더 오래걸려 비교적 느림을 알 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;output&quot;&gt;Output&lt;/h2&gt;
+&lt;p&gt;위의 SQL 프로파일링과도 이어지는 컨셉이다.&lt;br /&gt;
+냉면으로 유명한 집에서 국수를 먹고, 국수가 유명한 집에서 밥을 먹지 않는 것 처럼&lt;br /&gt;
+각 언어의 특색에 맞는 장점들을 충분히 이용하는것이 합리적이라 생각한다.&lt;/p&gt;
+&lt;p&gt;이번 프로파일링도 비슷하다.&lt;br /&gt;
+R에서 처리된 결과물을 R object 이미지로(.rda)로 저장하는것과 .csv 포맷으로 저장하는 것을 비교해 보았다.&lt;br /&gt;
+(R에서 처리된 결과물의 예제를 &lt;code&gt;mtcars&lt;/code&gt; 내장데이터로 가정해보겠다)&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
+  &lt;span class=&quot;kw&quot;&gt;save&lt;/span&gt;(mtcars, &lt;span class=&quot;dt&quot;&gt;file =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;mtcars.rda&amp;quot;&lt;/span&gt;),
+  &lt;span class=&quot;kw&quot;&gt;write.csv&lt;/span&gt;(mtcars, &lt;span class=&quot;dt&quot;&gt;file =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;mtcars.csv&amp;quot;&lt;/span&gt;)
+)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##                                     test replications elapsed relative
+## 1      save(mtcars, file = &amp;quot;mtcars.rda&amp;quot;)          100   0.054    1.000
+## 2 write.csv(mtcars, file = &amp;quot;mtcars.csv&amp;quot;)          100   0.116    2.148&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;결과는 .rda 로 객체이미지를 저장시키는 것이 2배 빠른 것을 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;to-be-continued&quot;&gt;To be continued&lt;/h2&gt;
+&lt;p&gt;의미 있는 프로파일링이 다음에 또 생기면 이어서 덧붙여질 예정이다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;프로파일링에-사용했던-동작환경&quot;&gt;프로파일링에 사용했던 동작환경&lt;/h2&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sessionInfo&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## R version 3.3.1 (2016-06-21)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## Running under: OS X 10.12.3 (Sierra)
+## 
+## locale:
+## [1] C
+## 
+## attached base packages:
+## [1] parallel  stats     grDevices utils     datasets  graphics  methods  
+## [8] base     
+## 
+## other attached packages:
+## [1] rmarkdown_1.3               rbenchmark_1.0.0           
+## [3] data.table_1.10.4           ggplot2_2.2.1              
+## [5] dplyr_0.5.0                 knitr_1.15.1               
+## [7] useful.lovetoken_0.1.0.0090
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.9      magrittr_1.5     munsell_0.4.3    colorspace_1.3-2
+##  [5] R6_2.2.0         stringr_1.2.0    plyr_1.8.4       tools_3.3.1     
+##  [9] grid_3.3.1       gtable_0.2.0     pacman_0.4.1     DBI_0.5-1       
+## [13] htmltools_0.3.5  yaml_2.1.14      lazyeval_0.2.0   assertthat_0.1  
+## [17] digest_0.6.12    rprojroot_1.2    tibble_1.2       evaluate_0.10   
+## [21] stringi_1.1.2    scales_0.4.1     backports_1.0.5&lt;/code&gt;&lt;/pre&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;&lt;code&gt;benchmark()&lt;/code&gt; 함수에서 &lt;code&gt;replications&lt;/code&gt; 인자를 통해 조정이 가능하며, 디폴트 값이 100이다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Wed, 22 Feb 2017 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2017/02/22/Profiling.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2017/02/22/Profiling.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>Docker 를 이용해 Rstudio server 띄워보기 (on Mac OSX)</title>
