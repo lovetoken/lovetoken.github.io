@@ -5,18 +5,18 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 22 Feb 2017 00:42:23 +0900</pubDate>
-    <lastBuildDate>Wed, 22 Feb 2017 00:42:23 +0900</lastBuildDate>
+    <pubDate>Thu, 23 Feb 2017 22:50:07 +0900</pubDate>
+    <lastBuildDate>Thu, 23 Feb 2017 22:50:07 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
         <title>R에서 의미가 있었던 프로파일링 모음</title>
-        <description>&lt;p&gt;훌륭한진 못해도 좋은 프로그래머가 되고 싶다는 생각이 많이 든다.&lt;br /&gt;
+        <description>&lt;p&gt;훌륭한진 못해도 좋은 개발을 하고 싶다는 생각이 많이 든다.&lt;br /&gt;
 좋은 코드를 짜기 위해 노력중이다.&lt;br /&gt;
 좋은 코드에 필요한 요소들은 여러가지가 있겠지만, 지금 가장 큰 흥미를 가지고 관심가지는 것은 효율성이다.&lt;br /&gt;
 효율성에서도 여러 가지 측면이 있겠지만 코드수행시간에 특히 민감해 하고 있다.&lt;br /&gt;
-코드수행시간의 비교를 위한 &lt;a href=&quot;https://en.wikipedia.org/wiki/Profiling_(computer_programming)&quot;&gt;Profiling&lt;/a&gt; 을 통해 이런저런 실험들을 해보고 있고, 그 중 나름 유의미했던 실험들을 정리해 보고자 한다.&lt;/p&gt;
-&lt;p&gt;프로파일링에 사용한 도구는 rbenchmark package 의 &lt;code&gt;benchmark()&lt;/code&gt; 함수로 통일 하였다.&lt;/p&gt;
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Profiling_(computer_programming)&quot;&gt;Profiling&lt;/a&gt; 을 통해 이런저런 실험들을 해보고 있고, 그 중 나름 유의미했던 실험들을 정리해 보고자 한다.&lt;/p&gt;
+&lt;p&gt;프로파일링에 사용한 도구는 rbenchmark package 의 &lt;code&gt;benchmark()&lt;/code&gt; 함수로 통일 하였고, 대조군 코드를 통해 비교적 쉽게 받아들일 수 있도록 작성해 보았다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;lapply-vs-parallelmclapply&quot;&gt;&lt;code&gt;lapply()&lt;/code&gt; VS &lt;code&gt;parallel::mclapply()&lt;/code&gt;&lt;/h2&gt;
 &lt;p&gt;&amp;quot;parallel&amp;quot; package 에 있는 &lt;code&gt;mclapply()&lt;/code&gt; 함수는 &lt;code&gt;lapply()&lt;/code&gt; 함수와 기능이 똑같다.&lt;br /&gt;
@@ -114,6 +114,38 @@ R에서 처리된 결과물을 R object 이미지로(.rda)로 저장하는것과
 ## 2 write.csv(mtcars, file = &amp;quot;mtcars.csv&amp;quot;)          100   0.116    2.148&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;결과는 .rda 로 객체이미지를 저장시키는 것이 2배 빠른 것을 볼 수 있다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;역행렬-계산시-특이값-분해singular-value-decomposition-이용&quot;&gt;역행렬 계산시 특이값 분해(Singular value decomposition) 이용&lt;/h2&gt;
+&lt;p&gt;(정방)행렬의 차원이 크면 클수록 역행렬을 계산할 때 컴퓨터가 힘들어 한다.&lt;br /&gt;
+조금이라도 빠르게 계산할 수 있는 방법이 없을까 고민하다가 특이값 분해(SVD) 를 알게된 이후로 조금 개선된 방법을 찾게 되었다.&lt;/p&gt;
+&lt;p&gt;SVD 를 아주 간단하게 설명하면 행렬&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;X&lt;/em&gt;&lt;/span&gt; 를 대각행렬 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;D&lt;/em&gt;&lt;/span&gt; 를 중앙으로 하고 3개의 행렬곱으로 나누어 준다.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;&lt;em&gt;X&lt;/em&gt; = &lt;em&gt;U&lt;/em&gt;&lt;em&gt;D&lt;/em&gt;&lt;em&gt;V&lt;/em&gt;&lt;sup&gt;&lt;em&gt;T&lt;/em&gt;&lt;/sup&gt;&lt;/span&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;그리고 이렇게 분해된 행렬곱을 변환하면&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;&lt;em&gt;X&lt;/em&gt;&lt;sup&gt;−1&lt;/sup&gt; = &lt;em&gt;V&lt;/em&gt;&lt;em&gt;D&lt;/em&gt;&lt;sup&gt;−1&lt;/sup&gt;&lt;em&gt;U&lt;/em&gt;&lt;sup&gt;&lt;em&gt;T&lt;/em&gt;&lt;/sup&gt;&lt;/span&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;이 되는 특성을 가지고 있다.&lt;br /&gt;
+컴퓨터 입장에선 복잡한 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;X&lt;/em&gt;&lt;/span&gt;를 바로 역행렬 계산하는 것 보다, 부담이 적은 단위행렬 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;D&lt;/em&gt;&lt;/span&gt;를 역행렬 계산하는것을 쉬워할 것이다.&lt;br /&gt;
+이러한 특성을 이용한 것이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;m &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;matrix&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;rnorm&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;)
+svd &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;svd&lt;/span&gt;(m)
+
+&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
+  &lt;span class=&quot;kw&quot;&gt;solve&lt;/span&gt;(m),
+  svd$v %*%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;solve&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;diag&lt;/span&gt;(svd$d)) %*%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;t&lt;/span&gt;(svd$u)
+)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##                                        test replications elapsed relative
+## 1                                  solve(m)          100 238.183    1.194
+## 2 svd$v %*% solve(diag(svd$d)) %*% t(svd$u)          100 199.452    1.000&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;SVD로 나눈 행렬을 이용해 역행렬 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;X&lt;/em&gt;&lt;sup&gt;−1&lt;/sup&gt;&lt;/span&gt; 을 구하는것이 조금 빠른것을 볼 수 있다.&lt;br /&gt;
+상대적으로 볼 때 별차이가 없어 보일수도 있지만 행렬의 차원이 크면 클수록 절대소요시간차이는 엄청날 것이다.&lt;/p&gt;
+&lt;p&gt;그런데 여기서 반론을 제기할 수 있다.&lt;br /&gt;
+바로 특이값 분해시 코드수행속도도 포함시켜야 하지 않느냐 이다.&lt;br /&gt;
+즉 엄밀히 말하면 &lt;code&gt;svd &amp;lt;- svd(m)&lt;/code&gt; 코드 수행시간도 더해주어야 할 것이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;system.time&lt;/span&gt;(svd &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;svd&lt;/span&gt;(m))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##   user  system elapsed 
+##  4.101   0.047   4.202 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;하지만 4초내외로 특이값분해는 의외로 많은 시간이 걸리지 않는다.&lt;br /&gt;
+이 4초 내외를 더해보았자 대세에 지장이 없는 수준이다.&lt;br /&gt;
+게다가 &lt;code&gt;svd()&lt;/code&gt; 말고도 이보다 더 빠르게 특이값 분해를 할 수 있는 방법&lt;a href=&quot;#fn3&quot; class=&quot;footnoteRef&quot; id=&quot;fnref3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;들도 있으니 참고해 볼만하다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;to-be-continued&quot;&gt;To be continued&lt;/h2&gt;
 &lt;p&gt;의미 있는 프로파일링이 다음에 또 생기면 이어서 덧붙여질 예정이다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
@@ -124,17 +156,16 @@ R에서 처리된 결과물을 R object 이미지로(.rda)로 저장하는것과
 ## Running under: OS X 10.12.3 (Sierra)
 ## 
 ## locale:
-## [1] C
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 ## 
 ## attached base packages:
 ## [1] parallel  stats     grDevices utils     datasets  graphics  methods  
 ## [8] base     
 ## 
 ## other attached packages:
-## [1] rmarkdown_1.3               rbenchmark_1.0.0           
-## [3] data.table_1.10.4           ggplot2_2.2.1              
-## [5] dplyr_0.5.0                 knitr_1.15.1               
-## [7] useful.lovetoken_0.1.0.0090
+## [1] rbenchmark_1.0.0            data.table_1.10.4          
+## [3] ggplot2_2.2.1               dplyr_0.5.0                
+## [5] knitr_1.15.1                useful.lovetoken_0.1.0.0090
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_0.12.9      magrittr_1.5     munsell_0.4.3    colorspace_1.3-2
@@ -142,11 +173,13 @@ R에서 처리된 결과물을 R object 이미지로(.rda)로 저장하는것과
 ##  [9] grid_3.3.1       gtable_0.2.0     pacman_0.4.1     DBI_0.5-1       
 ## [13] htmltools_0.3.5  yaml_2.1.14      lazyeval_0.2.0   assertthat_0.1  
 ## [17] digest_0.6.12    rprojroot_1.2    tibble_1.2       evaluate_0.10   
-## [21] stringi_1.1.2    scales_0.4.1     backports_1.0.5&lt;/code&gt;&lt;/pre&gt;
+## [21] rmarkdown_1.3    stringi_1.1.2    scales_0.4.1     backports_1.0.5&lt;/code&gt;&lt;/pre&gt;
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
 &lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;&lt;code&gt;benchmark()&lt;/code&gt; 함수에서 &lt;code&gt;replications&lt;/code&gt; 인자를 통해 조정이 가능하며, 디폴트 값이 100이다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;이때 행렬은 정방행렬이 아니어도 특이값 분해가 가능하다&lt;a href=&quot;#fnref2&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn3&quot;&gt;&lt;p&gt;&lt;code&gt;corpcor::fast.svd()&lt;/code&gt; 와 같은 것도 있다&lt;a href=&quot;#fnref3&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/section&gt;
 </description>

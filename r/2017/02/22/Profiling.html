@@ -135,12 +135,12 @@
 
 
 <div class="content">
-    <div class="post"><p>훌륭한진 못해도 좋은 프로그래머가 되고 싶다는 생각이 많이 든다.<br />
+    <div class="post"><p>훌륭한진 못해도 좋은 개발을 하고 싶다는 생각이 많이 든다.<br />
 좋은 코드를 짜기 위해 노력중이다.<br />
 좋은 코드에 필요한 요소들은 여러가지가 있겠지만, 지금 가장 큰 흥미를 가지고 관심가지는 것은 효율성이다.<br />
 효율성에서도 여러 가지 측면이 있겠지만 코드수행시간에 특히 민감해 하고 있다.<br />
-코드수행시간의 비교를 위한 <a href="https://en.wikipedia.org/wiki/Profiling_(computer_programming)">Profiling</a> 을 통해 이런저런 실험들을 해보고 있고, 그 중 나름 유의미했던 실험들을 정리해 보고자 한다.</p>
-<p>프로파일링에 사용한 도구는 rbenchmark package 의 <code>benchmark()</code> 함수로 통일 하였다.</p>
+<a href="https://en.wikipedia.org/wiki/Profiling_(computer_programming)">Profiling</a> 을 통해 이런저런 실험들을 해보고 있고, 그 중 나름 유의미했던 실험들을 정리해 보고자 한다.</p>
+<p>프로파일링에 사용한 도구는 rbenchmark package 의 <code>benchmark()</code> 함수로 통일 하였고, 대조군 코드를 통해 비교적 쉽게 받아들일 수 있도록 작성해 보았다.</p>
 <p><br><br></p>
 <h2 id="lapply-vs-parallelmclapply"><code>lapply()</code> VS <code>parallel::mclapply()</code></h2>
 <p>&quot;parallel&quot; package 에 있는 <code>mclapply()</code> 함수는 <code>lapply()</code> 함수와 기능이 똑같다.<br />
@@ -238,6 +238,38 @@ R에서 처리된 결과물을 R object 이미지로(.rda)로 저장하는것과
 ## 2 write.csv(mtcars, file = &quot;mtcars.csv&quot;)          100   0.116    2.148</code></pre>
 <p>결과는 .rda 로 객체이미지를 저장시키는 것이 2배 빠른 것을 볼 수 있다.</p>
 <p><br><br></p>
+<h2 id="역행렬-계산시-특이값-분해singular-value-decomposition-이용">역행렬 계산시 특이값 분해(Singular value decomposition) 이용</h2>
+<p>(정방)행렬의 차원이 크면 클수록 역행렬을 계산할 때 컴퓨터가 힘들어 한다.<br />
+조금이라도 빠르게 계산할 수 있는 방법이 없을까 고민하다가 특이값 분해(SVD) 를 알게된 이후로 조금 개선된 방법을 찾게 되었다.</p>
+<p>SVD 를 아주 간단하게 설명하면 행렬<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> <span class="math inline"><em>X</em></span> 를 대각행렬 <span class="math inline"><em>D</em></span> 를 중앙으로 하고 3개의 행렬곱으로 나누어 준다.</p>
+<p><br /><span class="math display"><em>X</em> = <em>U</em><em>D</em><em>V</em><sup><em>T</em></sup></span><br /></p>
+<p>그리고 이렇게 분해된 행렬곱을 변환하면</p>
+<p><br /><span class="math display"><em>X</em><sup>−1</sup> = <em>V</em><em>D</em><sup>−1</sup><em>U</em><sup><em>T</em></sup></span><br /></p>
+<p>이 되는 특성을 가지고 있다.<br />
+컴퓨터 입장에선 복잡한 <span class="math inline"><em>X</em></span>를 바로 역행렬 계산하는 것 보다, 부담이 적은 단위행렬 <span class="math inline"><em>D</em></span>를 역행렬 계산하는것을 쉬워할 것이다.<br />
+이러한 특성을 이용한 것이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">1000</span>^<span class="dv">2</span>), <span class="dv">1000</span>)
+svd &lt;-<span class="st"> </span><span class="kw">svd</span>(m)
+
+<span class="kw">benchmark</span>(
+  <span class="kw">solve</span>(m),
+  svd$v %*%<span class="st"> </span><span class="kw">solve</span>(<span class="kw">diag</span>(svd$d)) %*%<span class="st"> </span><span class="kw">t</span>(svd$u)
+)</code></pre></div>
+<pre><code>##                                        test replications elapsed relative
+## 1                                  solve(m)          100 238.183    1.194
+## 2 svd$v %*% solve(diag(svd$d)) %*% t(svd$u)          100 199.452    1.000</code></pre>
+<p>SVD로 나눈 행렬을 이용해 역행렬 <span class="math inline"><em>X</em><sup>−1</sup></span> 을 구하는것이 조금 빠른것을 볼 수 있다.<br />
+상대적으로 볼 때 별차이가 없어 보일수도 있지만 행렬의 차원이 크면 클수록 절대소요시간차이는 엄청날 것이다.</p>
+<p>그런데 여기서 반론을 제기할 수 있다.<br />
+바로 특이값 분해시 코드수행속도도 포함시켜야 하지 않느냐 이다.<br />
+즉 엄밀히 말하면 <code>svd &lt;- svd(m)</code> 코드 수행시간도 더해주어야 할 것이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system.time</span>(svd &lt;-<span class="st"> </span><span class="kw">svd</span>(m))</code></pre></div>
+<pre><code>##   user  system elapsed 
+##  4.101   0.047   4.202 </code></pre>
+<p>하지만 4초내외로 특이값분해는 의외로 많은 시간이 걸리지 않는다.<br />
+이 4초 내외를 더해보았자 대세에 지장이 없는 수준이다.<br />
+게다가 <code>svd()</code> 말고도 이보다 더 빠르게 특이값 분해를 할 수 있는 방법<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>들도 있으니 참고해 볼만하다.</p>
+<p><br><br></p>
 <h2 id="to-be-continued">To be continued</h2>
 <p>의미 있는 프로파일링이 다음에 또 생기면 이어서 덧붙여질 예정이다.</p>
 <p><br><br></p>
@@ -248,17 +280,16 @@ R에서 처리된 결과물을 R object 이미지로(.rda)로 저장하는것과
 ## Running under: OS X 10.12.3 (Sierra)
 ## 
 ## locale:
-## [1] C
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 ## 
 ## attached base packages:
 ## [1] parallel  stats     grDevices utils     datasets  graphics  methods  
 ## [8] base     
 ## 
 ## other attached packages:
-## [1] rmarkdown_1.3               rbenchmark_1.0.0           
-## [3] data.table_1.10.4           ggplot2_2.2.1              
-## [5] dplyr_0.5.0                 knitr_1.15.1               
-## [7] useful.lovetoken_0.1.0.0090
+## [1] rbenchmark_1.0.0            data.table_1.10.4          
+## [3] ggplot2_2.2.1               dplyr_0.5.0                
+## [5] knitr_1.15.1                useful.lovetoken_0.1.0.0090
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_0.12.9      magrittr_1.5     munsell_0.4.3    colorspace_1.3-2
@@ -266,11 +297,13 @@ R에서 처리된 결과물을 R object 이미지로(.rda)로 저장하는것과
 ##  [9] grid_3.3.1       gtable_0.2.0     pacman_0.4.1     DBI_0.5-1       
 ## [13] htmltools_0.3.5  yaml_2.1.14      lazyeval_0.2.0   assertthat_0.1  
 ## [17] digest_0.6.12    rprojroot_1.2    tibble_1.2       evaluate_0.10   
-## [21] stringi_1.1.2    scales_0.4.1     backports_1.0.5</code></pre>
+## [21] rmarkdown_1.3    stringi_1.1.2    scales_0.4.1     backports_1.0.5</code></pre>
 <section class="footnotes">
 <hr />
 <ol>
 <li id="fn1"><p><code>benchmark()</code> 함수에서 <code>replications</code> 인자를 통해 조정이 가능하며, 디폴트 값이 100이다<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>이때 행렬은 정방행렬이 아니어도 특이값 분해가 가능하다<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p><code>corpcor::fast.svd()</code> 와 같은 것도 있다<a href="#fnref3">↩</a></p></li>
 </ol>
 </section>
 </div>
