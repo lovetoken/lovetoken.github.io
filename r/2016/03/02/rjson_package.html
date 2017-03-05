@@ -137,8 +137,10 @@
 <div class="content">
     <div class="post"><p>JSON 포맷의 데이터를 R에서 읽어 들인 후 가공하기 위해 JSON 형식을 parser 해야 하는 과정이 필요하다고 한다.<br />
 rjson 라는 패키지가 이를 도와주는데 이 안에 있는 함수 <code>toJSON()</code>, <code>fromJSON()</code> 2개를 기본적으로 이용하여 실습을 해보겠다.</p>
-<h2 id="a-준비">A) 준비</h2>
-<h3 id="a-1-예제-데이터">A-1) 예제 데이터</h3>
+<p><br><br></p>
+<h2 id="준비">준비</h2>
+<p><br></p>
+<h3 id="예제-데이터">예제 데이터</h3>
 <p>실습을 하기 위하여 아래와 같은 JSON 타입의 데이터가 있다고 가정해 보겠다.<br />
 아래의 데이터는 <a href="https://ko.wikipedia.org/wiki/JSON#.EC.98.88.EC.A0.9C">JSON 을 설명하는 위키백과</a>의 예제데이터를 적절히 수정한 것이다.</p>
 <pre><code>[
@@ -156,11 +158,14 @@ rjson 라는 패키지가 이를 도와주는데 이 안에 있는 함수 <code>
 <img src="/assets/rjson_1.png" />
 </figure>
 <p>나는 Sublime text 3 라는 텍스트 에디터를 이용해 이처럼 저장하였다.</p>
-<h3 id="a-2-jsonlite-패키지-불러오기">A-2) jsonlite 패키지 불러오기</h3>
+<p><br></p>
+<h3 id="jsonlite-패키지-불러오기">jsonlite 패키지 불러오기</h3>
 <p>당연히 rjson 패키지를 불러오는 것이 필요하다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;rjson&quot;</span>)</code></pre></div>
-<h2 id="b-tojson-fromjson-함수-이용해보기">B) <code>toJSON()</code>, <code>fromJSON()</code> 함수 이용해보기</h2>
-<h3 id="b-1-fromjson">B-1) <code>fromJSON()</code></h3>
+<p><br><br></p>
+<h2 id="tojson-fromjson-함수-이용해보기"><code>toJSON()</code>, <code>fromJSON()</code> 함수 이용해보기</h2>
+<p><br></p>
+<h3 id="fromjson"><code>fromJSON()</code></h3>
 <p>우선 <code>fromJSON()</code> 함수를 알아보자.<br />
 JSON 형 데이터를 R에서 가공할 수 있도록 형태를 변환하여 준다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(<span class="dt">file =</span> <span class="st">&quot;test.json&quot;</span>)
@@ -187,7 +192,8 @@ data</code></pre></div>
 dataframe</code></pre></div>
 <pre><code>##   Name Age Sex Address      Hobby
 ## 1 Test  25   F   Seoul Basketball</code></pre>
-<h3 id="b-2-tojson">B-2) <code>toJSON()</code></h3>
+<p><br></p>
+<h3 id="tojson"><code>toJSON()</code></h3>
 <p><code>toJSON()</code> 은 이와 반대의 성격을 가진다.<br />
 R의 객체를 특히 list, data.frame 등을 JSON 형으로 변환시킨다.<br />
 방금만든 <code>dataframe</code> 객체를 다시 JSON 형태로 바꾸기 위해선,</p>

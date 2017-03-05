@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 05 Mar 2017 17:52:36 +0900</pubDate>
-    <lastBuildDate>Sun, 05 Mar 2017 17:52:36 +0900</lastBuildDate>
+    <pubDate>Sun, 05 Mar 2017 18:32:57 +0900</pubDate>
+    <lastBuildDate>Sun, 05 Mar 2017 18:32:57 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -26,7 +26,7 @@ R을 잘 알고 사용하는 사람이라면 방법이 어찌 되었건 간에 �
 &lt;p&gt;준비한 슬라이드 쇼에는 가장 간단한 패키지 수동설치법에 대해서&lt;br /&gt;
 5page 로 축약하여 설명을 해 놓았다.&lt;/p&gt;
 &lt;p&gt;망분리란 고립된(?) 환경을 체험 중인 분들에게&lt;br /&gt;
-그나마 해갈을 할 수 있도록 도움이 되었으면 좋겠다. 😢&lt;/p&gt;
+그나마 해갈을 할 수 있도록 도움이 되었으면 좋겠다 😢&lt;/p&gt;
 </description>
         <pubDate>Sun, 05 Mar 2017 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2017/03/05/Rpackage_install_in.html</link>
@@ -226,7 +226,8 @@ svd &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot
 Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 설명하지 못한다.&lt;br /&gt;
 가상머신상에서 실험했을 당시 불편한 점들과 만족스럽지 못한 성능을 대체할만한 기술 중 Docker 라는 것이 있다는 소문을 듣고 추천을 받았으며 인기가 매우 높다는 정도만 알고 있다.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;우선 본 글은 Docker를 이용해 Rstudio server를 띄움으로써 &amp;quot;Hello Docker!&amp;quot; 를 외치는 것이 목표라 하겠다.&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&quot;a-docker-준비&quot;&gt;A) Docker 준비&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;docker-준비&quot;&gt;Docker 준비&lt;/h2&gt;
 &lt;p&gt;Docker 을 OSX 에서 설치하는 방법은 다양하다.&lt;br /&gt;
 &lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker 공식홈페이지&lt;/a&gt;의 튜토리얼 대로 설치하는 것이 가장 정석의 방법이고,&lt;br /&gt;
 &lt;a href=&quot;https://penandpants.com/2014/03/09/docker-via-homebrew/&quot;&gt;Homebrew 를 통해서도 설치&lt;/a&gt;할 수 있으며,&lt;br /&gt;
@@ -276,7 +277,8 @@ Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 �
 Docker version 1.12.6, build 78d1802&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;$ boot2docker version
 Boot2Docker-cli version: v1.8.0&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;b-boot2docker-로-docker-vm-준비하기&quot;&gt;B) boot2docker 로 docker VM 준비하기&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;boot2docker-로-docker-vm-준비하기&quot;&gt;boot2docker 로 docker VM 준비하기&lt;/h2&gt;
 &lt;p&gt;&amp;quot;boot2docker&amp;quot; 이름대로 docker 를 이용하기 전에 수행되어야 한다.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ boot2docker
 
@@ -313,7 +315,8 @@ Docker version 1.8.0, build 0d03096
 docker@boot2docker:~$&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;docker VM 에 접속되며 호스트 OS 가 아닌 bash 인것을 확인할 수 있다.&lt;br /&gt;
 저 고래의 모습이 터미널에 출력되면 docker를 본격적으로 이용할 수 있는 모든 준비가 되었다는 것으로 이해해도 좋다. 🐳🐳🐳&lt;/p&gt;
-&lt;h2 id=&quot;c-hello-docker-를-위한-rstudio-server-띄우기&quot;&gt;C) Hello Docker! 를 위한 Rstudio server 띄우기&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;hello-docker-를-위한-rstudio-server-띄우기&quot;&gt;Hello Docker! 를 위한 Rstudio server 띄우기&lt;/h2&gt;
 &lt;p&gt;Docker 의 장점은 여러가지가 있다고 하는데 대표적으로 내세우는 장점이 배포성이라고 한다.&lt;br /&gt;
 &lt;a href=&quot;https://hub.docker.com/&quot;&gt;Docker Hub&lt;/a&gt; 는 개발환경 세팅이 끝난 이미지들을 공유하는 곳인데,&lt;br /&gt;
 지금 예로 들을 Rstudio server 의 경우도 환경세팅이 끝난 이미지를 찾아 바로 이용할 수 있다.&lt;br /&gt;
@@ -444,7 +447,7 @@ Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 
     
       <item>
         <title>R에서 다수의 패키지 편하게 불러오기</title>
-        <description>&lt;h2 id=&quot;a-상황&quot;&gt;A) 상황&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;상황&quot;&gt;상황&lt;/h2&gt;
 &lt;p&gt;R 에서 여러 개의 패키지를 사용해야 하는 프로그램을 작성해야 한다면 &lt;code&gt;library()&lt;/code&gt; 함수로 사용하는 패키지를 불러오는 코드를 서두에 작성하는 전략을 사용할 것이다. &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;package1&amp;quot;&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;package2&amp;quot;&lt;/span&gt;)
@@ -466,7 +469,8 @@ Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 
 &lt;p&gt;또한, 위에 제시한 어떠한 방법이든&lt;br /&gt;
 자신이 만든 프로그램이 다수의 패키지에 의존되면 의존될수록 타인이 자신의 프로그램을 이용할 때 오류가 일어날 가능성도 커진다.&lt;br /&gt;
 타인은 프로그램에 의존된 패키지가 모두 설치되어 있을 리 없다.&lt;/p&gt;
-&lt;h2 id=&quot;b-pacman-패키지의-p_load-함수&quot;&gt;B) pacman 패키지의 &lt;code&gt;p_load()&lt;/code&gt; 함수&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;pacman-패키지의-p_load-함수&quot;&gt;pacman 패키지의 &lt;code&gt;p_load()&lt;/code&gt; 함수&lt;/h2&gt;
 &lt;p&gt;이처럼 재현 가능한 연구를 방해하는 요소들을 없애기 위해 고민하다가 pacman package 를 알게 되었고&lt;br /&gt;
 pacman 패키지에서 제공되는 여러 함수 중 &lt;code&gt;p_load()&lt;/code&gt; 함수의 도움을 가장 많이 받고 있다.&lt;br /&gt;
 일반적인 상황에서 &lt;code&gt;p_load()&lt;/code&gt; 함수는 위에 제시한 불편한 문제들을 잘 해결해 준다.&lt;/p&gt;
@@ -503,7 +507,8 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 &lt;code&gt;p_
 자신의 홈 디렉토리에 &amp;quot;.Rprofile&amp;quot; 이란 숨김파일을 만든 후&lt;br /&gt;
 이안에 자주 활용하는 패키지를 호출하는 명령어를 미리 적어 놓는 것이다.&lt;/p&gt;
 &lt;p&gt;자세히 정리하면 아래와 같다.&lt;/p&gt;
-&lt;h2 id=&quot;a-홈-디렉토리로-들어가-.rprofile-숨김파일-만들기&quot;&gt;A) 홈 디렉토리로 들어가 &amp;quot;.Rprofile&amp;quot; 숨김파일 만들기&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;홈-디렉토리로-들어가-.rprofile-숨김파일-만들기&quot;&gt;홈 디렉토리로 들어가 &amp;quot;.Rprofile&amp;quot; 숨김파일 만들기&lt;/h2&gt;
 &lt;p&gt;쉘에서 틸드(~)문자는 사용자의 홈 디렉토리를 의미하는 특별한 기호이다.&lt;br /&gt;
 터미널을 실행한 후 틸드문자를 이용해 사용자 홈디렉토리로 이동한다.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;cd ~&lt;/code&gt;&lt;/pre&gt;
@@ -512,7 +517,8 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 &lt;code&gt;p_
 간편히 nano 를 이용한다고 치면&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;nano .Rprofile&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;를 통해 &amp;quot;.Rprofile&amp;quot; 를 열거나 새로 만들게 된다.&lt;/p&gt;
-&lt;h2 id=&quot;b-startup-커멘드-및-옵션들-작성하기&quot;&gt;B) Startup 커멘드 및 옵션들 작성하기&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;startup-커멘드-및-옵션들-작성하기&quot;&gt;Startup 커멘드 및 옵션들 작성하기&lt;/h2&gt;
 &lt;p&gt;&amp;quot;.Rprofile&amp;quot; 에 무언가를 작성할 것인데&lt;br /&gt;
 바로 이곳에 &lt;code&gt;library(dplyr)&lt;/code&gt; 과 같은 것을 적고 저장시키면&lt;br /&gt;
 앞으로 R을 실행하자마자 &lt;code&gt;library(dplyr)&lt;/code&gt; 명령어가 자동으로 실행된다.&lt;br /&gt;
@@ -536,6 +542,7 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 &lt;p&gt;여러분도 여러분 나름의 &amp;quot;.Rprofile&amp;quot; 를 작성해 보시길 🙃&lt;br /&gt;
 그리고 본 글은 Mac OS X 를 기준으로 작성한 경우이지만, 리눅스이어도 홈 디렉토리의 경로만 약간 다를 뿐 틸드문자를 이용한 방법은 똑같다고 보면 되겠다.&lt;br /&gt;
 윈도우의 경우는 R이 설치된 &amp;quot;C:\Program Files\R\R-***\etc\&amp;quot; 이곳에 &amp;quot;.Rprofile&amp;quot; 를 작성하면 되겠다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;http://www.onthelambda.com/2014/09/17/fun-with-rprofile-and-customizing-r-startup/&quot;&gt;Fun with .Rprofile and customizing R startup&lt;/a&gt;&lt;/li&gt;
@@ -607,11 +614,13 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 그래서 내가 생각하는 낮은 수준의 질문을 발번역해 영어로 작문하고, 작성된 글을 올리기 위하여 스택오버플로우에 로그인하였다.&lt;a href=&quot;#fn3&quot; class=&quot;footnoteRef&quot; id=&quot;fnref3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;이때부터 스택오버플로우의 사용방법과, 생태계의 메커니즘을 좀 정확히 알고 싶은 마음이 생겼는데&lt;br /&gt;
 이를 계기로 이글을 작성한 다음 적극적으로 애용해보려 한다.&lt;/p&gt;
-&lt;h2 id=&quot;a-스택오버플로우-간단-소개&quot;&gt;A) 스택오버플로우 간단 소개&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;스택오버플로우-간단-소개&quot;&gt;스택오버플로우 간단 소개&lt;/h2&gt;
 &lt;p&gt;스택오버플로우는 2008년경에 만들어진 프로그래머들 사이의 질문/답변 커뮤니케이션 사이트이다.&lt;br /&gt;
 조엘 스폴스키 등 2명이 기존의 있던 Q&amp;amp;A 사이트인 Experts_Exchange를 더 개방시킨 웹사이트로서 만들어진 사이트라고 한다.&lt;br /&gt;
 만들어진지 8년만에 개발관련된 구글링을 하면 절반이 넘는 게시글이 스택오버플로우로 연결되어 있을 정도로 아주 중요한 웹사이트가 되었다.(&lt;a href=&quot;https://en.wikipedia.org/wiki/Stack_Overflow&quot;&gt;wiki 참고&lt;/a&gt;)&lt;/p&gt;
-&lt;h2 id=&quot;b-스택오버플로우의-운영-원리&quot;&gt;B) 스택오버플로우의 운영 원리&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;스택오버플로우의-운영-원리&quot;&gt;스택오버플로우의 운영 원리&lt;/h2&gt;
 &lt;p&gt;스택오버플로우는 reputation 즉 명성도라는 것을 이용한다. (평판이라고도 한다)&lt;br /&gt;
 평판제도는 스택오버플로우를 사용할 때 특정 자격을 부여하는 등 사용 동기부여를 주기도 한다.&lt;br /&gt;
 이 제도 때문에 사용자들이 좀 더 정확한 질문, 그에 대한 알찬 답변을 상호적으로 주고 받을 수 있는 좋은 메커니즘으로 작용하고 있고, 자연스럽게 주제와 벗어난 질문과 글들이 필터링 되는 좋은 인프라가 뿌리잡았다고 생각한다.&lt;br /&gt;
@@ -778,7 +787,8 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 &lt;li&gt;내가 작성한 답변에 upvote 가 되면 +10&lt;/li&gt;
 &lt;li&gt;내가 작성한 답변이 질문자에 의해 승인이 되면 +15&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&quot;c-see-also&quot;&gt;C) See also&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;see-also&quot;&gt;See also&lt;/h2&gt;
 &lt;p&gt;스택오버플로우의 가장 아쉬운 점은 영어를 사용해야 한다는 점이다.&lt;br /&gt;
 개발 및 코드와 함께 작성될 질문글은 많은 부가적인 설명과 함께 작성하게 될 가능성이 높은데&lt;br /&gt;
 영어를 완벽하게 구사하지 못한다면 자신이 표출하고 싶은 의미를 서술하기 힘들 것이다.&lt;/p&gt;
@@ -793,6 +803,7 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 &lt;li&gt;&lt;a href=&quot;http://dolgo.net/&quot;&gt;돌고넷&lt;/a&gt; (http://dolgo.net)&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://hashcode.co.kr&quot;&gt;Hashcode&lt;/a&gt; (http://hashcode.co.kr)&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;http://stackoverflow-in-korean.github.io/&quot;&gt;StackOverflow in Korean&lt;/a&gt;&lt;/li&gt;
@@ -832,7 +843,8 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 ## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
 ## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 ## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;a-기호&quot;&gt;A) &amp;quot;~&amp;quot; 기호&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;기호&quot;&gt;&amp;quot;~&amp;quot; 기호&lt;/h2&gt;
 &lt;p&gt;기본적으로 &lt;code&gt;formula&lt;/code&gt; 인자값의 입력은 종속변수를 앞에 쓰고 독립변수를 뒤에 쓰게 되는데&lt;br /&gt;
 종속변수와 독립변수를 구분 짓는 기호는 &amp;quot;~&amp;quot; 이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -846,7 +858,8 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 &lt;p&gt;위의 단순선형회귀적합 코드를 살펴보자.&lt;br /&gt;
 &lt;code&gt;lm()&lt;/code&gt; 함수의 첫 번째 인자입력값을 보면 &lt;code&gt;mpg ~ wt&lt;/code&gt; 로 되어있다.&lt;br /&gt;
 왼쪽 맨 앞의 &lt;code&gt;mpg&lt;/code&gt; 는 종속변수로 지정하고, 오른쪽 뒤에 있는 &lt;code&gt;wt&lt;/code&gt; 는 독립변수로 지정하겠다는 의미가 된다.&lt;/p&gt;
-&lt;h2 id=&quot;b-기호&quot;&gt;B) &amp;quot;+&amp;quot; 기호&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;기호-1&quot;&gt;&amp;quot;+&amp;quot; 기호&lt;/h2&gt;
 &lt;p&gt;독립변수를 &lt;code&gt;wt&lt;/code&gt; 뿐만 아니라 &lt;code&gt;cyl&lt;/code&gt; 변수까지 고려하는 다중회귀분석을 하고 싶다면 &amp;quot;+&amp;quot; 기호를 이용해 고려대상이 되는 변수를 추가시킬 수 있다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## 
@@ -873,7 +886,8 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 &lt;p&gt;이런 식으로 고려대상이 되는 독립변수의 명칭을 모두 적은 다음&lt;br /&gt;
 사이사이에 &amp;quot;+&amp;quot; 기호를 무식하게 넣어주어야 하는 상황이다.&lt;br /&gt;
 하지만 위의 코딩은 매우 비효율적 🙄 손이 아파질 수 있다.&lt;/p&gt;
-&lt;h2 id=&quot;c-.-기호&quot;&gt;C) &amp;quot;.&amp;quot; 기호&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;기호-2&quot;&gt;&amp;quot;.&amp;quot; 기호&lt;/h2&gt;
 &lt;p&gt;이를 대비해 특수하게 약속된 &amp;quot;.&amp;quot; 기호를 이용하면 좋다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## 
@@ -889,7 +903,8 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 ##    -0.19942&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&amp;quot;.&amp;quot; 기호는 &amp;quot;전부&amp;quot; 의 의미를 가진다.&lt;br /&gt;
 위의 코드는 종속변수로 이미 배정된 mpg 이외의 모든 변수를 독립변수로 고려하라 라는 의미가 된다.&lt;/p&gt;
-&lt;h2 id=&quot;d---기호&quot;&gt;D) &amp;quot;-&amp;quot; 기호&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;기호-3&quot;&gt;&amp;quot;-&amp;quot; 기호&lt;/h2&gt;
 &lt;p&gt;&amp;quot;+&amp;quot; 기호의 반대는 &amp;quot;-&amp;quot; 이다. 의미 역시 반대이다.&lt;br /&gt;
 고려대상에서 추가하는 &amp;quot;+&amp;quot; 와 다르게 &amp;quot;-&amp;quot; 는 고려대상에서 제외시킨다.&lt;br /&gt;
 &amp;quot;.&amp;quot; 기호를 통해 모든 독립변수를 배정했는데, 여기서 &lt;code&gt;cyl&lt;/code&gt; 변수만은 독립변수에서 제외하고 싶을 경우&lt;/p&gt;
@@ -928,7 +943,8 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 ##  0.35083   0.01354  -0.02055   1.24158  -3.82613   1.19140   0.18972  
 ##       am      gear      carb  
 ##  2.83222   1.05426  -0.26321&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;e-기호&quot;&gt;E) &amp;quot;:&amp;quot; 기호&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;기호-4&quot;&gt;&amp;quot;:&amp;quot; 기호&lt;/h2&gt;
 &lt;p&gt;회귀적합에서 상호작용에 대해 고려한다면 &amp;quot;:&amp;quot; 기호를 이용하여 상호작용항을 부여할 수 있다.&lt;br /&gt;
 만약 종속변수 &lt;code&gt;mpg&lt;/code&gt; 에 대해 설명하는 독립변수를 &lt;code&gt;wt&lt;/code&gt;, &lt;code&gt;cyl&lt;/code&gt; 2개 설정하고,&lt;br /&gt;
 이 두 변수의 상호작용까지 고려하고자 한다면 이렇게 하면 된다.&lt;/p&gt;
@@ -953,7 +969,8 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 ##     47.3853     -10.4502      -0.8957       2.2704       0.5459  
 ##     wt:gear     cyl:gear  wt:cyl:gear  
 ##      0.3527      -0.8794       0.1001&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;f-기호&quot;&gt;F) &amp;quot;*&amp;quot; 기호&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;기호-5&quot;&gt;&amp;quot;*&amp;quot; 기호&lt;/h2&gt;
 &lt;p&gt;상호작용항을 고려하되 각 개별항과 상호작용항이 될 수 있는 모든 조합을 알아서 배정시키는&lt;br /&gt;
 약속된 기호가 바로 &amp;quot;*&amp;quot; 이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt *&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl *&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;gear, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -972,7 +989,8 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 &lt;code&gt;mpg ~ wt + cyl + gear + wt:cyl + wt:gear + cyl:gear + wt:cyl:gear&lt;/code&gt;&lt;br /&gt;
 와 동일한 것이다.&lt;br /&gt;
 따라서 실행된 코드의 출력결과도 비교해 보면 같은 것을 확인할 수 있다.&lt;/p&gt;
-&lt;h2 id=&quot;g-i-함수&quot;&gt;G) &lt;code&gt;I()&lt;/code&gt; 함수&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;i-함수&quot;&gt;&lt;code&gt;I()&lt;/code&gt; 함수&lt;/h2&gt;
 &lt;p&gt;만약 분석자 나름대로 다변수들의 정보를 하나로 압축시킨 파생변수로 회귀적합을 하고 싶다면 어떻게 해야 할까?&lt;br /&gt;
 예를 들어 &lt;code&gt;hp&lt;/code&gt; 변수값과 루트를 씌운 &lt;code&gt;wt&lt;/code&gt;변수값을 더하고 &lt;code&gt;carb&lt;/code&gt; 변수의 값을 뺀 값을 독립변수로 설정하여 단순회귀적합을 하고 싶다고 가정해보자. (일부러 의미 없이 복잡하게 설정해 봄)&lt;/p&gt;
 &lt;p&gt;일단 떠오르는 방법은 &lt;code&gt;mtcars&lt;/code&gt; 에 새로운 변수열을 만들어 위의 상황대로&lt;/p&gt;
@@ -1022,7 +1040,7 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 &lt;img src=&quot;/assets/forcats_1.png&quot; /&gt;
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;a-개요&quot;&gt;A) 개요&lt;/h2&gt;
+&lt;h2 id=&quot;개요&quot;&gt;개요&lt;/h2&gt;
 &lt;p&gt;R에서 범주형 변수를 다룰 때 factor 형을 이용한다.&lt;br /&gt;
 범주형 자료는 연속형 자료와는 다르게 그 자체의 고유한 의미를 가진다는 특성때문에 정성적인 관리가 필요한 편이다.&lt;br /&gt;
 애초에 많은 관심을 필요로 하고 있다고 볼 수 있다.&lt;br /&gt;
@@ -1032,7 +1050,8 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 &lt;p&gt;The goal of the &lt;strong&gt;forcats&lt;/strong&gt; package is to provide a suite of useful tools that solve common problems with factors.&lt;br /&gt;
 - &lt;a href=&quot;https://github.com/tidyverse/forcats&quot;&gt;forcats package 의 README.md 중&lt;/a&gt;에서&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&quot;b-패키지-설치&quot;&gt;B) 패키지 설치&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;패키지-설치&quot;&gt;패키지 설치&lt;/h2&gt;
 &lt;p&gt;CRAN 에 등록되어 있으므로&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;install.packages&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;forcats&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;로 설치할 수 있다.&lt;/p&gt;
@@ -1040,7 +1059,8 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
 개발버전을 사용하고 싶다면 Github 를 통해 패키지를 설치해도 되겠다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# Or the the development version from GitHub:&lt;/span&gt;
 devtools::&lt;span class=&quot;kw&quot;&gt;install_github&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;tidyverse/forcats&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;c-getting-started&quot;&gt;C) Getting started&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;getting-started&quot;&gt;Getting started&lt;/h2&gt;
 &lt;p&gt;forcats package 의 함수들은 &amp;quot;fct_&amp;quot; 로 시작한다.&lt;br /&gt;
 이후의 단어가 함수쓰임의 의미를 담고 있다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -1137,7 +1157,8 @@ devtools::&lt;span class=&quot;kw&quot;&gt;install_github&lt;/span&gt;(&lt;span 
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;접두사 &amp;quot;fct_&amp;quot; 가 코딩할 때 불편할 수도 있겠다 싶지만, 오히려 &amp;quot;fct_&amp;quot; 가 있음으로 변수형자료를 핸들링하는 것임을 정확하게 인지할 수 있는 tag같은 역할을 하는 것 같기도 해서 나는 개인적으로 좋다. &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;여하튼 이 함수들 중 자주 사용하는 것을 몇 개 언급해보고자 한다.&lt;/p&gt;
-&lt;h3 id=&quot;c-1-fct_recode&quot;&gt;C-1) &lt;code&gt;fct_recode()&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3 id=&quot;fct_recode&quot;&gt;&lt;code&gt;fct_recode()&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;factor 형 자료를 다룰 때 가장 번거로운 것 중 하나는 요인의 성격을 보존한 채 오직 명칭만 변경하는 과정이다.&lt;/p&gt;
 &lt;p&gt;예를들면&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;ex &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;factor&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;L&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;M&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;small&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;small&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;L&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;M&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;L&amp;quot;&lt;/span&gt;), 
@@ -1200,7 +1221,8 @@ gss_cat %&amp;gt;%
 ## 8  Independent, near dem  2499
 ## 9         Democrat, weak  3690
 ## 10      Democrat, strong  3490&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;c-2-fct_lump&quot;&gt;C-2) &lt;code&gt;fct_lump()&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3 id=&quot;fct_lump&quot;&gt;&lt;code&gt;fct_lump()&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;lump 영단어의 뜻은 &amp;quot;덩어리&amp;quot;, &amp;quot;한 무더기&amp;quot; 정도이다.&lt;br /&gt;
 파편들을 모아 한 덩어리로 만들어 주는 &lt;code&gt;fct_lump()&lt;/code&gt;, 곰곰이 생각해 보면 &amp;quot;파편들을 모아 한 덩어리로 만드는&amp;quot; 일은 꽤 많다.&lt;br /&gt;
 이런 예제를 생각하면 바로 이해가 될 것 같다.&lt;/p&gt;
@@ -1240,6 +1262,7 @@ gss_cat %&amp;gt;%
 &lt;p&gt;&lt;img src=&quot;/assets/forcats_4.png&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;fct_lump(partyid, n = 7, other_level = &amp;quot;etc&amp;quot;)&lt;/code&gt; 를 살펴보면 &lt;code&gt;n&lt;/code&gt; 인자를 7로 설정하여 7개의 주항목 요인 외에는 &amp;quot;etc&amp;quot; 라는 명칭으로 자동으로 바꿔준다.&lt;br /&gt;
 따라서 pie chart를 보면 소수의견인 &amp;quot;Don&#39;t know&amp;quot;, &amp;quot;No answer&amp;quot;, &amp;quot;Other party&amp;quot; 요인들이 &amp;quot;etc&amp;quot; 로 통합된 것을 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://www.r-bloggers.com/forcats-0-1-0-%F0%9F%90%88%F0%9F%90%88%F0%9F%90%88%F0%9F%90%88/&quot;&gt;forcats 0.1.0 🐈🐈🐈🐈&lt;/a&gt;&lt;/li&gt;
@@ -1269,7 +1292,8 @@ gss_cat %&amp;gt;%
 &lt;p&gt;&lt;br&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Mac에서 Spotlight 대용으로 &lt;a href=&quot;https://www.alfredapp.com/&quot;&gt;Alfred&lt;/a&gt; 를 사용 중이며 최대한 다양한 기능들을 이용해 보고 있었다.&lt;br /&gt;
 개인적으로 가장 생산성이 높은, 그리고 자주 사용하는 기능은 검색쿼리를 등록해 한방에 검색하는 편의를 가장 많이 느끼고 있었다.&lt;/p&gt;
-&lt;h2 id=&quot;a-alfred-검색쿼리-기능&quot;&gt;A) Alfred 검색쿼리 기능&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;alfred-검색쿼리-기능&quot;&gt;Alfred 검색쿼리 기능&lt;/h2&gt;
 &lt;p&gt;부연설명을 하자면 아래와 같다.&lt;br /&gt;
 만약 영어를 잘하고 싶어서 네이버에 &amp;quot;영어를 잘하는 법&amp;quot; 이라는 검색어로 검색을 원할 때 보통 아래와 같은 과정일 것이다. &lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;네이버 웹페이지가 뜨는 것을 기다린 후, &lt;code&gt;영어를 잘하는 법&lt;/code&gt; 으로 검색바에 타자를 치고 엔터를 누름&lt;/strong&gt; &lt;br&gt;&lt;br&gt;&lt;/p&gt;
@@ -1277,13 +1301,15 @@ gss_cat %&amp;gt;%
 네이버를 Alfred 에 검색 키워드로 등록하고 (예를 들어 &lt;code&gt;na&lt;/code&gt; 라고 등록한다면) 검색쿼리 설정을 해놓으면 &lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;kbd&gt;⌥&lt;/kbd&gt; + &lt;kbd&gt;Space&lt;/kbd&gt; 로 Alfred 실행 후 &lt;code&gt;na 영어를 잘하는 법&lt;/code&gt; 타자 치고 엔터를 누름&lt;/strong&gt; &lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;이란 과정으로 검색을 간편하게 할 수 있을 것이다.&lt;/p&gt;
-&lt;h2 id=&quot;b-alfred-검색쿼리-등록방법-alfred-v3.1.1-을-기준&quot;&gt;B) Alfred 검색쿼리 등록방법 (Alfred v3.1.1 을 기준)&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;alfred-검색쿼리-등록방법-alfred-v3.1.1-을-기준&quot;&gt;Alfred 검색쿼리 등록방법 (Alfred v3.1.1 을 기준)&lt;/h2&gt;
 &lt;p&gt;등록방법을 구구절절 쓰는 것 보다 스크린캐스트를 보는 것이 좋을 것 같다.&lt;br /&gt;
 아래 영상처럼 하면 된다.&lt;br /&gt;
 이 영상은 Alfred 에 Github 검색쿼리를 등록한 후 테스트하는 영상이 되겠다.&lt;/p&gt;
 &lt;iframe width=&quot;100%&quot; height=&quot;400&quot; src=&quot;https://www.youtube.com/embed/eG_Z5INGfsM&quot; frameborder=&quot;0&quot; allowfullscreen&gt;
 &lt;/iframe&gt;
-&lt;h2 id=&quot;c-alfred-검색쿼리-예시&quot;&gt;C) Alfred 검색쿼리 예시&lt;/h2&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;alfred-검색쿼리-예시&quot;&gt;Alfred 검색쿼리 예시&lt;/h2&gt;
 &lt;p&gt;최근에 나는 Alfred 가 3.X 버전을 출시하면서 이전 1.X 버전을 생각 없이 지웠는데&lt;br /&gt;
 아쉽게도 1.X 버전에 커스터마이징 된 환경들이 싹 날라가 버렸다. 😓&lt;/p&gt;
 &lt;p&gt;특히 검색쿼리를 다시 찾고 세팅하는 것이 번거로웠는데&lt;br /&gt;

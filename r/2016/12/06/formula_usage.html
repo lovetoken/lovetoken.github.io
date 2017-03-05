@@ -148,7 +148,8 @@
 ## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
 ## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 ## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
-<h2 id="a-기호">A) &quot;~&quot; 기호</h2>
+<p><br><br></p>
+<h2 id="기호">&quot;~&quot; 기호</h2>
 <p>기본적으로 <code>formula</code> 인자값의 입력은 종속변수를 앞에 쓰고 독립변수를 뒤에 쓰게 되는데<br />
 종속변수와 독립변수를 구분 짓는 기호는 &quot;~&quot; 이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</code></pre></div>
@@ -162,7 +163,8 @@
 <p>위의 단순선형회귀적합 코드를 살펴보자.<br />
 <code>lm()</code> 함수의 첫 번째 인자입력값을 보면 <code>mpg ~ wt</code> 로 되어있다.<br />
 왼쪽 맨 앞의 <code>mpg</code> 는 종속변수로 지정하고, 오른쪽 뒤에 있는 <code>wt</code> 는 독립변수로 지정하겠다는 의미가 된다.</p>
-<h2 id="b-기호">B) &quot;+&quot; 기호</h2>
+<p><br><br></p>
+<h2 id="기호-1">&quot;+&quot; 기호</h2>
 <p>독립변수를 <code>wt</code> 뿐만 아니라 <code>cyl</code> 변수까지 고려하는 다중회귀분석을 하고 싶다면 &quot;+&quot; 기호를 이용해 고려대상이 되는 변수를 추가시킬 수 있다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>wt +<span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</code></pre></div>
 <pre><code>## 
@@ -189,7 +191,8 @@
 <p>이런 식으로 고려대상이 되는 독립변수의 명칭을 모두 적은 다음<br />
 사이사이에 &quot;+&quot; 기호를 무식하게 넣어주어야 하는 상황이다.<br />
 하지만 위의 코딩은 매우 비효율적 🙄 손이 아파질 수 있다.</p>
-<h2 id="c-.-기호">C) &quot;.&quot; 기호</h2>
+<p><br><br></p>
+<h2 id="기호-2">&quot;.&quot; 기호</h2>
 <p>이를 대비해 특수하게 약속된 &quot;.&quot; 기호를 이용하면 좋다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>., <span class="dt">data =</span> mtcars)  </code></pre></div>
 <pre><code>## 
@@ -205,7 +208,8 @@
 ##    -0.19942</code></pre>
 <p>&quot;.&quot; 기호는 &quot;전부&quot; 의 의미를 가진다.<br />
 위의 코드는 종속변수로 이미 배정된 mpg 이외의 모든 변수를 독립변수로 고려하라 라는 의미가 된다.</p>
-<h2 id="d---기호">D) &quot;-&quot; 기호</h2>
+<p><br><br></p>
+<h2 id="기호-3">&quot;-&quot; 기호</h2>
 <p>&quot;+&quot; 기호의 반대는 &quot;-&quot; 이다. 의미 역시 반대이다.<br />
 고려대상에서 추가하는 &quot;+&quot; 와 다르게 &quot;-&quot; 는 고려대상에서 제외시킨다.<br />
 &quot;.&quot; 기호를 통해 모든 독립변수를 배정했는데, 여기서 <code>cyl</code> 변수만은 독립변수에서 제외하고 싶을 경우</p>
@@ -244,7 +248,8 @@
 ##  0.35083   0.01354  -0.02055   1.24158  -3.82613   1.19140   0.18972  
 ##       am      gear      carb  
 ##  2.83222   1.05426  -0.26321</code></pre>
-<h2 id="e-기호">E) &quot;:&quot; 기호</h2>
+<p><br><br></p>
+<h2 id="기호-4">&quot;:&quot; 기호</h2>
 <p>회귀적합에서 상호작용에 대해 고려한다면 &quot;:&quot; 기호를 이용하여 상호작용항을 부여할 수 있다.<br />
 만약 종속변수 <code>mpg</code> 에 대해 설명하는 독립변수를 <code>wt</code>, <code>cyl</code> 2개 설정하고,<br />
 이 두 변수의 상호작용까지 고려하고자 한다면 이렇게 하면 된다.</p>
@@ -269,7 +274,8 @@
 ##     47.3853     -10.4502      -0.8957       2.2704       0.5459  
 ##     wt:gear     cyl:gear  wt:cyl:gear  
 ##      0.3527      -0.8794       0.1001</code></pre>
-<h2 id="f-기호">F) &quot;*&quot; 기호</h2>
+<p><br><br></p>
+<h2 id="기호-5">&quot;*&quot; 기호</h2>
 <p>상호작용항을 고려하되 각 개별항과 상호작용항이 될 수 있는 모든 조합을 알아서 배정시키는<br />
 약속된 기호가 바로 &quot;*&quot; 이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>wt *<span class="st"> </span>cyl *<span class="st"> </span>gear, <span class="dt">data =</span> mtcars)  </code></pre></div>
@@ -288,7 +294,8 @@
 <code>mpg ~ wt + cyl + gear + wt:cyl + wt:gear + cyl:gear + wt:cyl:gear</code><br />
 와 동일한 것이다.<br />
 따라서 실행된 코드의 출력결과도 비교해 보면 같은 것을 확인할 수 있다.</p>
-<h2 id="g-i-함수">G) <code>I()</code> 함수</h2>
+<p><br><br></p>
+<h2 id="i-함수"><code>I()</code> 함수</h2>
 <p>만약 분석자 나름대로 다변수들의 정보를 하나로 압축시킨 파생변수로 회귀적합을 하고 싶다면 어떻게 해야 할까?<br />
 예를 들어 <code>hp</code> 변수값과 루트를 씌운 <code>wt</code>변수값을 더하고 <code>carb</code> 변수의 값을 뺀 값을 독립변수로 설정하여 단순회귀적합을 하고 싶다고 가정해보자. (일부러 의미 없이 복잡하게 설정해 봄)</p>
 <p>일단 떠오르는 방법은 <code>mtcars</code> 에 새로운 변수열을 만들어 위의 상황대로</p>

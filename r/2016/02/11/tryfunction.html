@@ -145,7 +145,8 @@
 <pre><code>&gt; bsid
 Error: object &#39;bsid&#39; not found</code></pre>
 <p>의 에러메세지가 출력된다.</p>
-<h2 id="a-try-함수">A) <code>try()</code> 함수</h2>
+<p><br><br></p>
+<h2 id="try-함수"><code>try()</code> 함수</h2>
 <p>에러를 뿜는 위의 코드를 <code>try()</code> 함수로 감싸주어 보자.<br />
 감싼 이 코드는 단순히 &quot;try&quot; 라는 단어 대로 시도를 해보고 안되면 마는 식으로 동작하게 된다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="dt">expr=</span>bsid)</code></pre></div>
@@ -161,12 +162,14 @@ Error: object &#39;bsid&#39; not found</code></pre>
 <p><code>try()</code> 함수를 쓴 코드 이후의 코드인 <code>print(&quot;Hello R&quot;)</code> 은 정상적으로 실행되 수행된 것을 볼 수 있다.<br />
 유의할 것은 실제로 위 코드청크에 <code>eval=F</code> 설정을 주지 않고도 렌더링이 막히지 않았는다는 것이다.<br />
 따라서 에러를 뿜는 코드이더라 하더라도, 그것이 <code>try()</code> 함수로 감싸지면 계속적으로 수행된다는 것이다.</p>
-<h3 id="a-1-silent-인자">A-1) <code>silent</code> 인자</h3>
+<p><br></p>
+<h3 id="silent-인자"><code>silent</code> 인자</h3>
 <p><code>try()</code> 함수의 <code>silent</code> 인자로 command 에 에러가 반환되는 메세지 조차 침묵시킬 수 있다.<br />
 이 인자의 값을 <code>TRUE</code> 로 설정하면 에러는 silent 시킨다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(bsid, <span class="dt">silent =</span> T)</code></pre></div>
 <p>차이점을 체감하기 위해선 직접 R 을 켜 코드를 동작시켜 볼 필요가 있다.</p>
-<h3 id="a-2-두-줄-의-코드를-try-하되-한줄은-정상-한줄은-에러를-내는-코드로-수정하면">A-2) 두 줄 의 코드를 try 하되 한줄은 정상, 한줄은 에러를 내는 코드로 수정하면?</h3>
+<p><br></p>
+<h3 id="두-줄-의-코드를-try-하되-한줄은-정상-한줄은-에러를-내는-코드로-수정하면">두 줄 의 코드를 try 하되 한줄은 정상, 한줄은 에러를 내는 코드로 수정하면?</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>({
   <span class="kw">print</span>(<span class="st">&quot;Hello R&quot;</span>)  <span class="co"># normal code</span>
   bsid  <span class="co"># error code</span>
@@ -180,7 +183,8 @@ Error: object &#39;bsid&#39; not found</code></pre>
   <span class="kw">print</span>(<span class="st">&quot;Hello R&quot;</span>)  <span class="co"># normal code</span>
 }, <span class="dt">silent =</span> T)</code></pre></div>
 <p>흠 첫번째 코드가 에러를 뿜기 때문에 그 이후 코드인 <code>print(&quot;Hello R&quot;)</code>는 수행되지 않는것을 볼 수 있다. <code>try()</code> 함수에 감싸져있는 코드덩어리는 평소대로 에러코드 이후인 정상적 코드를 실행하지 못한다.</p>
-<h2 id="b-에러가-날-경우의-예외처리를-위한-trycatch-함수">B) 에러가 날 경우의 예외처리를 위한 <code>tryCatch()</code> 함수</h2>
+<p><br><br></p>
+<h2 id="에러가-날-경우의-예외처리를-위한-trycatch-함수">에러가 날 경우의 예외처리를 위한 <code>tryCatch()</code> 함수</h2>
 <p>이처럼 <code>try()</code> 함수를 알아 보았는데 잘 이용하면 에러가 나는 코드를 건너뛰고 다음 프로세스를 진행할 수 있다.<br />
 에러가 나는 상황에 대한 조건부 프로세스가 따로 필요하다면 <code>try()</code> 함수만으론 부족할 수 있다.<br />
 이럴때는 lowerCamelCase 로 네이밍된 <code>tryCatch()</code> 함수를 이용하면 간편하게 해결할 수 있다.</p>

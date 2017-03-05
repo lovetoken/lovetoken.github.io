@@ -135,7 +135,7 @@
 
 
 <div class="content">
-    <div class="post"><h2 id="a-상황">A) 상황</h2>
+    <div class="post"><h2 id="상황">상황</h2>
 <p>R 에서 여러 개의 패키지를 사용해야 하는 프로그램을 작성해야 한다면 <code>library()</code> 함수로 사용하는 패키지를 불러오는 코드를 서두에 작성하는 전략을 사용할 것이다. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;package1&quot;</span>)
 <span class="kw">library</span>(<span class="st">&quot;package2&quot;</span>)
@@ -157,7 +157,8 @@
 <p>또한, 위에 제시한 어떠한 방법이든<br />
 자신이 만든 프로그램이 다수의 패키지에 의존되면 의존될수록 타인이 자신의 프로그램을 이용할 때 오류가 일어날 가능성도 커진다.<br />
 타인은 프로그램에 의존된 패키지가 모두 설치되어 있을 리 없다.</p>
-<h2 id="b-pacman-패키지의-p_load-함수">B) pacman 패키지의 <code>p_load()</code> 함수</h2>
+<p><br><br></p>
+<h2 id="pacman-패키지의-p_load-함수">pacman 패키지의 <code>p_load()</code> 함수</h2>
 <p>이처럼 재현 가능한 연구를 방해하는 요소들을 없애기 위해 고민하다가 pacman package 를 알게 되었고<br />
 pacman 패키지에서 제공되는 여러 함수 중 <code>p_load()</code> 함수의 도움을 가장 많이 받고 있다.<br />
 일반적인 상황에서 <code>p_load()</code> 함수는 위에 제시한 불편한 문제들을 잘 해결해 준다.</p>

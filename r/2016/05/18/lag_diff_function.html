@@ -139,7 +139,8 @@
 복잡한 모듈들을 만들 때 아래의 함수들과 패키지가 얼마나 유용한지 몰랐었다.</p>
 <p>오늘 정리해보고자 하는 함수는 3가지이며, 부가적으로 시계열 데이터셋에 날짜의 전처리 부담을 줄여주는 xts package 를 조금씩 이용해보려 한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(xts)</code></pre></div>
-<h2 id="a-예제-데이터-만들기">A) 예제 데이터 만들기</h2>
+<p><br><br></p>
+<h2 id="예제-데이터-만들기">예제 데이터 만들기</h2>
 <p>오늘 날짜를 기준으로 약 한 달 전 까지의 코스닥 지수를 예제 데이터로 이용해 보고자 한다. (본 포스팅 글의 오늘 날짜는 스크립트를 작성한 기준 날짜를 기준으로 한다)<br />
 R에서는 특정 주가지수를 자동으로 불러올 수 있는 유용한 패키지가 있는데 바로 quantmod package이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(quantmod)</code></pre></div>
@@ -206,7 +207,8 @@ kq &lt;-<span class="st"> </span><span class="kw">getSymbols</span>(<span class=
 만약 다른 것을 조회하고 싶다면 해당되는 심볼을 찾은 후 기입하면 된다. (ex. 코스피200지수의 경우 '^ks11')</p>
 <p>반환된 결과물을 보면 open, high, low, close, volume, adjusted 6개의 상황별 지수가 있는데 종가지수인 close 만 관심의 대상이라 가정하고 subset 을 추출한 데이터 <code>data</code> 를 최종 예제데이터로 삼겠다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>kq[,<span class="dv">4</span>]</code></pre></div>
-<h2 id="b-일일-수익률-계산하기">B) 일일 수익률 계산하기</h2>
+<p><br><br></p>
+<h2 id="일일-수익률-계산하기">일일 수익률 계산하기</h2>
 <p>예제데이터를 이용하여 일일 수익률을 계산해 보겠다.<br />
 예를 들어 2016년 4월 19일의 수익률을 계산하기 위해선 해당 시차 지수 701.68 을 직전날시차 지수 695.34 로 나눠 준 후 1을 빼면 된다.<br />
 이것을 모든 날에 대해 일괄적으로 행하여야 한다.<br />
@@ -288,7 +290,8 @@ res[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="ot">NA
 for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
     res[i] &lt;-<span class="st"> </span>data[[i]] /<span class="st"> </span>data[[i<span class="dv">-1</span>]]-<span class="dv">1</span>
 } <span class="co"># T_T.....</span></code></pre></div>
-<h2 id="c-로그수익률-계산하기">C) 로그수익률 계산하기</h2>
+<p><br><br></p>
+<h2 id="로그수익률-계산하기">로그수익률 계산하기</h2>
 <p>만약 일일 로그수익률을 계산하고 싶다면 현시차 주가를 직전시차주가로 나눠준 후 로그함수를 씌워주면 되는데<br />
 방금 알게된 <code>lag()</code> 함수를 이용하면</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(data) -<span class="st"> </span><span class="kw">log</span>(<span class="kw">lag</span>(data))</code></pre></div>

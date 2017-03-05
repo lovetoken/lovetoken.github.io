@@ -167,7 +167,8 @@ dt2 &lt;-<span class="st"> </span><span class="kw">data.table</span>(df2); <span
     join_res_dt &lt;-<span class="st"> </span><span class="kw">left_join</span>(dt, dt2), <span class="dt">replications =</span> <span class="dv">20</span>
 )</code></pre></div>
 <p>위의 코드를 간략히 설명해 보면</p>
-<h2 id="a-예제로-사용할-data.frame-data.table-객체-만들기">A) 예제로 사용할 data.frame, data.table 객체 만들기</h2>
+<p><br><br></p>
+<h2 id="예제로-사용할-data.frame-data.table-객체-만들기">예제로 사용할 data.frame, data.table 객체 만들기</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(data.table)
 <span class="kw">library</span>(dplyr)
 <span class="kw">library</span>(rbenchmark)
@@ -201,7 +202,8 @@ key variable 세팅이 제대로 되었는지가 궁금하다면 <code>tables()<
 ## [2,] dt2    900,000    2 11 ID,Var3            ID 
 ## Total: 31MB</code></pre>
 <p>출력결과의 맨 우측 Key 항목에 &quot;ID&quot; 가 있는것을 보아 제대로 세팅이 된 것을 볼 수 있다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
-<h2 id="b-join">B) Join</h2>
+<p><br><br></p>
+<h2 id="join">Join</h2>
 <p>본격적으로 병합(Join)을 시작한다.<br />
 join 방법은 무난한 left join 을 실시하기 위해 dplyr package 에 있는 <code>left_join()</code> 함수를 이용 했다.</p>
 <p>data.frame 에 대한 join 과<br />

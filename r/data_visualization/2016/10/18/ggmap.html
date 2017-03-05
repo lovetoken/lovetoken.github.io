@@ -139,7 +139,8 @@
 <a href="https://cran.r-project.org/web/packages/ggmap/ggmap.pdf">ggmap package</a> 는 <a href="https://enterprise.google.com/intl/ko/maps/products/mapsapi.html">Google map API</a> 를 이용하여 지도자료를 불러와주는 역할을 하는 패키지이다.</p>
 <p>간략한 예제를 통해 &quot;ggmap&quot; 패키지의 주요 함수 <code>get_googlemap()</code>, <code>ggmap()</code> 2개의 사용방법을 알아본 후<br />
 지도위에 간단한 경로를 결합하는 간단한 예제를 실습해 보고자 한다.</p>
-<h2 id="a-우리나라-지도-호출">A) 우리나라 지도 호출</h2>
+<p><br><br></p>
+<h2 id="우리나라-지도-호출">우리나라 지도 호출</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">getmap &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="st">&quot;seoul&quot;</span>)
 <span class="kw">ggmap</span>(getmap)</code></pre></div>
 <center>
@@ -154,7 +155,8 @@ R에 plotting 하는 코드이다.</p>
 </ol>
 <p>로직이 이처럼 간단하므로 앞으로 체인연산자(chain operation)를 사용해 간단히 한 줄로 실행하겠다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_googlemap</span>(<span class="st">&quot;seoul&quot;</span>) %&gt;%<span class="st"> </span>ggmap</code></pre></div>
-<h2 id="b-ggplot2-의-함수들과-조합">B) ggplot2 의 함수들과 조합</h2>
+<p><br><br></p>
+<h2 id="ggplot2-의-함수들과-조합">ggplot2 의 함수들과 조합</h2>
 <p><code>ggmap()</code> 으로 반환되는 결과물은 기본적으로 ggplot 기반의 결과물인데 이점을 이용하여 ggplot2 패키지의 함수와 조합해 지도 위에 새로운 정보들을 더할 수 있다.<br />
 &quot;ggmap&quot;, &quot;ggplot2&quot; 이 두 패키지의 조합은 다양한 Geo Visualization(지리적 시각화) 을 구사할 수 있는 잠재력이 있을거라 생각된다.<br />
 지금은 복잡한 실습보단 간단한 예제를 통해 맛보기를 아래처럼 해보았다.</p>
@@ -164,7 +166,8 @@ R에 plotting 하는 코드이다.</p>
 <p>그림을 다시 자세히 보면 x축이 &quot;lon&quot; 이라고 적혀있고, y축은 &quot;lat&quot; 라고 적혀 있다.<br />
 &quot;lon&quot; 은 경도(longitude), &quot;lat&quot; 은 위도(latitude) 를 각각 뜻한다고 볼 수 있다.</p>
 <p>즉 위도와 경도의 데이터가 있다면 이 지도 위에 ggplot2 를 이용하여 무언가를 덧그릴 수 있을 것이다.</p>
-<h3 id="b-1-포인팅">B-1) 포인팅</h3>
+<p><br></p>
+<h3 id="포인팅">포인팅</h3>
 <p>의미는 크게 없지만, 서초역과 강남역 부근에 무언가 장난을 쳐보려 한다.</p>
 <ul>
 <li>서초역 : 경도 127.007675, 위도 37.491843<br />
@@ -209,7 +212,8 @@ p2</code></pre></div>
 <center>
 <img src="/assets/ggmap-7-1.png" />
 </center>
-<h3 id="b-2-경로-그리기">B-2) 경로 그리기</h3>
+<p><br></p>
+<h3 id="경로-그리기">경로 그리기</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">locationInfo &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
     <span class="dt">Name =</span> <span class="kw">c</span>(<span class="st">&quot;강남&quot;</span>, <span class="st">&quot;양재&quot;</span>, <span class="st">&quot;양재시민의숲&quot;</span>, <span class="st">&quot;청계산입구&quot;</span>, <span class="st">&quot;판교&quot;</span>, <span class="st">&quot;정자&quot;</span>), 
     <span class="dt">lon =</span> <span class="kw">c</span>(<span class="fl">127.028046</span>, <span class="fl">127.035140</span>, <span class="fl">127.038451</span>, <span class="fl">127.054769</span>, <span class="fl">127.111172</span>, <span class="fl">127.108367</span>), 
@@ -240,7 +244,8 @@ p3</code></pre></div>
 <img src="/assets/ggmap-10-1.png" />
 </center>
 <p>그다음 경로를 표현하기 위해 각 점에 적당한 직선을 <code>geom_path()</code> 를 통해 그리면 신분당선의 경로가 어떤지를 볼 수 있겠다.</p>
-<h2 id="c-기타">C) 기타</h2>
+<p><br><br></p>
+<h2 id="기타">기타</h2>
 <p>소개한 <code>get_googlemap()</code>, <code>ggmap()</code> 함수의 옵션들은 정말 방대한 편이다.<br />
 모든 것을 건드려 보진 못했지만 유용할 것으로 생각하는 기능 중</p>
 <ol type="1">
@@ -248,7 +253,8 @@ p3</code></pre></div>
 <li>Map type 을 변경하는 기능</li>
 </ol>
 <p>이 눈에 띄었다.</p>
-<h3 id="c-1-extent-device-로-지도-꽉-채워-보기">C-1) <code>extent = &quot;device&quot;</code> 로 지도 꽉 채워 보기</h3>
+<p><br></p>
+<h3 id="extent-device-로-지도-꽉-채워-보기"><code>extent = &quot;device&quot;</code> 로 지도 꽉 채워 보기</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_googlemap</span>() %&gt;%<span class="st"> </span>ggmap</code></pre></div>
 <center>
 <img src="/assets/ggmap-11-1.png" />
@@ -261,7 +267,8 @@ p3</code></pre></div>
 <img src="/assets/ggmap-12-1.png" />
 </center>
 <p><code>extent = &quot;device&quot;</code> 를 이용하면 되겠다.</p>
-<h3 id="c-2-get_googlemap-함수의-maptype-인자를-조정해-지도스타일-바꾸기">C-2) <code>get_googlemap()</code> 함수의 <code>maptype</code> 인자를 조정해 지도스타일 바꾸기</h3>
+<p><br></p>
+<h3 id="get_googlemap-함수의-maptype-인자를-조정해-지도스타일-바꾸기"><code>get_googlemap()</code> 함수의 <code>maptype</code> 인자를 조정해 지도스타일 바꾸기</h3>
 <p><code>get_googlemap()</code> 함수의 <code>maptype</code> 인자 값을<br />
 &quot;terrain&quot;, &quot;satellite&quot;, &quot;roadmap&quot;, &quot;hybrid&quot; 등으로 조절해보면</p>
 <p><em>satellite 로 설정한 결과</em></p>
@@ -289,6 +296,7 @@ p7 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&q
 <img src="/assets/ggmap-16-1.png" />
 </center>
 <p>이처럼 쓰임에 맞는 지도 스타일을 선택할 수 있다.</p>
+<p><br><br></p>
 <h2 id="reference">Reference</h2>
 <ul>
 <li><a href="http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf">ggmap: Spatial Visualization with ggplot2 by David Kahle and Hadley Wickham</a></li>

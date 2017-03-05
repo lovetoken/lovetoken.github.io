@@ -141,7 +141,8 @@
 자신의 홈 디렉토리에 &quot;.Rprofile&quot; 이란 숨김파일을 만든 후<br />
 이안에 자주 활용하는 패키지를 호출하는 명령어를 미리 적어 놓는 것이다.</p>
 <p>자세히 정리하면 아래와 같다.</p>
-<h2 id="a-홈-디렉토리로-들어가-.rprofile-숨김파일-만들기">A) 홈 디렉토리로 들어가 &quot;.Rprofile&quot; 숨김파일 만들기</h2>
+<p><br><br></p>
+<h2 id="홈-디렉토리로-들어가-.rprofile-숨김파일-만들기">홈 디렉토리로 들어가 &quot;.Rprofile&quot; 숨김파일 만들기</h2>
 <p>쉘에서 틸드(~)문자는 사용자의 홈 디렉토리를 의미하는 특별한 기호이다.<br />
 터미널을 실행한 후 틸드문자를 이용해 사용자 홈디렉토리로 이동한다.</p>
 <pre><code>cd ~</code></pre>
@@ -150,7 +151,8 @@
 간편히 nano 를 이용한다고 치면<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
 <pre><code>nano .Rprofile</code></pre>
 <p>를 통해 &quot;.Rprofile&quot; 를 열거나 새로 만들게 된다.</p>
-<h2 id="b-startup-커멘드-및-옵션들-작성하기">B) Startup 커멘드 및 옵션들 작성하기</h2>
+<p><br><br></p>
+<h2 id="startup-커멘드-및-옵션들-작성하기">Startup 커멘드 및 옵션들 작성하기</h2>
 <p>&quot;.Rprofile&quot; 에 무언가를 작성할 것인데<br />
 바로 이곳에 <code>library(dplyr)</code> 과 같은 것을 적고 저장시키면<br />
 앞으로 R을 실행하자마자 <code>library(dplyr)</code> 명령어가 자동으로 실행된다.<br />
@@ -174,6 +176,7 @@ opts_chunk$<span class="kw">set</span>(<span class="dt">fig.path =</span> <span 
 <p>여러분도 여러분 나름의 &quot;.Rprofile&quot; 를 작성해 보시길 🙃<br />
 그리고 본 글은 Mac OS X 를 기준으로 작성한 경우이지만, 리눅스이어도 홈 디렉토리의 경로만 약간 다를 뿐 틸드문자를 이용한 방법은 똑같다고 보면 되겠다.<br />
 윈도우의 경우는 R이 설치된 &quot;C:\Program Files\R\R-***\etc\&quot; 이곳에 &quot;.Rprofile&quot; 를 작성하면 되겠다.</p>
+<p><br><br></p>
 <h2 id="reference">Reference</h2>
 <ul>
 <li><a href="http://www.onthelambda.com/2014/09/17/fun-with-rprofile-and-customizing-r-startup/">Fun with .Rprofile and customizing R startup</a></li>

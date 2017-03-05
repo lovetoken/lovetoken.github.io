@@ -138,7 +138,8 @@
     <div class="post"><p>통계 비전공자에게 중심극한의 정리를 설명해야 했던 적이 있었는데,<br />
 심오한 이론들을 증명하며 설명하느니 한번 보여주는 것이 더 큰 공감을 얻게될 것 같아 animation plot 을 준비한적이 있다.<br />
 본 포스팅 글은 R markdown 포맷에서 코드청크옵션 <code>fig.show = &quot;animate&quot;</code> 을 통해 animation plot 을 준비하는 것이 가능하다는 것을 소개하고 그 예시로 중심극한정리 시뮬레이션을 통해 설명할 것이다.</p>
-<h2 id="a-중심극한정리-central-limit-theorem-에-대해서">A) 중심극한정리 (Central Limit Theorem) 에 대해서</h2>
+<p><br><br></p>
+<h2 id="중심극한정리-central-limit-theorem-에-대해서">중심극한정리 (Central Limit Theorem) 에 대해서</h2>
 <p>중심극한정리는 표본의 크기가 커짐에 따라 표본평균의 분포가 점점 정규분포로 닮아(근사) 짐을 의미하는 이론이다.<br />
 그리고 표본은 어떠한 분포 타입에 나온 것이더라 하더라도 상관없이 중심극한정리에 해당되는것을 특징으로 한다.<br />
 여기서 헷갈리는 것이 있을 수 있는데, 표본평균은 단하나의 값으로 분포가 될 수 있느냐 라는 질문이 생길 수 있다.<br />
@@ -155,7 +156,8 @@
 <li>표본평균들을 1,000개 준비하기 위해 위 과정을 1000번 반복</li>
 </ul>
 <p>할 것이다.</p>
-<h2 id="b-단편-시뮬레이션">B) 단편 시뮬레이션</h2>
+<p><br><br></p>
+<h2 id="단편-시뮬레이션">단편 시뮬레이션</h2>
 <p>위에서 설명한 시뮬레이션은 아래코드를 통해 확인 가능하다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="dt">expr=</span>{
     n &lt;-<span class="st"> </span><span class="dv">500</span>
@@ -181,7 +183,8 @@
 <p>2번에 해당하는 소위 QQplot 이다.</p>
 <p>분명 결과물을 통해선 포아송분포에서 뽑은 표본들의 평균의 분포가 정규분포에 근사하는 것을 체감할 수는 있다.<br />
 하지만 나는 이것보다 분포의 개수가 많으면 많아질수록 정규분포의 닮아짐이 높아진다는 점근적근사를 시각적으로 보여주고 싶은 것이었다.</p>
-<h2 id="c-rmarkdown-의-코드청크옵션-fig.show-animate-에-대해서">C) Rmarkdown 의 코드청크옵션 <code>fig.show = &quot;animate&quot;</code> 에 대해서</h2>
+<p><br><br></p>
+<h2 id="rmarkdown-의-코드청크옵션-fig.show-animate-에-대해서">Rmarkdown 의 코드청크옵션 <code>fig.show = &quot;animate&quot;</code> 에 대해서</h2>
 <p>필자는 Rmarkdown 포맷을 자주 사용하여 내 지식을 전달하는 편인데 데이터분석과 융화된 글을 쓰기에 거리낌 없는 도구로 굉장한 공감을 얻었기 때문이다.<br />
 특히 <code>fig.show = &quot;animate&quot;</code> 와 같은 코드청크 옵션은 데이터의 변질에 따른 plot output 의 변화를 보여주기에 간편한 기능을 제공해서 적극적으로 애용 중이다.</p>
 <p>위의 예시를 이어서 설명하자면 단편적인 시뮬레이션을 통해 정규분포에 근사하는 것을 체감시켰지만,<br />
@@ -262,7 +265,8 @@ verbatim 모드로 Rmarkdown 코드청크 전체를 보여주면 아래와 같�
 <span class="co">#   qqnorm(res, xlim = c(-4, 4), ylim = c(9, 11))</span>
 <span class="co"># }</span>
 <span class="co"># ```</span></code></pre></div>
-<h2 id="d-요구사항">D) 요구사항</h2>
+<p><br><br></p>
+<h2 id="요구사항">요구사항</h2>
 <p>단 이렇게 영상으로 인코딩하는 작업을 하기 위해서 운영체계별로 요구하는 플러그인이 다를 수 있다.<br />
 필자는 OSX 에서 이 글을 작성한 것이며 <a href="https://www.ffmpeg.org/">ffmpeg</a> 설치가 요구되었었다.</p>
 <p>그리고 이것이 요구사항일지는 모르겠지만 코드수행시간이란 비용 이외에 animation plot 영상을 인코딩하는 시간 역시 필요하다.<br />
