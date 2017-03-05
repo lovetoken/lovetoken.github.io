@@ -5,9 +5,37 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 05 Mar 2017 14:40:54 +0900</pubDate>
-    <lastBuildDate>Sun, 05 Mar 2017 14:40:54 +0900</lastBuildDate>
+    <pubDate>Sun, 05 Mar 2017 17:29:57 +0900</pubDate>
+    <lastBuildDate>Sun, 05 Mar 2017 17:29:57 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>인터넷 접속이 불가능 한 내부망에서의 R package 설치방법에 대해</title>
+        <description>&lt;p&gt;(지금은 그렇지 않은데) 이전에 일하던 환경이 망분리(내부망)의 도입으로 인하여&lt;br /&gt;
+인터넷이 불가능한 상황에서 R을 이용해 분석을 해야 했던 적이 있었다.&lt;br /&gt;
+특히 보안으로 인한 법 개정인지 몰라도 망분리 도입이 공기업을 시작으로 활발하게 진행하는 듯 싶은데,&lt;br /&gt;
+이로인한 많은 이슈를 대응해야 하는 사람들 입장에선 많이 피곤할 것으로 생각한다.&lt;/p&gt;
+&lt;p&gt;오픈소스 도구 특성상 대부분이 그렇겠지만, 인터넷의 의존도는 높을 것이다.&lt;br /&gt;
+그중 하나인 R 언어 역시 마찬가지다.&lt;br /&gt;
+R 패키지의 설치는 기본적으론 &lt;a href=&quot;https://cran.r-project.org/&quot;&gt;CRAN&lt;/a&gt; 을 통해 패키지 리소스들을 요청하고 다운로드 하는데 이것이 불가해진다.&lt;br /&gt;
+그렇다고 패키지 설치가 아예 불가능한 것은 아닌데, 문제는 R을 이용하는 클라이언트 입장에서 매우 불편을 느끼게 된다는 것이 문제다.&lt;br /&gt;
+R을 잘 알고 사용하는 사람이라면 방법이 어찌 되었건 간에 패키지 리소스를 로컬상으로 옮겨서 이슈를 해결하지만, 수동적으로 R 을 분석을 위해서 단편적으로 이용하시는 분들 입장에선 어디까지나 해괴망측한 에러 중 하나로 판단할 것이 당연하다.&lt;br /&gt;
+클라이언트 입장에서 가장 간단한 패키지 설치 방법을 PPT로 제작해 보았다.&lt;/p&gt;
+&lt;iframe src=&quot;https://lovetoken.github.io/assets/assets/player/KeynoteDHTMLPlayer.html#0&quot; width=&quot;100%&quot; height=&quot;500px&quot;&gt;
+&lt;/iframe&gt;
+&lt;p&gt;준비한 슬라이드 쇼에는 가장 간단한 패키지 수동설치법에 대해서&lt;br /&gt;
+5page 로 축약하여 설명을 해 놓았다.&lt;/p&gt;
+&lt;p&gt;망분리란 고립된(?) 환경을 체험 중인 분들에게&lt;br /&gt;
+그나마 해갈을 할 수 있도록 도움이 되었으면 좋겠다. 😢&lt;/p&gt;
+</description>
+        <pubDate>Sun, 05 Mar 2017 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2017/03/05/Rpackage_install_in.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2017/03/05/Rpackage_install_in.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>R에서 의미가 있었던 프로파일링 모음</title>
