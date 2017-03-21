@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>lovetoken</title>
+        <meta name="author" content="Lovetoken" />
+        <meta name="description" content="RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)" />
+        <meta name="keywords" content="RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker), , R" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="" property="fb:app_id">
+        <meta content="" property="og:site_name">
+        
+          <meta content="RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="" property="og:description">
+        
+        
+          <meta content="https://lovetoken.github.io/r/2017/03/21/RImpala_package.html" property="og:url">
+        
+        
+          <meta content="2017-03-21T00:00:00+09:00" property="article:published_time">
+          <meta content="https://lovetoken.github.io/about/" property="article:author">
+        
+        
+          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="R" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:creator" content="@">
+        
+          <meta name="twitter:title" content="RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)">
+        
+        
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2017/03/21/RImpala_package.html">
+        
+        
+          <meta name="twitter:description" content="">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', 'UA-89656101-1', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">Lovetoken</h1>
+                
+                <div id="about">
+                    저는 개발 취향을 가진 데이터 분석가 Jr. 입니다.
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://twitter.com/LT_Lovetoken" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/lovetoken/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>Navigation</strong><br />
+                    &nbsp;&raquo; <a href="/">Home</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">About Me</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/lovetoken">Github</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)</h1>
+<span class="time">21 Mar 2017</span>
+
+<span class="categories">
+    &raquo; <a href="/category/R">R</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><p><a href="https://www.cloudera.com/documentation/enterprise/5-8-x/topics/impala.html">Impala</a> 라는걸 사용해 봐야 할 일이 생겼다.<br />
+필자는 Hadoop, SQL 과 같은 기술이 상당히 낯설고 두려움이 있었는데 Impala 를 통해 조금씩 알게 되는 계기가 되었으면 좋겠다.</p>
+<p>Impala 는 아파치 프로젝트에 incubating 단계로 관리되고 있는 프로젝트로써<br />
+HDFS(Hadoop Distributed File System) 안에 있는 데이터를 SQL 을 통해 실시간으로(대화형으로) 분석할 수 있게 도와주는 시스템이라고 한다.<br />
+HDFS 를 이용하기 위해선 MapReduce 프레임워크를 알고 이용했어야 한다는 불편한 제약을 Impala 를 통해 벗어날 수 있다 이해할 수 있겠다.</p>
+<p>Impala 소개는 이쯤 하고 (<del>읔.. 알고있는게 이정도 뿐이다 😅;;</del>) 여하튼 지금은 <a href="https://www.docker.com/">Docker</a> 을 통해 Impala 를 간단히 구동시켜보고,<br />
+RImpala package 를 이용해 R 상에서 Impala 와 커넥션을 맺는데 성공했던 과정을 짤막하게 정리하고 적어보고자 한다.</p>
+<p><br><br></p>
+<h2 id="ready-impala">Ready impala</h2>
+<p>Impala 이용 전 <code>.jar</code> 리소스들을 준비해야 한다고 한다.<br />
+아래 코드를 통해 다운로드 및 워킹디렉토리에 압축해제가 가능하다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">download.file</span>(<span class="st">&quot;https://github.com/Mu-Sigma/RImpala/blob/master/impala-jdbc-cdh5.zip?raw=true&quot;</span>, 
+              <span class="st">&quot;jdbc.zip&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;curl&quot;</span>, <span class="dt">extra =</span> <span class="st">&quot;-L&quot;</span>)
+<span class="kw">unzip</span>(<span class="st">&quot;jdbc.zip&quot;</span>)</code></pre></div>
+<p><br><br></p>
+<h2 id="docker-images-ready">Docker images ready</h2>
+<p>그다음 터미널을 들어가 Docker 를 구동할 준비를 한다.<br />
+여기서 Docker 를 이용하려는 이유를 언급해야 할 것 같은데<br />
+Impala 를 이용하기 위해선 Hadoop 시스템이 사전에 준비되어야 하고, JDBC 를 위한 Java 설정등 다양한 준비(Requirements)가 매우 부담되기 때문이다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a><br />
+이러한 이유로 나는 Docker 를 이용해 누군가 개발해 놓은, 사전에 잘 구축한 환경을 사용하고자 하기 때문에<br />
+Docker 구동을 위해 boot2docker 를 시작했다.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">boot2docker</span> init
+$ <span class="kw">boot2docker</span> up
+$ <span class="kw">boot2docker</span> ssh</code></pre></div>
+<p><code>boot2docker ssh</code> 를 통해 docker 가상머신에 접속 후 &quot;Impala&quot; 를 검색어로 적당한 이미지를 찾아본다.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker@boot2docker</span>:~$ docker search impala</code></pre></div>
+<pre><code>NAME                                DESCRIPTION                                     STARS
+cloudera/impala-dev                 Impala development environment                  10
+codingtony/impala                                                                   5
+rooneyp1976/impala                  Impala 2.0.1 on Ubuntu 14.04 Image (fork o...   4
+lancope/impala-shell                                                                1
+yanlinw/docker-impala               impala 2.0.1 + sqoop + sql server driver        0
+mikefaille/ubuntu-impala            Description                                     0
+galloplabs/hadoop-cdh-impala                                                        0
+yanlinw/docker-impala-sqoop         impala sqoop2                                   0
+cpcloud86/impala                                                                    0
+damsl/impala                                                                        0
+joshdub223/impala                                                                   0
+aurele/shiny4saagie-impala          Form that reads/writes from Impala on Saagie    0
+sebastianmontero/impala                                                             0
+datadudes/impala-rest-api           Simple rest API for Impala                      0
+andreysabitov/impala-kudu                                                           0
+... [이하 생략]</code></pre>
+<p>여러 가지가 이미지가 준비되어 있는데 그중 개인적으론 &quot;cloudera/impala-dev&quot; 보단 &quot;codingtony/impala&quot; 가 바로 사용하기 좋았다.<br />
+&quot;codingtony/impala&quot; 이미지를 준비 내려받았다.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker@boot2docker</span>:~$ docker pull codingtony/impala</code></pre></div>
+<p>1.4GB 정도가 다운로드 되는데 시간이 조금 소요된다.<br />
+다운로드 이후 image 가 잘 준비되어 있는지 <code>docker images</code> 를 통해 확인할 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker@boot2docker</span>:~$ docker images</code></pre></div>
+<pre><code>REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+codingtony/impala   latest              24f0d50712cf        2 years ago         1.452 GB</code></pre>
+<p>다음을 통해 준비한 Impala 이미지를 컨테이너로 실행시킨다.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker@boot2docker</span>:~$ docker run -d --name <span class="st">&quot;impala&quot;</span> -p 9000:9000 -p 50010:50010 -p 50020:50020 -p 50070:50070 -p 50075:50075 -p 21000:21000 -p 21050:21050 -p 25000:25000 -p 25010:25010 -p 25020:25020 codingtony/impala</code></pre></div>
+<p>참고로 <code>docker run</code> 의 다양한 옵션들 중 <code>-d,</code> <code>--name</code> 은 각각</p>
+<ul>
+<li><code>-d</code> : background 프로세스로 실행해 놓겠다는 의미</li>
+<li><code>--name &quot;impala&quot;</code> : image 이름의 alias 를 부여, 예를 들어 본 컨테이너에 접근하기 위해선 &quot;codingtony/impala&quot; 의 이름을 다 입력해야 하는데 앞으론 &quot;impala&quot; 라는 이름으로 접근 가능</li>
+</ul>
+<p>의 의미를 가지고 있다.<br />
+참고로 Impala 컨테이너가 백그라운드로 잘 실행되는 상태인지 확인을 위해선 <code>docker ps</code> 명령어로 프로세스 확인할 수 있다.<br />
+프로세스가 잘 돌고 있는 것을 확인했다면</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker@boot2docker</span>:~$ docker exec -it impala /bin/bash</code></pre></div>
+<p>를 통해 Impala 컨테이너의 bash 셸을 열어 입력/출력이 가능하도록 사용할 수 있고<br />
+<code>impala-shell</code> 를 실행해 대화형 쿼리를 주고받을 수 있다.</p>
+<pre><code>root@cb4ba4d0f902:/# impala-shell
+
+Starting Impala Shell without Kerberos authentication
+Connected to cb4ba4d0f902:21000
+Server version: impalad version 1.4.2-cdh5 RELEASE (build eac952d4ff674663ec3834778c2b981b252aec78)
+Welcome to the Impala shell. Press TAB twice to see a list of available commands.
+
+Copyright (c) 2012 Cloudera, Inc. All rights reserved.
+
+(Shell build version: Impala Shell v1.4.2-cdh5 (eac952d) built on Tue Sep 16 19:15:40 PDT 2014)
+[cb4ba4d0f902:21000] &gt;</code></pre>
+<p><br><br></p>
+<h2 id="rimpala-package-이용한-로컬에서의-impala-제어">RImpala package 이용한 로컬에서의 impala 제어</h2>
+<h3 id="docker-vm-ip-확인">Docker VM IP 확인</h3>
+<p>로컬 상에서 RImpala package 이용한 로컬 상의 제어를 위해 docker ip 를 확인할 필요가 있다.<br />
+이는 <code>boot2docker ip</code> 를 통해 쉽게 확인 가능하다.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">boot2docker</span> ip</code></pre></div>
+<p>예를 들어 &quot;192.168.59.103&quot; 임을 위의 커멘드를 통해 확인했다고 가정하겠다.</p>
+<h3 id="r상에-rimpala-패키지를-이용한-커넥션">R상에 RImpala 패키지를 이용한 커넥션</h3>
+<p>R로 되돌아오자.<br />
+먼저 <code>.jar</code> 들을 다운받은 디렉토리 path를 <code>rimpala.init()</code> 함수에 입력한 코드를 먼저 실행하고,<br />
+docker 가상환경의 ip, 그리고 Impala JDBC/ODBC 기본값 포트번호 (21050) 를 <code>rimpala.connect()</code> 에 입력한 코드를 그다음으로 실행하면 <code>TRUE</code> 가 반기면 커넥션이 성공한 것이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RImpala)
+
+<span class="kw">rimpala.init</span>(<span class="dt">libs =</span> <span class="st">&quot;impala-jdbc-cdh5&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;Classpath added successfully&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rimpala.connect</span>(<span class="dt">IP =</span> <span class="st">&quot;192.168.59.103&quot;</span>, <span class="dt">port =</span> <span class="st">&quot;21050&quot;</span>)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<h3 id="use-databases">Use databases</h3>
+<p>자 이제 즐기면(?) 되겠다. database 가 무엇이 있는지 확인부터 해보자.<br />
+<code>show databases;</code> 쿼리를 날려보는 건 <code>rimpala.showdatabases()</code> 을 실행하는 것과 같다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rimpala.showdatabases</span>()</code></pre></div>
+<pre><code>##               name
+## 1 _impala_builtins
+## 2          default</code></pre>
+<p>쿼리문 자체를 이용하고자 한다면 <code>rimpala.query()</code> 함수를 이용하면 된다.<br />
+단 쿼리문 마지막에 세미콜론(;)은 넣지 않아야 에러가 나지 않았다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rimpala.query</span>(<span class="st">&quot;show databases&quot;</span>)</code></pre></div>
+<pre><code>##               name
+## 1 _impala_builtins
+## 2          default</code></pre>
+<p>사용할 데이터베이스 선택을 해보자.<br />
+&quot;default&quot; database 를 사용하려한다면</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rimpala.usedatabase</span>(<span class="st">&quot;default&quot;</span>)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>를 하면된다. <code>use default;</code> 쿼리와 같다.</p>
+<h3 id="send-query-test">Send query test</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tryCatch</span>(<span class="kw">rimpala.query</span>(<span class="st">&quot;drop table sample&quot;</span>), <span class="dt">error =</span> function(e){})</code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tryCatch</span>(<span class="kw">rimpala.query</span>(<span class="st">&quot;create table sample(no integer)&quot;</span>), <span class="dt">error =</span> function(e){})</code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tryCatch</span>(<span class="kw">rimpala.query</span>(<span class="st">&quot;insert into sample (no) values (1)&quot;</span>), <span class="dt">error =</span> function(e){})</code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">rimpala.query</span>(<span class="st">&quot;select * from sample&quot;</span>) <span class="co"># output value is data.frame class</span>
+data</code></pre></div>
+<pre><code>##   no
+## 1  1</code></pre>
+<p><code>rimpala.query()</code> 함수로 쿼리를 보낼 때 에러를 많이 반환했다.<br />
+하지만 이상하게도 R상에선 에러를 뿜었으나 쿼리가 Impala 에 잘 먹혔다.<br />
+이 때문에 임시방편으로 <code>tryCatch()</code> 를 통해 예외처리를 했다.<br />
+다만 데이터를 끌어오는데는 쿼리는 문제없이 잘 실행됬다.</p>
+<h3 id="close-connect-impala">close connect impala</h3>
+<p>커넥션은 <code>rimpala.close()</code> 로 끊을 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rimpala.close</span>()</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p><br><br></p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="http://blog.cloudera.com/blog/2013/12/how-to-do-statistical-analysis-with-impala-and-r/">How-to: Do Statistical Analysis with Impala and R</a></li>
+<li><a href="http://d2.naver.com/helloworld/246342">Naver D2 - Hadoop에서의 실시간 SQL 질의: Impala</a></li>
+<li><a href="https://github.com/codingtony/docker-impala">Github Readme (codingtony/docker-impala)</a></li>
+</ul>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Cloudera 에서 <a href="https://www.cloudera.com/documentation/enterprise/5-9-x/topics/impala_prereqs.html">Impala install 페이지</a>를 보고 지레 겁먹어서 그렇기도 하다<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p><code>docker pull</code> 과정 없이 바로 <code>docker run</code> 을 해도 된다. 무슨말이냐면 사실 <code>docker run</code> 은 이미지가 없을 경우 자동으로 이미지를 다운로드 하기 때문이다<a href="#fnref2">↩</a></p></li>
+</ol>
+</section>
+</div>
+    <div class="share-page">
+    <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2017/03/21/RImpala_package.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/03/05/Rpackage_install_in.html">인터넷 접속이 불가능 한 내부망에서의 R package 설치방법에 대해</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/02/22/Profiling.html">R에서 의미가 있었던 프로파일링 모음</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/01/28/Docker_Rstudio_server.html">Docker 를 이용해 Rstudio server 띄워보기 (on Mac OSX)</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/01/12/multiple_load_packages.html">R에서 다수의 패키지 편하게 불러오기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/12/20/RStartup_Option.html">R에서 Startup option 설정하기 (on Mac OSX)</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/12/18/RCodeConventions.html">Google 에서 사용하는 R 코딩 스타일 규약</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/r/2017/03/05/Rpackage_install_in.html">&laquo; 인터넷 접속이 불가능 한 내부망에서의 R package 설치방법에 대해</a>
+  
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+
+        var disqus_shortname = "lovetoken";
+        var disqus_identifier = "https://lovetoken.github.io_RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)";
+        var disqus_title = "RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    /* ]]> */
+    </script>
+</div>
+
+                <footer>
+                    Copyleft by Lovetoken
+                     
+                    - <a href="https://github.com/lovetoken">https://github.com/lovetoken</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>                    
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>
