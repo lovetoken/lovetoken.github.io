@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="R에서 replicate() 함수 소개" />
-        <meta name="keywords" content="R에서 replicate() 함수 소개, , R" />
+        <meta name="description" content="R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해" />
+        <meta name="keywords" content="R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해, , R" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="R에서 replicate() 함수 소개" property="og:title">
+          <meta content="R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/02/19/replicate_function.html" property="og:url">
+          <meta content="https://lovetoken.github.io/r/2017/03/21/replicate_function.html" property="og:url">
         
         
-          <meta content="2016-02-19T00:00:00+09:00" property="article:published_time">
+          <meta content="2017-03-21T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="R에서 replicate() 함수 소개">
+          <meta name="twitter:title" content="R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/02/19/replicate_function.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2017/03/21/replicate_function.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,8 +126,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>R에서 replicate() 함수 소개</h1>
-<span class="time">19 Feb 2016</span>
+                <h1>R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해</h1>
+<span class="time">21 Mar 2017</span>
 
 <span class="categories">
     &raquo; <a href="/category/R">R</a>
@@ -135,49 +135,49 @@
 
 
 <div class="content">
-    <div class="post"><p>특정 코드를 반복해서 실행하는 방법들은 반복문을 이용하면 간단히 구현가능하다.<br />
-그런데 반복문의 주안점이 만약 반복된 모든 결과들을 저장해야 한다는 것에 있다면 통상적인 반복문에선 오묘한 방법을 통해 이를 구현한다.</p>
-<p>for 문을 이용한 간단한 예시 코드를 보면</p>
+    <div class="post"><p>R 에서 특정 코드를 반복해서 실행하는 방법은 for, while, repeat, apply 과 같은 반복문을 이용하면 간단히 구현할 수 있다.<br />
+그런데 만약 반복문의 주안점이 반복된 모든 결과들을 저장해야 한다는 것에 있다면 통상적인 반복문에선 조금 오묘한 방법을 통해 이를 구현한다.</p>
 <p><br><br></p>
 <h2 id="for문을-이용한-주사위-100회-던지기">for문을 이용한 주사위 100회 던지기</h2>
+<p>for 문을 이용한 간단한 예시 코드를 보면</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">c</span>()
 for(i in <span class="kw">seq</span>(<span class="dv">100</span>)) res[i] &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dv">1</span>)
 res</code></pre></div>
-<pre><code>##   [1] 1 5 3 2 6 2 2 5 6 6 2 3 4 1 1 6 1 3 1 5 3 3 3 3 5 3 5 5 3 4 2 1 1 2 1
-##  [36] 2 1 3 1 2 2 3 3 4 2 3 1 1 5 1 6 4 3 4 6 2 4 1 5 1 2 4 2 6 3 3 5 6 4 5
-##  [71] 5 5 4 2 6 4 3 6 2 1 6 5 6 4 5 4 2 2 4 2 6 3 5 5 4 2 2 2 5 2</code></pre>
-<p>이 코드는 주사위를 100번 던진 후 그 결과를 <code>res</code> 라는 객체에 벡터형태로 저장하는 코드로 볼 수 있다.</p>
-<p>반복문 방식을 바꿔보겠다.<br />
-위 예시를 <code>apply()</code> 를 이용해본 코드이다.</p>
+<pre><code>##   [1] 5 1 6 4 2 1 2 4 5 2 5 4 2 6 3 6 2 4 4 6 2 6 2 4 2 3 6 1 5 3 6 4 3 6 2
+##  [36] 1 5 6 4 4 1 1 6 5 5 2 4 5 6 3 1 1 2 6 3 1 2 5 2 2 2 1 4 5 2 1 3 1 4 6
+##  [71] 3 2 4 5 2 4 5 3 6 3 5 6 5 6 3 6 2 6 4 2 5 3 3 6 6 1 1 1 4 4</code></pre>
+<p>이 코드는 주사위를 100번 던져 나온 숫자들을 <code>res</code> 라는 객체에 벡터형태로 저장하는 코드로 볼 수 있다.</p>
 <p><br><br></p>
 <h2 id="apply를-이용한-주사위-100회-던지기"><code>apply()</code>를 이용한 주사위 100회 던지기</h2>
+<p>반복문 방식을 바꿔보겠다.<br />
+위 예시를 <code>apply()</code> 를 이용해본 코드이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="kw">matrix</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">100</span>), <span class="dv">2</span>, function(x) <span class="kw">sample</span>(x, <span class="dv">1</span>))
 res</code></pre></div>
-<pre><code>##   [1] 3 1 1 6 4 5 1 2 4 1 2 4 2 4 6 2 5 6 1 1 4 1 2 4 3 4 2 2 5 5 2 6 4 1 3
-##  [36] 2 4 2 3 1 6 2 4 6 3 6 3 4 1 4 4 5 4 1 2 4 4 3 1 4 6 3 5 4 4 1 6 1 5 4
-##  [71] 2 2 4 1 6 1 4 3 6 5 1 4 3 3 3 1 2 6 4 2 3 4 5 5 5 2 5 1 5 3</code></pre>
-<p>이 두가지 방식의 코드는 한가지 공통점이 있다.<br />
-반복문의 내용이 무엇이 되었던 100번의 반복으로 인해 어떤 무엇인가가 100번 반환될 것이고 이에 대한 저장공간을 사전에 생각하여 준비해야 한다는 것 이다.<br />
-무슨말인지 쉽게 풀어 설명해보자면</p>
+<pre><code>##   [1] 6 2 1 1 6 5 4 3 5 3 5 1 6 3 3 1 4 4 6 2 3 2 2 1 1 4 2 4 1 4 3 4 5 6 4
+##  [36] 4 5 3 6 3 1 1 1 6 4 1 2 2 4 3 5 2 3 3 4 6 4 4 2 5 4 5 1 6 3 1 1 4 3 1
+##  [71] 6 4 4 2 1 6 1 1 3 2 6 5 2 4 4 3 2 2 4 5 6 1 4 1 1 3 4 1 3 2</code></pre>
+<p>지금까지 예시로 든 두가지 방식의 코드는 한가지 공통점이 있다.<br />
+반복문의 내용이 무엇이 되었던 100번의 반복으로 인해 <strong>어떤 무엇인가가 100번 반환될 것이고, 이에 대한 저장공간을 사전에 생각하여 준비</strong>해야 한다는 것 이다.</p>
 <ol type="1">
 <li>첫번째 for문 반복문 예제에선 100개의 값이 저장될 <code>res</code> 라는 빈 벡터를 사전에 준비한 <code>res &lt;- c()</code> 코드가 눈에 띈다.<br />
 </li>
-<li>두번째 <code>apply()</code> 예제에선 일괄함수적용을 위해 1, 2, 3, 4, 5, 6 의 벡터 100개가 열방향으로 bind 된 matrix 를 사전에 준비했고, 이에 대해 무작위로 추출하기위한 <code>sample()</code> 함수를 일괄 적용했다.</li>
+<li>두번째 <code>apply()</code> 예제에선 일괄함수적용을 위해 1, 2, 3, 4, 5, 6 의 벡터 100개가 열방향으로 bind 된 matrix 를 사전에 준비했고, 이에 대해 무작위로 추출하기 위한 <code>sample()</code> 함수를 일괄 적용했다.</li>
 </ol>
 <p>이처럼 100회 반복의 모든 결과를 어딘가의 담아 두기 위한 사전 설계의 노력이 따로 필요하다.<br />
-분명 정석적으로 이러한 준비는 반드시 필요하며 틀리지 않다.<br />
-문제는 위의 예제처럼 간단한 코드가 아닌 복잡한 상황 일 때 사전준비 과정들은 곱절 높아질 수 있다.<br />
+분명 정석적으로 이러한 준비는 반드시 필요하며 틀린방법이라고 말할 수 없다.</p>
+<p>문제는 위의 예제처럼 간단한 코드가 아닌 복잡한 상황 일 때 사전준비 과정들은 곱절 높아질 수 있다는 것이다.<br />
 보통 복잡도는 지수적으로 늘어나기 때문에 이 오묘한 방법이 실전에서 코딩의 비효율로 일어날 수 있다고 생각한다.</p>
-<p>만약 그러한 복잡한 상황일 때,<br />
-위의 예제에들의 로직을 그대로 가지고 있으되 사전준비의 부담을 덜 수 있는 함축된 함수가 있다고 생각하는데 <code>replicate()</code> 함수 이다.</p>
 <p><br><br></p>
-<h2 id="replicate-를-이용한-주사위-100회-던지기"><code>replicate()</code> 를 이용한 주사위 100회 던지기</h2>
+<h2 id="replicate-함수-소개"><code>replicate()</code> 함수 소개</h2>
+<p>만약 복잡한 상황일 때,<br />
+위의 예제들의 로직을 그대로 가지고 있으되 사전준비의 부담을 덜 수 있는 함축된 함수가 있다고 생각하는데<br />
+바로 <code>replicate()</code> 함수 이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">100</span>, <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dv">1</span>))
 res</code></pre></div>
-<pre><code>##   [1] 2 3 5 4 1 5 6 5 6 3 4 5 3 3 1 2 5 6 2 3 5 4 3 6 4 2 5 5 5 4 4 1 5 4 5
-##  [36] 2 5 5 4 5 5 2 5 5 2 1 6 4 2 3 6 1 4 3 1 4 2 6 3 2 1 5 1 4 4 1 3 6 2 5
-##  [71] 6 2 1 1 3 4 5 5 4 3 6 1 3 1 1 1 2 4 3 2 5 2 5 2 3 2 4 1 5 3</code></pre>
-<p><code>replicate()</code> 함수는 반복문의 내용(expr)을 두번째 인자에 부여하고 첫번째 인자에 반복회수를 넣어줌으로써 반복실행된 코드의 결과를 벡터형태로 반환시켜주는 편리한 함수이다.<br />
+<pre><code>##   [1] 6 2 4 2 3 4 5 3 6 6 1 3 6 1 1 5 2 1 3 5 1 6 1 1 1 5 3 2 3 3 4 3 6 1 5
+##  [36] 6 4 1 4 4 3 5 1 2 2 2 4 4 5 3 4 6 5 3 6 6 1 6 5 4 3 6 1 4 3 3 5 4 2 4
+##  [71] 6 6 2 5 5 4 4 4 5 4 2 4 4 1 5 2 4 6 5 4 2 2 3 2 6 6 1 5 1 4</code></pre>
+<p><code>replicate()</code> 함수는 반복문의 내용(expr)을 두번째 인자에 부여하고 첫번째 인자에 반복회수를 넣어줌으로써 반복 실행된 코드의 결과를 벡터형태로 반환시켜주는 편리한 함수이다.<br />
 사전준비에 대한 로직을 <code>replicate()</code> 함수가 대신해준다.<br />
 따라서 코드길이도 확실히 줄일 수 있게 된다.</p>
 </div>
@@ -193,7 +193,7 @@ res</code></pre></div>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/02/19/replicate_function.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2017/03/21/replicate_function.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -211,20 +211,6 @@ res</code></pre></div>
     
         
             
-                
-                <div class="panel-body">
-                <h4>Related Posts</h4>
-                <ul>
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2017/03/21/replicate_function.html">R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
         
     
 
@@ -232,6 +218,10 @@ res</code></pre></div>
     
         
             
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
                 
                 <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/2017/03/21/RImpala_package.html">R에서 RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)</a>
@@ -316,6 +306,16 @@ res</code></pre></div>
     
     
         
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2016/12/20/RStartup_Option.html">R에서 Startup option 설정하기 (on Mac OSX)</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
             
         
     
@@ -550,10 +550,8 @@ res</code></pre></div>
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/r/2016/02/11/tryfunction.html">&laquo; R에서 try(), tryCatch() 함수 소개</a>
+    <a class="prev" href="/r/2017/03/21/RImpala_package.html">&laquo; R에서 RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)</a>
   
-  
-    <a class="next" href="/r/2016/03/02/rjson_package.html">R에서 rjson package 의 toJSON(), fromJSON() 함수 알아보기 &raquo;</a>
   
 </div>
 
@@ -564,8 +562,8 @@ res</code></pre></div>
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 replicate() 함수 소개";
-        var disqus_title = "R에서 replicate() 함수 소개";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해";
+        var disqus_title = "R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

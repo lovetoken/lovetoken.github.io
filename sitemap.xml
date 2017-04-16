@@ -5,12 +5,69 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 21 Mar 2017 09:34:34 +0900</pubDate>
-    <lastBuildDate>Tue, 21 Mar 2017 09:34:34 +0900</lastBuildDate>
+    <pubDate>Sun, 16 Apr 2017 19:38:30 +0900</pubDate>
+    <lastBuildDate>Sun, 16 Apr 2017 19:38:30 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
-        <title>RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)</title>
+        <title>R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해</title>
+        <description>&lt;p&gt;R 에서 특정 코드를 반복해서 실행하는 방법은 for, while, repeat, apply 과 같은 반복문을 이용하면 간단히 구현할 수 있다.&lt;br /&gt;
+그런데 만약 반복문의 주안점이 반복된 모든 결과들을 저장해야 한다는 것에 있다면 통상적인 반복문에선 조금 오묘한 방법을 통해 이를 구현한다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;for문을-이용한-주사위-100회-던지기&quot;&gt;for문을 이용한 주사위 100회 던지기&lt;/h2&gt;
+&lt;p&gt;for 문을 이용한 간단한 예시 코드를 보면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;()
+for(i in &lt;span class=&quot;kw&quot;&gt;seq&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;)) res[i] &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;)
+res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##   [1] 5 1 6 4 2 1 2 4 5 2 5 4 2 6 3 6 2 4 4 6 2 6 2 4 2 3 6 1 5 3 6 4 3 6 2
+##  [36] 1 5 6 4 4 1 1 6 5 5 2 4 5 6 3 1 1 2 6 3 1 2 5 2 2 2 1 4 5 2 1 3 1 4 6
+##  [71] 3 2 4 5 2 4 5 3 6 3 5 6 5 6 3 6 2 6 4 2 5 3 3 6 6 1 1 1 4 4&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이 코드는 주사위를 100번 던져 나온 숫자들을 &lt;code&gt;res&lt;/code&gt; 라는 객체에 벡터형태로 저장하는 코드로 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;apply를-이용한-주사위-100회-던지기&quot;&gt;&lt;code&gt;apply()&lt;/code&gt;를 이용한 주사위 100회 던지기&lt;/h2&gt;
+&lt;p&gt;반복문 방식을 바꿔보겠다.&lt;br /&gt;
+위 예시를 &lt;code&gt;apply()&lt;/code&gt; 를 이용해본 코드이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;apply&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;matrix&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;), &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, function(x) &lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(x, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;))
+res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##   [1] 6 2 1 1 6 5 4 3 5 3 5 1 6 3 3 1 4 4 6 2 3 2 2 1 1 4 2 4 1 4 3 4 5 6 4
+##  [36] 4 5 3 6 3 1 1 1 6 4 1 2 2 4 3 5 2 3 3 4 6 4 4 2 5 4 5 1 6 3 1 1 4 3 1
+##  [71] 6 4 4 2 1 6 1 1 3 2 6 5 2 4 4 3 2 2 4 5 6 1 4 1 1 3 4 1 3 2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;지금까지 예시로 든 두가지 방식의 코드는 한가지 공통점이 있다.&lt;br /&gt;
+반복문의 내용이 무엇이 되었던 100번의 반복으로 인해 &lt;strong&gt;어떤 무엇인가가 100번 반환될 것이고, 이에 대한 저장공간을 사전에 생각하여 준비&lt;/strong&gt;해야 한다는 것 이다.&lt;/p&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;첫번째 for문 반복문 예제에선 100개의 값이 저장될 &lt;code&gt;res&lt;/code&gt; 라는 빈 벡터를 사전에 준비한 &lt;code&gt;res &amp;lt;- c()&lt;/code&gt; 코드가 눈에 띈다.&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;두번째 &lt;code&gt;apply()&lt;/code&gt; 예제에선 일괄함수적용을 위해 1, 2, 3, 4, 5, 6 의 벡터 100개가 열방향으로 bind 된 matrix 를 사전에 준비했고, 이에 대해 무작위로 추출하기 위한 &lt;code&gt;sample()&lt;/code&gt; 함수를 일괄 적용했다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;이처럼 100회 반복의 모든 결과를 어딘가의 담아 두기 위한 사전 설계의 노력이 따로 필요하다.&lt;br /&gt;
+분명 정석적으로 이러한 준비는 반드시 필요하며 틀린방법이라고 말할 수 없다.&lt;/p&gt;
+&lt;p&gt;문제는 위의 예제처럼 간단한 코드가 아닌 복잡한 상황 일 때 사전준비 과정들은 곱절 높아질 수 있다는 것이다.&lt;br /&gt;
+보통 복잡도는 지수적으로 늘어나기 때문에 이 오묘한 방법이 실전에서 코딩의 비효율로 일어날 수 있다고 생각한다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;replicate-함수-소개&quot;&gt;&lt;code&gt;replicate()&lt;/code&gt; 함수 소개&lt;/h2&gt;
+&lt;p&gt;만약 복잡한 상황일 때,&lt;br /&gt;
+위의 예제들의 로직을 그대로 가지고 있으되 사전준비의 부담을 덜 수 있는 함축된 함수가 있다고 생각하는데&lt;br /&gt;
+바로 &lt;code&gt;replicate()&lt;/code&gt; 함수 이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;replicate&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;, &lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;))
+res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##   [1] 6 2 4 2 3 4 5 3 6 6 1 3 6 1 1 5 2 1 3 5 1 6 1 1 1 5 3 2 3 3 4 3 6 1 5
+##  [36] 6 4 1 4 4 3 5 1 2 2 2 4 4 5 3 4 6 5 3 6 6 1 6 5 4 3 6 1 4 3 3 5 4 2 4
+##  [71] 6 6 2 5 5 4 4 4 5 4 2 4 4 1 5 2 4 6 5 4 2 2 3 2 6 6 1 5 1 4&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;replicate()&lt;/code&gt; 함수는 반복문의 내용(expr)을 두번째 인자에 부여하고 첫번째 인자에 반복회수를 넣어줌으로써 반복 실행된 코드의 결과를 벡터형태로 반환시켜주는 편리한 함수이다.&lt;br /&gt;
+사전준비에 대한 로직을 &lt;code&gt;replicate()&lt;/code&gt; 함수가 대신해준다.&lt;br /&gt;
+따라서 코드길이도 확실히 줄일 수 있게 된다.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 21 Mar 2017 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2017/03/21/replicate_function.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2017/03/21/replicate_function.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
+    
+      <item>
+        <title>R에서 RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)</title>
         <description>&lt;p&gt;&lt;a href=&quot;https://www.cloudera.com/documentation/enterprise/5-8-x/topics/impala.html&quot;&gt;Impala&lt;/a&gt; 라는걸 사용해 봐야 할 일이 생겼다.&lt;br /&gt;
 필자는 Hadoop, SQL 과 같은 기술이 상당히 낯설고 두려움이 있었는데 Impala 를 통해 조금씩 알게 되는 계기가 되었으면 좋겠다.&lt;/p&gt;
 &lt;p&gt;Impala 는 아파치 프로젝트에 incubating 단계로 관리되고 있는 프로젝트로써&lt;br /&gt;
@@ -21,7 +78,7 @@ RImpala package 를 이용해 R 상에서 Impala 와 커넥션을 맺는데 성�
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;ready-impala&quot;&gt;Ready impala&lt;/h2&gt;
 &lt;p&gt;Impala 이용 전 &lt;code&gt;.jar&lt;/code&gt; 리소스들을 준비해야 한다고 한다.&lt;br /&gt;
-아래 코드를 통해 다운로드 및 워킹디렉토리에 압축해제가 가능하다.&lt;/p&gt;
+아래 R 코드를 통해 다운로드 및 워킹디렉토리에 압축해제가 가능하다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;download.file&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;https://github.com/Mu-Sigma/RImpala/blob/master/impala-jdbc-cdh5.zip?raw=true&amp;quot;&lt;/span&gt;, 
               &lt;span class=&quot;st&quot;&gt;&amp;quot;jdbc.zip&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;curl&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;extra =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;-L&amp;quot;&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;unzip&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;jdbc.zip&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -1439,7 +1496,7 @@ gss_cat %&amp;gt;%
       </item>
     
       <item>
-        <title>Alfred(알프레드) 에서 검색쿼리 등록을 통한 간편검색 (on Mac OSX)</title>
+        <title>Mac 에서 Alfred(알프레드) 검색쿼리 등록을 통한 간편검색</title>
         <description>&lt;a href=&quot;https://www.alfredapp.com/&quot;&gt;&lt;br&gt;
 &lt;center&gt;
 &lt;img src=&quot;/assets/alfred_1.png&quot; /&gt;
@@ -1712,6 +1769,7 @@ p7 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;
 &lt;blockquote&gt;
 &lt;p&gt;R Graphics Cookbook [Programming Insight] - 300page&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;r을-이용한-간단한-예제-실습&quot;&gt;R을 이용한 간단한 예제 실습&lt;/h2&gt;
 &lt;p&gt;위 예제로 든 것을 실제로 만들어 보며 실습을 해보았다.&lt;br /&gt;
 R의 여러 패키지의 도움을 빌렸다.&lt;br /&gt;
