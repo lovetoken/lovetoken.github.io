@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 16 Apr 2017 23:37:04 +0900</pubDate>
-    <lastBuildDate>Sun, 16 Apr 2017 23:37:04 +0900</lastBuildDate>
+    <pubDate>Wed, 19 Apr 2017 22:12:09 +0900</pubDate>
+    <lastBuildDate>Wed, 19 Apr 2017 22:12:09 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -138,63 +138,6 @@ lmfit &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&qu
         <pubDate>Sun, 16 Apr 2017 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2017/04/16/vif.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2017/04/16/vif.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해</title>
-        <description>&lt;p&gt;R 에서 특정 코드를 반복해서 실행하는 방법은 for, while, repeat, apply 과 같은 반복문을 이용하면 간단히 구현할 수 있다.&lt;br /&gt;
-그런데 만약 반복문의 주안점이 반복된 모든 결과들을 저장해야 한다는 것에 있다면 통상적인 반복문에선 조금 오묘한 방법을 통해 이를 구현한다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;for문을-이용한-주사위-100회-던지기&quot;&gt;for문을 이용한 주사위 100회 던지기&lt;/h2&gt;
-&lt;p&gt;for 문을 이용한 간단한 예시 코드를 보면&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;()
-for(i in &lt;span class=&quot;kw&quot;&gt;seq&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;)) res[i] &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;)
-res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##   [1] 3 1 5 4 1 6 6 4 5 6 6 1 1 3 2 4 4 2 3 4 4 4 5 1 5 5 6 1 1 3 6 1 3 5 2
-##  [36] 5 1 2 5 3 4 5 2 4 2 5 6 2 3 4 3 1 6 2 1 4 1 1 3 6 4 3 1 5 6 3 4 3 5 3
-##  [71] 2 6 3 4 6 3 2 3 3 1 3 6 4 3 6 1 5 4 2 1 6 6 3 3 2 4 3 5 3 1&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;이 코드는 주사위를 100번 던져 나온 숫자들을 &lt;code&gt;res&lt;/code&gt; 라는 객체에 벡터형태로 저장하는 코드로 볼 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;apply를-이용한-주사위-100회-던지기&quot;&gt;&lt;code&gt;apply()&lt;/code&gt;를 이용한 주사위 100회 던지기&lt;/h2&gt;
-&lt;p&gt;반복문 방식을 바꿔보겠다.&lt;br /&gt;
-위 예시를 &lt;code&gt;apply()&lt;/code&gt; 를 이용해본 코드이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;apply&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;matrix&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;), &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, function(x) &lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(x, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;))
-res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##   [1] 4 6 5 6 3 5 4 3 5 1 6 6 2 3 5 6 4 6 2 3 5 4 4 5 1 1 2 5 3 6 6 5 5 4 5
-##  [36] 5 3 6 3 4 6 5 2 2 6 1 3 6 6 3 5 3 6 4 1 1 4 4 5 1 5 3 4 4 4 4 2 4 2 1
-##  [71] 3 1 5 4 4 4 6 1 2 2 4 5 2 1 5 5 2 3 2 1 2 4 5 3 5 1 6 1 1 6&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;지금까지 예시로 든 두 가지 방식의 코드는 한가지 공통점이 있다.&lt;br /&gt;
-반복문의 내용이 무엇이 되었던 100번의 반복으로 인해 &lt;strong&gt;어떤 무엇인가가 100번 반환될 것이고, 이에 대한 저장공간을 사전에 생각하여 준비&lt;/strong&gt;해야 한다는 것이다.&lt;/p&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;첫 번째 for문 반복문 예제에선 100개의 값이 저장될 &lt;code&gt;res&lt;/code&gt; 라는 빈 벡터를 사전에 준비한 &lt;code&gt;res &amp;lt;- c()&lt;/code&gt; 코드가 눈에 띈다.&lt;br /&gt;
-&lt;/li&gt;
-&lt;li&gt;두 번째 &lt;code&gt;apply()&lt;/code&gt; 예제에선 일괄함수적용을 위해 1, 2, 3, 4, 5, 6 의 벡터 100개가 열방향으로 bind 된 matrix 를 사전에 준비했고, 이에 대해 무작위로 추출하기 위한 &lt;code&gt;sample()&lt;/code&gt; 함수를 일괄 적용했다.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;이처럼 100회 반복의 모든 결과를 어딘가의 담아 두기 위한 사전 설계의 노력이 따로 필요하다.&lt;br /&gt;
-분명 정석적으로 이러한 준비는 반드시 필요하며 틀린 방법이라고 말할 수 없다.&lt;/p&gt;
-&lt;p&gt;문제는 위의 예제처럼 간단한 코드가 아닌 복잡한 상황일 때 사전준비 과정들은 곱절 높아질 수 있다는 것이다.&lt;br /&gt;
-보통 복잡도는 지수적으로 늘어나기 때문에 이 오묘한 방법이 실전에서 코딩의 비효율로 일어날 수 있다고 생각한다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;replicate-함수-소개&quot;&gt;&lt;code&gt;replicate()&lt;/code&gt; 함수 소개&lt;/h2&gt;
-&lt;p&gt;만약 복잡한 상황일 때,&lt;br /&gt;
-위의 예제들의 로직을 그대로 가지고 있되 사전준비의 부담을 덜 수 있는 함축된 함수가 있다고 생각하는데&lt;br /&gt;
-바로 &lt;code&gt;replicate()&lt;/code&gt; 함수이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;replicate&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;, &lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;))
-res&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##   [1] 2 5 1 4 2 5 2 2 2 5 1 1 4 5 5 6 3 4 5 1 6 1 3 5 6 2 5 1 5 4 1 1 1 5 6
-##  [36] 3 1 2 3 6 3 5 2 6 5 6 4 6 5 5 4 1 2 6 4 5 1 5 5 1 1 2 2 5 6 2 2 3 1 3
-##  [71] 4 4 4 6 2 1 2 2 2 1 4 6 5 2 4 5 4 6 4 2 4 1 2 2 2 6 1 4 4 1&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;replicate()&lt;/code&gt; 함수는 반복문의 내용(expr)을 두 번째 인자에 부여하고, 첫 번째 인자에 반복회수를 넣어줌으로써 반복 실행된 코드의 결과를 벡터형태로 반환시켜주는 편리한 함수이다.&lt;br /&gt;
-사전준비에 대한 로직을 &lt;code&gt;replicate()&lt;/code&gt; 함수가 대신해준다.&lt;br /&gt;
-따라서 코드 길이도 확실히 줄일 수 있게 된다.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 16 Apr 2017 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2017/04/16/replicate_function.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2017/04/16/replicate_function.html</guid>
         
         
         <category>R</category>
@@ -1172,6 +1115,211 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
         
         
         <category>etc</category>
+        
+      </item>
+    
+      <item>
+        <title>R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰</title>
+        <description>&lt;p&gt;R을 이용한 모델링을 할 때 &lt;code&gt;formula&lt;/code&gt; 인자값을 어떤 식으로 입력해야 하는지 정리해 볼 필요가 있다.&lt;br /&gt;
+대표적으로 &lt;code&gt;lm()&lt;/code&gt; 함수의 첫 번째 인자에 대한 입력값을 예로 들 수 있을 것이다.&lt;br /&gt;
+이 인자값에는 약속에 의해 정해진 기호(operator)를 이용하여 모델의 뼈대를 설정할 수 있다.&lt;br /&gt;
+몇가지의 기호만 알고 이를 조합한다면 일반적인 뼈대를 구성하는데 문제가 생기진 않을 것이다.&lt;/p&gt;
+&lt;p&gt;(본 글에서 사용될 기초데이터는 &lt;code&gt;mtcars&lt;/code&gt; 이다.)&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;head&lt;/span&gt;(mtcars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;기호&quot;&gt;&amp;quot;~&amp;quot; 기호&lt;/h2&gt;
+&lt;p&gt;기본적으로 &lt;code&gt;formula&lt;/code&gt; 인자값의 입력은 종속변수를 앞에 쓰고 독립변수를 뒤에 쓰게 되는데&lt;br /&gt;
+종속변수와 독립변수를 구분 짓는 기호는 &amp;quot;~&amp;quot; 이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = mpg ~ wt, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt  
+##      37.285       -5.344&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위의 단순선형회귀적합 코드를 살펴보자.&lt;br /&gt;
+&lt;code&gt;lm()&lt;/code&gt; 함수의 첫 번째 인자입력값을 보면 &lt;code&gt;mpg ~ wt&lt;/code&gt; 로 되어있다.&lt;br /&gt;
+왼쪽 맨 앞의 &lt;code&gt;mpg&lt;/code&gt; 는 종속변수로 지정하고, 오른쪽 뒤에 있는 &lt;code&gt;wt&lt;/code&gt; 는 독립변수로 지정하겠다는 의미가 된다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;기호-1&quot;&gt;&amp;quot;+&amp;quot; 기호&lt;/h2&gt;
+&lt;p&gt;독립변수를 &lt;code&gt;wt&lt;/code&gt; 뿐만 아니라 &lt;code&gt;cyl&lt;/code&gt; 변수까지 고려하는 다중회귀분석을 하고 싶다면 &amp;quot;+&amp;quot; 기호를 이용해 고려대상이 되는 변수를 추가시킬 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = mpg ~ wt + cyl, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt          cyl  
+##      39.686       -3.191       -1.508&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;그런데 만약 자신이 가지고 있는 데이터셋에 종속변수를 설명시킬 독립변수들이 이미 모두 포진되어있는 상태라면, 그리고 그 독립변수들을 모두 고려한 다중회귀적합을 시키고 싶다면 어떻게 해야 할까?&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;disp +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;hp +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;drat +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;qsec +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;vs +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;am +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;gear +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;carb, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = mpg ~ cyl + disp + hp + drat + wt + qsec + vs + 
+##     am + gear + carb, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)          cyl         disp           hp         drat  
+##    12.30337     -0.11144      0.01334     -0.02148      0.78711  
+##          wt         qsec           vs           am         gear  
+##    -3.71530      0.82104      0.31776      2.52023      0.65541  
+##        carb  
+##    -0.19942&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이런 식으로 고려대상이 되는 독립변수의 명칭을 모두 적은 다음&lt;br /&gt;
+사이사이에 &amp;quot;+&amp;quot; 기호를 무식하게 넣어주어야 하는 상황이다.&lt;br /&gt;
+하지만 위의 코딩은 매우 비효율적 🙄 손이 아파질 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;기호-2&quot;&gt;&amp;quot;.&amp;quot; 기호&lt;/h2&gt;
+&lt;p&gt;이를 대비해 특수하게 약속된 &amp;quot;.&amp;quot; 기호를 이용하면 좋다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = mpg ~ ., data = mtcars)
+## 
+## Coefficients:
+## (Intercept)          cyl         disp           hp         drat  
+##    12.30337     -0.11144      0.01334     -0.02148      0.78711  
+##          wt         qsec           vs           am         gear  
+##    -3.71530      0.82104      0.31776      2.52023      0.65541  
+##        carb  
+##    -0.19942&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&amp;quot;.&amp;quot; 기호는 &amp;quot;전부&amp;quot; 의 의미를 가진다.&lt;br /&gt;
+위의 코드는 종속변수로 이미 배정된 mpg 이외의 모든 변수를 독립변수로 고려하라 라는 의미가 된다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;기호-3&quot;&gt;&amp;quot;-&amp;quot; 기호&lt;/h2&gt;
+&lt;p&gt;&amp;quot;+&amp;quot; 기호의 반대는 &amp;quot;-&amp;quot; 이다. 의미 역시 반대이다.&lt;br /&gt;
+고려대상에서 추가하는 &amp;quot;+&amp;quot; 와 다르게 &amp;quot;-&amp;quot; 는 고려대상에서 제외시킨다.&lt;br /&gt;
+&amp;quot;.&amp;quot; 기호를 통해 모든 독립변수를 배정했는데, 여기서 &lt;code&gt;cyl&lt;/code&gt; 변수만은 독립변수에서 제외하고 싶을 경우&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;. -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = mpg ~ . - cyl, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)         disp           hp         drat           wt  
+##    10.96007      0.01283     -0.02191      0.83520     -3.69251  
+##        qsec           vs           am         gear         carb  
+##     0.84244      0.38975      2.57743      0.71155     -0.21958&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이렇게 &amp;quot;-&amp;quot; 기호를 활용하면 된다.&lt;/p&gt;
+&lt;p&gt;한 가지 덧붙이자면 회귀적합시 기본적으로 절편(intercept)을 고려하는 회귀적합을 하게 되는데, 절편이 0인 모델로 적합하고 싶은 경우 절편항을 제외시켜야 할 것이다.&lt;br /&gt;
+&amp;quot;-&amp;quot; 기호를 아래와 같이 이용하면 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;. -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = mpg ~ . - 1, data = mtcars)
+## 
+## Coefficients:
+##      cyl      disp        hp      drat        wt      qsec        vs  
+##  0.35083   0.01354  -0.02055   1.24158  -3.82613   1.19140   0.18972  
+##       am      gear      carb  
+##  2.83222   1.05426  -0.26321&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;결과를 확인해 보면 항시 언급되었던 절편항 &amp;quot;(Intercept)&amp;quot; 이 없어진 것을 확인할 수 있다.&lt;br /&gt;
+참고로 아래와 같이 해도 절편항을 제외한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;. +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = mpg ~ . + 0, data = mtcars)
+## 
+## Coefficients:
+##      cyl      disp        hp      drat        wt      qsec        vs  
+##  0.35083   0.01354  -0.02055   1.24158  -3.82613   1.19140   0.18972  
+##       am      gear      carb  
+##  2.83222   1.05426  -0.26321&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;기호-4&quot;&gt;&amp;quot;:&amp;quot; 기호&lt;/h2&gt;
+&lt;p&gt;회귀적합에서 상호작용에 대해 고려한다면 &amp;quot;:&amp;quot; 기호를 이용하여 상호작용항을 부여할 수 있다.&lt;br /&gt;
+만약 종속변수 &lt;code&gt;mpg&lt;/code&gt; 에 대해 설명하는 독립변수를 &lt;code&gt;wt&lt;/code&gt;, &lt;code&gt;cyl&lt;/code&gt; 2개 설정하고,&lt;br /&gt;
+이 두 변수의 상호작용까지 고려하고자 한다면 이렇게 하면 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt:cyl, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = mpg ~ wt + cyl + wt:cyl, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt          cyl       wt:cyl  
+##     54.3068      -8.6556      -3.8032       0.8084&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;그런데 고려대상인 독립변수가 3개 이상, 그리고 독립변수의 조합별 상호작용을 고려하게 된다면 골치가 아플 수 있다.&lt;br /&gt;
+예를 들어 &lt;code&gt;mpg&lt;/code&gt; 에 대해 설명하는 독립변수를 &lt;code&gt;wt&lt;/code&gt;, &lt;code&gt;cyl&lt;/code&gt;, &lt;code&gt;gear&lt;/code&gt; 3개이고, 3개의 모든 조합에 대해 상호작용을 고려한다면 &lt;code&gt;formula&lt;/code&gt; 인자값이 아래처럼 매우 길게 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;gear +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt:cyl +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt:gear +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl:gear +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt:cyl:gear, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = mpg ~ wt + cyl + gear + wt:cyl + wt:gear + cyl:gear + 
+##     wt:cyl:gear, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt          cyl         gear       wt:cyl  
+##     47.3853     -10.4502      -0.8957       2.2704       0.5459  
+##     wt:gear     cyl:gear  wt:cyl:gear  
+##      0.3527      -0.8794       0.1001&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;기호-5&quot;&gt;&amp;quot;*&amp;quot; 기호&lt;/h2&gt;
+&lt;p&gt;상호작용항을 고려하되 각 개별항과 상호작용항이 될 수 있는 모든 조합을 알아서 배정시키는&lt;br /&gt;
+약속된 기호가 바로 &amp;quot;*&amp;quot; 이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt *&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl *&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;gear, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = mpg ~ wt * cyl * gear, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt          cyl         gear       wt:cyl  
+##     47.3853     -10.4502      -0.8957       2.2704       0.5459  
+##     wt:gear     cyl:gear  wt:cyl:gear  
+##      0.3527      -0.8794       0.1001&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위의&lt;br /&gt;
+&lt;code&gt;mpg ~ wt * cyl * gear&lt;/code&gt;&lt;br /&gt;
+는&lt;br /&gt;
+&lt;code&gt;mpg ~ wt + cyl + gear + wt:cyl + wt:gear + cyl:gear + wt:cyl:gear&lt;/code&gt;&lt;br /&gt;
+와 동일한 것이다.&lt;br /&gt;
+따라서 실행된 코드의 출력결과도 비교해 보면 같은 것을 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;i-함수&quot;&gt;&lt;code&gt;I()&lt;/code&gt; 함수&lt;/h2&gt;
+&lt;p&gt;만약 분석자 나름대로 다변수들의 정보를 하나로 압축시킨 파생변수로 회귀적합을 하고 싶다면 어떻게 해야 할까?&lt;br /&gt;
+예를 들어 &lt;code&gt;hp&lt;/code&gt; 변수값과 루트를 씌운 &lt;code&gt;wt&lt;/code&gt;변수값을 더하고 &lt;code&gt;carb&lt;/code&gt; 변수의 값을 뺀 값을 독립변수로 설정하여 단순회귀적합을 하고 싶다고 가정해보자. (일부러 의미 없이 복잡하게 설정해 봄)&lt;/p&gt;
+&lt;p&gt;일단 떠오르는 방법은 &lt;code&gt;mtcars&lt;/code&gt; 에 새로운 변수열을 만들어 위의 상황대로&lt;/p&gt;
+&lt;p&gt;hp + sqrt(wt) - carb&lt;/p&gt;
+&lt;p&gt;를 계산한 새로운 변수를 만들어 이 변수열과 회귀적합을 하면 될 것이다.&lt;br /&gt;
+하지만 &lt;code&gt;I()&lt;/code&gt; 함수를 알게 된다면 새로운 변수를 직접 만들 필요가 없다. 이렇게 하면 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;I&lt;/span&gt;(hp +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;sqrt&lt;/span&gt;(wt) -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;carb), &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = mpg ~ I(hp + sqrt(wt) - carb), data = mtcars)
+## 
+## Coefficients:
+##             (Intercept)  I(hp + sqrt(wt) - carb)  
+##                30.20584                 -0.06945&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;그런데 한 가지 의문이 생길 수 있다.&lt;br /&gt;
+만약 &lt;code&gt;I()&lt;/code&gt; 함수를 이용하지 않고 &lt;code&gt;formula&lt;/code&gt; 에 &lt;code&gt;hp + sqrt(wt) - carb&lt;/code&gt; 의 날것의 형태로 입력하면 되지 않을까? 라는 의문이다.&lt;br /&gt;
+실행해보면 다음과 같다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;hp +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;sqrt&lt;/span&gt;(wt) -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;carb, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = mpg ~ hp + sqrt(wt) - carb, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           hp     sqrt(wt)  
+##    50.42823     -0.02908    -14.70273&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;우리가 줄곧 배운 &lt;code&gt;formula&lt;/code&gt; 의 입력값은 특정한 기호에 의해 약속된 문법을 따른다.&lt;br /&gt;
+따라서 &lt;code&gt;hp + sqrt(wt) - carb&lt;/code&gt; 의 형태는 우리가 원하는 파생변수를 만들어 적합시키지 않는다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;hp&lt;/code&gt; 값에 &lt;code&gt;sqrt(wt)&lt;/code&gt; 값이 더해진 후 &lt;code&gt;carb&lt;/code&gt; 변수값이 차감된 것을 원하지만,&lt;br /&gt;
+독립변수에 &lt;code&gt;hp&lt;/code&gt;, &lt;code&gt;sqrt(wt)&lt;/code&gt; 가 따로따로 고려되고 &lt;code&gt;carb&lt;/code&gt; 변수가 독립변수로 제외됨을 명시할 뿐이다.&lt;/p&gt;
+&lt;p&gt;다시 &lt;code&gt;I()&lt;/code&gt; 함수를 이용한 결과로 돌아가 보면 &lt;code&gt;I()&lt;/code&gt; 의 쓰임은 결국 &lt;code&gt;formula&lt;/code&gt; 인자의 약속된 문법을 escape 하는 역할로 볼 수도 있겠다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;formula&lt;/code&gt; 인자에 입력할 값의 사용방법과 기호의 의미를 정리해 보았다.&lt;br /&gt;
+위의 내용 외에도 더 많은 팁과 기호들의 조합을 생각해 볼 수 있을 것이다.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 06 Dec 2016 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2016/12/06/formula_usage.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/12/06/formula_usage.html</guid>
+        
+        
+        <category>R</category>
         
       </item>
     
