@@ -5,9 +5,436 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 19 Apr 2017 22:12:09 +0900</pubDate>
-    <lastBuildDate>Wed, 19 Apr 2017 22:12:09 +0900</lastBuildDate>
+    <pubDate>Sun, 23 Apr 2017 15:47:02 +0900</pubDate>
+    <lastBuildDate>Sun, 23 Apr 2017 15:47:02 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 caret package 를 이용한 데이터 학습 간편화 전략</title>
+        <description>&lt;p&gt;기계학습(Machine Learning) 에서 기법이 무엇이 되든, 어떤 알고리즘을 사용할 것이든 공통으로 필요한 과정은 &amp;quot;Learning&amp;quot; 즉 &amp;quot;학습&amp;quot;이다.&lt;br /&gt;
+학습의 대상은 전통적으로 훈련데이터(Training dataset)이고, 훈련데이터를 학습시키는 아주 다양한 방법들이 존재한다.&lt;br /&gt;
+방법별로 특징과 색깔이 완전히 다르며, 무엇보다 &lt;strong&gt;워낙 다양한 방법들이 존재하기 때문&lt;/strong&gt;에 아무리 많이 공부를 한 사람이라 한들 모든 알고리즘을 아는것이 한계가 있다고 생각한다.&lt;br /&gt;
+때문에 무엇을 채택해서 어느 정도의 파라미터값을 부여해야 알맞은 모델을 만들 수 있을지 현실적인 문제에 부딪히게 된다.&lt;/p&gt;
+&lt;p&gt;R에서 배포되고 있는 머신러닝 관련 패키지의 개수는 &lt;a href=&quot;https://cran.r-project.org/web/views/MachineLearning.html&quot;&gt;CRAN Task View: Machine Learning &amp;amp; Statistical Learning&lt;/a&gt;만을 보아도 수십개가 된다.&lt;br /&gt;
+이 패키지들을 모두 하나하나 실행해서 상황에 맞는 모델링을 하기 위해 비교실험을 해보는 것도 가능할 것이다.&lt;br /&gt;
+하지만 패키지별로 사용방식이 많이 다를 수 있어 이를 인지하는데도 많은 시간이 걸리고, 비교해보고 싶은 알고리즘의 패키지를 찾아 설치하고 로드하는 것 마저 부담으로 다가올 수 있겠다.&lt;/p&gt;
+&lt;p&gt;이러한 상황에서 caret 패키지는 예측모델을 만들기 위한 데이터 학습 시 간편한 함수를 제공해 준다.&lt;br /&gt;
+특히 금일&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;기준 242개의 머신러닝 알고리즘을 표준화된 인터페이스를 통해 테스트 해 볼 수 있도록 준비가 되어 있고,&lt;br /&gt;
+이에 대해서 다양한 파라미터 시나리오를 구성해 손쉽게 튜닝해주고 변수의 중요도를 측정해준다.&lt;br /&gt;
+사용자는 편리한 훈련데이터의 학습을 통해 적절한 알고리즘 선택 의사결정에 도움을 받을 수 있다.&lt;/p&gt;
+&lt;p&gt;이러한 기대효과를 가진 caret package 에 대해 소개하는 시간을 가져보도록 하겠다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/caret.png&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;caret 패키지의 명칭은 &amp;quot;&lt;strong&gt;C&lt;/strong&gt;lassification &lt;strong&gt;A&lt;/strong&gt;nd &lt;strong&gt;RE&lt;/strong&gt;gression &lt;strong&gt;T&lt;/strong&gt;raining&amp;quot; 의 앞글자를 따와 명명되었다.&lt;br /&gt;
+주 관심 대상이 되는 종속변수(예측변수)가 명목형 변수라면 &amp;quot;Classification&amp;quot;, 연속형 변수라면 &amp;quot;Regression&amp;quot; 으로 갈피를 잡아 &amp;quot;Training&amp;quot; 을 하게 될 텐데, 이 과정을 caret 패키지를 이용해 코딩해 본 가장 간단한 예제로 시작해 보겠다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(tidyverse)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(caret)
+
+&lt;span class=&quot;kw&quot;&gt;set.seed&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1234&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# Reproducibility 를 위한 시드넘버 지정&lt;/span&gt;
+
+&lt;span class=&quot;kw&quot;&gt;data&lt;/span&gt;(Sonar, &lt;span class=&quot;dt&quot;&gt;package =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;mlbench&amp;quot;&lt;/span&gt;)
+Sonar &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Sonar %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;tbl_df
+Sonar&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 208 x 61
+##        V1     V2     V3     V4     V5     V6     V7     V8     V9    V10
+## *   &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;
+## 1  0.0200 0.0371 0.0428 0.0207 0.0954 0.0986 0.1539 0.1601 0.3109 0.2111
+## 2  0.0453 0.0523 0.0843 0.0689 0.1183 0.2583 0.2156 0.3481 0.3337 0.2872
+## 3  0.0262 0.0582 0.1099 0.1083 0.0974 0.2280 0.2431 0.3771 0.5598 0.6194
+## 4  0.0100 0.0171 0.0623 0.0205 0.0205 0.0368 0.1098 0.1276 0.0598 0.1264
+## 5  0.0762 0.0666 0.0481 0.0394 0.0590 0.0649 0.1209 0.2467 0.3564 0.4459
+## 6  0.0286 0.0453 0.0277 0.0174 0.0384 0.0990 0.1201 0.1833 0.2105 0.3039
+## 7  0.0317 0.0956 0.1321 0.1408 0.1674 0.1710 0.0731 0.1401 0.2083 0.3513
+## 8  0.0519 0.0548 0.0842 0.0319 0.1158 0.0922 0.1027 0.0613 0.1465 0.2838
+## 9  0.0223 0.0375 0.0484 0.0475 0.0647 0.0591 0.0753 0.0098 0.0684 0.1487
+## 10 0.0164 0.0173 0.0347 0.0070 0.0187 0.0671 0.1056 0.0697 0.0962 0.0251
+## # ... with 198 more rows, and 51 more variables: V11 &amp;lt;dbl&amp;gt;, V12 &amp;lt;dbl&amp;gt;,
+## #   V13 &amp;lt;dbl&amp;gt;, V14 &amp;lt;dbl&amp;gt;, V15 &amp;lt;dbl&amp;gt;, V16 &amp;lt;dbl&amp;gt;, V17 &amp;lt;dbl&amp;gt;, V18 &amp;lt;dbl&amp;gt;,
+## #   V19 &amp;lt;dbl&amp;gt;, V20 &amp;lt;dbl&amp;gt;, V21 &amp;lt;dbl&amp;gt;, V22 &amp;lt;dbl&amp;gt;, V23 &amp;lt;dbl&amp;gt;, V24 &amp;lt;dbl&amp;gt;,
+## #   V25 &amp;lt;dbl&amp;gt;, V26 &amp;lt;dbl&amp;gt;, V27 &amp;lt;dbl&amp;gt;, V28 &amp;lt;dbl&amp;gt;, V29 &amp;lt;dbl&amp;gt;, V30 &amp;lt;dbl&amp;gt;,
+## #   V31 &amp;lt;dbl&amp;gt;, V32 &amp;lt;dbl&amp;gt;, V33 &amp;lt;dbl&amp;gt;, V34 &amp;lt;dbl&amp;gt;, V35 &amp;lt;dbl&amp;gt;, V36 &amp;lt;dbl&amp;gt;,
+## #   V37 &amp;lt;dbl&amp;gt;, V38 &amp;lt;dbl&amp;gt;, V39 &amp;lt;dbl&amp;gt;, V40 &amp;lt;dbl&amp;gt;, V41 &amp;lt;dbl&amp;gt;, V42 &amp;lt;dbl&amp;gt;,
+## #   V43 &amp;lt;dbl&amp;gt;, V44 &amp;lt;dbl&amp;gt;, V45 &amp;lt;dbl&amp;gt;, V46 &amp;lt;dbl&amp;gt;, V47 &amp;lt;dbl&amp;gt;, V48 &amp;lt;dbl&amp;gt;,
+## #   V49 &amp;lt;dbl&amp;gt;, V50 &amp;lt;dbl&amp;gt;, V51 &amp;lt;dbl&amp;gt;, V52 &amp;lt;dbl&amp;gt;, V53 &amp;lt;dbl&amp;gt;, V54 &amp;lt;dbl&amp;gt;,
+## #   V55 &amp;lt;dbl&amp;gt;, V56 &amp;lt;dbl&amp;gt;, V57 &amp;lt;dbl&amp;gt;, V58 &amp;lt;dbl&amp;gt;, V59 &amp;lt;dbl&amp;gt;, V60 &amp;lt;dbl&amp;gt;,
+## #   Class &amp;lt;fctr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;예제에 사용할 데이터셋은 &lt;code&gt;mlbench::Sonar&lt;/code&gt; 을 이용해보겠으며 예측대상변수는 &lt;code&gt;Class&lt;/code&gt; 라는 명칭의 명목형으로 M, R 2개의 이분값이 담겨있다.&lt;br /&gt;
+이를 예측하는 다양한 모델을 만들어 볼 것이다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;createdatapartition-함수&quot;&gt;&lt;code&gt;createDataPartition()&lt;/code&gt; 함수&lt;/h2&gt;
+&lt;p&gt;첫번째로 훈련데이터셋(Training dataset)과 테스트데이터셋(Test dataset)을 나누어 추후에 모델평가에 이용할 준비를 해보겠다. 비율은 70%를 훈련데이터셋에 배정하겠다.&lt;br /&gt;
+&lt;code&gt;sample()&lt;/code&gt; 함수를 이용해 훈련데이터셋과 테스트데이터셋의 파티셔닝을 해 볼 수 있지만&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;indexTrain &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;kw&quot;&gt;nrow&lt;/span&gt;(Sonar), &lt;span class=&quot;kw&quot;&gt;round&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;nrow&lt;/span&gt;(Sonar) *&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;.&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;))
+training &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Sonar[ indexTrain, ]
+testing  &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Sonar[-indexTrain, ]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;caret 패키지에 있는 &lt;code&gt;createDataPartition()&lt;/code&gt; 함수를 이용해 볼 수도 있다.&lt;br /&gt;
+이 함수에는 &lt;code&gt;p&lt;/code&gt; 인자가 있어 특정비율로 파티셔닝할 때 편하다.&lt;br /&gt;
+단 반환되는 타입이 기본적으로 list 이므로 &lt;code&gt;list&lt;/code&gt; 인자값을 &lt;code&gt;FALSE&lt;/code&gt;로 해 보았다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;indexTrain &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;createDataPartition&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;kw&quot;&gt;nrow&lt;/span&gt;(Sonar), &lt;span class=&quot;dt&quot;&gt;p =&lt;/span&gt; .&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;list =&lt;/span&gt; F)
+training &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Sonar[ indexTrain, ]
+testing  &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Sonar[-indexTrain, ]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;7:3 비율만큼 잘 파티셔닝이 되어있는지 확인해 보면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;training&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 148 x 61
+##        V1     V2     V3     V4     V5     V6     V7     V8     V9    V10
+##     &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;
+## 1  0.0262 0.0582 0.1099 0.1083 0.0974 0.2280 0.2431 0.3771 0.5598 0.6194
+## 2  0.0100 0.0171 0.0623 0.0205 0.0205 0.0368 0.1098 0.1276 0.0598 0.1264
+## 3  0.0286 0.0453 0.0277 0.0174 0.0384 0.0990 0.1201 0.1833 0.2105 0.3039
+## 4  0.0519 0.0548 0.0842 0.0319 0.1158 0.0922 0.1027 0.0613 0.1465 0.2838
+## 5  0.0223 0.0375 0.0484 0.0475 0.0647 0.0591 0.0753 0.0098 0.0684 0.1487
+## 6  0.0164 0.0173 0.0347 0.0070 0.0187 0.0671 0.1056 0.0697 0.0962 0.0251
+## 7  0.0039 0.0063 0.0152 0.0336 0.0310 0.0284 0.0396 0.0272 0.0323 0.0452
+## 8  0.0123 0.0309 0.0169 0.0313 0.0358 0.0102 0.0182 0.0579 0.1122 0.0835
+## 9  0.0090 0.0062 0.0253 0.0489 0.1197 0.1589 0.1392 0.0987 0.0955 0.1895
+## 10 0.0298 0.0615 0.0650 0.0921 0.1615 0.2294 0.2176 0.2033 0.1459 0.0852
+## # ... with 138 more rows, and 51 more variables: V11 &amp;lt;dbl&amp;gt;, V12 &amp;lt;dbl&amp;gt;,
+## #   V13 &amp;lt;dbl&amp;gt;, V14 &amp;lt;dbl&amp;gt;, V15 &amp;lt;dbl&amp;gt;, V16 &amp;lt;dbl&amp;gt;, V17 &amp;lt;dbl&amp;gt;, V18 &amp;lt;dbl&amp;gt;,
+## #   V19 &amp;lt;dbl&amp;gt;, V20 &amp;lt;dbl&amp;gt;, V21 &amp;lt;dbl&amp;gt;, V22 &amp;lt;dbl&amp;gt;, V23 &amp;lt;dbl&amp;gt;, V24 &amp;lt;dbl&amp;gt;,
+## #   V25 &amp;lt;dbl&amp;gt;, V26 &amp;lt;dbl&amp;gt;, V27 &amp;lt;dbl&amp;gt;, V28 &amp;lt;dbl&amp;gt;, V29 &amp;lt;dbl&amp;gt;, V30 &amp;lt;dbl&amp;gt;,
+## #   V31 &amp;lt;dbl&amp;gt;, V32 &amp;lt;dbl&amp;gt;, V33 &amp;lt;dbl&amp;gt;, V34 &amp;lt;dbl&amp;gt;, V35 &amp;lt;dbl&amp;gt;, V36 &amp;lt;dbl&amp;gt;,
+## #   V37 &amp;lt;dbl&amp;gt;, V38 &amp;lt;dbl&amp;gt;, V39 &amp;lt;dbl&amp;gt;, V40 &amp;lt;dbl&amp;gt;, V41 &amp;lt;dbl&amp;gt;, V42 &amp;lt;dbl&amp;gt;,
+## #   V43 &amp;lt;dbl&amp;gt;, V44 &amp;lt;dbl&amp;gt;, V45 &amp;lt;dbl&amp;gt;, V46 &amp;lt;dbl&amp;gt;, V47 &amp;lt;dbl&amp;gt;, V48 &amp;lt;dbl&amp;gt;,
+## #   V49 &amp;lt;dbl&amp;gt;, V50 &amp;lt;dbl&amp;gt;, V51 &amp;lt;dbl&amp;gt;, V52 &amp;lt;dbl&amp;gt;, V53 &amp;lt;dbl&amp;gt;, V54 &amp;lt;dbl&amp;gt;,
+## #   V55 &amp;lt;dbl&amp;gt;, V56 &amp;lt;dbl&amp;gt;, V57 &amp;lt;dbl&amp;gt;, V58 &amp;lt;dbl&amp;gt;, V59 &amp;lt;dbl&amp;gt;, V60 &amp;lt;dbl&amp;gt;,
+## #   Class &amp;lt;fctr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;testing&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 60 x 61
+##        V1     V2     V3     V4     V5     V6     V7     V8     V9    V10
+##     &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;
+## 1  0.0200 0.0371 0.0428 0.0207 0.0954 0.0986 0.1539 0.1601 0.3109 0.2111
+## 2  0.0453 0.0523 0.0843 0.0689 0.1183 0.2583 0.2156 0.3481 0.3337 0.2872
+## 3  0.0762 0.0666 0.0481 0.0394 0.0590 0.0649 0.1209 0.2467 0.3564 0.4459
+## 4  0.0317 0.0956 0.1321 0.1408 0.1674 0.1710 0.0731 0.1401 0.2083 0.3513
+## 5  0.0079 0.0086 0.0055 0.0250 0.0344 0.0546 0.0528 0.0958 0.1009 0.1240
+## 6  0.0124 0.0433 0.0604 0.0449 0.0597 0.0355 0.0531 0.0343 0.1052 0.2120
+## 7  0.0126 0.0149 0.0641 0.1732 0.2565 0.2559 0.2947 0.4110 0.4983 0.5920
+## 8  0.0473 0.0509 0.0819 0.1252 0.1783 0.3070 0.3008 0.2362 0.3830 0.3759
+## 9  0.0099 0.0484 0.0299 0.0297 0.0652 0.1077 0.2363 0.2385 0.0075 0.1882
+## 10 0.0151 0.0320 0.0599 0.1050 0.1163 0.1734 0.1679 0.1119 0.0889 0.1205
+## # ... with 50 more rows, and 51 more variables: V11 &amp;lt;dbl&amp;gt;, V12 &amp;lt;dbl&amp;gt;,
+## #   V13 &amp;lt;dbl&amp;gt;, V14 &amp;lt;dbl&amp;gt;, V15 &amp;lt;dbl&amp;gt;, V16 &amp;lt;dbl&amp;gt;, V17 &amp;lt;dbl&amp;gt;, V18 &amp;lt;dbl&amp;gt;,
+## #   V19 &amp;lt;dbl&amp;gt;, V20 &amp;lt;dbl&amp;gt;, V21 &amp;lt;dbl&amp;gt;, V22 &amp;lt;dbl&amp;gt;, V23 &amp;lt;dbl&amp;gt;, V24 &amp;lt;dbl&amp;gt;,
+## #   V25 &amp;lt;dbl&amp;gt;, V26 &amp;lt;dbl&amp;gt;, V27 &amp;lt;dbl&amp;gt;, V28 &amp;lt;dbl&amp;gt;, V29 &amp;lt;dbl&amp;gt;, V30 &amp;lt;dbl&amp;gt;,
+## #   V31 &amp;lt;dbl&amp;gt;, V32 &amp;lt;dbl&amp;gt;, V33 &amp;lt;dbl&amp;gt;, V34 &amp;lt;dbl&amp;gt;, V35 &amp;lt;dbl&amp;gt;, V36 &amp;lt;dbl&amp;gt;,
+## #   V37 &amp;lt;dbl&amp;gt;, V38 &amp;lt;dbl&amp;gt;, V39 &amp;lt;dbl&amp;gt;, V40 &amp;lt;dbl&amp;gt;, V41 &amp;lt;dbl&amp;gt;, V42 &amp;lt;dbl&amp;gt;,
+## #   V43 &amp;lt;dbl&amp;gt;, V44 &amp;lt;dbl&amp;gt;, V45 &amp;lt;dbl&amp;gt;, V46 &amp;lt;dbl&amp;gt;, V47 &amp;lt;dbl&amp;gt;, V48 &amp;lt;dbl&amp;gt;,
+## #   V49 &amp;lt;dbl&amp;gt;, V50 &amp;lt;dbl&amp;gt;, V51 &amp;lt;dbl&amp;gt;, V52 &amp;lt;dbl&amp;gt;, V53 &amp;lt;dbl&amp;gt;, V54 &amp;lt;dbl&amp;gt;,
+## #   V55 &amp;lt;dbl&amp;gt;, V56 &amp;lt;dbl&amp;gt;, V57 &amp;lt;dbl&amp;gt;, V58 &amp;lt;dbl&amp;gt;, V59 &amp;lt;dbl&amp;gt;, V60 &amp;lt;dbl&amp;gt;,
+## #   Class &amp;lt;fctr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;훈련데이터셋이 148개, 테스트데이터셋이 60개로 잘 나누어진 것을 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;머신러닝-알고리즘별-최적의-모수를-찾기-위한-학습방법-사전-설정&quot;&gt;머신러닝 알고리즘별 최적의 모수를 찾기 위한 학습방법 사전 설정&lt;/h2&gt;
+&lt;p&gt;K 최근접 이웃모델 즉 KNN(K-Neareast Neighbors) 을 통해 명목변수를 예측하려 한다면&lt;br /&gt;
+그 이전에 선행되어야 할 것이 &amp;quot;K&amp;quot; 를 몇개로 설정할 것이냐이다.&lt;br /&gt;
+랜덤포레스트(RandomForest) 를 이용하려 한다면 노드를 나눌 기준으로 고려할 변수의 개수인 &amp;quot;mtry&amp;quot; 를 얼마로 정해야 할지도 마찬가지이다.&lt;br /&gt;
+위의 예시에서 &amp;quot;K&amp;quot;, &amp;quot;mtry&amp;quot; 와 같은 모수는 예비조사를 통해 사람이 정하거나, 데이터에 근거해 최적의 군집개수를 정하는 과정을 통해 (방법이 어떻게 되었든) 정해져야 모델링을 할 수 있다. (단 비모수적 모델링이라면 제외되는 이야기이겠다)&lt;br /&gt;
+이처럼 알고리즘 별로 반드시 정해져야 모델링을 실시 할 수 있는 모수들을 caret package 에선 &amp;quot;Tuning parameters&amp;quot; 로 설명하고 있고, LOOCV, K-fold cross validation 등과 같은 방법을 통해서 데이터에 근거한 최적의 parameter 를 찾는 과정을 거친다.&lt;/p&gt;
+&lt;p&gt;특히 하나의 단모수가 아니라 p개의 모수일 경우 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;&lt;em&gt;P&lt;/em&gt;&lt;/sup&gt;&lt;/span&gt; 의 그리드를 탐색하여 후보모델들을 테스트하게 된다.&lt;/p&gt;
+&lt;p&gt;예를 들면 이렇다.&lt;br /&gt;
+KNN(K-Neareast Neighbors) 는 단모수이므로 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;1&lt;/sup&gt; = 3&lt;/span&gt; 인 3가지 k 값들을 후보로 두고 모델을 비교하게 된다.&lt;br /&gt;
+RRLDA(Robust Regularized Linear Discriminant Analysis) 의 경우 모수의 개수가 lambda, hp, penalty 총 3개인데 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;3&lt;/sup&gt; = 27&lt;/span&gt; 인 27가지 후보를 비교하게 될 것이다.&lt;/p&gt;
+&lt;p&gt;3개이던 27개 이던 다수의 후보에 대해서 비교하는 방식 또한 고려대상이다.&lt;br /&gt;
+후보의 비교방법을 K-fold cross validation 으로 한다고 할 경우 몇번을 접어 cross validation 을 할 것이냐 란 질문의 K 를 정해야 한다.&lt;br /&gt;
+caret 패키지에선 &lt;code&gt;trainControl()&lt;/code&gt; 함수를 통해 일관된 비교방법을 각 후보에게 통일되게 적용하여 평가할 수 있게 도와준다.&lt;/p&gt;
+&lt;p&gt;아래 코드는 10-fold cross validation 을 5번 반복하여 가장 좋은 후보의 파라미터 그리드를 찾게 해주는 일종의 장치를 만드는 코드이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;fitControl &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;trainControl&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;repeatedcv&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;number =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;repeats =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이렇게 만들어진 비교방법에 대한 정보가 담겨있는 &lt;code&gt;fitControl&lt;/code&gt; 객체는 추후에 학습 과정에서 사용하게 될 것이다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;randomforest-로-학습시켜보기&quot;&gt;RandomForest 로 학습시켜보기&lt;/h2&gt;
+&lt;p&gt;본격적으로 훈련데이터셋을 이용해 학습을 시켜보겠다.&lt;br /&gt;
+학습을 위한 표준화된 인터페이스는 바로 &lt;code&gt;train()&lt;/code&gt; 함수이다.&lt;br /&gt;
+이함수에서 &lt;code&gt;method&lt;/code&gt; 인자만 바꿔주면 원하는 학습모델 알고리즘을 구현할 수 있게 된다.&lt;/p&gt;
+&lt;p&gt;아래 코드는 랜덤포레스트를 통해 훈련데이터셋을 학습하는 코드다.&lt;br /&gt;
+랜덤포레스트 알고리즘을 통해 학습할 것을 &lt;code&gt;method = &amp;quot;rf&amp;quot;&lt;/code&gt; 를 통해 선언한다.&lt;br /&gt;
+랜덤포레스트에서 Tuning parameter 에 해당되는 &amp;quot;mtry&amp;quot; 는 10-fold cross validation 을 5번 반복하여 가장 좋게 평가된 것을 선택하는 후보채택방법인 &lt;code&gt;fitControl&lt;/code&gt; 객체를 &lt;code&gt;trControl&lt;/code&gt; 인자에 입력한다.&lt;br /&gt;
+&lt;code&gt;verbose&lt;/code&gt; 인자는 기본적으로 &lt;code&gt;TRUE&lt;/code&gt; 로 설정되어 있는데 &amp;quot;mtry&amp;quot; 선정과정이 적나라하게 모두 출력된다.&lt;br /&gt;
+이 출력을 막고싶었기 때문에 &lt;code&gt;FALSE&lt;/code&gt; 로 해제하였다.&lt;/p&gt;
+&lt;p&gt;더해서 랜덤포레스트를 알고리즘을 이용하기 위한 원 소스인 randomForest 패키지 여부를 먼저 확인하는 과정이 있으므로&lt;br /&gt;
+만약 randomForest 패키지가 없다면 설치를 시도할 것인지를 물어볼 것이다. 이럴땐 패키지를 설치하겠다는 의미인 &amp;quot;1&amp;quot;을 입력하면 설치 이후 학습을 연이어 진행한다.&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;rf_fit &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;train&lt;/span&gt;(Class ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; training, &lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;rf&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;trControl =&lt;/span&gt; fitControl, &lt;span class=&quot;dt&quot;&gt;verbose =&lt;/span&gt; F)
+rf_fit&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## Random Forest 
+## 
+## 148 samples
+##  60 predictor
+##   2 classes: &amp;#39;M&amp;#39;, &amp;#39;R&amp;#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 5 times) 
+## Summary of sample sizes: 133, 133, 133, 133, 133, 133, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa    
+##    2    0.8401905  0.6762815
+##   31    0.7969524  0.5898194
+##   60    0.7793333  0.5547874
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was mtry = 2.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;mtry 후보는 2, 31, 60 개로 자동설정된 것을 볼 수 있고, 이 중 Kappa 통계량과 정확도에 의해서 mtry = 2 가 최종적으로 선정된 것을 볼 수 있다.&lt;br /&gt;
+선정과정을 자세하게 보고 싶을 경우엔 &lt;code&gt;verbose = F&lt;/code&gt; 를 삭제하고 실행해 보면 좋을 수도 있겠다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;테스트셋에-적용하여-정확도-확인&quot;&gt;테스트셋에 적용하여 정확도 확인&lt;/h2&gt;
+&lt;p&gt;보통 훈련데이터셋을 이용해 모델 학습하면&lt;br /&gt;
+바로 해보고 싶은 것이 Test dataset 에 적용시켜 영리한 모델인지를 확인해 보는 것이다.&lt;/p&gt;
+&lt;p&gt;제너릭 함수인 &lt;code&gt;predict()&lt;/code&gt; 를 이용해 볼 수 도 있겠지만&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(rf_fit, &lt;span class=&quot;dt&quot;&gt;newdata =&lt;/span&gt; testing)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] M M R M R R M M R M R R R R M R R R R R R R R M M R R M M R M M M M M
+## [36] M M M M M M M M M M M R M M R M M M M M M M M M M
+## Levels: M R&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;caret package 의 &lt;code&gt;confusionMatrix()&lt;/code&gt; 를 곁들이면 더 간편하게 분류교차표 및 정확도까지 출력된다.&lt;a href=&quot;#fn3&quot; class=&quot;footnoteRef&quot; id=&quot;fnref3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(rf_fit, &lt;span class=&quot;dt&quot;&gt;newdata =&lt;/span&gt; testing) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;confusionMatrix&lt;/span&gt;(testing$Class)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  M  R
+##          M 30  9
+##          R  3 18
+##                                           
+##                Accuracy : 0.8             
+##                  95% CI : (0.6767, 0.8922)
+##     No Information Rate : 0.55            
+##     P-Value [Acc &amp;gt; NIR] : 4.67e-05        
+##                                           
+##                   Kappa : 0.5876          
+##  Mcnemar&amp;#39;s Test P-Value : 0.1489          
+##                                           
+##             Sensitivity : 0.9091          
+##             Specificity : 0.6667          
+##          Pos Pred Value : 0.7692          
+##          Neg Pred Value : 0.8571          
+##              Prevalence : 0.5500          
+##          Detection Rate : 0.5000          
+##    Detection Prevalence : 0.6500          
+##       Balanced Accuracy : 0.7879          
+##                                           
+##        &amp;#39;Positive&amp;#39; Class : M               
+## &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;60개의 테스트 데이터셋 중 7개가 오분류 되어 약 88% 의 정확도를 가진 것으로 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;tuning-parameters-의-그리드-조정하기&quot;&gt;Tuning parameters 의 그리드 조정하기&lt;/h2&gt;
+&lt;h3 id=&quot;사용자-검색-그리드custom-search-grid&quot;&gt;사용자 검색 그리드(custom search grid)&lt;/h3&gt;
+&lt;p&gt;최적 파라미터 선정 시 탐색범위와 그리드를 수동으로 조절할 수 있다.&lt;br /&gt;
+자동으로 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;&lt;em&gt;P&lt;/em&gt;&lt;/sup&gt;&lt;/span&gt; 에 의해 정해진 mtry 의 후보는 2, 31, 60 로 3개가 되었다.&lt;br /&gt;
+만약 더 많은 후보와 상대평가하고 싶을 경우 후보를 사용자가 직접 설정할 수 있다는 것이다.&lt;/p&gt;
+&lt;p&gt;아래 코드는 mtry 의 후보를 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 로 바꾸어 설정하고 이 중에서 채택해 보는 코드이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;customGrid &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;expand.grid&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;mtry =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;)
+rf_fit2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;train&lt;/span&gt;(Class ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; training, &lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;rf&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;trControl =&lt;/span&gt; fitControl, &lt;span class=&quot;dt&quot;&gt;tuneGrid =&lt;/span&gt; customGrid, &lt;span class=&quot;dt&quot;&gt;verbose =&lt;/span&gt; F)
+
+rf_fit2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## Random Forest 
+## 
+## 148 samples
+##  60 predictor
+##   2 classes: &amp;#39;M&amp;#39;, &amp;#39;R&amp;#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 5 times) 
+## Summary of sample sizes: 133, 133, 134, 133, 133, 133, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa    
+##    1    0.8283810  0.6509334
+##    2    0.8449524  0.6849450
+##    3    0.8352381  0.6654026
+##    4    0.8366667  0.6687853
+##    5    0.8390476  0.6740847
+##    6    0.8349524  0.6651819
+##    7    0.8245714  0.6441155
+##    8    0.8406667  0.6766160
+##    9    0.8322857  0.6603633
+##   10    0.8284762  0.6522812
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was mtry = 2.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;후보를 사용자 검색에 의해 늘려보아도 이전과 같이 mtry = 2 가 최적의 파라미터로 선정되는 것을 볼 수 있다.&lt;/p&gt;
+&lt;h3 id=&quot;랜덤-검색-그리드random-selection-of-tuning-parameter-combinations&quot;&gt;랜덤 검색 그리드(&lt;a href=&quot;http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf&quot;&gt;random selection of tuning parameter combinations&lt;/a&gt;)&lt;/h3&gt;
+&lt;p&gt;튜닝 파라미터의 개수가 많으면 많아질수록 탐색그리드의 개수는 지수적으로 증가하게 되고 동일한 간격의 그리드 구성으로 인해 탐색과정이 비효율적이 될 수 있다.&lt;br /&gt;
+지금까지 튜닝 파라미터가 한개인 랜덤포레스트를 예시로 했는데 이번에는 튜닝 파라미터가 2개인 RDA(Regularized Discriminant Analysis) 를 통해 훈련을 해보겠다.&lt;br /&gt;
+&lt;code&gt;method = &amp;quot;rda&amp;quot;&lt;/code&gt; 를 통해 알고리즘을 RDA 로 선언할 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;rda_fit &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;train&lt;/span&gt;(Class ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; training, &lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;rda&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;trControl =&lt;/span&gt; fitControl, &lt;span class=&quot;dt&quot;&gt;verbose =&lt;/span&gt; F)
+
+rda_fit&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## Regularized Discriminant Analysis 
+## 
+## 148 samples
+##  60 predictor
+##   2 classes: &amp;#39;M&amp;#39;, &amp;#39;R&amp;#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 5 times) 
+## Summary of sample sizes: 133, 133, 133, 133, 134, 133, ... 
+## Resampling results across tuning parameters:
+## 
+##   gamma  lambda  Accuracy   Kappa    
+##   0.0    0.0     0.5687619  0.1108443
+##   0.0    0.5     0.7151429  0.4264147
+##   0.0    1.0     0.7499048  0.4979435
+##   0.5    0.0     0.8162857  0.6298722
+##   0.5    0.5     0.8340000  0.6646203
+##   0.5    1.0     0.7962857  0.5907191
+##   1.0    0.0     0.6405714  0.2773524
+##   1.0    0.5     0.6392381  0.2748428
+##   1.0    1.0     0.6406667  0.2776946
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final values used for the model were gamma = 0.5 and lambda = 0.5.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;총 9개의 파라미터 조합을 비교하는 것을 볼 수 있다.&lt;br /&gt;
+바로 위에 소개한 사용자 검색 그리드 역시 &lt;code&gt;expand.grid()&lt;/code&gt; 함수를 이용하여 동일간격 그리드를 검색하게 될 것이다. 이와는 다르게 랜덤 검색 그리드를 이용하면 동일간격 조건을 파괴시켜 파라미터 조합을 구성할 수 도 있다.&lt;br /&gt;
+&lt;code&gt;trainControl()&lt;/code&gt; 함수의 &lt;code&gt;search = &amp;quot;random&amp;quot;&lt;/code&gt; 을 통해 검색 타입을 랜덤으로 바꾼다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;fitControl &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;trainControl&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;repeatedcv&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;number =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;repeats =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;search =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;random&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이후 &lt;code&gt;rda_fit2&lt;/code&gt; 라는 객체이름으로 학습을 다시 시도하고 저장해 본다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;rda_fit2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;train&lt;/span&gt;(Class ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; training, &lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;rda&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;trControl =&lt;/span&gt; fitControl, &lt;span class=&quot;dt&quot;&gt;verbose =&lt;/span&gt; F)
+rda_fit2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## Regularized Discriminant Analysis 
+## 
+## 148 samples
+##  60 predictor
+##   2 classes: &amp;#39;M&amp;#39;, &amp;#39;R&amp;#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 5 times) 
+## Summary of sample sizes: 134, 133, 134, 133, 133, 133, ... 
+## Resampling results across tuning parameters:
+## 
+##   gamma      lambda      Accuracy   Kappa    
+##   0.1905631  0.09127881  0.8182857  0.6359082
+##   0.4408472  0.90947514  0.8528571  0.7038502
+##   0.5510134  0.81992551  0.8500952  0.6971829
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final values used for the model were gamma = 0.4408472 and lambda
+##  = 0.9094751.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;튜닝파라미터가 gamma, lambda 2개인데 검색타입을 랜덤으로 바꾸는 순간 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;&lt;em&gt;P&lt;/em&gt;&lt;/sup&gt;&lt;/span&gt; 로 검색하지 않는 것을 확인할 수 있다.&lt;br /&gt;
+수동으로 튜닝파라미터 조합개수를 늘려볼 필요가 있다. 이땐 &lt;code&gt;train()&lt;/code&gt; 함수의 &lt;code&gt;tuneLength&lt;/code&gt; 인자를 이용하면 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;rda_fit2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;train&lt;/span&gt;(Class ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; training, &lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;rda&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;trControl =&lt;/span&gt; fitControl, &lt;span class=&quot;dt&quot;&gt;tuneLength =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;50&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;verbose =&lt;/span&gt; F)
+rda_fit2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## Regularized Discriminant Analysis 
+## 
+## 148 samples
+##  60 predictor
+##   2 classes: &amp;#39;M&amp;#39;, &amp;#39;R&amp;#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 5 times) 
+## Summary of sample sizes: 133, 133, 133, 133, 134, 133, ... 
+## Resampling results across tuning parameters:
+## 
+##   gamma       lambda       Accuracy   Kappa    
+##   0.02467175  0.046240696  0.7835238  0.5655217
+##   0.04621138  0.002756874  0.7919048  0.5824003
+##   0.07368577  0.095874564  0.8066667  0.6118768
+##   0.07701965  0.222859888  0.8202857  0.6398213
+##   0.08188038  0.929917497  0.8123810  0.6225995
+##   0.08238852  0.477012957  0.8337143  0.6662831
+##   0.08304677  0.278592744  0.8242857  0.6477351
+##   0.13057207  0.394850662  0.8407619  0.6801815
+##   0.16005396  0.740609627  0.8583810  0.7147504
+##   0.16216482  0.825921020  0.8475238  0.6931098
+##   0.17577373  0.014122051  0.8121905  0.6232475
+##   0.18138144  0.343863922  0.8367619  0.6723626
+##   0.19299614  0.250964919  0.8272381  0.6530806
+##   0.21154934  0.924441815  0.8380952  0.6743253
+##   0.29112614  0.062553048  0.8165714  0.6318989
+##   0.32592688  0.815187029  0.8491429  0.6957937
+##   0.33401985  0.355391729  0.8343810  0.6667045
+##   0.33579572  0.585321935  0.8450476  0.6877346
+##   0.38974907  0.595071037  0.8462857  0.6901836
+##   0.43134665  0.053143749  0.8057143  0.6091455
+##   0.46238233  0.225248311  0.8180952  0.6334203
+##   0.48010298  0.220008595  0.8167619  0.6308603
+##   0.52875129  0.900502936  0.8369524  0.6717790
+##   0.59418161  0.835826412  0.8410476  0.6796135
+##   0.64002373  0.715450695  0.8450476  0.6871024
+##   0.66951286  0.080254850  0.8084762  0.6133645
+##   0.66992710  0.557613578  0.8411429  0.6791014
+##   0.68394252  0.120018550  0.8085714  0.6136620
+##   0.70021389  0.623248231  0.8423810  0.6819366
+##   0.70083494  0.075418255  0.8072381  0.6108154
+##   0.71019128  0.776717800  0.8287619  0.6548209
+##   0.72006479  0.588846389  0.8301905  0.6573055
+##   0.73698825  0.234913379  0.8139048  0.6242272
+##   0.74356291  0.148414826  0.8139048  0.6242293
+##   0.75140091  0.109355597  0.8112381  0.6189670
+##   0.75224234  0.263593657  0.8179048  0.6324297
+##   0.76679423  0.973216361  0.7871429  0.5722820
+##   0.79372463  0.790550417  0.8045714  0.6062931
+##   0.82214953  0.130020319  0.8098095  0.6156629
+##   0.82467612  0.550611505  0.8059048  0.6081189
+##   0.82612455  0.693889297  0.7966667  0.5900626
+##   0.84879017  0.495823009  0.7993333  0.5949617
+##   0.85219803  0.931135875  0.7571429  0.5118228
+##   0.86055616  0.314226715  0.8045714  0.6050836
+##   0.86385220  0.089582003  0.7966667  0.5883829
+##   0.87890898  0.058559475  0.7939048  0.5827761
+##   0.89994468  0.677635454  0.7641905  0.5254671
+##   0.93039376  0.101246271  0.7522857  0.5002045
+##   0.93660375  0.971543712  0.7182857  0.4340252
+##   0.95149425  0.689020876  0.7141905  0.4257570
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final values used for the model were gamma = 0.160054 and lambda
+##  = 0.7406096.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;tuneLength = 50&lt;/code&gt; 로 설정해본 결과이다.&lt;br /&gt;
+기본 그리드 검색방법에 비교해 보면 채택된 파라미터의 값이 소수점이 더 많아져 자연스럽게 정밀해 진 것을 확인할 수 있다.&lt;br /&gt;
+이처럼 튜닝파라미터를 랜덤하게 50개로 설정하여 조금 더 융통성 있는 최적의 파라미터 튜닝 방법을 고려해 볼 수도 있겠다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;병렬처리parallel-processing&quot;&gt;병렬처리(Parallel Processing)&lt;/h2&gt;
+&lt;p&gt;병렬처리를 통해 빠른 탐색 전략을 취할 수 있다.&lt;br /&gt;
+doMC 패키지와의 연계를 지원되는 caret 패키지는 학습 시 생기는 많은 연산을 병렬처리를 통해 시간 비용을 낮출 수 있다.&lt;br /&gt;
+특히 튜닝파라미터의 조합 수가 많으면 많을수록 병렬처리는 많은 효용이 있을 것이다.&lt;/p&gt;
+&lt;p&gt;필요에 따라 doMC 패키지를 설치하고 로드한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;install.packages&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;doMC&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;doMC&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;doMC 패키지를 로드하면 &lt;code&gt;getDoParWorkers()&lt;/code&gt; 를 통해 현재 활성화된 코어수를 확인할 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;getDoParWorkers&lt;/span&gt;() &lt;span class=&quot;co&quot;&gt;# default cores count&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;기본적으론 세팅 이전엔 1코어임을 확인할 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;time &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;system.time&lt;/span&gt;({
+  &lt;span class=&quot;kw&quot;&gt;train&lt;/span&gt;(Class ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; training, &lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;gbm&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;trControl =&lt;/span&gt; fitControl, &lt;span class=&quot;dt&quot;&gt;verbose =&lt;/span&gt; F)
+})
+time&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##    user  system elapsed 
+## 157.872   2.239 116.540&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이때 GBM(Stochastic Gradient Boosting Model)알고리즘으로 학습에 소요되는 시간은 117 초 내외이다.&lt;/p&gt;
+&lt;p&gt;이번에는 &lt;code&gt;registerDoMC()&lt;/code&gt; 함수를 이용해 코어수를 2개로 늘린 후 학습에 소요되는 시간을 비교해보자.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;registerDoMC&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;cores =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;getDoParWorkers&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;time &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;system.time&lt;/span&gt;({
+  &lt;span class=&quot;kw&quot;&gt;train&lt;/span&gt;(Class ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; training, &lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;gbm&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;trControl =&lt;/span&gt; fitControl, &lt;span class=&quot;dt&quot;&gt;verbose =&lt;/span&gt; F)
+})
+time&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##    user  system elapsed 
+## 152.187   1.348  43.648&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이때 학습에 소요되는 시간은 44 초 내외이다.&lt;br /&gt;
+확실히 소요시간이 줄어든 것을 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://topepo.github.io/caret&quot; class=&quot;uri&quot;&gt;https://topepo.github.io/caret&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;2017-04-23 기준으로 글이 작성 및 수정 되었다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;1: yes, 2: no&lt;a href=&quot;#fnref2&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn3&quot;&gt;&lt;p&gt;예제가 Classification 일때 이므로 Regression 일때는 논외다&lt;a href=&quot;#fnref3&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Sun, 23 Apr 2017 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2017/04/23/caret_package.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2017/04/23/caret_package.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>R에서 car::vif() 함수를 이용한 분산팽창요인(Variance Inflation Factor) 구하기</title>
@@ -1115,211 +1542,6 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
         
         
         <category>etc</category>
-        
-      </item>
-    
-      <item>
-        <title>R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰</title>
-        <description>&lt;p&gt;R을 이용한 모델링을 할 때 &lt;code&gt;formula&lt;/code&gt; 인자값을 어떤 식으로 입력해야 하는지 정리해 볼 필요가 있다.&lt;br /&gt;
-대표적으로 &lt;code&gt;lm()&lt;/code&gt; 함수의 첫 번째 인자에 대한 입력값을 예로 들 수 있을 것이다.&lt;br /&gt;
-이 인자값에는 약속에 의해 정해진 기호(operator)를 이용하여 모델의 뼈대를 설정할 수 있다.&lt;br /&gt;
-몇가지의 기호만 알고 이를 조합한다면 일반적인 뼈대를 구성하는데 문제가 생기진 않을 것이다.&lt;/p&gt;
-&lt;p&gt;(본 글에서 사용될 기초데이터는 &lt;code&gt;mtcars&lt;/code&gt; 이다.)&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;head&lt;/span&gt;(mtcars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
-## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;기호&quot;&gt;&amp;quot;~&amp;quot; 기호&lt;/h2&gt;
-&lt;p&gt;기본적으로 &lt;code&gt;formula&lt;/code&gt; 인자값의 입력은 종속변수를 앞에 쓰고 독립변수를 뒤에 쓰게 되는데&lt;br /&gt;
-종속변수와 독립변수를 구분 짓는 기호는 &amp;quot;~&amp;quot; 이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Call:
-## lm(formula = mpg ~ wt, data = mtcars)
-## 
-## Coefficients:
-## (Intercept)           wt  
-##      37.285       -5.344&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;위의 단순선형회귀적합 코드를 살펴보자.&lt;br /&gt;
-&lt;code&gt;lm()&lt;/code&gt; 함수의 첫 번째 인자입력값을 보면 &lt;code&gt;mpg ~ wt&lt;/code&gt; 로 되어있다.&lt;br /&gt;
-왼쪽 맨 앞의 &lt;code&gt;mpg&lt;/code&gt; 는 종속변수로 지정하고, 오른쪽 뒤에 있는 &lt;code&gt;wt&lt;/code&gt; 는 독립변수로 지정하겠다는 의미가 된다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;기호-1&quot;&gt;&amp;quot;+&amp;quot; 기호&lt;/h2&gt;
-&lt;p&gt;독립변수를 &lt;code&gt;wt&lt;/code&gt; 뿐만 아니라 &lt;code&gt;cyl&lt;/code&gt; 변수까지 고려하는 다중회귀분석을 하고 싶다면 &amp;quot;+&amp;quot; 기호를 이용해 고려대상이 되는 변수를 추가시킬 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Call:
-## lm(formula = mpg ~ wt + cyl, data = mtcars)
-## 
-## Coefficients:
-## (Intercept)           wt          cyl  
-##      39.686       -3.191       -1.508&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;그런데 만약 자신이 가지고 있는 데이터셋에 종속변수를 설명시킬 독립변수들이 이미 모두 포진되어있는 상태라면, 그리고 그 독립변수들을 모두 고려한 다중회귀적합을 시키고 싶다면 어떻게 해야 할까?&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;disp +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;hp +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;drat +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;qsec +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;vs +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;am +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;gear +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;carb, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Call:
-## lm(formula = mpg ~ cyl + disp + hp + drat + wt + qsec + vs + 
-##     am + gear + carb, data = mtcars)
-## 
-## Coefficients:
-## (Intercept)          cyl         disp           hp         drat  
-##    12.30337     -0.11144      0.01334     -0.02148      0.78711  
-##          wt         qsec           vs           am         gear  
-##    -3.71530      0.82104      0.31776      2.52023      0.65541  
-##        carb  
-##    -0.19942&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;이런 식으로 고려대상이 되는 독립변수의 명칭을 모두 적은 다음&lt;br /&gt;
-사이사이에 &amp;quot;+&amp;quot; 기호를 무식하게 넣어주어야 하는 상황이다.&lt;br /&gt;
-하지만 위의 코딩은 매우 비효율적 🙄 손이 아파질 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;기호-2&quot;&gt;&amp;quot;.&amp;quot; 기호&lt;/h2&gt;
-&lt;p&gt;이를 대비해 특수하게 약속된 &amp;quot;.&amp;quot; 기호를 이용하면 좋다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Call:
-## lm(formula = mpg ~ ., data = mtcars)
-## 
-## Coefficients:
-## (Intercept)          cyl         disp           hp         drat  
-##    12.30337     -0.11144      0.01334     -0.02148      0.78711  
-##          wt         qsec           vs           am         gear  
-##    -3.71530      0.82104      0.31776      2.52023      0.65541  
-##        carb  
-##    -0.19942&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&amp;quot;.&amp;quot; 기호는 &amp;quot;전부&amp;quot; 의 의미를 가진다.&lt;br /&gt;
-위의 코드는 종속변수로 이미 배정된 mpg 이외의 모든 변수를 독립변수로 고려하라 라는 의미가 된다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;기호-3&quot;&gt;&amp;quot;-&amp;quot; 기호&lt;/h2&gt;
-&lt;p&gt;&amp;quot;+&amp;quot; 기호의 반대는 &amp;quot;-&amp;quot; 이다. 의미 역시 반대이다.&lt;br /&gt;
-고려대상에서 추가하는 &amp;quot;+&amp;quot; 와 다르게 &amp;quot;-&amp;quot; 는 고려대상에서 제외시킨다.&lt;br /&gt;
-&amp;quot;.&amp;quot; 기호를 통해 모든 독립변수를 배정했는데, 여기서 &lt;code&gt;cyl&lt;/code&gt; 변수만은 독립변수에서 제외하고 싶을 경우&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;. -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Call:
-## lm(formula = mpg ~ . - cyl, data = mtcars)
-## 
-## Coefficients:
-## (Intercept)         disp           hp         drat           wt  
-##    10.96007      0.01283     -0.02191      0.83520     -3.69251  
-##        qsec           vs           am         gear         carb  
-##     0.84244      0.38975      2.57743      0.71155     -0.21958&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;이렇게 &amp;quot;-&amp;quot; 기호를 활용하면 된다.&lt;/p&gt;
-&lt;p&gt;한 가지 덧붙이자면 회귀적합시 기본적으로 절편(intercept)을 고려하는 회귀적합을 하게 되는데, 절편이 0인 모델로 적합하고 싶은 경우 절편항을 제외시켜야 할 것이다.&lt;br /&gt;
-&amp;quot;-&amp;quot; 기호를 아래와 같이 이용하면 된다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;. -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Call:
-## lm(formula = mpg ~ . - 1, data = mtcars)
-## 
-## Coefficients:
-##      cyl      disp        hp      drat        wt      qsec        vs  
-##  0.35083   0.01354  -0.02055   1.24158  -3.82613   1.19140   0.18972  
-##       am      gear      carb  
-##  2.83222   1.05426  -0.26321&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;결과를 확인해 보면 항시 언급되었던 절편항 &amp;quot;(Intercept)&amp;quot; 이 없어진 것을 확인할 수 있다.&lt;br /&gt;
-참고로 아래와 같이 해도 절편항을 제외한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;. +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Call:
-## lm(formula = mpg ~ . + 0, data = mtcars)
-## 
-## Coefficients:
-##      cyl      disp        hp      drat        wt      qsec        vs  
-##  0.35083   0.01354  -0.02055   1.24158  -3.82613   1.19140   0.18972  
-##       am      gear      carb  
-##  2.83222   1.05426  -0.26321&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;기호-4&quot;&gt;&amp;quot;:&amp;quot; 기호&lt;/h2&gt;
-&lt;p&gt;회귀적합에서 상호작용에 대해 고려한다면 &amp;quot;:&amp;quot; 기호를 이용하여 상호작용항을 부여할 수 있다.&lt;br /&gt;
-만약 종속변수 &lt;code&gt;mpg&lt;/code&gt; 에 대해 설명하는 독립변수를 &lt;code&gt;wt&lt;/code&gt;, &lt;code&gt;cyl&lt;/code&gt; 2개 설정하고,&lt;br /&gt;
-이 두 변수의 상호작용까지 고려하고자 한다면 이렇게 하면 된다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt:cyl, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Call:
-## lm(formula = mpg ~ wt + cyl + wt:cyl, data = mtcars)
-## 
-## Coefficients:
-## (Intercept)           wt          cyl       wt:cyl  
-##     54.3068      -8.6556      -3.8032       0.8084&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;그런데 고려대상인 독립변수가 3개 이상, 그리고 독립변수의 조합별 상호작용을 고려하게 된다면 골치가 아플 수 있다.&lt;br /&gt;
-예를 들어 &lt;code&gt;mpg&lt;/code&gt; 에 대해 설명하는 독립변수를 &lt;code&gt;wt&lt;/code&gt;, &lt;code&gt;cyl&lt;/code&gt;, &lt;code&gt;gear&lt;/code&gt; 3개이고, 3개의 모든 조합에 대해 상호작용을 고려한다면 &lt;code&gt;formula&lt;/code&gt; 인자값이 아래처럼 매우 길게 된다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;gear +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt:cyl +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt:gear +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl:gear +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt:cyl:gear, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Call:
-## lm(formula = mpg ~ wt + cyl + gear + wt:cyl + wt:gear + cyl:gear + 
-##     wt:cyl:gear, data = mtcars)
-## 
-## Coefficients:
-## (Intercept)           wt          cyl         gear       wt:cyl  
-##     47.3853     -10.4502      -0.8957       2.2704       0.5459  
-##     wt:gear     cyl:gear  wt:cyl:gear  
-##      0.3527      -0.8794       0.1001&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;기호-5&quot;&gt;&amp;quot;*&amp;quot; 기호&lt;/h2&gt;
-&lt;p&gt;상호작용항을 고려하되 각 개별항과 상호작용항이 될 수 있는 모든 조합을 알아서 배정시키는&lt;br /&gt;
-약속된 기호가 바로 &amp;quot;*&amp;quot; 이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;wt *&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cyl *&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;gear, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Call:
-## lm(formula = mpg ~ wt * cyl * gear, data = mtcars)
-## 
-## Coefficients:
-## (Intercept)           wt          cyl         gear       wt:cyl  
-##     47.3853     -10.4502      -0.8957       2.2704       0.5459  
-##     wt:gear     cyl:gear  wt:cyl:gear  
-##      0.3527      -0.8794       0.1001&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;위의&lt;br /&gt;
-&lt;code&gt;mpg ~ wt * cyl * gear&lt;/code&gt;&lt;br /&gt;
-는&lt;br /&gt;
-&lt;code&gt;mpg ~ wt + cyl + gear + wt:cyl + wt:gear + cyl:gear + wt:cyl:gear&lt;/code&gt;&lt;br /&gt;
-와 동일한 것이다.&lt;br /&gt;
-따라서 실행된 코드의 출력결과도 비교해 보면 같은 것을 확인할 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;i-함수&quot;&gt;&lt;code&gt;I()&lt;/code&gt; 함수&lt;/h2&gt;
-&lt;p&gt;만약 분석자 나름대로 다변수들의 정보를 하나로 압축시킨 파생변수로 회귀적합을 하고 싶다면 어떻게 해야 할까?&lt;br /&gt;
-예를 들어 &lt;code&gt;hp&lt;/code&gt; 변수값과 루트를 씌운 &lt;code&gt;wt&lt;/code&gt;변수값을 더하고 &lt;code&gt;carb&lt;/code&gt; 변수의 값을 뺀 값을 독립변수로 설정하여 단순회귀적합을 하고 싶다고 가정해보자. (일부러 의미 없이 복잡하게 설정해 봄)&lt;/p&gt;
-&lt;p&gt;일단 떠오르는 방법은 &lt;code&gt;mtcars&lt;/code&gt; 에 새로운 변수열을 만들어 위의 상황대로&lt;/p&gt;
-&lt;p&gt;hp + sqrt(wt) - carb&lt;/p&gt;
-&lt;p&gt;를 계산한 새로운 변수를 만들어 이 변수열과 회귀적합을 하면 될 것이다.&lt;br /&gt;
-하지만 &lt;code&gt;I()&lt;/code&gt; 함수를 알게 된다면 새로운 변수를 직접 만들 필요가 없다. 이렇게 하면 된다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;I&lt;/span&gt;(hp +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;sqrt&lt;/span&gt;(wt) -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;carb), &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Call:
-## lm(formula = mpg ~ I(hp + sqrt(wt) - carb), data = mtcars)
-## 
-## Coefficients:
-##             (Intercept)  I(hp + sqrt(wt) - carb)  
-##                30.20584                 -0.06945&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;그런데 한 가지 의문이 생길 수 있다.&lt;br /&gt;
-만약 &lt;code&gt;I()&lt;/code&gt; 함수를 이용하지 않고 &lt;code&gt;formula&lt;/code&gt; 에 &lt;code&gt;hp + sqrt(wt) - carb&lt;/code&gt; 의 날것의 형태로 입력하면 되지 않을까? 라는 의문이다.&lt;br /&gt;
-실행해보면 다음과 같다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;hp +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;sqrt&lt;/span&gt;(wt) -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;carb, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; mtcars)  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Call:
-## lm(formula = mpg ~ hp + sqrt(wt) - carb, data = mtcars)
-## 
-## Coefficients:
-## (Intercept)           hp     sqrt(wt)  
-##    50.42823     -0.02908    -14.70273&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;우리가 줄곧 배운 &lt;code&gt;formula&lt;/code&gt; 의 입력값은 특정한 기호에 의해 약속된 문법을 따른다.&lt;br /&gt;
-따라서 &lt;code&gt;hp + sqrt(wt) - carb&lt;/code&gt; 의 형태는 우리가 원하는 파생변수를 만들어 적합시키지 않는다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;hp&lt;/code&gt; 값에 &lt;code&gt;sqrt(wt)&lt;/code&gt; 값이 더해진 후 &lt;code&gt;carb&lt;/code&gt; 변수값이 차감된 것을 원하지만,&lt;br /&gt;
-독립변수에 &lt;code&gt;hp&lt;/code&gt;, &lt;code&gt;sqrt(wt)&lt;/code&gt; 가 따로따로 고려되고 &lt;code&gt;carb&lt;/code&gt; 변수가 독립변수로 제외됨을 명시할 뿐이다.&lt;/p&gt;
-&lt;p&gt;다시 &lt;code&gt;I()&lt;/code&gt; 함수를 이용한 결과로 돌아가 보면 &lt;code&gt;I()&lt;/code&gt; 의 쓰임은 결국 &lt;code&gt;formula&lt;/code&gt; 인자의 약속된 문법을 escape 하는 역할로 볼 수도 있겠다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;formula&lt;/code&gt; 인자에 입력할 값의 사용방법과 기호의 의미를 정리해 보았다.&lt;br /&gt;
-위의 내용 외에도 더 많은 팁과 기호들의 조합을 생각해 볼 수 있을 것이다.&lt;/p&gt;
-</description>
-        <pubDate>Tue, 06 Dec 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2016/12/06/formula_usage.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/12/06/formula_usage.html</guid>
-        
-        
-        <category>R</category>
         
       </item>
     
