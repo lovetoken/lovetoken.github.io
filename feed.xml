@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Apr 2017 15:47:02 +0900</pubDate>
-    <lastBuildDate>Sun, 23 Apr 2017 15:47:02 +0900</lastBuildDate>
+    <pubDate>Sun, 23 Apr 2017 22:08:04 +0900</pubDate>
+    <lastBuildDate>Sun, 23 Apr 2017 22:08:04 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -133,9 +133,9 @@ testing  &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Sonar[-indexTra
 랜덤포레스트(RandomForest) 를 이용하려 한다면 노드를 나눌 기준으로 고려할 변수의 개수인 &amp;quot;mtry&amp;quot; 를 얼마로 정해야 할지도 마찬가지이다.&lt;br /&gt;
 위의 예시에서 &amp;quot;K&amp;quot;, &amp;quot;mtry&amp;quot; 와 같은 모수는 예비조사를 통해 사람이 정하거나, 데이터에 근거해 최적의 군집개수를 정하는 과정을 통해 (방법이 어떻게 되었든) 정해져야 모델링을 할 수 있다. (단 비모수적 모델링이라면 제외되는 이야기이겠다)&lt;br /&gt;
 이처럼 알고리즘 별로 반드시 정해져야 모델링을 실시 할 수 있는 모수들을 caret package 에선 &amp;quot;Tuning parameters&amp;quot; 로 설명하고 있고, LOOCV, K-fold cross validation 등과 같은 방법을 통해서 데이터에 근거한 최적의 parameter 를 찾는 과정을 거친다.&lt;/p&gt;
-&lt;p&gt;특히 하나의 단모수가 아니라 p개의 모수일 경우 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;&lt;em&gt;P&lt;/em&gt;&lt;/sup&gt;&lt;/span&gt; 의 그리드를 탐색하여 후보모델들을 테스트하게 된다.&lt;/p&gt;
+&lt;p&gt;알고리즘별로 튜닝 파라미터 개수는 달라지는데 p개의 파라미터일 경우 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;&lt;em&gt;P&lt;/em&gt;&lt;/sup&gt;&lt;/span&gt; 의 그리드를 탐색하여 후보모델들을 테스트하게 된다.&lt;/p&gt;
 &lt;p&gt;예를 들면 이렇다.&lt;br /&gt;
-KNN(K-Neareast Neighbors) 는 단모수이므로 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;1&lt;/sup&gt; = 3&lt;/span&gt; 인 3가지 k 값들을 후보로 두고 모델을 비교하게 된다.&lt;br /&gt;
+KNN(K-Neareast Neighbors) 는 K 하나인 단모수이므로 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;1&lt;/sup&gt; = 3&lt;/span&gt; 인 3가지 K 값들을 후보로 두고 모델을 비교하게 된다.&lt;br /&gt;
 RRLDA(Robust Regularized Linear Discriminant Analysis) 의 경우 모수의 개수가 lambda, hp, penalty 총 3개인데 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;3&lt;/sup&gt; = 27&lt;/span&gt; 인 27가지 후보를 비교하게 될 것이다.&lt;/p&gt;
 &lt;p&gt;3개이던 27개 이던 다수의 후보에 대해서 비교하는 방식 또한 고려대상이다.&lt;br /&gt;
 후보의 비교방법을 K-fold cross validation 으로 한다고 할 경우 몇번을 접어 cross validation 을 할 것이냐 란 질문의 K 를 정해야 한다.&lt;br /&gt;
@@ -219,7 +219,7 @@ rf_fit&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2 id=&quot;tuning-parameters-의-그리드-조정하기&quot;&gt;Tuning parameters 의 그리드 조정하기&lt;/h2&gt;
 &lt;h3 id=&quot;사용자-검색-그리드custom-search-grid&quot;&gt;사용자 검색 그리드(custom search grid)&lt;/h3&gt;
 &lt;p&gt;최적 파라미터 선정 시 탐색범위와 그리드를 수동으로 조절할 수 있다.&lt;br /&gt;
-자동으로 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;&lt;em&gt;P&lt;/em&gt;&lt;/sup&gt;&lt;/span&gt; 에 의해 정해진 mtry 의 후보는 2, 31, 60 로 3개가 되었다.&lt;br /&gt;
+자동으로 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;&lt;em&gt;P&lt;/em&gt;&lt;/sup&gt;&lt;/span&gt; 공식에 의해 정해진 mtry 의 후보는 2, 31, 60 로 3개가 되었다.&lt;br /&gt;
 만약 더 많은 후보와 상대평가하고 싶을 경우 후보를 사용자가 직접 설정할 수 있다는 것이다.&lt;/p&gt;
 &lt;p&gt;아래 코드는 mtry 의 후보를 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 로 바꾸어 설정하고 이 중에서 채택해 보는 코드이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;customGrid &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;expand.grid&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;mtry =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;)
@@ -309,7 +309,7 @@ rda_fit2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 ## Accuracy was used to select the optimal model using  the largest value.
 ## The final values used for the model were gamma = 0.4408472 and lambda
 ##  = 0.9094751.&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;튜닝파라미터가 gamma, lambda 2개인데 검색타입을 랜덤으로 바꾸는 순간 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;&lt;em&gt;P&lt;/em&gt;&lt;/sup&gt;&lt;/span&gt; 로 검색하지 않는 것을 확인할 수 있다.&lt;br /&gt;
+&lt;p&gt;튜닝파라미터가 gamma, lambda 2개인데 검색타입을 랜덤으로 바꾸는 순간 &lt;span class=&quot;math inline&quot;&gt;3&lt;sup&gt;&lt;em&gt;P&lt;/em&gt;&lt;/sup&gt;&lt;/span&gt; 공식으로 후보군을 설정하지 않는 것을 확인할 수 있다.&lt;br /&gt;
 수동으로 튜닝파라미터 조합개수를 늘려볼 필요가 있다. 이땐 &lt;code&gt;train()&lt;/code&gt; 함수의 &lt;code&gt;tuneLength&lt;/code&gt; 인자를 이용하면 된다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;rda_fit2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;train&lt;/span&gt;(Class ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; training, &lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;rda&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;trControl =&lt;/span&gt; fitControl, &lt;span class=&quot;dt&quot;&gt;tuneLength =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;50&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;verbose =&lt;/span&gt; F)
 rda_fit2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -392,15 +392,15 @@ doMC 패키지와의 연계를 지원되는 caret 패키지는 학습 시 생기
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;doMC&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;doMC 패키지를 로드하면 &lt;code&gt;getDoParWorkers()&lt;/code&gt; 를 통해 현재 활성화된 코어수를 확인할 수 있다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;getDoParWorkers&lt;/span&gt;() &lt;span class=&quot;co&quot;&gt;# default cores count&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;기본적으론 세팅 이전엔 1코어임을 확인할 수 있다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;time &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;system.time&lt;/span&gt;({
   &lt;span class=&quot;kw&quot;&gt;train&lt;/span&gt;(Class ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; training, &lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;gbm&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;trControl =&lt;/span&gt; fitControl, &lt;span class=&quot;dt&quot;&gt;verbose =&lt;/span&gt; F)
 })
 time&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##    user  system elapsed 
-## 157.872   2.239 116.540&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;이때 GBM(Stochastic Gradient Boosting Model)알고리즘으로 학습에 소요되는 시간은 117 초 내외이다.&lt;/p&gt;
+## 217.652   1.528 221.757&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이때 GBM(Stochastic Gradient Boosting Model)알고리즘으로 학습에 소요되는 시간은 222 초 내외이다.&lt;/p&gt;
 &lt;p&gt;이번에는 &lt;code&gt;registerDoMC()&lt;/code&gt; 함수를 이용해 코어수를 2개로 늘린 후 학습에 소요되는 시간을 비교해보자.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;registerDoMC&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;cores =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;getDoParWorkers&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -410,7 +410,7 @@ time&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 })
 time&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##    user  system elapsed 
-## 152.187   1.348  43.648&lt;/code&gt;&lt;/pre&gt;
+##  42.700   0.265  43.685&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;이때 학습에 소요되는 시간은 44 초 내외이다.&lt;br /&gt;
 확실히 소요시간이 줄어든 것을 볼 수 있다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
