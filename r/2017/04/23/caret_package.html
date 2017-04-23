@@ -154,10 +154,10 @@
 <p><br></p>
 <p>caret 패키지의 명칭은 &quot;<strong>C</strong>lassification <strong>A</strong>nd <strong>RE</strong>gression <strong>T</strong>raining&quot; 의 앞글자를 따와 명명되었다.<br />
 주 관심 대상이 되는 종속변수(예측변수)가 명목형 변수라면 &quot;Classification&quot;, 연속형 변수라면 &quot;Regression&quot; 으로 갈피를 잡아 &quot;Training&quot; 을 하게 될 텐데, 이 과정을 caret 패키지를 이용해 코딩해 본 가장 간단한 예제로 시작해 보겠다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse) <span class="co"># for tidy tools (pipe operation, tibble, etc..)</span>
 <span class="kw">library</span>(caret)
 
-<span class="kw">set.seed</span>(<span class="dv">1234</span>) <span class="co"># Reproducibility 를 위한 시드넘버 지정</span>
+<span class="kw">set.seed</span>(<span class="dv">1234</span>) <span class="co"># for reproducibility</span>
 
 <span class="kw">data</span>(Sonar, <span class="dt">package =</span> <span class="st">&quot;mlbench&quot;</span>)
 Sonar &lt;-<span class="st"> </span>Sonar %&gt;%<span class="st"> </span>tbl_df
@@ -512,7 +512,7 @@ rda_fit2</code></pre></div>
 doMC 패키지와의 연계를 지원되는 caret 패키지는 학습 시 생기는 많은 연산을 병렬처리를 통해 시간 비용을 낮출 수 있다.<br />
 특히 튜닝파라미터의 조합 수가 많으면 많을수록 병렬처리는 많은 효용이 있을 것이다.</p>
 <p>필요에 따라 doMC 패키지를 설치하고 로드한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;doMC&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;doMC&quot;)</span>
 <span class="kw">library</span>(<span class="st">&quot;doMC&quot;</span>)</code></pre></div>
 <p>doMC 패키지를 로드하면 <code>getDoParWorkers()</code> 를 통해 현재 활성화된 코어수를 확인할 수 있다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getDoParWorkers</span>() <span class="co"># default cores count</span></code></pre></div>
@@ -523,7 +523,7 @@ doMC 패키지와의 연계를 지원되는 caret 패키지는 학습 시 생기
 })
 time</code></pre></div>
 <pre><code>##    user  system elapsed 
-## 217.652   1.528 221.757</code></pre>
+## 218.508   1.495 221.734</code></pre>
 <p>이때 GBM(Stochastic Gradient Boosting Model)알고리즘으로 학습에 소요되는 시간은 222 초 내외이다.</p>
 <p>이번에는 <code>registerDoMC()</code> 함수를 이용해 코어수를 2개로 늘린 후 학습에 소요되는 시간을 비교해보자.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">registerDoMC</span>(<span class="dt">cores =</span> <span class="dv">2</span>)
@@ -534,8 +534,8 @@ time</code></pre></div>
 })
 time</code></pre></div>
 <pre><code>##    user  system elapsed 
-##  42.700   0.265  43.685</code></pre>
-<p>이때 학습에 소요되는 시간은 44 초 내외이다.<br />
+##   0.595   0.067  44.684</code></pre>
+<p>이때 학습에 소요되는 시간은 45 초 내외이다.<br />
 확실히 소요시간이 줄어든 것을 볼 수 있다.</p>
 <p><br><br></p>
 <h2 id="reference">Reference</h2>

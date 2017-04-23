@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Apr 2017 22:08:04 +0900</pubDate>
-    <lastBuildDate>Sun, 23 Apr 2017 22:08:04 +0900</lastBuildDate>
+    <pubDate>Sun, 23 Apr 2017 22:28:12 +0900</pubDate>
+    <lastBuildDate>Sun, 23 Apr 2017 22:28:12 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -30,10 +30,10 @@
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;caret 패키지의 명칭은 &amp;quot;&lt;strong&gt;C&lt;/strong&gt;lassification &lt;strong&gt;A&lt;/strong&gt;nd &lt;strong&gt;RE&lt;/strong&gt;gression &lt;strong&gt;T&lt;/strong&gt;raining&amp;quot; 의 앞글자를 따와 명명되었다.&lt;br /&gt;
 주 관심 대상이 되는 종속변수(예측변수)가 명목형 변수라면 &amp;quot;Classification&amp;quot;, 연속형 변수라면 &amp;quot;Regression&amp;quot; 으로 갈피를 잡아 &amp;quot;Training&amp;quot; 을 하게 될 텐데, 이 과정을 caret 패키지를 이용해 코딩해 본 가장 간단한 예제로 시작해 보겠다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(tidyverse)
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(tidyverse) &lt;span class=&quot;co&quot;&gt;# for tidy tools (pipe operation, tibble, etc..)&lt;/span&gt;
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(caret)
 
-&lt;span class=&quot;kw&quot;&gt;set.seed&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1234&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# Reproducibility 를 위한 시드넘버 지정&lt;/span&gt;
+&lt;span class=&quot;kw&quot;&gt;set.seed&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1234&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# for reproducibility&lt;/span&gt;
 
 &lt;span class=&quot;kw&quot;&gt;data&lt;/span&gt;(Sonar, &lt;span class=&quot;dt&quot;&gt;package =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;mlbench&amp;quot;&lt;/span&gt;)
 Sonar &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Sonar %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;tbl_df
@@ -388,7 +388,7 @@ rda_fit2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 doMC 패키지와의 연계를 지원되는 caret 패키지는 학습 시 생기는 많은 연산을 병렬처리를 통해 시간 비용을 낮출 수 있다.&lt;br /&gt;
 특히 튜닝파라미터의 조합 수가 많으면 많을수록 병렬처리는 많은 효용이 있을 것이다.&lt;/p&gt;
 &lt;p&gt;필요에 따라 doMC 패키지를 설치하고 로드한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;install.packages&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;doMC&amp;quot;&lt;/span&gt;)
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# install.packages(&amp;quot;doMC&amp;quot;)&lt;/span&gt;
 &lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;doMC&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;doMC 패키지를 로드하면 &lt;code&gt;getDoParWorkers()&lt;/code&gt; 를 통해 현재 활성화된 코어수를 확인할 수 있다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;getDoParWorkers&lt;/span&gt;() &lt;span class=&quot;co&quot;&gt;# default cores count&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -399,7 +399,7 @@ doMC 패키지와의 연계를 지원되는 caret 패키지는 학습 시 생기
 })
 time&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##    user  system elapsed 
-## 217.652   1.528 221.757&lt;/code&gt;&lt;/pre&gt;
+## 218.508   1.495 221.734&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;이때 GBM(Stochastic Gradient Boosting Model)알고리즘으로 학습에 소요되는 시간은 222 초 내외이다.&lt;/p&gt;
 &lt;p&gt;이번에는 &lt;code&gt;registerDoMC()&lt;/code&gt; 함수를 이용해 코어수를 2개로 늘린 후 학습에 소요되는 시간을 비교해보자.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;registerDoMC&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;cores =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
@@ -410,8 +410,8 @@ time&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 })
 time&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##    user  system elapsed 
-##  42.700   0.265  43.685&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;이때 학습에 소요되는 시간은 44 초 내외이다.&lt;br /&gt;
+##   0.595   0.067  44.684&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이때 학습에 소요되는 시간은 45 초 내외이다.&lt;br /&gt;
 확실히 소요시간이 줄어든 것을 볼 수 있다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
