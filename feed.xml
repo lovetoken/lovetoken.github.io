@@ -5,16 +5,16 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 04 May 2017 22:59:59 +0900</pubDate>
-    <lastBuildDate>Thu, 04 May 2017 22:59:59 +0900</lastBuildDate>
+    <pubDate>Thu, 04 May 2017 23:29:23 +0900</pubDate>
+    <lastBuildDate>Thu, 04 May 2017 23:29:23 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
         <title>온라인 설문지 서비스 Typeform 소개, 설문조사 방법에 대한 설문조사</title>
         <description>&lt;p&gt;평범한 일상생활 속에서도 사람의 생각과 의견을 수렴하는 행위들은 참 많이 일어난다.&lt;br /&gt;
 필자의 경우 학창시절을 돌이켜 볼 때 통계관련 수업시 툭하면 마주하는 프로젝트가 &amp;quot;설문조사&amp;quot; 와 관련된 것이었다.&lt;br /&gt;
-이때마다 설문지를 워드나 한글로 타이핑하고 굳이 출력해서 손수 나눠준 후 일일이 되돌려 받는 형식의 설문조사 일방적으로 이루어졌다.&lt;br /&gt;
-설문지를 취합해서 코딩과 펀칭을 하는 수고는 즐겁기도 하면서 손이 많이 가고 정성이 필요로 했다.&lt;br /&gt;
+이때마다 설문지를 워드나 한글로 타이핑하고 굳이 출력해서 손수 나눠준 후 일일이 되돌려 받는 형식의 설문조사가 일방적으로 이루어졌다.&lt;br /&gt;
+설문지를 취합해서 코딩과 펀칭을 하는 수고는 즐겁기도 하면서 손이 많이 가고 큰 정성을 필요로 했다.&lt;br /&gt;
 반대로 설문지를 응답하는 상황에서도 이러한 형태의 설문조사방식을 많이 겪는 편인 것 같다.&lt;/p&gt;
 &lt;p&gt;설문조사자로서의 입장, 그리고 설문응답자로서의 입장들을 겪을 때마다 느껴지는 질문은&lt;br /&gt;
 &amp;quot;의견을 온전하게 전달하고 받을 수 있는 최선의 방법은 무엇일까?&amp;quot; 이다.&lt;br /&gt;
@@ -23,7 +23,8 @@
 소통에서 전달 매체의 선택이 잘못될 경우 소통이 불가하다.&lt;br /&gt;
 이처럼 설문조사에서 조사방법을 잘 선택하고 설계하는 것은 중요한 문제이다.&lt;/p&gt;
 &lt;p&gt;그런 의미에서 여러 시도를 해보고 있다.&lt;br /&gt;
-지금까지도 많이 쓰이는 전통적인 종이 설문지 배포 및 수거 방법 외에 다른 방법들이 무엇이 있을까 찾아보고 있고 좀 더 현명한 방법은 무엇일지 실험을 해보고 있다.&lt;/p&gt;
+지금까지도 많이 쓰이는 전통적인 종이 설문지 배포 및 수거 방법 외에 다른 방법들이 무엇이 있을까 찾아보고 있고&lt;br /&gt;
+좀 더 현명한 방법은 무엇일지 실험을 해보고 있다.&lt;/p&gt;
 &lt;p&gt;그중 최근 한 실험은 &lt;a href=&quot;https://www.typeform.com&quot;&gt;Typeform&lt;/a&gt; 과 같은 툴을 이용해 온라인 설문조사 방식이다.&lt;br /&gt;
 아래는 Typeform 서비스의 힘을 빌려 만들어 본 설문지이다.&lt;br /&gt;
 주제는 이글과 연관있는 &amp;quot;설문조사 방법에 대한 설문조사&amp;quot; 이다.&lt;/p&gt;
@@ -713,7 +714,7 @@ lmfit &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&qu
 &lt;p&gt;Impala 는 아파치 프로젝트에 incubating 단계로 관리되고 있는 프로젝트로써&lt;br /&gt;
 HDFS(Hadoop Distributed File System) 안에 있는 데이터를 SQL 을 통해 실시간으로(대화형으로) 분석할 수 있게 도와주는 시스템이라고 한다.&lt;br /&gt;
 HDFS 를 이용하기 위해선 MapReduce 프레임워크를 알고 이용했어야 한다는 불편한 제약을 Impala 를 통해 벗어날 수 있다 이해할 수 있겠다.&lt;/p&gt;
-&lt;p&gt;Impala 소개는 이쯤 하고 (&lt;del&gt;읔.. 알고있는게 이정도 뿐이다 😅;;&lt;/del&gt;) 여하튼 지금은 &lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker&lt;/a&gt; 을 통해 Impala 를 간단히 구동시켜보고,&lt;br /&gt;
+&lt;p&gt;Impala 소개는 이쯤 하고 (&lt;del&gt;읔.. 알고있는게 이정도 뿐이다 😅&lt;/del&gt;) 여하튼 지금은 &lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker&lt;/a&gt; 을 통해 Impala 를 간단히 구동시켜보고,&lt;br /&gt;
 RImpala package 를 이용해 R 상에서 Impala 와 커넥션을 맺는데 성공했던 과정을 짤막하게 정리하고 적어보고자 한다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;ready-impala&quot;&gt;Ready impala&lt;/h2&gt;
