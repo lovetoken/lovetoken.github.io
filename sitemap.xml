@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Apr 2017 22:28:12 +0900</pubDate>
-    <lastBuildDate>Sun, 23 Apr 2017 22:28:12 +0900</lastBuildDate>
+    <pubDate>Thu, 04 May 2017 14:58:33 +0900</pubDate>
+    <lastBuildDate>Thu, 04 May 2017 14:58:33 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -4185,105 +4185,95 @@ Error: object &amp;#39;bsid&amp;#39; not found&lt;/code&gt;&lt;/pre&gt;
       </item>
     
       <item>
-        <title>R에서 Shell command 를 실행하기위한 대안 : system() 함수</title>
-        <description>&lt;p&gt;(본 글은 Linux, Mac 을 기준으로 작성한 글입니다.)&lt;/p&gt;
+        <title>R에서 Shell command 를 실행하기 위한 대안 : system() 함수</title>
+        <description>&lt;p&gt;(본 글은 Linux, Mac OS 머신을 기준으로 작성한 글이다)&lt;/p&gt;
 &lt;p&gt;Shell command 로 출력되는 것을 R에서 보기 위한 방법은 없을까?&lt;br /&gt;
-예를 들어 워킹디렉토리의 파일리스트를 출력하기 위해선 쉘에서 간단히 &lt;code&gt;ls&lt;/code&gt;, 아니면 &lt;code&gt;ls -al&lt;/code&gt; 등으로 참조할 수 있지만 Rstudio 를 사용하고 있는 상황이 아니고선 R command 상황에서 파일리스트를 참조하기는 좀 그렇다.&lt;/p&gt;
+예를 들어 워킹디렉토리의 파일리스트를 출력하기 위해선 쉘에다서 간단히 &lt;code&gt;ls&lt;/code&gt;, 아니면 &lt;code&gt;ls -al&lt;/code&gt; 등으로 참조할 수 있지만 Rstudio 를 사용하고 있는 상황이 아니고선 R command 상황에서 파일리스트를 참조하기는 좀 그렇다.&lt;/p&gt;
 &lt;p&gt;굳이 찾아본다면 Shell 의 &lt;code&gt;ls -al&lt;/code&gt; 와 같은 R코드는&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;file.info&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;list.files&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;all.files =&lt;/span&gt; T))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##                  size isdir mode               mtime               ctime
-## .                 238  TRUE  755 2016-02-17 13:21:12 2016-02-17 13:21:12
-## ..               1360  TRUE  755 2016-02-11 16:50:19 2016-02-11 16:50:19
-## .DS_Store        6148 FALSE  644 2016-02-17 12:59:38 2016-02-17 12:59:38
-## Rmarkdown.docx  12662 FALSE  644 2016-02-17 13:19:40 2016-02-17 13:19:40
-## Rmarkdown.html 795924 FALSE  666 2016-02-08 14:07:00 2016-02-08 14:07:00
-## Rmarkdown.md     6975 FALSE  666 2016-02-08 14:07:00 2016-02-08 14:07:00
-## Rmarkdown.Rmd    4167 FALSE  755 2016-02-17 13:21:16 2016-02-17 13:21:16
+&lt;pre&gt;&lt;code&gt;##                   size isdir mode               mtime               ctime
+## .                  204  TRUE  755 2017-05-04 14:28:32 2017-05-04 14:28:32
+## ..                1394  TRUE  755 2017-05-04 13:54:18 2017-05-04 13:54:18
+## .DS_Store         6148 FALSE  644 2017-05-04 14:28:32 2017-05-04 14:28:32
+## Rmarkdown.Rmd     4451 FALSE  755 2017-05-04 14:12:34 2017-05-04 14:12:34
+## Rmarkdown.html 1037047 FALSE  666 2017-05-04 14:12:41 2017-05-04 14:12:41
+## Rmarkdown.md      7150 FALSE  666 2017-05-04 14:12:41 2017-05-04 14:12:41
 ##                              atime uid gid     uname grname
-## .              2016-02-17 13:21:16 501  20 lovetoken  staff
-## ..             2016-02-17 13:19:41 501  20 lovetoken  staff
-## .DS_Store      2016-02-17 12:55:40 501  20 lovetoken  staff
-## Rmarkdown.docx 2016-02-17 13:21:16 501  20 lovetoken  staff
-## Rmarkdown.html 2016-02-17 13:21:16 501  20 lovetoken  staff
-## Rmarkdown.md   2016-02-17 13:21:16 501  20 lovetoken  staff
-## Rmarkdown.Rmd  2016-02-17 13:21:16 501  20 lovetoken  staff&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;등을 예시로 할 수 있는데 딱 봐도 마음에 들지 않는다...&lt;/p&gt;
-&lt;p&gt;게다가 Rstudio 와 같은 GUI 환경이 아닌 CLI 환경이 정감이 가는 분들이라면 생산성을 추구하고, 마우스를 이용한다는 거 자체를 용납하지 않을 것 인데, 위와 같은 긴 코드는 전혀 공감되지 않는다.&lt;/p&gt;
-&lt;p&gt;이처럼 R에서 대체할 수 있는 함수나 코드를 찾기보단, 아예 R내에서 Shell command를 실행할 수 있는 방법을 찾는 것이 합리적이다.&lt;/p&gt;
-&lt;p&gt;이것저것 찾아보았는데 &lt;code&gt;system()&lt;/code&gt; 함수를 이용하는 방법이 있어 정리해 본다.&lt;/p&gt;
+## .              2017-05-04 14:30:01 501  20 lovetoken  staff
+## ..             2017-05-04 13:56:14 501  20 lovetoken  staff
+## .DS_Store      2017-05-04 14:11:18 501  20 lovetoken  staff
+## Rmarkdown.Rmd  2017-05-04 14:30:01 501  20 lovetoken  staff
+## Rmarkdown.html 2017-05-04 14:28:33 501  20 lovetoken  staff
+## Rmarkdown.md   2017-05-04 14:13:27 501  20 lovetoken  staff&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;등을 예시로 들 수 있는데 딱 봐도 마음에 들지 않는다 😨&lt;/p&gt;
+&lt;p&gt;불필요하게 길은 코드인 것 뿐만아니라&lt;br /&gt;
+Shell 의 &lt;code&gt;ls&lt;/code&gt; 만의 기능을 R의 &lt;code&gt;list.files()&lt;/code&gt; 함수가 가지고 있지 못하다.&lt;/p&gt;
+&lt;p&gt;이처럼 R에서 대체할 수 있는 함수나 코드를 찾기보단 아예 R내에서 Shell command를 실행할 수 있는 방법이 없을까 고민해 보았다.&lt;br /&gt;
+이것저것 찾아보았는데 &lt;code&gt;system()&lt;/code&gt; 함수를 이용하는 방법이 있어 정리해 본다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;shell-command-in-r&quot;&gt;shell command in r&lt;/h2&gt;
+&lt;h2 id=&quot;r에서-shell-command-입력해-표준출력-조회하기&quot;&gt;R에서 Shell command 입력해 표준출력 조회하기&lt;/h2&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;ls -al&amp;quot;&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;pwd&amp;quot;&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;echo Hello world!&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;사용방법은 &lt;code&gt;system()&lt;/code&gt; 함수의 첫번째 인자인 expression 을 Shell command 로 채워 넣어주면 된다.&lt;br /&gt;
 아쉽지만 문자열만을 받아들이기 때문에 &amp;quot;&amp;quot; 로 양 옆을 채워야 한다.&lt;br /&gt;
-현재 글에선 출력결과를 생략하였지만 실제로 R에서 실행 시 원하는 출력을 볼 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+현재 글에선 출력결과를 생략하였지만 실제로 R에서 실행 시 원하는 표준출력(stdout)을 볼 수 있다.&lt;/p&gt;
 &lt;h3 id=&quot;shell-출력물을-r에서-바로-이용하기-위한-intern-true&quot;&gt;Shell 출력물을 R에서 바로 이용하기 위한 &lt;code&gt;intern = TRUE&lt;/code&gt;&lt;/h3&gt;
-&lt;p&gt;위의 예제에서 본 출력물을 R 내에서 character 형으로 바로 사용하기 위해선 R의 기본 컨테이너인 vector 로 저장되어야 한다.&lt;br /&gt;
-하지만 &lt;code&gt;system()&lt;/code&gt; 함수를 이용한 기본출력은 벡터로 반환되지 않는다.&lt;br /&gt;
-출력은 출력일 뿐인 이것을 vector type 으로 반환시키기 위해선 &lt;code&gt;intern = TRUE&lt;/code&gt; 로 설정한다.&lt;/p&gt;
+&lt;p&gt;위의 예제에서 본 출력물을 R 내에서 character 형으로 바로 사용하기 위해선 R의 컨테이너에 저장되어야 한다.&lt;br /&gt;
+하지만 &lt;code&gt;system()&lt;/code&gt; 함수를 이용한 기본출력은 벡터형으로 반환되지 않는다.&lt;br /&gt;
+출력은 출력일 뿐인 이것을 벡터형으로 반환시키기 위해선 &lt;code&gt;intern = TRUE&lt;/code&gt; 로 설정하면 된다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;ls -al&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;intern =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;total 1640&amp;quot;                                                        
-## [2] &amp;quot;drwxr-xr-x   7 lovetoken  staff     238  2 17 13:21 .&amp;quot;             
-## [3] &amp;quot;drwxr-xr-x  40 lovetoken  staff    1360  2 11 16:50 ..&amp;quot;            
-## [4] &amp;quot;-rw-r--r--@  1 lovetoken  staff    6148  2 17 12:59 .DS_Store&amp;quot;     
-## [5] &amp;quot;-rwxr-xr-x@  1 lovetoken  staff    4167  2 17 13:21 Rmarkdown.Rmd&amp;quot; 
-## [6] &amp;quot;-rw-r--r--@  1 lovetoken  staff   12662  2 17 13:19 Rmarkdown.docx&amp;quot;
-## [7] &amp;quot;-rw-rw-rw-   1 lovetoken  staff  795924  2  8 14:07 Rmarkdown.html&amp;quot;
-## [8] &amp;quot;-rw-rw-rw-   1 lovetoken  staff    6975  2  8 14:07 Rmarkdown.md&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;total 2080&amp;quot;                                                          
+## [2] &amp;quot;drwxr-xr-x@  6 lovetoken  staff      204 May  4 14:28 .&amp;quot;             
+## [3] &amp;quot;drwxr-xr-x@ 41 lovetoken  staff     1394 May  4 13:54 ..&amp;quot;            
+## [4] &amp;quot;-rw-r--r--@  1 lovetoken  staff     6148 May  4 14:28 .DS_Store&amp;quot;     
+## [5] &amp;quot;-rwxr-xr-x@  1 lovetoken  staff     4451 May  4 14:12 Rmarkdown.Rmd&amp;quot; 
+## [6] &amp;quot;-rw-rw-rw-@  1 lovetoken  staff  1037047 May  4 14:12 Rmarkdown.html&amp;quot;
+## [7] &amp;quot;-rw-rw-rw-@  1 lovetoken  staff     7150 May  4 14:12 Rmarkdown.md&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;pwd&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;intern =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;/Users/lovetoken/Desktop/OneDrive/02_Study/01_Statistic/31_R/11_Rcafe/01_Function/system()&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;/Users/lovetoken/Desktop/Dropbox/02_Study/01_Statistic/31_R/11_R_posting/01_function/system&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;echo Hello world!&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;intern =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Hello world!&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;shell-output-을-r과-연동&quot;&gt;shell output 을 R과 연동&lt;/h2&gt;
+&lt;h2 id=&quot;shell-표준출력을-r과-함께-이용&quot;&gt;Shell 표준출력을 R과 함께 이용&lt;/h2&gt;
 &lt;p&gt;이점을 이용하여 R과 Shell 의 캐미를 만들 수 있을 것이다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h3 id=&quot;ex1-r-에서의-hello-와-shell-에서의-r-을-붙여-hello-r-완성시키기&quot;&gt;ex1) R 에서의 &#39;Hello &#39; 와 Shell 에서의 &#39;R!&#39; 을 붙여 &#39;Hello R!&#39; 완성시키기&lt;/h3&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;R &amp;lt;-&lt;span class=&quot;st&quot;&gt; &amp;quot;Hello &amp;quot;&lt;/span&gt;
 Shell &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;echo R!&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;intern =&lt;/span&gt; T)
 
 &lt;span class=&quot;kw&quot;&gt;paste0&lt;/span&gt;(R, Shell)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Hello R!&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h3 id=&quot;ex2-r에서-생성한-규칙적-문자열-데이터들로-폴더-생성하기&quot;&gt;ex2) R에서 생성한 규칙적 문자열 데이터들로 폴더 생성하기&lt;/h3&gt;
-&lt;p&gt;R에서 준비된 날짜명칭들을 이용해 Shell &lt;code&gt;mkdir&lt;/code&gt; 명령어와 혼합하여 폴더들을 생성하기.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# before&lt;/span&gt;
-&lt;span class=&quot;kw&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;ls -al&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;intern =&lt;/span&gt; &lt;span class=&quot;ot&quot;&gt;TRUE&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;total 1640&amp;quot;                                                        
-## [2] &amp;quot;drwxr-xr-x   7 lovetoken  staff     238  2 17 13:21 .&amp;quot;             
-## [3] &amp;quot;drwxr-xr-x  40 lovetoken  staff    1360  2 11 16:50 ..&amp;quot;            
-## [4] &amp;quot;-rw-r--r--@  1 lovetoken  staff    6148  2 17 12:59 .DS_Store&amp;quot;     
-## [5] &amp;quot;-rwxr-xr-x@  1 lovetoken  staff    4167  2 17 13:21 Rmarkdown.Rmd&amp;quot; 
-## [6] &amp;quot;-rw-r--r--@  1 lovetoken  staff   12662  2 17 13:19 Rmarkdown.docx&amp;quot;
-## [7] &amp;quot;-rw-rw-rw-   1 lovetoken  staff  795924  2  8 14:07 Rmarkdown.html&amp;quot;
-## [8] &amp;quot;-rw-rw-rw-   1 lovetoken  staff    6975  2  8 14:07 Rmarkdown.md&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# after&lt;/span&gt;
-date &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;seq&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;Sys.Date&lt;/span&gt;()-&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;kw&quot;&gt;Sys.Date&lt;/span&gt;(), &lt;span class=&quot;dt&quot;&gt;by =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;paste&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;collapse =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot; &amp;quot;&lt;/span&gt;)
+&lt;p&gt;R에서 준비된 날짜명칭들을 이용해 Shell &lt;code&gt;mkdir&lt;/code&gt; 명령어와 혼합하여 폴더들을 생성해보는 예제이다.&lt;/p&gt;
+&lt;p&gt;우선 현 워킹디렉토리의 상황을 조회해보면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;ls -al&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;intern =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;total 2080&amp;quot;                                                          
+## [2] &amp;quot;drwxr-xr-x@  6 lovetoken  staff      204 May  4 14:28 .&amp;quot;             
+## [3] &amp;quot;drwxr-xr-x@ 41 lovetoken  staff     1394 May  4 13:54 ..&amp;quot;            
+## [4] &amp;quot;-rw-r--r--@  1 lovetoken  staff     6148 May  4 14:28 .DS_Store&amp;quot;     
+## [5] &amp;quot;-rwxr-xr-x@  1 lovetoken  staff     4451 May  4 14:12 Rmarkdown.Rmd&amp;quot; 
+## [6] &amp;quot;-rw-rw-rw-@  1 lovetoken  staff  1037047 May  4 14:12 Rmarkdown.html&amp;quot;
+## [7] &amp;quot;-rw-rw-rw-@  1 lovetoken  staff     7150 May  4 14:12 Rmarkdown.md&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;폴더따윈 없다.&lt;/p&gt;
+&lt;p&gt;최근 3일치 날짜명칭들을 R을 통해 만들고&lt;br /&gt;
+Shell 에서 폴더를 만드는 명령어인 &lt;code&gt;mkdir&lt;/code&gt; 과 결합하여&lt;br /&gt;
+최종적으로 &lt;code&gt;&amp;quot;mkdir 2017-05-02 2017-05-03 2017-05-04&amp;quot;&lt;/code&gt; 명령어를 만들어 실행시키는 코드이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;date &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;seq&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;Sys.Date&lt;/span&gt;() -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;kw&quot;&gt;Sys.Date&lt;/span&gt;(), &lt;span class=&quot;dt&quot;&gt;by =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;paste&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;collapse =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot; &amp;quot;&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;paste&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;mkdir&amp;quot;&lt;/span&gt;, date) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;intern =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## character(0)&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;ls -al&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;intern =&lt;/span&gt; &lt;span class=&quot;ot&quot;&gt;TRUE&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;total 1640&amp;quot;                                                        
-##  [2] &amp;quot;drwxr-xr-x  18 lovetoken  staff     612  2 17 13:21 .&amp;quot;             
-##  [3] &amp;quot;drwxr-xr-x  40 lovetoken  staff    1360  2 11 16:50 ..&amp;quot;            
-##  [4] &amp;quot;-rw-r--r--@  1 lovetoken  staff    6148  2 17 12:59 .DS_Store&amp;quot;     
-##  [5] &amp;quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-07&amp;quot;    
-##  [6] &amp;quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-08&amp;quot;    
-##  [7] &amp;quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-09&amp;quot;    
-##  [8] &amp;quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-10&amp;quot;    
-##  [9] &amp;quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-11&amp;quot;    
-## [10] &amp;quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-12&amp;quot;    
-## [11] &amp;quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-13&amp;quot;    
-## [12] &amp;quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-14&amp;quot;    
-## [13] &amp;quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-15&amp;quot;    
-## [14] &amp;quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-16&amp;quot;    
-## [15] &amp;quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-17&amp;quot;    
-## [16] &amp;quot;-rwxr-xr-x@  1 lovetoken  staff    4167  2 17 13:21 Rmarkdown.Rmd&amp;quot; 
-## [17] &amp;quot;-rw-r--r--@  1 lovetoken  staff   12662  2 17 13:19 Rmarkdown.docx&amp;quot;
-## [18] &amp;quot;-rw-rw-rw-   1 lovetoken  staff  795924  2  8 14:07 Rmarkdown.html&amp;quot;
-## [19] &amp;quot;-rw-rw-rw-   1 lovetoken  staff    6975  2  8 14:07 Rmarkdown.md&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;실행 이후 최근 3일치 명칭 폴더 3개가 잘 만들어 졌는지 확인해 보면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;ls -al&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;intern =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;total 2080&amp;quot;                                                          
+##  [2] &amp;quot;drwxr-xr-x@  9 lovetoken  staff      306 May  4 14:30 .&amp;quot;             
+##  [3] &amp;quot;drwxr-xr-x@ 41 lovetoken  staff     1394 May  4 13:54 ..&amp;quot;            
+##  [4] &amp;quot;-rw-r--r--@  1 lovetoken  staff     6148 May  4 14:28 .DS_Store&amp;quot;     
+##  [5] &amp;quot;drwxr-xr-x   2 lovetoken  staff       68 May  4 14:30 2017-05-02&amp;quot;    
+##  [6] &amp;quot;drwxr-xr-x   2 lovetoken  staff       68 May  4 14:30 2017-05-03&amp;quot;    
+##  [7] &amp;quot;drwxr-xr-x   2 lovetoken  staff       68 May  4 14:30 2017-05-04&amp;quot;    
+##  [8] &amp;quot;-rwxr-xr-x@  1 lovetoken  staff     4451 May  4 14:12 Rmarkdown.Rmd&amp;quot; 
+##  [9] &amp;quot;-rw-rw-rw-@  1 lovetoken  staff  1037047 May  4 14:12 Rmarkdown.html&amp;quot;
+## [10] &amp;quot;-rw-rw-rw-@  1 lovetoken  staff     7150 May  4 14:12 Rmarkdown.md&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;잘 만들어 진 것을 볼 수 있다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;정리&quot;&gt;정리&lt;/h2&gt;
 &lt;p&gt;필자는 Shell 에 대해 완전 초급자여서 즐겨 쓰는 명령어 몇 개 이외에 잘 아는것이 없다.&lt;br /&gt;
@@ -4303,7 +4293,7 @@ date &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quo
         <title>R에서 Step function model 이용하기</title>
         <description>&lt;p&gt;일반적인 선형회귀분석보다 모델의 해석이 특수하나&lt;br /&gt;
 한눈에 이해할 수 있는 모델링 방법인 Step function 을 R에서 구현해보고자 한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;data&lt;/span&gt;(College, &lt;span class=&quot;dt&quot;&gt;package=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;ISLR&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;data&lt;/span&gt;(College, &lt;span class=&quot;dt&quot;&gt;package =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;ISLR&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;예제로 사용할 데이터는 ISLR 패키지에 내장되어있는 &lt;code&gt;College&lt;/code&gt; 데이터이다.&lt;br /&gt;
 미국의 여러 대학교가 관측치이고, 각 대학들의 지원자 수와 각 대학들의 정보를 변수로 가지고 있는 데이터셋이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;summary&lt;/span&gt;(College)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -4342,12 +4332,12 @@ date &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quo
 ##  Mean   : 65.46  
 ##  3rd Qu.: 78.00  
 ##  Max.   :118.00&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;18개 만큼의 변수들을 가지고 있는데, 우리 분석은 종속변수를 지원서 등록횟수인 &lt;code&gt;Apps&lt;/code&gt; 로 하고, 독립변수를 졸업률인 &lt;code&gt;Grad.Rate&lt;/code&gt; 로 제한시켜 두개의 변수만 신경쓰도록 하겠다.&lt;/p&gt;
+&lt;p&gt;18개 만큼의 변수들을 가지고 있는데, 현 분석과정에선 지원서 등록횟수인 &lt;code&gt;Apps&lt;/code&gt; 을 종속변수로 하고, 졸업률인 &lt;code&gt;Grad.Rate&lt;/code&gt; 를 독립변수로 제한시켜 두 개의 변수만 신경쓰도록 하겠다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;simple-regression-model&quot;&gt;Simple regression model&lt;/h2&gt;
 &lt;p&gt;일반적인 단순선형회귀적합을 하게되면 아래와 같이 모델적합이 된다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;reg_fit &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data=&lt;/span&gt;College)
-&lt;span class=&quot;kw&quot;&gt;summary&lt;/span&gt;(reg_fit)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;regFit &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; College)
+&lt;span class=&quot;kw&quot;&gt;summary&lt;/span&gt;(regFit)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## 
 ## Call:
 ## lm(formula = Apps ~ Grad.Rate, data = College)
@@ -4366,24 +4356,26 @@ date &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quo
 ## Residual standard error: 3831 on 775 degrees of freedom
 ## Multiple R-squared:  0.02154,    Adjusted R-squared:  0.02027 
 ## F-statistic: 17.06 on 1 and 775 DF,  p-value: 4.019e-05&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;회귀적합된 1차 선형방정식을 살펴보면&lt;/p&gt;
 &lt;p&gt;&lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;&lt;em&gt;A&lt;/em&gt;&lt;em&gt;p&lt;/em&gt;&lt;em&gt;p&lt;/em&gt;&lt;em&gt;s&lt;/em&gt; = 837.14 + 33.06 × &lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt;&lt;/span&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p&gt;졸업률이 한 단위 증가하면 지원자 수도 33.06회만큼 증가하는 경향을 가진 것으로 회귀적합모델을 볼 때 알 수 있다.&lt;br /&gt;
+&lt;p&gt;졸업률이 한 단위 증가하면 지원자 수도 33.06회만큼 증가하는 경향을 가진 것으로 알 수 있다.&lt;br /&gt;
 실제 데이터의 산포와 산출된 회귀적합선을 겹쳐 표현하면 아래와 같다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data=&lt;/span&gt;College, &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;grey&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;pch=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;21&lt;/span&gt;)
-&lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(College$Grad.Rate), &lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(reg_fit)), &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; College, &lt;span class=&quot;dt&quot;&gt;col =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;grey&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;pch =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;21&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(College$Grad.Rate), &lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(regFit)), &lt;span class=&quot;dt&quot;&gt;col =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;grid&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;br&gt;
 &lt;center&gt;
 &lt;img src=&quot;/assets/step_1.png&quot; /&gt;
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;분명 학교의 졸업률이 높으면 높을수록 대학교의 인기가 높은 것인지 해당학교의 지원자가 많아지는 경향을 plotting 결과물에서 볼 수 있다.&lt;br /&gt;
+&lt;p&gt;분명 학교의 졸업률이 높으면 높을수록 대학교의 인기가 높은 것인지&lt;br /&gt;
+해당학교의 지원자가 많아지는 경향을 그림을 보면 알 수 있다.&lt;br /&gt;
 &lt;code&gt;Grad.Rate&lt;/code&gt; 의 회귀계수 또한 베타계수가 0이라는 귀무가설을 기각시키는 P-value 이다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;step-function-model&quot;&gt;Step function model&lt;/h2&gt;
-&lt;p&gt;자 그러면 이제 언급할 Step function model 은 위의 일반적인 선형회귀적합과 무엇의 차이가 있을까?&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;step_fit &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;cut&lt;/span&gt;(Grad.Rate, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;data=&lt;/span&gt;College)
-&lt;span class=&quot;kw&quot;&gt;summary&lt;/span&gt;(step_fit)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;자 그러면 이제 언급할 Step function model 은 위의 일반적인 선형회귀적합과 어떤 차이가 있을까?&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;stepFit &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;cut&lt;/span&gt;(Grad.Rate, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; College)
+&lt;span class=&quot;kw&quot;&gt;summary&lt;/span&gt;(stepFit)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## 
 ## Call:
 ## lm(formula = Apps ~ cut(Grad.Rate, 2), data = College)
@@ -4404,31 +4396,30 @@ date &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quo
 ## F-statistic: 12.33 on 1 and 775 DF,  p-value: 0.0004714&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;lm()&lt;/code&gt; 함수의 formula 인자부분의 독립변수에 해당되는 부분을 보면 &lt;code&gt;cut(Grad.Rate, 2)&lt;/code&gt; 으로 되어있는데 이것의 의미는 &lt;code&gt;Grad.Rate&lt;/code&gt; 변수값들을 두 부분으로 범주화(grouping) 시키겠다는 의미이다.&lt;br /&gt;
 어떻게 범주화를 시키느냐? 한쪽은 값이 낮은 그룹, 나머지 한쪽은 값이 높은 그룹으로 이분류가 자동적으로 된다.&lt;br /&gt;
-그리고 위에서 출력된 &lt;code&gt;summary(step_fit)&lt;/code&gt; 의 결과물을 이용해 종속변수 &lt;code&gt;Apps&lt;/code&gt; 의 모델링 식을 표현하면 아래와 같다.&lt;/p&gt;
+그리고 위에서 출력된 &lt;code&gt;summary(stepFit)&lt;/code&gt; 의 결과물을 이용해 종속변수 &lt;code&gt;Apps&lt;/code&gt; 의 모델 방정식을 표현하면 아래와 같다.&lt;/p&gt;
 &lt;p&gt;&lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;&lt;em&gt;A&lt;/em&gt;&lt;em&gt;p&lt;/em&gt;&lt;em&gt;p&lt;/em&gt;&lt;em&gt;s&lt;/em&gt; = 2494.0 + 969.1 × &lt;em&gt;c&lt;/em&gt;&lt;em&gt;u&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;(&lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt;, 2)(64, 118]&lt;/span&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p&gt;단 위에서 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;c&lt;/em&gt;&lt;em&gt;u&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;(&lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt;, 2)(64, 118]&lt;/span&gt; 의 값은 &lt;code&gt;Grad.Rate&lt;/code&gt; 값이 &lt;span class=&quot;math inline&quot;&gt;64 &amp;lt; &lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt; ≤ 118&lt;/span&gt; 일 때 1, 아니면 0의 의미이다.&lt;/p&gt;
-&lt;p&gt;실제 데이터 산포와 &lt;code&gt;step_fit&lt;/code&gt; 적합선을 겹처 표현해보면&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data=&lt;/span&gt;College, &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;grey&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;pch=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;21&lt;/span&gt;)
-&lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(College$Grad.Rate), &lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(step_fit)), &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
+&lt;p&gt;실제 데이터 산포와 &lt;code&gt;stepFit&lt;/code&gt; 적합선을 겹처 그려보면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; College, &lt;span class=&quot;dt&quot;&gt;col =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;grey&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;pch =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;21&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(College$Grad.Rate), &lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(stepFit)), &lt;span class=&quot;dt&quot;&gt;col =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;grid&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;br&gt;
 &lt;center&gt;
 &lt;img src=&quot;/assets/step_2.png&quot; /&gt;
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;Grad.Rate 의 값이 낮은 그룹, 즉 졸업률이 64% 이하인 그룹은 2493.99회로, 64% 이상인 그룹은 3463.13회로 예측이 되는 모델인 것이다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Grad.Rate&lt;/code&gt; 의 값이 낮은 그룹, 즉 졸업률이 64% 이하인 그룹은 2493.99회로, 64% 이상인 그룹은 3463.13회로 예측이 되는 모델인 것이다.&lt;/p&gt;
 &lt;p&gt;이처럼 모델의 형태가 계단(Step)의 형태로 적합 시키며 독립변수의 구간을 계단처럼 구분지은후 각 그룹구간별 종속변수의 값을 예측하게 되는 특성을 가진다.&lt;/p&gt;
 &lt;p&gt;step function model 을 구현하기 위한 방법은 위의 예제처럼 R에서 &lt;code&gt;cut()&lt;/code&gt; 함수를 통해 간단히 구현할 수 있다.&lt;br /&gt;
 &lt;code&gt;lm()&lt;/code&gt; 함수를 이용한 적합은 그대로 두고, formula 인자부분만 알맞게 조정하면 되는데&lt;br /&gt;
 범주화를 시키고자 하는 독립변수에 &lt;code&gt;cut()&lt;/code&gt; 함수를 씌우고 범주화 개수를 지정시키면 된다. (더 특수하게 범주화시키고자 한다면 &lt;code&gt;cut()&lt;/code&gt; 함수의 도움말을 이용해 응용해 볼 수도 있겠다)&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h3 id=&quot;example-step-function-model&quot;&gt;Example step function model&lt;/h3&gt;
-&lt;p&gt;2개가 아닌 3개의 그룹으로 나누어 step function 적합한 경우의 코드 및 결과이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# using update() function&lt;/span&gt;
-step_fit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;update&lt;/span&gt;(step_fit, Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;cut&lt;/span&gt;(Grad.Rate, &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;))
+&lt;p&gt;2개가 아닌 3개의 그룹으로 나누어 step function 적합한 경우의 코드 및 결과이다.&lt;br /&gt;
+덧붙이면 &lt;code&gt;update()&lt;/code&gt; 함수를 통해 이전 객체 &lt;code&gt;stepFit&lt;/code&gt; 을 재활용 하고, 형식만 변형했다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;stepFit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;update&lt;/span&gt;(stepFit, Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;cut&lt;/span&gt;(Grad.Rate, &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;))
 
-&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data=&lt;/span&gt;College, &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;grey&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;pch=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;21&lt;/span&gt;)
-&lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(College$Grad.Rate), &lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(step_fit3)), &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; College, &lt;span class=&quot;dt&quot;&gt;col =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;grey&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;pch =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;21&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(College$Grad.Rate), &lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(stepFit3)), &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;grid&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;br&gt;
 &lt;center&gt;
@@ -4437,10 +4428,10 @@ step_fit3 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;이번엔 4개로 해보면?&lt;br /&gt;
 다음과 같다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;step_fit4 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;update&lt;/span&gt;(step_fit, Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;cut&lt;/span&gt;(Grad.Rate, &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;))
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;stepFit4 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;update&lt;/span&gt;(stepFit, Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;cut&lt;/span&gt;(Grad.Rate, &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;))
 
-&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data=&lt;/span&gt;College, &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;grey&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;pch=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;21&lt;/span&gt;)
-&lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(College$Grad.Rate), &lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(step_fit4)), &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd=&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(Apps ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;Grad.Rate, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; College, &lt;span class=&quot;dt&quot;&gt;col =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;grey&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;pch =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;21&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(College$Grad.Rate), &lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;predict&lt;/span&gt;(stepFit4)), &lt;span class=&quot;dt&quot;&gt;col =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lwd =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)
 &lt;span class=&quot;kw&quot;&gt;grid&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;br&gt;
 &lt;center&gt;

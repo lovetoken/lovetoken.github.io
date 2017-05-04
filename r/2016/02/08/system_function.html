@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="R에서 Shell command 를 실행하기위한 대안 : system() 함수" />
-        <meta name="keywords" content="R에서 Shell command 를 실행하기위한 대안 : system() 함수, , R" />
+        <meta name="description" content="R에서 Shell command 를 실행하기 위한 대안 : system() 함수" />
+        <meta name="keywords" content="R에서 Shell command 를 실행하기 위한 대안 : system() 함수, , R" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="R에서 Shell command 를 실행하기위한 대안 : system() 함수" property="og:title">
+          <meta content="R에서 Shell command 를 실행하기 위한 대안 : system() 함수" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -46,7 +46,7 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="R에서 Shell command 를 실행하기위한 대안 : system() 함수">
+          <meta name="twitter:title" content="R에서 Shell command 를 실행하기 위한 대안 : system() 함수">
         
         
           <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/02/08/system_function.html">
@@ -126,7 +126,7 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>R에서 Shell command 를 실행하기위한 대안 : system() 함수</h1>
+                <h1>R에서 Shell command 를 실행하기 위한 대안 : system() 함수</h1>
 <span class="time">08 Feb 2016</span>
 
 <span class="categories">
@@ -135,104 +135,94 @@
 
 
 <div class="content">
-    <div class="post"><p>(본 글은 Linux, Mac 을 기준으로 작성한 글입니다.)</p>
+    <div class="post"><p>(본 글은 Linux, Mac OS 머신을 기준으로 작성한 글이다)</p>
 <p>Shell command 로 출력되는 것을 R에서 보기 위한 방법은 없을까?<br />
-예를 들어 워킹디렉토리의 파일리스트를 출력하기 위해선 쉘에서 간단히 <code>ls</code>, 아니면 <code>ls -al</code> 등으로 참조할 수 있지만 Rstudio 를 사용하고 있는 상황이 아니고선 R command 상황에서 파일리스트를 참조하기는 좀 그렇다.</p>
+예를 들어 워킹디렉토리의 파일리스트를 출력하기 위해선 쉘에다서 간단히 <code>ls</code>, 아니면 <code>ls -al</code> 등으로 참조할 수 있지만 Rstudio 를 사용하고 있는 상황이 아니고선 R command 상황에서 파일리스트를 참조하기는 좀 그렇다.</p>
 <p>굳이 찾아본다면 Shell 의 <code>ls -al</code> 와 같은 R코드는</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">file.info</span>(<span class="kw">list.files</span>(<span class="dt">all.files =</span> T))</code></pre></div>
-<pre><code>##                  size isdir mode               mtime               ctime
-## .                 238  TRUE  755 2016-02-17 13:21:12 2016-02-17 13:21:12
-## ..               1360  TRUE  755 2016-02-11 16:50:19 2016-02-11 16:50:19
-## .DS_Store        6148 FALSE  644 2016-02-17 12:59:38 2016-02-17 12:59:38
-## Rmarkdown.docx  12662 FALSE  644 2016-02-17 13:19:40 2016-02-17 13:19:40
-## Rmarkdown.html 795924 FALSE  666 2016-02-08 14:07:00 2016-02-08 14:07:00
-## Rmarkdown.md     6975 FALSE  666 2016-02-08 14:07:00 2016-02-08 14:07:00
-## Rmarkdown.Rmd    4167 FALSE  755 2016-02-17 13:21:16 2016-02-17 13:21:16
+<pre><code>##                   size isdir mode               mtime               ctime
+## .                  204  TRUE  755 2017-05-04 14:28:32 2017-05-04 14:28:32
+## ..                1394  TRUE  755 2017-05-04 13:54:18 2017-05-04 13:54:18
+## .DS_Store         6148 FALSE  644 2017-05-04 14:28:32 2017-05-04 14:28:32
+## Rmarkdown.Rmd     4451 FALSE  755 2017-05-04 14:12:34 2017-05-04 14:12:34
+## Rmarkdown.html 1037047 FALSE  666 2017-05-04 14:12:41 2017-05-04 14:12:41
+## Rmarkdown.md      7150 FALSE  666 2017-05-04 14:12:41 2017-05-04 14:12:41
 ##                              atime uid gid     uname grname
-## .              2016-02-17 13:21:16 501  20 lovetoken  staff
-## ..             2016-02-17 13:19:41 501  20 lovetoken  staff
-## .DS_Store      2016-02-17 12:55:40 501  20 lovetoken  staff
-## Rmarkdown.docx 2016-02-17 13:21:16 501  20 lovetoken  staff
-## Rmarkdown.html 2016-02-17 13:21:16 501  20 lovetoken  staff
-## Rmarkdown.md   2016-02-17 13:21:16 501  20 lovetoken  staff
-## Rmarkdown.Rmd  2016-02-17 13:21:16 501  20 lovetoken  staff</code></pre>
-<p>등을 예시로 할 수 있는데 딱 봐도 마음에 들지 않는다...</p>
-<p>게다가 Rstudio 와 같은 GUI 환경이 아닌 CLI 환경이 정감이 가는 분들이라면 생산성을 추구하고, 마우스를 이용한다는 거 자체를 용납하지 않을 것 인데, 위와 같은 긴 코드는 전혀 공감되지 않는다.</p>
-<p>이처럼 R에서 대체할 수 있는 함수나 코드를 찾기보단, 아예 R내에서 Shell command를 실행할 수 있는 방법을 찾는 것이 합리적이다.</p>
-<p>이것저것 찾아보았는데 <code>system()</code> 함수를 이용하는 방법이 있어 정리해 본다.</p>
+## .              2017-05-04 14:30:01 501  20 lovetoken  staff
+## ..             2017-05-04 13:56:14 501  20 lovetoken  staff
+## .DS_Store      2017-05-04 14:11:18 501  20 lovetoken  staff
+## Rmarkdown.Rmd  2017-05-04 14:30:01 501  20 lovetoken  staff
+## Rmarkdown.html 2017-05-04 14:28:33 501  20 lovetoken  staff
+## Rmarkdown.md   2017-05-04 14:13:27 501  20 lovetoken  staff</code></pre>
+<p>등을 예시로 들 수 있는데 딱 봐도 마음에 들지 않는다 😨</p>
+<p>불필요하게 길은 코드인 것 뿐만아니라<br />
+Shell 의 <code>ls</code> 만의 기능을 R의 <code>list.files()</code> 함수가 가지고 있지 못하다.</p>
+<p>이처럼 R에서 대체할 수 있는 함수나 코드를 찾기보단 아예 R내에서 Shell command를 실행할 수 있는 방법이 없을까 고민해 보았다.<br />
+이것저것 찾아보았는데 <code>system()</code> 함수를 이용하는 방법이 있어 정리해 본다.</p>
 <p><br><br></p>
-<h2 id="shell-command-in-r">shell command in r</h2>
+<h2 id="r에서-shell-command-입력해-표준출력-조회하기">R에서 Shell command 입력해 표준출력 조회하기</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system</span>(<span class="st">&quot;ls -al&quot;</span>)
 <span class="kw">system</span>(<span class="st">&quot;pwd&quot;</span>)
 <span class="kw">system</span>(<span class="st">&quot;echo Hello world!&quot;</span>)</code></pre></div>
 <p>사용방법은 <code>system()</code> 함수의 첫번째 인자인 expression 을 Shell command 로 채워 넣어주면 된다.<br />
 아쉽지만 문자열만을 받아들이기 때문에 &quot;&quot; 로 양 옆을 채워야 한다.<br />
-현재 글에선 출력결과를 생략하였지만 실제로 R에서 실행 시 원하는 출력을 볼 수 있다.</p>
-<p><br></p>
+현재 글에선 출력결과를 생략하였지만 실제로 R에서 실행 시 원하는 표준출력(stdout)을 볼 수 있다.</p>
 <h3 id="shell-출력물을-r에서-바로-이용하기-위한-intern-true">Shell 출력물을 R에서 바로 이용하기 위한 <code>intern = TRUE</code></h3>
-<p>위의 예제에서 본 출력물을 R 내에서 character 형으로 바로 사용하기 위해선 R의 기본 컨테이너인 vector 로 저장되어야 한다.<br />
-하지만 <code>system()</code> 함수를 이용한 기본출력은 벡터로 반환되지 않는다.<br />
-출력은 출력일 뿐인 이것을 vector type 으로 반환시키기 위해선 <code>intern = TRUE</code> 로 설정한다.</p>
+<p>위의 예제에서 본 출력물을 R 내에서 character 형으로 바로 사용하기 위해선 R의 컨테이너에 저장되어야 한다.<br />
+하지만 <code>system()</code> 함수를 이용한 기본출력은 벡터형으로 반환되지 않는다.<br />
+출력은 출력일 뿐인 이것을 벡터형으로 반환시키기 위해선 <code>intern = TRUE</code> 로 설정하면 된다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system</span>(<span class="st">&quot;ls -al&quot;</span>, <span class="dt">intern =</span> T)</code></pre></div>
-<pre><code>## [1] &quot;total 1640&quot;                                                        
-## [2] &quot;drwxr-xr-x   7 lovetoken  staff     238  2 17 13:21 .&quot;             
-## [3] &quot;drwxr-xr-x  40 lovetoken  staff    1360  2 11 16:50 ..&quot;            
-## [4] &quot;-rw-r--r--@  1 lovetoken  staff    6148  2 17 12:59 .DS_Store&quot;     
-## [5] &quot;-rwxr-xr-x@  1 lovetoken  staff    4167  2 17 13:21 Rmarkdown.Rmd&quot; 
-## [6] &quot;-rw-r--r--@  1 lovetoken  staff   12662  2 17 13:19 Rmarkdown.docx&quot;
-## [7] &quot;-rw-rw-rw-   1 lovetoken  staff  795924  2  8 14:07 Rmarkdown.html&quot;
-## [8] &quot;-rw-rw-rw-   1 lovetoken  staff    6975  2  8 14:07 Rmarkdown.md&quot;</code></pre>
+<pre><code>## [1] &quot;total 2080&quot;                                                          
+## [2] &quot;drwxr-xr-x@  6 lovetoken  staff      204 May  4 14:28 .&quot;             
+## [3] &quot;drwxr-xr-x@ 41 lovetoken  staff     1394 May  4 13:54 ..&quot;            
+## [4] &quot;-rw-r--r--@  1 lovetoken  staff     6148 May  4 14:28 .DS_Store&quot;     
+## [5] &quot;-rwxr-xr-x@  1 lovetoken  staff     4451 May  4 14:12 Rmarkdown.Rmd&quot; 
+## [6] &quot;-rw-rw-rw-@  1 lovetoken  staff  1037047 May  4 14:12 Rmarkdown.html&quot;
+## [7] &quot;-rw-rw-rw-@  1 lovetoken  staff     7150 May  4 14:12 Rmarkdown.md&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system</span>(<span class="st">&quot;pwd&quot;</span>, <span class="dt">intern =</span> T)</code></pre></div>
-<pre><code>## [1] &quot;/Users/lovetoken/Desktop/OneDrive/02_Study/01_Statistic/31_R/11_Rcafe/01_Function/system()&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/lovetoken/Desktop/Dropbox/02_Study/01_Statistic/31_R/11_R_posting/01_function/system&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system</span>(<span class="st">&quot;echo Hello world!&quot;</span>, <span class="dt">intern =</span> T)</code></pre></div>
 <pre><code>## [1] &quot;Hello world!&quot;</code></pre>
 <p><br><br></p>
-<h2 id="shell-output-을-r과-연동">shell output 을 R과 연동</h2>
+<h2 id="shell-표준출력을-r과-함께-이용">Shell 표준출력을 R과 함께 이용</h2>
 <p>이점을 이용하여 R과 Shell 의 캐미를 만들 수 있을 것이다.</p>
-<p><br></p>
 <h3 id="ex1-r-에서의-hello-와-shell-에서의-r-을-붙여-hello-r-완성시키기">ex1) R 에서의 'Hello ' 와 Shell 에서의 'R!' 을 붙여 'Hello R!' 완성시키기</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">R &lt;-<span class="st"> &quot;Hello &quot;</span>
 Shell &lt;-<span class="st"> </span><span class="kw">system</span>(<span class="st">&quot;echo R!&quot;</span>, <span class="dt">intern =</span> T)
 
 <span class="kw">paste0</span>(R, Shell)</code></pre></div>
 <pre><code>## [1] &quot;Hello R!&quot;</code></pre>
-<p><br></p>
 <h3 id="ex2-r에서-생성한-규칙적-문자열-데이터들로-폴더-생성하기">ex2) R에서 생성한 규칙적 문자열 데이터들로 폴더 생성하기</h3>
-<p>R에서 준비된 날짜명칭들을 이용해 Shell <code>mkdir</code> 명령어와 혼합하여 폴더들을 생성하기.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># before</span>
-<span class="kw">system</span>(<span class="st">&quot;ls -al&quot;</span>, <span class="dt">intern =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] &quot;total 1640&quot;                                                        
-## [2] &quot;drwxr-xr-x   7 lovetoken  staff     238  2 17 13:21 .&quot;             
-## [3] &quot;drwxr-xr-x  40 lovetoken  staff    1360  2 11 16:50 ..&quot;            
-## [4] &quot;-rw-r--r--@  1 lovetoken  staff    6148  2 17 12:59 .DS_Store&quot;     
-## [5] &quot;-rwxr-xr-x@  1 lovetoken  staff    4167  2 17 13:21 Rmarkdown.Rmd&quot; 
-## [6] &quot;-rw-r--r--@  1 lovetoken  staff   12662  2 17 13:19 Rmarkdown.docx&quot;
-## [7] &quot;-rw-rw-rw-   1 lovetoken  staff  795924  2  8 14:07 Rmarkdown.html&quot;
-## [8] &quot;-rw-rw-rw-   1 lovetoken  staff    6975  2  8 14:07 Rmarkdown.md&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># after</span>
-date &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">Sys.Date</span>()-<span class="dv">10</span>, <span class="kw">Sys.Date</span>(), <span class="dt">by =</span> <span class="dv">1</span>) %&gt;%<span class="st"> </span><span class="kw">paste</span>(<span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)
+<p>R에서 준비된 날짜명칭들을 이용해 Shell <code>mkdir</code> 명령어와 혼합하여 폴더들을 생성해보는 예제이다.</p>
+<p>우선 현 워킹디렉토리의 상황을 조회해보면</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system</span>(<span class="st">&quot;ls -al&quot;</span>, <span class="dt">intern =</span> T)</code></pre></div>
+<pre><code>## [1] &quot;total 2080&quot;                                                          
+## [2] &quot;drwxr-xr-x@  6 lovetoken  staff      204 May  4 14:28 .&quot;             
+## [3] &quot;drwxr-xr-x@ 41 lovetoken  staff     1394 May  4 13:54 ..&quot;            
+## [4] &quot;-rw-r--r--@  1 lovetoken  staff     6148 May  4 14:28 .DS_Store&quot;     
+## [5] &quot;-rwxr-xr-x@  1 lovetoken  staff     4451 May  4 14:12 Rmarkdown.Rmd&quot; 
+## [6] &quot;-rw-rw-rw-@  1 lovetoken  staff  1037047 May  4 14:12 Rmarkdown.html&quot;
+## [7] &quot;-rw-rw-rw-@  1 lovetoken  staff     7150 May  4 14:12 Rmarkdown.md&quot;</code></pre>
+<p>폴더따윈 없다.</p>
+<p>최근 3일치 날짜명칭들을 R을 통해 만들고<br />
+Shell 에서 폴더를 만드는 명령어인 <code>mkdir</code> 과 결합하여<br />
+최종적으로 <code>&quot;mkdir 2017-05-02 2017-05-03 2017-05-04&quot;</code> 명령어를 만들어 실행시키는 코드이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">date &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">Sys.Date</span>() -<span class="st"> </span><span class="dv">2</span>, <span class="kw">Sys.Date</span>(), <span class="dt">by =</span> <span class="dv">1</span>) %&gt;%<span class="st"> </span><span class="kw">paste</span>(<span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)
 <span class="kw">paste</span>(<span class="st">&quot;mkdir&quot;</span>, date) %&gt;%<span class="st"> </span><span class="kw">system</span>(<span class="dt">intern =</span> T)</code></pre></div>
 <pre><code>## character(0)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system</span>(<span class="st">&quot;ls -al&quot;</span>, <span class="dt">intern =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>##  [1] &quot;total 1640&quot;                                                        
-##  [2] &quot;drwxr-xr-x  18 lovetoken  staff     612  2 17 13:21 .&quot;             
-##  [3] &quot;drwxr-xr-x  40 lovetoken  staff    1360  2 11 16:50 ..&quot;            
-##  [4] &quot;-rw-r--r--@  1 lovetoken  staff    6148  2 17 12:59 .DS_Store&quot;     
-##  [5] &quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-07&quot;    
-##  [6] &quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-08&quot;    
-##  [7] &quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-09&quot;    
-##  [8] &quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-10&quot;    
-##  [9] &quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-11&quot;    
-## [10] &quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-12&quot;    
-## [11] &quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-13&quot;    
-## [12] &quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-14&quot;    
-## [13] &quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-15&quot;    
-## [14] &quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-16&quot;    
-## [15] &quot;drwxr-xr-x   2 lovetoken  staff      68  2 17 13:21 2016-02-17&quot;    
-## [16] &quot;-rwxr-xr-x@  1 lovetoken  staff    4167  2 17 13:21 Rmarkdown.Rmd&quot; 
-## [17] &quot;-rw-r--r--@  1 lovetoken  staff   12662  2 17 13:19 Rmarkdown.docx&quot;
-## [18] &quot;-rw-rw-rw-   1 lovetoken  staff  795924  2  8 14:07 Rmarkdown.html&quot;
-## [19] &quot;-rw-rw-rw-   1 lovetoken  staff    6975  2  8 14:07 Rmarkdown.md&quot;</code></pre>
+<p>실행 이후 최근 3일치 명칭 폴더 3개가 잘 만들어 졌는지 확인해 보면</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system</span>(<span class="st">&quot;ls -al&quot;</span>, <span class="dt">intern =</span> T)</code></pre></div>
+<pre><code>##  [1] &quot;total 2080&quot;                                                          
+##  [2] &quot;drwxr-xr-x@  9 lovetoken  staff      306 May  4 14:30 .&quot;             
+##  [3] &quot;drwxr-xr-x@ 41 lovetoken  staff     1394 May  4 13:54 ..&quot;            
+##  [4] &quot;-rw-r--r--@  1 lovetoken  staff     6148 May  4 14:28 .DS_Store&quot;     
+##  [5] &quot;drwxr-xr-x   2 lovetoken  staff       68 May  4 14:30 2017-05-02&quot;    
+##  [6] &quot;drwxr-xr-x   2 lovetoken  staff       68 May  4 14:30 2017-05-03&quot;    
+##  [7] &quot;drwxr-xr-x   2 lovetoken  staff       68 May  4 14:30 2017-05-04&quot;    
+##  [8] &quot;-rwxr-xr-x@  1 lovetoken  staff     4451 May  4 14:12 Rmarkdown.Rmd&quot; 
+##  [9] &quot;-rw-rw-rw-@  1 lovetoken  staff  1037047 May  4 14:12 Rmarkdown.html&quot;
+## [10] &quot;-rw-rw-rw-@  1 lovetoken  staff     7150 May  4 14:12 Rmarkdown.md&quot;</code></pre>
+<p>잘 만들어 진 것을 볼 수 있다.</p>
 <p><br><br></p>
 <h2 id="정리">정리</h2>
 <p>필자는 Shell 에 대해 완전 초급자여서 즐겨 쓰는 명령어 몇 개 이외에 잘 아는것이 없다.<br />
@@ -629,8 +619,8 @@ date &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 Shell command 를 실행하기위한 대안 : system() 함수";
-        var disqus_title = "R에서 Shell command 를 실행하기위한 대안 : system() 함수";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 Shell command 를 실행하기 위한 대안 : system() 함수";
+        var disqus_title = "R에서 Shell command 를 실행하기 위한 대안 : system() 함수";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

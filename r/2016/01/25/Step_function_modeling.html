@@ -137,7 +137,7 @@
 <div class="content">
     <div class="post"><p>일반적인 선형회귀분석보다 모델의 해석이 특수하나<br />
 한눈에 이해할 수 있는 모델링 방법인 Step function 을 R에서 구현해보고자 한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(College, <span class="dt">package=</span><span class="st">&quot;ISLR&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(College, <span class="dt">package =</span> <span class="st">&quot;ISLR&quot;</span>)</code></pre></div>
 <p>예제로 사용할 데이터는 ISLR 패키지에 내장되어있는 <code>College</code> 데이터이다.<br />
 미국의 여러 대학교가 관측치이고, 각 대학들의 지원자 수와 각 대학들의 정보를 변수로 가지고 있는 데이터셋이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(College)</code></pre></div>
@@ -176,12 +176,12 @@
 ##  Mean   : 65.46  
 ##  3rd Qu.: 78.00  
 ##  Max.   :118.00</code></pre>
-<p>18개 만큼의 변수들을 가지고 있는데, 우리 분석은 종속변수를 지원서 등록횟수인 <code>Apps</code> 로 하고, 독립변수를 졸업률인 <code>Grad.Rate</code> 로 제한시켜 두개의 변수만 신경쓰도록 하겠다.</p>
+<p>18개 만큼의 변수들을 가지고 있는데, 현 분석과정에선 지원서 등록횟수인 <code>Apps</code> 을 종속변수로 하고, 졸업률인 <code>Grad.Rate</code> 를 독립변수로 제한시켜 두 개의 변수만 신경쓰도록 하겠다.</p>
 <p><br><br></p>
 <h2 id="simple-regression-model">Simple regression model</h2>
 <p>일반적인 단순선형회귀적합을 하게되면 아래와 같이 모델적합이 된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">reg_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(Apps ~<span class="st"> </span>Grad.Rate, <span class="dt">data=</span>College)
-<span class="kw">summary</span>(reg_fit)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regFit &lt;-<span class="st"> </span><span class="kw">lm</span>(Apps ~<span class="st"> </span>Grad.Rate, <span class="dt">data =</span> College)
+<span class="kw">summary</span>(regFit)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Apps ~ Grad.Rate, data = College)
@@ -200,24 +200,26 @@
 ## Residual standard error: 3831 on 775 degrees of freedom
 ## Multiple R-squared:  0.02154,    Adjusted R-squared:  0.02027 
 ## F-statistic: 17.06 on 1 and 775 DF,  p-value: 4.019e-05</code></pre>
+<p>회귀적합된 1차 선형방정식을 살펴보면</p>
 <p><br /><span class="math display"><em>A</em><em>p</em><em>p</em><em>s</em> = 837.14 + 33.06 × <em>G</em><em>r</em><em>a</em><em>d</em>.<em>R</em><em>a</em><em>t</em><em>e</em></span><br /></p>
-<p>졸업률이 한 단위 증가하면 지원자 수도 33.06회만큼 증가하는 경향을 가진 것으로 회귀적합모델을 볼 때 알 수 있다.<br />
+<p>졸업률이 한 단위 증가하면 지원자 수도 33.06회만큼 증가하는 경향을 가진 것으로 알 수 있다.<br />
 실제 데이터의 산포와 산출된 회귀적합선을 겹쳐 표현하면 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Apps ~<span class="st"> </span>Grad.Rate, <span class="dt">data=</span>College, <span class="dt">col=</span><span class="st">&quot;grey&quot;</span>, <span class="dt">pch=</span><span class="dv">21</span>)
-<span class="kw">lines</span>(<span class="kw">sort</span>(College$Grad.Rate), <span class="kw">sort</span>(<span class="kw">predict</span>(reg_fit)), <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Apps ~<span class="st"> </span>Grad.Rate, <span class="dt">data =</span> College, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">21</span>)
+<span class="kw">lines</span>(<span class="kw">sort</span>(College$Grad.Rate), <span class="kw">sort</span>(<span class="kw">predict</span>(regFit)), <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">grid</span>()</code></pre></div>
 <br>
 <center>
 <img src="/assets/step_1.png" />
 </center>
 <p><br></p>
-<p>분명 학교의 졸업률이 높으면 높을수록 대학교의 인기가 높은 것인지 해당학교의 지원자가 많아지는 경향을 plotting 결과물에서 볼 수 있다.<br />
+<p>분명 학교의 졸업률이 높으면 높을수록 대학교의 인기가 높은 것인지<br />
+해당학교의 지원자가 많아지는 경향을 그림을 보면 알 수 있다.<br />
 <code>Grad.Rate</code> 의 회귀계수 또한 베타계수가 0이라는 귀무가설을 기각시키는 P-value 이다.</p>
 <p><br><br></p>
 <h2 id="step-function-model">Step function model</h2>
-<p>자 그러면 이제 언급할 Step function model 은 위의 일반적인 선형회귀적합과 무엇의 차이가 있을까?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">step_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(Apps ~<span class="st"> </span><span class="kw">cut</span>(Grad.Rate, <span class="dv">2</span>), <span class="dt">data=</span>College)
-<span class="kw">summary</span>(step_fit)</code></pre></div>
+<p>자 그러면 이제 언급할 Step function model 은 위의 일반적인 선형회귀적합과 어떤 차이가 있을까?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stepFit &lt;-<span class="st"> </span><span class="kw">lm</span>(Apps ~<span class="st"> </span><span class="kw">cut</span>(Grad.Rate, <span class="dv">2</span>), <span class="dt">data =</span> College)
+<span class="kw">summary</span>(stepFit)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Apps ~ cut(Grad.Rate, 2), data = College)
@@ -238,31 +240,30 @@
 ## F-statistic: 12.33 on 1 and 775 DF,  p-value: 0.0004714</code></pre>
 <p><code>lm()</code> 함수의 formula 인자부분의 독립변수에 해당되는 부분을 보면 <code>cut(Grad.Rate, 2)</code> 으로 되어있는데 이것의 의미는 <code>Grad.Rate</code> 변수값들을 두 부분으로 범주화(grouping) 시키겠다는 의미이다.<br />
 어떻게 범주화를 시키느냐? 한쪽은 값이 낮은 그룹, 나머지 한쪽은 값이 높은 그룹으로 이분류가 자동적으로 된다.<br />
-그리고 위에서 출력된 <code>summary(step_fit)</code> 의 결과물을 이용해 종속변수 <code>Apps</code> 의 모델링 식을 표현하면 아래와 같다.</p>
+그리고 위에서 출력된 <code>summary(stepFit)</code> 의 결과물을 이용해 종속변수 <code>Apps</code> 의 모델 방정식을 표현하면 아래와 같다.</p>
 <p><br /><span class="math display"><em>A</em><em>p</em><em>p</em><em>s</em> = 2494.0 + 969.1 × <em>c</em><em>u</em><em>t</em>(<em>G</em><em>r</em><em>a</em><em>d</em>.<em>R</em><em>a</em><em>t</em><em>e</em>, 2)(64, 118]</span><br /></p>
 <p>단 위에서 <span class="math inline"><em>c</em><em>u</em><em>t</em>(<em>G</em><em>r</em><em>a</em><em>d</em>.<em>R</em><em>a</em><em>t</em><em>e</em>, 2)(64, 118]</span> 의 값은 <code>Grad.Rate</code> 값이 <span class="math inline">64 &lt; <em>G</em><em>r</em><em>a</em><em>d</em>.<em>R</em><em>a</em><em>t</em><em>e</em> ≤ 118</span> 일 때 1, 아니면 0의 의미이다.</p>
-<p>실제 데이터 산포와 <code>step_fit</code> 적합선을 겹처 표현해보면</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Apps ~<span class="st"> </span>Grad.Rate, <span class="dt">data=</span>College, <span class="dt">col=</span><span class="st">&quot;grey&quot;</span>, <span class="dt">pch=</span><span class="dv">21</span>)
-<span class="kw">lines</span>(<span class="kw">sort</span>(College$Grad.Rate), <span class="kw">sort</span>(<span class="kw">predict</span>(step_fit)), <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)
+<p>실제 데이터 산포와 <code>stepFit</code> 적합선을 겹처 그려보면</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Apps ~<span class="st"> </span>Grad.Rate, <span class="dt">data =</span> College, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">21</span>)
+<span class="kw">lines</span>(<span class="kw">sort</span>(College$Grad.Rate), <span class="kw">sort</span>(<span class="kw">predict</span>(stepFit)), <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">grid</span>()</code></pre></div>
 <br>
 <center>
 <img src="/assets/step_2.png" />
 </center>
 <p><br></p>
-<p>Grad.Rate 의 값이 낮은 그룹, 즉 졸업률이 64% 이하인 그룹은 2493.99회로, 64% 이상인 그룹은 3463.13회로 예측이 되는 모델인 것이다.</p>
+<p><code>Grad.Rate</code> 의 값이 낮은 그룹, 즉 졸업률이 64% 이하인 그룹은 2493.99회로, 64% 이상인 그룹은 3463.13회로 예측이 되는 모델인 것이다.</p>
 <p>이처럼 모델의 형태가 계단(Step)의 형태로 적합 시키며 독립변수의 구간을 계단처럼 구분지은후 각 그룹구간별 종속변수의 값을 예측하게 되는 특성을 가진다.</p>
 <p>step function model 을 구현하기 위한 방법은 위의 예제처럼 R에서 <code>cut()</code> 함수를 통해 간단히 구현할 수 있다.<br />
 <code>lm()</code> 함수를 이용한 적합은 그대로 두고, formula 인자부분만 알맞게 조정하면 되는데<br />
 범주화를 시키고자 하는 독립변수에 <code>cut()</code> 함수를 씌우고 범주화 개수를 지정시키면 된다. (더 특수하게 범주화시키고자 한다면 <code>cut()</code> 함수의 도움말을 이용해 응용해 볼 수도 있겠다)</p>
-<p><br></p>
 <h3 id="example-step-function-model">Example step function model</h3>
-<p>2개가 아닌 3개의 그룹으로 나누어 step function 적합한 경우의 코드 및 결과이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using update() function</span>
-step_fit3 &lt;-<span class="st"> </span><span class="kw">update</span>(step_fit, Apps ~<span class="st"> </span><span class="kw">cut</span>(Grad.Rate, <span class="dv">3</span>))
+<p>2개가 아닌 3개의 그룹으로 나누어 step function 적합한 경우의 코드 및 결과이다.<br />
+덧붙이면 <code>update()</code> 함수를 통해 이전 객체 <code>stepFit</code> 을 재활용 하고, 형식만 변형했다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stepFit3 &lt;-<span class="st"> </span><span class="kw">update</span>(stepFit, Apps ~<span class="st"> </span><span class="kw">cut</span>(Grad.Rate, <span class="dv">3</span>))
 
-<span class="kw">plot</span>(Apps ~<span class="st"> </span>Grad.Rate, <span class="dt">data=</span>College, <span class="dt">col=</span><span class="st">&quot;grey&quot;</span>, <span class="dt">pch=</span><span class="dv">21</span>)
-<span class="kw">lines</span>(<span class="kw">sort</span>(College$Grad.Rate), <span class="kw">sort</span>(<span class="kw">predict</span>(step_fit3)), <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)
+<span class="kw">plot</span>(Apps ~<span class="st"> </span>Grad.Rate, <span class="dt">data =</span> College, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">21</span>)
+<span class="kw">lines</span>(<span class="kw">sort</span>(College$Grad.Rate), <span class="kw">sort</span>(<span class="kw">predict</span>(stepFit3)), <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">grid</span>()</code></pre></div>
 <br>
 <center>
@@ -271,10 +272,10 @@ step_fit3 &lt;-<span class="st"> </span><span class="kw">update</span>(step_fit,
 <p><br></p>
 <p>이번엔 4개로 해보면?<br />
 다음과 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">step_fit4 &lt;-<span class="st"> </span><span class="kw">update</span>(step_fit, Apps ~<span class="st"> </span><span class="kw">cut</span>(Grad.Rate, <span class="dv">4</span>))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stepFit4 &lt;-<span class="st"> </span><span class="kw">update</span>(stepFit, Apps ~<span class="st"> </span><span class="kw">cut</span>(Grad.Rate, <span class="dv">4</span>))
 
-<span class="kw">plot</span>(Apps ~<span class="st"> </span>Grad.Rate, <span class="dt">data=</span>College, <span class="dt">col=</span><span class="st">&quot;grey&quot;</span>, <span class="dt">pch=</span><span class="dv">21</span>)
-<span class="kw">lines</span>(<span class="kw">sort</span>(College$Grad.Rate), <span class="kw">sort</span>(<span class="kw">predict</span>(step_fit4)), <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)
+<span class="kw">plot</span>(Apps ~<span class="st"> </span>Grad.Rate, <span class="dt">data =</span> College, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">21</span>)
+<span class="kw">lines</span>(<span class="kw">sort</span>(College$Grad.Rate), <span class="kw">sort</span>(<span class="kw">predict</span>(stepFit4)), <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">grid</span>()</code></pre></div>
 <br>
 <center>
@@ -661,7 +662,7 @@ step_fit3 &lt;-<span class="st"> </span><span class="kw">update</span>(step_fit,
     <a class="prev" href="/diary/2015/12/07/Imitation_game.html">&laquo; Imitation game</a>
   
   
-    <a class="next" href="/r/2016/02/08/system_function.html">R에서 Shell command 를 실행하기위한 대안 : system() 함수 &raquo;</a>
+    <a class="next" href="/r/2016/02/08/system_function.html">R에서 Shell command 를 실행하기 위한 대안 : system() 함수 &raquo;</a>
   
 </div>
 
