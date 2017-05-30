@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축" />
-        <meta name="keywords" content="Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축, , R" />
+        <meta name="description" content="R에서 행렬 간 이루어지는 다양한 곱셈에 대해 알아보기 (행렬의 곱셈, 하다마드 곱셈, 크로네커 곱셈)" />
+        <meta name="keywords" content="R에서 행렬 간 이루어지는 다양한 곱셈에 대해 알아보기 (행렬의 곱셈, 하다마드 곱셈, 크로네커 곱셈), , R" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축" property="og:title">
+          <meta content="R에서 행렬 간 이루어지는 다양한 곱셈에 대해 알아보기 (행렬의 곱셈, 하다마드 곱셈, 크로네커 곱셈)" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2015/03/25/RstudioServer_using_AWSAMI.html" property="og:url">
+          <meta content="https://lovetoken.github.io/r/2017/05/30/MatrixProduct.html" property="og:url">
         
         
-          <meta content="2015-03-25T00:00:00+09:00" property="article:published_time">
+          <meta content="2017-05-30T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축">
+          <meta name="twitter:title" content="R에서 행렬 간 이루어지는 다양한 곱셈에 대해 알아보기 (행렬의 곱셈, 하다마드 곱셈, 크로네커 곱셈)">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2015/03/25/RstudioServer_using_AWSAMI.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2017/05/30/MatrixProduct.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,8 +126,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축</h1>
-<span class="time">25 Mar 2015</span>
+                <h1>R에서 행렬 간 이루어지는 다양한 곱셈에 대해 알아보기 (행렬의 곱셈, 하다마드 곱셈, 크로네커 곱셈)</h1>
+<span class="time">30 May 2017</span>
 
 <span class="categories">
     &raquo; <a href="/category/R">R</a>
@@ -135,39 +135,120 @@
 
 
 <div class="content">
-    <div class="post"><blockquote>
-<p><a href="http://www.louisaslett.com" class="uri">http://www.louisaslett.com</a></p>
-</blockquote>
-<p>Amazon Web Service (AWS) 를 이용하여 미리 구축된 Rstudio Server AMI<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> 를 배포해주는 <a href="http://www.louisaslett.com/">사이트</a>가 있다.</p>
-<p>이 AMI를 이용해 직접 여러대의 Rstudio Server 를 손쉽게 구축시킬 수 있다.</p>
-<p>관련된 정보는 <a href="https://www.youtube.com/watch?v=NQu3ugUkYTk">아래링크</a>를 통해 참고하여 알게 되었고 튜토리얼 형태로 이용할 수 있는 방법에 대한 영상까지 있다.</p>
-<blockquote>
-<p><a href="https://www.youtube.com/watch?v=NQu3ugUkYTk">출처 : Youtube (Brief guide about Rstudio Server's Web interface on AWS)</a></p>
-</blockquote>
-<iframe width="100%" height="400" src="https://www.youtube.com/embed/NQu3ugUkYTk" frameborder="0" allowfullscreen>
-</iframe>
-<p>AWS 를 프리티어로 공짜로 이용하던 이전시절 이영상을 보고 그대로 따라하여 Rstudio Server 를 구축 시켜 봤었다.<br />
-등록되는 도메인을 통해 들어간 후</p>
-<p><em>ID : rstudio</em><br />
-<em>P.W : rstudio</em></p>
-<p>로 로그인하여 자유자재로 웹에서 사용할 수 있게 된다.<br />
-물론 초기 로그인시 아이디와 패스워드는 저렇지만 추후에 다른 패스워드로, 그리고 다른 아이디를 만들어 사용할 수도 있겠다.</p>
-<br>
-<center>
-<img src="/assets/AWSAMI-1.png" />
-</center>
-<p><br></p>
-<p>실질적으로 사용하고자 한다면 AWS EC2 사용 과금을 고려해야하며,<br />
-AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴스를 활성화 시킨다면<br />
-성능, 속도측면에서 기대하지 않는것이 좋을것이다.</p>
-<p>하지만 간편하게 원격으로 R 을 실행할 수도 있고, 소셜코딩이 가능할 수도 있겠으며 간편한 서버증설 등등의<br />
-유용하게 사용할 수 있는 방법은 무궁무진 할 것으로 생각된다.</p>
-<section class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>&quot;Amazon Machine Image&quot; 의 약어로 어떤 소프트웨어나 환경설정을 이미지화 하여 그대로 재활용할 수 있는 스냅샷이다<a href="#fnref1">↩</a></p></li>
-</ol>
-</section>
+    <div class="post"><p>행렬과 행렬간 곱셈은 행렬 A와 B가 아래와 같이 주어졌을 때</p>
+<p><br><img src="/assets/MatrixProduct_1.png" width="500"><br></p>
+<p>행렬 A와 행렬 B의 곱은</p>
+<p><br><img src="/assets/MatrixProduct_2.png" width="450"><br></p>
+<p>이며, 이때 앞에 위치한 행렬의 열의 수와 뒤에 위치한 행렬의 행의 수가 같아야 행렬곱이 가능하다.<br />
+R에서 위와 같은 행렬의 곱셈을 실행하기 위해서는 <code>*</code> 연산자가 아닌 <code>%*%</code> 를 이용한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>( <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">1</span>,  <span class="dv">3</span>), <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">ncol =</span> <span class="dv">2</span>))</code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    2    1
+## [2,]    7    3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(B &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(-<span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">1</span>, -<span class="dv">3</span>), <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">ncol =</span> <span class="dv">2</span>))</code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]   -2    1
+## [2,]    7   -3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">A %*%<span class="st"> </span>B</code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    3   -1
+## [2,]    7   -2</code></pre>
+<p>일반적인 행렬의 곱셈은 <code>%*%</code> 을 이용해야 한다고 했는데<br />
+그럼 <code>*</code> 이것을 이용하면 어떻게 될까?</p>
+<p><br><br></p>
+<h2 id="하다마드-곱셈-hadamard-product">하다마드 곱셈 (Hadamard Product)</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">A *<span class="st"> </span>B</code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]   -4    1
+## [2,]   49   -9</code></pre>
+<p>동일한 위치의 원소끼리의 곱이 되어 버린다.<br />
+사실 동일차원의 행렬끼리 동일위치원소와 곱해지는 곱셈을 하다마드 곱셈(Hadamard Product) 이라고도 부르는데, 위의 코드가 바로 하다마드 곱셈을 하는 코드로 볼 수 있겠다.<br />
+여하튼 R에서는 <code>%*%</code> 사이에 행렬객체를 넣고 실행하면 행렬간 곱셈을,<br />
+<code>*</code> 사이에 넣어주면 하다마드 곱셈을 실행킨다는 차이를 확인할 수 있다.</p>
+<p><br><br></p>
+<h2 id="크로네커-곱셈-kronecker-product">크로네커 곱셈 (Kronecker Product)</h2>
+<p>행렬의 곱셈 중 크로네커 곱셈(Kronecker Product)이라는 것도 있다.<br />
+가끔 요긴하게 쓸 때가 있는 이 크로네커 곱셈은 이런 형태이다.</p>
+<p><br><img src="/assets/MatrixProduct_3.png" width="500"><br></p>
+<p>일 때 행렬 A와 행렬 B간 크로네커 곱셈 <span class="math inline"><em>A</em> ⊗ <em>B</em></span> 는 아래와 같다.</p>
+<p><br><img src="/assets/MatrixProduct_4.png" width="450"><br></p>
+<p><span class="math inline"><em>A</em> ⊗ <em>B</em></span> 를 계산한 후 행렬의 크기를 보게 된다면 <span class="math inline"><em>m</em><em>n</em> × <em>n</em><em>p</em></span> 행렬이 만들어 지게 될 것이다.</p>
+<p>크로네커 곱셈을 이용하면 행렬의 크기는 크되 일정한 규칙이 존재하는 행렬을 손쉽게 만들 수 있을 것이다.<br />
+예를들면 아래와 같은 행렬을 R에서 만들어 보겠다고 가정한다.</p>
+<p><br><img src="/assets/MatrixProduct_5.png" width="200"><br></p>
+<p>이 행렬 M을 만들기 위해</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">e &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">32</span>), <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">24</span>), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">8</span>), <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">24</span>), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">8</span>))
+(M &lt;-<span class="st"> </span><span class="kw">matrix</span>(e, <span class="dt">ncol =</span> <span class="dv">4</span>))</code></pre></div>
+<pre><code>##       [,1] [,2] [,3] [,4]
+##  [1,]    1    1    0    0
+##  [2,]    1    1    0    0
+##  [3,]    1    1    0    0
+##  [4,]    1    1    0    0
+##  [5,]    1    1    0    0
+##  [6,]    1    1    0    0
+##  [7,]    1    1    0    0
+##  [8,]    1    1    0    0
+##  [9,]    1    0    1    0
+## [10,]    1    0    1    0
+## [11,]    1    0    1    0
+## [12,]    1    0    1    0
+## [13,]    1    0    1    0
+## [14,]    1    0    1    0
+## [15,]    1    0    1    0
+## [16,]    1    0    1    0
+## [17,]    1    0    0    1
+## [18,]    1    0    0    1
+## [19,]    1    0    0    1
+## [20,]    1    0    0    1
+## [21,]    1    0    0    1
+## [22,]    1    0    0    1
+## [23,]    1    0    0    1
+## [24,]    1    0    0    1</code></pre>
+<p>와 같은 형식의 코드를 짤 수도 있다.<br />
+하지만 <code>c(rep(1, 32), rep(0, 24), rep(1, 8), rep(0, 24), rep(1, 8))</code> 처럼 손이 많이 가는 코드를 작성해야 하는데, 크로네커 곱셈을 약간 응용하면 행렬 M을 좀 더 편하게 만들 수 있을 것이다.<br />
+R에서 크로네커 곱셈을 수행하는 함수는 <code>kronecker()</code> 이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">ncol =</span> <span class="dv">4</span>))</code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    1    0    0
+## [2,]    1    0    1    0
+## [3,]    1    0    0    1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(B &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">8</span>)))</code></pre></div>
+<pre><code>##      [,1]
+## [1,]    1
+## [2,]    1
+## [3,]    1
+## [4,]    1
+## [5,]    1
+## [6,]    1
+## [7,]    1
+## [8,]    1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(M &lt;-<span class="st"> </span><span class="kw">kronecker</span>(A, B))</code></pre></div>
+<pre><code>##       [,1] [,2] [,3] [,4]
+##  [1,]    1    1    0    0
+##  [2,]    1    1    0    0
+##  [3,]    1    1    0    0
+##  [4,]    1    1    0    0
+##  [5,]    1    1    0    0
+##  [6,]    1    1    0    0
+##  [7,]    1    1    0    0
+##  [8,]    1    1    0    0
+##  [9,]    1    0    1    0
+## [10,]    1    0    1    0
+## [11,]    1    0    1    0
+## [12,]    1    0    1    0
+## [13,]    1    0    1    0
+## [14,]    1    0    1    0
+## [15,]    1    0    1    0
+## [16,]    1    0    1    0
+## [17,]    1    0    0    1
+## [18,]    1    0    0    1
+## [19,]    1    0    0    1
+## [20,]    1    0    0    1
+## [21,]    1    0    0    1
+## [22,]    1    0    0    1
+## [23,]    1    0    0    1
+## [24,]    1    0    0    1</code></pre>
+<p>이처럼 <code>kronecker(A, B)</code> 코드를 실행하면 <span class="math inline"><em>A</em> ⊗ <em>B</em></span> 를 연산해준다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -181,7 +262,7 @@ AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴�
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2015/03/25/RstudioServer_using_AWSAMI.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2017/05/30/MatrixProduct.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -199,34 +280,24 @@ AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴�
     
         
             
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>Related Posts</h4>
                 <ul>
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2017/05/30/MatrixProduct.html">R에서 행렬 간 이루어지는 다양한 곱셈에 대해 알아보기 (행렬의 곱셈, 하다마드 곱셈, 크로네커 곱셈)</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
                 
                 <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/2017/04/23/caret_package.html">R에서 caret package 를 이용한 데이터 학습 간편화 전략</a>
@@ -311,6 +382,16 @@ AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴�
     
     
         
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/01/28/Docker_Rstudio_server.html">Docker 를 이용해 Rstudio server 띄워보기 (on Mac OSX)</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
             
         
     
@@ -559,8 +640,8 @@ AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴�
 
 <div class="PageNavigation">
   
+    <a class="prev" href="/etc/2017/05/04/Typeform.html">&laquo; 온라인 설문지 서비스 Typeform 소개, 설문조사 방법에 대한 설문조사</a>
   
-    <a class="next" href="/r/2015/09/08/OperatorR.html">R에서 연산자의 우선순위 &raquo;</a>
   
 </div>
 
@@ -571,8 +652,8 @@ AWS 프리티어 계정기준 t2.micro 와 같은 최저 사양으로 인스턴�
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축";
-        var disqus_title = "Amazon Web Service 를 이용한 공동 사용 Rstudio Server 환경구축";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 행렬 간 이루어지는 다양한 곱셈에 대해 알아보기 (행렬의 곱셈, 하다마드 곱셈, 크로네커 곱셈)";
+        var disqus_title = "R에서 행렬 간 이루어지는 다양한 곱셈에 대해 알아보기 (행렬의 곱셈, 하다마드 곱셈, 크로네커 곱셈)";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

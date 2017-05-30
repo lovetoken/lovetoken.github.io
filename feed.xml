@@ -5,9 +5,135 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 09 May 2017 22:06:25 +0900</pubDate>
-    <lastBuildDate>Tue, 09 May 2017 22:06:25 +0900</lastBuildDate>
+    <pubDate>Tue, 30 May 2017 23:13:11 +0900</pubDate>
+    <lastBuildDate>Tue, 30 May 2017 23:13:11 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 행렬 간 이루어지는 다양한 곱셈에 대해 알아보기 (행렬의 곱셈, 하다마드 곱셈, 크로네커 곱셈)</title>
+        <description>&lt;p&gt;행렬과 행렬간 곱셈은 행렬 A와 B가 아래와 같이 주어졌을 때&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;img src=&quot;/assets/MatrixProduct_1.png&quot; width=&quot;500&quot;&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;행렬 A와 행렬 B의 곱은&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;img src=&quot;/assets/MatrixProduct_2.png&quot; width=&quot;450&quot;&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;이며, 이때 앞에 위치한 행렬의 열의 수와 뒤에 위치한 행렬의 행의 수가 같아야 행렬곱이 가능하다.&lt;br /&gt;
+R에서 위와 같은 행렬의 곱셈을 실행하기 위해서는 &lt;code&gt;*&lt;/code&gt; 연산자가 아닌 &lt;code&gt;%*%&lt;/code&gt; 를 이용한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;(A &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;matrix&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;( &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;,  &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;nrow =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;ncol =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##      [,1] [,2]
+## [1,]    2    1
+## [2,]    7    3&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;(B &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;matrix&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(-&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, -&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;nrow =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;ncol =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##      [,1] [,2]
+## [1,]   -2    1
+## [2,]    7   -3&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;A %*%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;B&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##      [,1] [,2]
+## [1,]    3   -1
+## [2,]    7   -2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;일반적인 행렬의 곱셈은 &lt;code&gt;%*%&lt;/code&gt; 을 이용해야 한다고 했는데&lt;br /&gt;
+그럼 &lt;code&gt;*&lt;/code&gt; 이것을 이용하면 어떻게 될까?&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;하다마드-곱셈-hadamard-product&quot;&gt;하다마드 곱셈 (Hadamard Product)&lt;/h2&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;A *&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;B&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##      [,1] [,2]
+## [1,]   -4    1
+## [2,]   49   -9&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;동일한 위치의 원소끼리의 곱이 되어 버린다.&lt;br /&gt;
+사실 동일차원의 행렬끼리 동일위치원소와 곱해지는 곱셈을 하다마드 곱셈(Hadamard Product) 이라고도 부르는데, 위의 코드가 바로 하다마드 곱셈을 하는 코드로 볼 수 있겠다.&lt;br /&gt;
+여하튼 R에서는 &lt;code&gt;%*%&lt;/code&gt; 사이에 행렬객체를 넣고 실행하면 행렬간 곱셈을,&lt;br /&gt;
+&lt;code&gt;*&lt;/code&gt; 사이에 넣어주면 하다마드 곱셈을 실행킨다는 차이를 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;크로네커-곱셈-kronecker-product&quot;&gt;크로네커 곱셈 (Kronecker Product)&lt;/h2&gt;
+&lt;p&gt;행렬의 곱셈 중 크로네커 곱셈(Kronecker Product)이라는 것도 있다.&lt;br /&gt;
+가끔 요긴하게 쓸 때가 있는 이 크로네커 곱셈은 이런 형태이다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;img src=&quot;/assets/MatrixProduct_3.png&quot; width=&quot;500&quot;&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;일 때 행렬 A와 행렬 B간 크로네커 곱셈 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;A&lt;/em&gt; ⊗ &lt;em&gt;B&lt;/em&gt;&lt;/span&gt; 는 아래와 같다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;img src=&quot;/assets/MatrixProduct_4.png&quot; width=&quot;450&quot;&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;A&lt;/em&gt; ⊗ &lt;em&gt;B&lt;/em&gt;&lt;/span&gt; 를 계산한 후 행렬의 크기를 보게 된다면 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;m&lt;/em&gt;&lt;em&gt;n&lt;/em&gt; × &lt;em&gt;n&lt;/em&gt;&lt;em&gt;p&lt;/em&gt;&lt;/span&gt; 행렬이 만들어 지게 될 것이다.&lt;/p&gt;
+&lt;p&gt;크로네커 곱셈을 이용하면 행렬의 크기는 크되 일정한 규칙이 존재하는 행렬을 손쉽게 만들 수 있을 것이다.&lt;br /&gt;
+예를들면 아래와 같은 행렬을 R에서 만들어 보겠다고 가정한다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;img src=&quot;/assets/MatrixProduct_5.png&quot; width=&quot;200&quot;&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;이 행렬 M을 만들기 위해&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;e &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;rep&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;32&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;rep&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;24&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;rep&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;8&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;rep&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;24&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;rep&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;8&lt;/span&gt;))
+(M &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;matrix&lt;/span&gt;(e, &lt;span class=&quot;dt&quot;&gt;ncol =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##       [,1] [,2] [,3] [,4]
+##  [1,]    1    1    0    0
+##  [2,]    1    1    0    0
+##  [3,]    1    1    0    0
+##  [4,]    1    1    0    0
+##  [5,]    1    1    0    0
+##  [6,]    1    1    0    0
+##  [7,]    1    1    0    0
+##  [8,]    1    1    0    0
+##  [9,]    1    0    1    0
+## [10,]    1    0    1    0
+## [11,]    1    0    1    0
+## [12,]    1    0    1    0
+## [13,]    1    0    1    0
+## [14,]    1    0    1    0
+## [15,]    1    0    1    0
+## [16,]    1    0    1    0
+## [17,]    1    0    0    1
+## [18,]    1    0    0    1
+## [19,]    1    0    0    1
+## [20,]    1    0    0    1
+## [21,]    1    0    0    1
+## [22,]    1    0    0    1
+## [23,]    1    0    0    1
+## [24,]    1    0    0    1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;와 같은 형식의 코드를 짤 수도 있다.&lt;br /&gt;
+하지만 &lt;code&gt;c(rep(1, 32), rep(0, 24), rep(1, 8), rep(0, 24), rep(1, 8))&lt;/code&gt; 처럼 손이 많이 가는 코드를 작성해야 하는데, 크로네커 곱셈을 약간 응용하면 행렬 M을 좀 더 편하게 만들 수 있을 것이다.&lt;br /&gt;
+R에서 크로네커 곱셈을 수행하는 함수는 &lt;code&gt;kronecker()&lt;/code&gt; 이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;(A &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;matrix&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;ncol =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##      [,1] [,2] [,3] [,4]
+## [1,]    1    1    0    0
+## [2,]    1    0    1    0
+## [3,]    1    0    0    1&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;(B &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;matrix&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;rep&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;8&lt;/span&gt;)))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##      [,1]
+## [1,]    1
+## [2,]    1
+## [3,]    1
+## [4,]    1
+## [5,]    1
+## [6,]    1
+## [7,]    1
+## [8,]    1&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;(M &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;kronecker&lt;/span&gt;(A, B))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##       [,1] [,2] [,3] [,4]
+##  [1,]    1    1    0    0
+##  [2,]    1    1    0    0
+##  [3,]    1    1    0    0
+##  [4,]    1    1    0    0
+##  [5,]    1    1    0    0
+##  [6,]    1    1    0    0
+##  [7,]    1    1    0    0
+##  [8,]    1    1    0    0
+##  [9,]    1    0    1    0
+## [10,]    1    0    1    0
+## [11,]    1    0    1    0
+## [12,]    1    0    1    0
+## [13,]    1    0    1    0
+## [14,]    1    0    1    0
+## [15,]    1    0    1    0
+## [16,]    1    0    1    0
+## [17,]    1    0    0    1
+## [18,]    1    0    0    1
+## [19,]    1    0    0    1
+## [20,]    1    0    0    1
+## [21,]    1    0    0    1
+## [22,]    1    0    0    1
+## [23,]    1    0    0    1
+## [24,]    1    0    0    1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이처럼 &lt;code&gt;kronecker(A, B)&lt;/code&gt; 코드를 실행하면 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;A&lt;/em&gt; ⊗ &lt;em&gt;B&lt;/em&gt;&lt;/span&gt; 를 연산해준다.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 30 May 2017 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2017/05/30/MatrixProduct.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2017/05/30/MatrixProduct.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>온라인 설문지 서비스 Typeform 소개, 설문조사 방법에 대한 설문조사</title>
@@ -1417,39 +1543,6 @@ opts_chunk$&lt;span class=&quot;kw&quot;&gt;set&lt;/span&gt;(&lt;span class=&quo
         <pubDate>Tue, 20 Dec 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/12/20/RStartup_Option.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2016/12/20/RStartup_Option.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>Google 에서 사용하는 R 코딩 스타일 규약</title>
-        <description>&lt;p&gt;구글에서는 코드를 작성할 때 아래 링크로 정리된 규약을 따라 프로그램을 작성한다고 한다.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://google.github.io/styleguide/Rguide.xml&quot;&gt;Google&#39;s R Style Guide&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;여러가지 규칙이 있고 이에 대한 예제가 상세히 제시되어 있다.&lt;br /&gt;
-간단하게 주요 10가지 사항만 정리해 보면&lt;/p&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;한 줄에 80자 이상을 작성하지 않는다.&lt;/li&gt;
-&lt;li&gt;단일명령문에는 중괄호 &lt;code&gt;{}&lt;/code&gt; 를 사용하지 않는다.&lt;/li&gt;
-&lt;li&gt;모든 연산자에는 양 좌, 우에 띄어쓰기를 하여 자간을 맞춘다.&lt;/li&gt;
-&lt;li&gt;쉼표 &lt;code&gt;,&lt;/code&gt; 는 앞에 공백을 두지 않고 뒤에만 넣는다.&lt;/li&gt;
-&lt;li&gt;들여쓰기는 Space를 이용해 2칸으로 정한다. Tab 을 사용하지 않는다.&lt;/li&gt;
-&lt;li&gt;괄호와 대괄호에서 여는곳과 닫는곳에 공백을 넣지 않는다.&lt;/li&gt;
-&lt;li&gt;할당연산자는 &lt;code&gt;&amp;lt;-&lt;/code&gt; 를 사용한다. &lt;code&gt;=&lt;/code&gt; 를 사용하지 않는다.&lt;/li&gt;
-&lt;li&gt;함수의 정의에서 인수를 설정할 땐 기본값이 없는 인수를 먼저 나열하고, 그 뒤에 기본값을 갖는 인수를 나열한다.&lt;/li&gt;
-&lt;li&gt;프로그램에선 오류를 만들 가능성이 있는 &lt;code&gt;attach()&lt;/code&gt; 를 사용하지 않는다.&lt;/li&gt;
-&lt;li&gt;(구글은 일관성을 위하여 세미콜론을 불필요하다고 판단했다) 세미콜론 &lt;code&gt;;&lt;/code&gt; 으로 줄을 끝내거나 같은 줄에 둘 이상의 명령을 넣지 않는다.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;정도가 된다.&lt;/p&gt;
-&lt;p&gt;나름대로 정리된 Code convention 을 읽지 않았을 이전에는 항상 R 스크립트가 뒤죽박죽인 면이 있었는데 앞으론 통일시킬 수 있을 것 같다.&lt;br /&gt;
-무엇보다 중요한 건 코딩시 생기는 불필요한 코딩 스타일의 선택에 대한 고민을 줄여 줄 수 있을 거라 생각된다.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 18 Dec 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2016/12/18/RCodeConventions.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2016/12/18/RCodeConventions.html</guid>
         
         
         <category>R</category>
