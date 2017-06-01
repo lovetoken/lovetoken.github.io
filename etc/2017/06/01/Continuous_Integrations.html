@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="R에서 다수의 패키지 편하게 불러오기" />
-        <meta name="keywords" content="R에서 다수의 패키지 편하게 불러오기, , R" />
+        <meta name="description" content="클라우드 스토리지 서비스 이용을 권장하고 보편화 하려는 이유" />
+        <meta name="keywords" content="클라우드 스토리지 서비스 이용을 권장하고 보편화 하려는 이유, , etc" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="R에서 다수의 패키지 편하게 불러오기" property="og:title">
+          <meta content="클라우드 스토리지 서비스 이용을 권장하고 보편화 하려는 이유" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2017/01/12/multiple_load_packages.html" property="og:url">
+          <meta content="https://lovetoken.github.io/etc/2017/06/01/Continuous_Integrations.html" property="og:url">
         
         
-          <meta content="2017-01-12T00:00:00+09:00" property="article:published_time">
+          <meta content="2017-06-01T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -35,7 +35,7 @@
         
         
           
-          <meta content="R" property="article:section">
+          <meta content="etc" property="article:section">
           
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="R에서 다수의 패키지 편하게 불러오기">
+          <meta name="twitter:title" content="클라우드 스토리지 서비스 이용을 권장하고 보편화 하려는 이유">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2017/01/12/multiple_load_packages.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/etc/2017/06/01/Continuous_Integrations.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,57 +126,54 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>R에서 다수의 패키지 편하게 불러오기</h1>
-<span class="time">12 Jan 2017</span>
+                <h1>클라우드 스토리지 서비스 이용을 권장하고 보편화 하려는 이유</h1>
+<span class="time">01 Jun 2017</span>
 
 <span class="categories">
-    &raquo; <a href="/category/R">R</a>
+    &raquo; <a href="/category/etc">etc</a>
 </span>
 
 
 <div class="content">
-    <div class="post"><h2 id="상황">상황</h2>
-<p>R 에서 여러 개의 패키지를 사용해야 하는 프로그램을 작성해야 한다면 <code>library()</code> 함수로 사용하는 패키지를 불러오는 코드를 서두에 작성하는 전략을 사용할 것이다. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;package1&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;package2&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;package3&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;package4&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;package5&quot;</span>)</code></pre></div>
-<p>위의 코드는 5개의 패키지를 로드하는 코드로 볼 수 있는데, 만약 필요로 하는 패키지의 수가 5개가 아닌 수십 개가 된다면 수십개의 <code>library()</code> 함수를 작성하게 될 것이다.<br />
-아쉽게도 <code>library()</code> 함수는 불러올 대상이 되는 패키지를 복수개로 입력할 수 없어</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="kw">c</span>(<span class="st">&quot;package1&quot;</span>, <span class="st">&quot;package2&quot;</span>, <span class="st">&quot;package3&quot;</span>, <span class="st">&quot;package4&quot;</span>, <span class="st">&quot;package5&quot;</span>))</code></pre></div>
-<pre><code>Error : 
-  &#39;package&#39;는 반드시 길이가 1이어야 합니다</code></pre>
-<p>와 같은 꼴로는 사용할 수 없기 때문에 코드가 불필요하게 길어진다.<br />
-반복문을 이용해 굳이 해결책을 찾자면 벡터형 문자열을 이용할 수 있을 것인데</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for(i in <span class="kw">c</span>(<span class="st">&quot;package1&quot;</span>, <span class="st">&quot;package2&quot;</span>, <span class="st">&quot;package3&quot;</span>, <span class="st">&quot;package4&quot;</span>, <span class="st">&quot;package5&quot;</span>)){
-  <span class="kw">library</span>(i, <span class="dt">character.only =</span> T)
-} </code></pre></div>
-<p>중간에 패키지 로드가 실패했을 경우 (예를 들어 &quot;package3&quot; 호출이 실패)<br />
-이후의 패키지들 (&quot;package4&quot;, &quot;package5&quot;) 이 로드되지 않는 등 실제로 사용하기엔 불편한 점들이 있을 것이다.</p>
-<p>또한, 위에 제시한 어떠한 방법이든<br />
-자신이 만든 프로그램이 다수의 패키지에 의존되면 의존될수록 타인이 자신의 프로그램을 이용할 때 오류가 일어날 가능성도 커진다.<br />
-타인은 프로그램에 의존된 패키지가 모두 설치되어 있을 리 없다.</p>
-<p><br><br></p>
-<h2 id="pacman-패키지의-p_load-함수">pacman 패키지의 <code>p_load()</code> 함수</h2>
-<p>이처럼 재현 가능한 연구를 방해하는 요소들을 없애기 위해 고민하다가 pacman package 를 알게 되었고<br />
-pacman 패키지에서 제공되는 여러 함수 중 <code>p_load()</code> 함수의 도움을 가장 많이 받고 있다.<br />
-일반적인 상황에서 <code>p_load()</code> 함수는 위에 제시한 불편한 문제들을 잘 해결해 준다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pacman::<span class="kw">p_load</span>(<span class="st">&quot;package1&quot;</span>, <span class="st">&quot;package2&quot;</span>, <span class="st">&quot;package3&quot;</span>, <span class="st">&quot;package4&quot;</span>, <span class="st">&quot;package5&quot;</span>)</code></pre></div>
-<ol type="1">
-<li><p>다수의 패키지를 불러올 때 복수의 문자열 벡터를 입력받을 수 있어 코드 길이를 줄일 수 있다.</p></li>
-<li><p>불러오길 희망하는 다수의 패키지 중에<br />
-설치가 되지 않은 패키지가 있어도 알아서 설치를 진행한 후 설치가 잘 완료되면 불러오는 기능이 한 번에 수행된다.<br />
-예를 들어 &quot;package3&quot; 이란 패키지가 설치되어있지 않은 상황이라 하더라도<br />
-오류와 함께 코드실행이 멈추는 것이 아니라 CRAN 에 &quot;package3&quot; 을 찾은 후 패키지 설치완료 후 불러온다.<br />
-CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()</code> 함수로 패키지를 로드할 때 오류가 날 일은 거의 없을 것이다.</p></li>
-</ol>
-<section class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>코드 중간중간 필요한 시점에서 <code>library()</code> 호출을 할 수 도 있겠으나, 프로젝트를 시작하기 앞서 필요한 모든 패키지를 보여주기 위해 보통 서두에 몰아 패키지를 호출하는 경우가 많은것 같다<a href="#fnref1">↩</a></p></li>
-</ol>
-</section>
+    <div class="post"><blockquote>
+<p>오늘 작성하는 문서는 내일의 작업을 더 효율적으로 만들어야 한다. - Git for Teams (엠마 제인 호그빈 웨스트비) 과 보이스카우트 규칙</p>
+</blockquote>
+<p>필자는 2인 이상 공동작업 프로젝트 시 최소한 <strong>클라우드 스토리지 서비스를 이용해 파일을 관리하자</strong>는 주장을 많이 펼치는 편이다.<br />
+나는 클라우드 스토리지 서비스를 <a href="https://www.dropbox.com/business/landing-t61fl?_tk=sem_b_goog&amp;_camp=sem-b-goog-korea&amp;_kw=dropbox%7Ce&amp;_ad=50011987662%7C1t1%7Cc&amp;gclid=CjwKEAjw07nJBRDG_tvshefHhWQSJABRcE-ZOBclGlASA1UBYKhUJhnawAiVLXnyP748IVb2hAQswxoCEoTw_wcB">드롭박스(Dropbox)</a>를 통해 처음 알게 되었다. 드롭박스라는 서비스가 처음 출시되었을 때 (약 2007년)부터 사용했는데 그 이전과 이후의 삶을 비교해보면 확연히 다름이 느껴진다.<br />
+08학번인 나는 운 좋게도 이러한 서비스를 대학생이 되었을 때부터 사용할 수 있었던 환경이었다.<br />
+따라서 학생 시절 클라우드 스토리지 서비스에 대한 거부감이 없는 시절을 보낸 시대인 듯싶다.</p>
+<p>본론으로 들어가 보려 한다.<br />
+<strong>글의 주제는 &quot;클라우드 스토리지 서비스 이용을 권장하고 보편화하려는 이유&quot; 이다.</strong></p>
+<p>혼자 일할 때는 개인의 컴퓨터 하드에 개인적으로만 파일을 관리하는 것은 전혀 문제 되지 않는다.<br />
+하지만 팀 차원에서 2인 이상이 일할 땐 위의 방식은 경험적으론 언젠간 문제가 닥쳐왔었고, 이 문제는 프로젝트가 장기적이면 장기적일수록 심각한 문제로 파생되고 뜯어고치기 쉽지 않다.</p>
+<p>자 이제 &quot;개인의 컴퓨터 하드에 개인적으로만 파일을 관리&quot; 의 방식을 대조군으로 설정하고 사견을 정리해 보고자 한다.</p>
+<p>팀이 만들어지는 이유를 잠깐 곱씹어 보면, 2명 이상이 바라보는 동일한 목적을 이루기 위한 이합집산이다.<br />
+조금 엄격하게 말한 측면도 있지만 사실은 사실이다.<br />
+또 한가지 엄격하게 더 말하자면 팀의 개개인별 역량과 성격은 서로 다르게 된다.<br />
+우리가 바라보는 그 원대한 목적은 조금 거대하고 어려워서 다양한 역량이 필요하다.<br />
+따라서 팀은 최대한 다른 성격, 서로 다른 역량을 가진 팀원들이 모이게 되는 것이라 생각한다.<br />
+개개인별로 각기 다른 역량을 발휘해 동일한 목적을 좀 더 빠르고 잘 이룰 수 있게 하려는 방법을 사회적으로 항상 고민했고 많은 시행착오가 과거에 있었을 것이다.<br />
+그 결과 많은 곳에선 지속적 통합(Continuous Integration)을 대안으로 제시했다.<br />
+지속적 통합 없이 개개인의 역량이 꾸준하게 발휘될 경우 공동목표에서 벗어나 배가 산으로 가는 경우가 많아질 것이다.<br />
+이처럼 별개의 독립된 환경 속에서 각자 작업을 하다가 끝에 가서 통합을 해야 할 경우 속칭 <a href="http://wiki.c2.com/?IntegrationHell">&quot;통합의 지옥&quot;</a> 이라 불리는 상황에 빠지게 된다.</p>
+<p>&quot;통합의 지옥&quot;에 빠지지 않기 위해선 많은 의사소통이 필요하며, 이 소통에 투자되는 시간은 중요함과 동시에 많이 소요된다.<br />
+이 중요성을 정말 많은 사람들이 잘 알고 있어서인지 대부분의 업무시간이 &quot;회의&quot;로 꽉꽉 채워지는 사례도 많다.<br />
+얼마나 중요하면 정말 일을 못하고 회의만 하다가 하루를 다 보내는 걸까? 왜 이런 일이 일어나는 것일까?</p>
+<p>필자는 이 의문을 항상 가지고 근본적인 원인이 무엇 때문인지 많은 고민해 보았다.<br />
+그 끝에는 대조군으로 설정한 위의 방식 때문이란 결론으로 다다른다.<br />
+어디까지나 사견이고 과장된 생각일 수 있지만 위의 대조군 방식의 가장 우려하는 부분은<br />
+개개인별로 의도한 적은 없어도 자연스럽게 &quot;통합의 지옥&quot;으로 다가가게 되는 틀이고, 더불어 <a href="http://mstockblog.com/220816437407">사일로 효과</a>를 내는 근본적 원인이라는 점이다.</p>
+<p>다시 한번 말하지만, 지금의 트렌드는 지속적 통합을 대안으로 제시하고 있다.<br />
+그리고 개발자에게만 친숙할 것 같은 이 지속적 통합의 단어를 다른 일반인들에게도 손쉽게 적용코자 하는 수많은 서비스가 성공하고 있고 자리를 잡아가고 있다.<br />
+가장 손쉽게 적용할 수 있는 서비스가 바로 클라우드 스토리지 서비스이다.</p>
+<p>팀원이 똑같은 곳을 바라보고(Keep everyone on the same page) 지속적 통합을 성공하기 위한 가장 손쉬운 방법은 클라우드 스토리지 서비스의 힘을 빌리는 것이라 생각한다.<br />
+인터넷만 연결된 환경이라면 클라우드 스토리지 서비스를 통해 이 지속적 통합을 간단히 구현할 수 있고, 자연스럽게 사일로 효과를 최소화하여 공통된 목표로 달려가는데 분명 도움을 줄 것이다.</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://brunch.co.kr/@lunarshore/55">빅데이터와 비즈니스 프로세스 - 정보 처리가 기업 경쟁력 (취합받고 깨진 파일 신경 쓰느라 날린 시간들)</a></li>
+<li>팀을 위한 Git(Git for Teams) - 엠마 제인 호그빈 웨스트비</li>
+<li>훌륭한 프로그래머 되는 법(Becoming a Better Programmer) - 피트 구들리프</li>
+</ul>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -190,7 +187,7 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2017/01/12/multiple_load_packages.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/etc/2017/06/01/Continuous_Integrations.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -215,19 +212,82 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()
     
         
             
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>Related Posts</h4>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2017/05/30/MatrixProduct.html">R에서 행렬 간 이루어지는 다양한 곱셈에 대해 알아보기 (행렬의 곱셈, 하다마드 곱셈, 크로네커 곱셈)</a>
+                    <a href="https://lovetoken.github.io/etc/2017/05/04/Typeform.html">온라인 설문지 서비스 Typeform 소개, 설문조사 방법에 대한 설문조사</a>
                     
-                        (Categories: <a href="/category/R">R</a>)
+                        (Categories: <a href="/category/etc">etc</a>)
                     
                 </li>
                 
                 
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
             
         
     
@@ -245,116 +305,13 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2017/04/23/caret_package.html">R에서 caret package 를 이용한 데이터 학습 간편화 전략</a>
+                    <a href="https://lovetoken.github.io/etc/2016/12/11/StackOverflow.html">Getting Started StackOverflow</a>
                     
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2017/04/16/vif.html">R에서 car::vif() 함수를 이용한 분산팽창요인(Variance Inflation Factor) 구하기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
+                        (Categories: <a href="/category/etc">etc</a>)
                     
                 </li>
                 
                 
-            
-        
-    
-
-    
-    
-        
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2017/03/21/RImpala_package.html">R에서 RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2017/03/05/Rpackage_install_in.html">인터넷 접속이 불가능 한 내부망에서의 R package 설치방법에 대해</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2017/02/22/Profiling.html">R에서 의미가 있었던 프로파일링 모음</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
             
         
     
@@ -575,10 +532,8 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/r/2016/12/20/RStartup_Option.html">&laquo; R에서 Startup option 설정하기 (on Mac OSX)</a>
+    <a class="prev" href="/r/2017/05/30/MatrixProduct.html">&laquo; R에서 행렬 간 이루어지는 다양한 곱셈에 대해 알아보기 (행렬의 곱셈, 하다마드 곱셈, 크로네커 곱셈)</a>
   
-  
-    <a class="next" href="/r/2017/01/28/Docker_Rstudio_server.html">Docker 를 이용해 Rstudio server 띄워보기 (on Mac OSX) &raquo;</a>
   
 </div>
 
@@ -589,8 +544,8 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 다수의 패키지 편하게 불러오기";
-        var disqus_title = "R에서 다수의 패키지 편하게 불러오기";
+        var disqus_identifier = "https://lovetoken.github.io_클라우드 스토리지 서비스 이용을 권장하고 보편화 하려는 이유";
+        var disqus_title = "클라우드 스토리지 서비스 이용을 권장하고 보편화 하려는 이유";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {
