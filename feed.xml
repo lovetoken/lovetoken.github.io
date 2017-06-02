@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 01 Jun 2017 14:32:22 +0900</pubDate>
-    <lastBuildDate>Thu, 01 Jun 2017 14:32:22 +0900</lastBuildDate>
+    <pubDate>Fri, 02 Jun 2017 10:35:20 +0900</pubDate>
+    <lastBuildDate>Fri, 02 Jun 2017 10:35:20 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -15,7 +15,8 @@
 &lt;p&gt;오늘 작성하는 문서는 내일의 작업을 더 효율적으로 만들어야 한다. - Git for Teams (엠마 제인 호그빈 웨스트비) 과 보이스카우트 규칙&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;필자는 2인 이상 공동작업 프로젝트 시 최소한 &lt;strong&gt;클라우드 스토리지 서비스를 이용해 파일을 관리하자&lt;/strong&gt;는 주장을 많이 펼치는 편이다.&lt;br /&gt;
-나는 클라우드 스토리지 서비스를 &lt;a href=&quot;https://www.dropbox.com/business/landing-t61fl?_tk=sem_b_goog&amp;amp;_camp=sem-b-goog-korea&amp;amp;_kw=dropbox%7Ce&amp;amp;_ad=50011987662%7C1t1%7Cc&amp;amp;gclid=CjwKEAjw07nJBRDG_tvshefHhWQSJABRcE-ZOBclGlASA1UBYKhUJhnawAiVLXnyP748IVb2hAQswxoCEoTw_wcB&quot;&gt;드롭박스(Dropbox)&lt;/a&gt;를 통해 처음 알게 되었다. 드롭박스라는 서비스가 처음 출시되었을 때 (약 2007년)부터 사용했는데 그 이전과 이후의 삶을 비교해보면 확연히 다름이 느껴진다.&lt;br /&gt;
+나는 클라우드 스토리지 서비스를 &lt;a href=&quot;https://www.dropbox.com/business/landing-t61fl?_tk=sem_b_goog&amp;amp;_camp=sem-b-goog-korea&amp;amp;_kw=dropbox%7Ce&amp;amp;_ad=50011987662%7C1t1%7Cc&amp;amp;gclid=CjwKEAjw07nJBRDG_tvshefHhWQSJABRcE-ZOBclGlASA1UBYKhUJhnawAiVLXnyP748IVb2hAQswxoCEoTw_wcB&quot;&gt;드롭박스(Dropbox)&lt;/a&gt;를 통해 처음 알게 되었다.&lt;br /&gt;
+드롭박스라는 서비스가 처음 출시되었을 때 (약 2007년)부터 사용했는데 그 이전과 이후의 삶을 비교해보면 확연히 다름이 느껴진다.&lt;br /&gt;
 08학번인 나는 운 좋게도 이러한 서비스를 대학생이 되었을 때부터 사용할 수 있었던 환경이었다.&lt;br /&gt;
 따라서 학생 시절 클라우드 스토리지 서비스에 대한 거부감이 없는 시절을 보낸 시대인 듯싶다.&lt;/p&gt;
 &lt;p&gt;본론으로 들어가 보려 한다.&lt;br /&gt;
@@ -28,7 +29,7 @@
 또 한가지 엄격하게 더 말하자면 팀의 개개인별 역량과 성격은 서로 다르게 된다.&lt;br /&gt;
 우리가 바라보는 그 원대한 목적은 조금 거대하고 어려워서 다양한 역량이 필요하다.&lt;br /&gt;
 따라서 팀은 최대한 다른 성격, 서로 다른 역량을 가진 팀원들이 모이게 되는 것이라 생각한다.&lt;br /&gt;
-개개인별로 각기 다른 역량을 발휘해 동일한 목적을 좀 더 빠르고 잘 이룰 수 있게 하려는 방법을 사회적으로 항상 고민했고 많은 시행착오가 과거에 있었을 것이다.&lt;br /&gt;
+개개인별로 각기 다른 역량을 발휘해 동일한 목적을 좀 더 빠르고 잘 이룰 수 있게 하려는 방법을 사회적으로 고민했고 많은 시행착오가 과거에 있었을 것이다.&lt;br /&gt;
 그 결과 많은 곳에선 지속적 통합(Continuous Integration)을 대안으로 제시했다.&lt;br /&gt;
 지속적 통합 없이 개개인의 역량이 꾸준하게 발휘될 경우 공동목표에서 벗어나 배가 산으로 가는 경우가 많아질 것이다.&lt;br /&gt;
 이처럼 별개의 독립된 환경 속에서 각자 작업을 하다가 끝에 가서 통합을 해야 할 경우 속칭 &lt;a href=&quot;http://wiki.c2.com/?IntegrationHell&quot;&gt;&amp;quot;통합의 지옥&amp;quot;&lt;/a&gt; 이라 불리는 상황에 빠지게 된다.&lt;/p&gt;
@@ -38,12 +39,12 @@
 &lt;p&gt;필자는 이 의문을 항상 가지고 근본적인 원인이 무엇 때문인지 많은 고민해 보았다.&lt;br /&gt;
 그 끝에는 대조군으로 설정한 위의 방식 때문이란 결론으로 다다른다.&lt;br /&gt;
 어디까지나 사견이고 과장된 생각일 수 있지만 위의 대조군 방식의 가장 우려하는 부분은&lt;br /&gt;
-개개인별로 의도한 적은 없어도 자연스럽게 &amp;quot;통합의 지옥&amp;quot;으로 다가가게 되는 틀이고, 더불어 &lt;a href=&quot;http://mstockblog.com/220816437407&quot;&gt;사일로 효과&lt;/a&gt;를 내는 근본적 원인이라는 점이다.&lt;/p&gt;
+개개인별로 의도한 적은 없어도 자연스럽게 &amp;quot;통합의 지옥&amp;quot;을 필연적으로 만날 수 밖에 없는 틀이고, 더불어 &lt;a href=&quot;http://mstockblog.com/220816437407&quot;&gt;사일로 효과&lt;/a&gt;를 내는 근본적 원인이라는 점이다.&lt;/p&gt;
 &lt;p&gt;다시 한번 말하지만, 지금의 트렌드는 지속적 통합을 대안으로 제시하고 있다.&lt;br /&gt;
 그리고 개발자에게만 친숙할 것 같은 이 지속적 통합의 단어를 다른 일반인들에게도 손쉽게 적용코자 하는 수많은 서비스가 성공하고 있고 자리를 잡아가고 있다.&lt;br /&gt;
 가장 손쉽게 적용할 수 있는 서비스가 바로 클라우드 스토리지 서비스이다.&lt;/p&gt;
-&lt;p&gt;팀원이 똑같은 곳을 바라보고(Keep everyone on the same page) 지속적 통합을 성공하기 위한 가장 손쉬운 방법은 클라우드 스토리지 서비스의 힘을 빌리는 것이라 생각한다.&lt;br /&gt;
-인터넷만 연결된 환경이라면 클라우드 스토리지 서비스를 통해 이 지속적 통합을 간단히 구현할 수 있고, 자연스럽게 사일로 효과를 최소화하여 공통된 목표로 달려가는데 분명 도움을 줄 것이다.&lt;/p&gt;
+&lt;p&gt;팀원이 똑같은 곳을 바라보면서(Keep everyone on the same page) 지속적 통합을 성공하기 위한 가장 손쉬운 방법은 클라우드 스토리지 서비스의 힘을 빌려 활용해 보는 것이라 생각한다.&lt;br /&gt;
+인터넷만 연결된 환경이라면 클라우드 스토리지 서비스를 통해 이 지속적 통합을 간단히 구현할 수 있고, 자연스럽게 통합된 서로의 생각이 조화되면서 결과물이 만들어 질 수 있으므로 공통된 목표로 달려가는데 도움이 될 것이라 단언한다.&lt;/p&gt;
 &lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://brunch.co.kr/@lunarshore/55&quot;&gt;빅데이터와 비즈니스 프로세스 - 정보 처리가 기업 경쟁력 (취합받고 깨진 파일 신경 쓰느라 날린 시간들)&lt;/a&gt;&lt;/li&gt;
