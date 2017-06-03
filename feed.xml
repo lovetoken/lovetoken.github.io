@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 03 Jun 2017 11:43:54 +0900</pubDate>
-    <lastBuildDate>Sat, 03 Jun 2017 11:43:54 +0900</lastBuildDate>
+    <pubDate>Sat, 03 Jun 2017 12:07:34 +0900</pubDate>
+    <lastBuildDate>Sat, 03 Jun 2017 12:07:34 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -32,7 +32,7 @@
 개개인별로 각기 다른 역량을 발휘해 동일한 목적을 좀 더 빠르고 잘 이룰 수 있게 하려는 방법을 사회적으로 고민했고 많은 시행착오가 과거에 있었을 것이다.&lt;br /&gt;
 그 결과 많은 곳에선 지속적 통합(Continuous Integration)을 대안으로 제시했다.&lt;br /&gt;
 지속적 통합 없이 개개인의 역량이 꾸준하게 발휘될 경우 공동목표에서 벗어나 배가 산으로 가는 경우가 많아질 것이다.&lt;br /&gt;
-이처럼 별개의 독립된 환경 속에서 각자 작업을 하다가 끝에 가서 통합을 해야 할 경우 속칭 &lt;a href=&quot;http://wiki.c2.com/?IntegrationHell&quot;&gt;&amp;quot;통합의 지옥&amp;quot;&lt;/a&gt; 이라 불리는 상황에 빠지게 된다.&lt;/p&gt;
+이처럼 별개의 독립된 환경 속에서 각자 작업을 하다가 끝에 가서 통합을 해야 할 경우 속칭 &lt;strong&gt;&lt;a href=&quot;http://wiki.c2.com/?IntegrationHell&quot;&gt;&amp;quot;통합의 지옥&amp;quot;&lt;/a&gt; 이라 불리는 상황에 빠지게 된다.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&amp;quot;통합의 지옥&amp;quot;에 빠지지 않기 위해선 많은 의사소통이 필요하며, 이 소통에 투자되는 시간은 중요함과 동시에 많이 소요된다.&lt;br /&gt;
 이 중요성을 정말 많은 사람들이 잘 알고 있어서인지 대부분의 업무시간이 &amp;quot;회의&amp;quot;로 꽉꽉 채워지는 사례도 많다.&lt;br /&gt;
 얼마나 중요하면 정말 일을 못하고 회의만 하다가 하루를 다 보내는 걸까? 왜 이런 일이 일어나는 것일까?&lt;/p&gt;
