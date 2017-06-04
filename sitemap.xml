@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 03 Jun 2017 12:07:34 +0900</pubDate>
-    <lastBuildDate>Sat, 03 Jun 2017 12:07:34 +0900</lastBuildDate>
+    <pubDate>Sun, 04 Jun 2017 20:12:46 +0900</pubDate>
+    <lastBuildDate>Sun, 04 Jun 2017 20:12:46 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -19,6 +19,11 @@
 드롭박스라는 서비스가 처음 출시되었을 때 (약 2007년)부터 사용했는데 그 이전과 이후의 삶을 비교해보면 확연히 다름이 느껴진다.&lt;br /&gt;
 08학번인 나는 운 좋게도 이러한 서비스를 대학생이 되었을 때부터 사용할 수 있었던 환경이었다.&lt;br /&gt;
 따라서 학생 시절 클라우드 스토리지 서비스에 대한 거부감이 없는 시절을 보낸 시대인 듯싶다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/CI1.png&quot;&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;본론으로 들어가 보려 한다.&lt;br /&gt;
 &lt;strong&gt;글의 주제는 &amp;quot;클라우드 스토리지 서비스 이용을 권장하고 보편화하려는 이유&amp;quot; 이다.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;혼자 일할 때는 개인의 컴퓨터 하드에 개인적으로만 파일을 관리하는 것은 전혀 문제 되지 않는다.&lt;br /&gt;
@@ -33,7 +38,7 @@
 그 결과 많은 곳에선 지속적 통합(Continuous Integration)을 대안으로 제시했다.&lt;br /&gt;
 지속적 통합 없이 개개인의 역량이 꾸준하게 발휘될 경우 공동목표에서 벗어나 배가 산으로 가는 경우가 많아질 것이다.&lt;br /&gt;
 이처럼 별개의 독립된 환경 속에서 각자 작업을 하다가 끝에 가서 통합을 해야 할 경우 속칭 &lt;strong&gt;&lt;a href=&quot;http://wiki.c2.com/?IntegrationHell&quot;&gt;&amp;quot;통합의 지옥&amp;quot;&lt;/a&gt; 이라 불리는 상황에 빠지게 된다.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&amp;quot;통합의 지옥&amp;quot;에 빠지지 않기 위해선 많은 의사소통이 필요하며, 이 소통에 투자되는 시간은 중요함과 동시에 많이 소요된다.&lt;br /&gt;
+&lt;p&gt;팀단위로 일하는 프로젝트에서 &amp;quot;통합의 지옥&amp;quot;에 빠지지 않기 위해선 많은 의사소통이 필요하며, 이 소통에 투자되는 시간은 중요함과 동시에 많이 소요된다.&lt;br /&gt;
 이 중요성을 정말 많은 사람들이 잘 알고 있어서인지 대부분의 업무시간이 &amp;quot;회의&amp;quot;로 꽉꽉 채워지는 사례도 많다.&lt;br /&gt;
 얼마나 중요하면 정말 일을 못하고 회의만 하다가 하루를 다 보내는 걸까? 왜 이런 일이 일어나는 것일까?&lt;/p&gt;
 &lt;p&gt;필자는 이 의문을 항상 가지고 근본적인 원인이 무엇 때문인지 많은 고민해 보았다.&lt;br /&gt;
@@ -45,8 +50,13 @@
 가장 손쉽게 적용할 수 있는 서비스가 바로 클라우드 스토리지 서비스이다.&lt;/p&gt;
 &lt;p&gt;클라우드 스토리지 서비스를 이용하게 되면 다양한 이득들이 있지만&lt;br /&gt;
 지금 강조하고자 하는 강점은 누구든지 공유폴더를 쉽게 만들 수 있다는 점이고, 이어서 &lt;strong&gt;팀원이 똑같은 곳을 바라보면서(Keep everyone on the same page) 지속적 통합을 유도할 수 있다&lt;/strong&gt;는 것이다.&lt;br /&gt;
-인터넷만 연결된 환경이라면 NAS 처럼 비용이 많이 드는 방법보단 클라우드 스토리지 서비스를 통해 이 지속적 통합을 간단히 구현할 수 있고,&lt;br /&gt;
+인터넷만 연결된 환경이라면 &lt;a href=&quot;https://namu.wiki/w/NAS(%EC%A0%80%EC%9E%A5%EC%9E%A5%EC%B9%98)&quot;&gt;NAS(Network Attached Storage)&lt;/a&gt;처럼 일정 비용과 구축준비가 필요한 방법보단 클라우드 스토리지 서비스를 통해 이 지속적 통합을 간단히 구현할 수 있고,&lt;br /&gt;
 자연스럽게 통합된 서로의 생각이 조화되면서 결과물이 만들어 질 수 있으므로 공통된 목표로 달려가는데 도움이 될 것이라 단언한다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/CI2.jpg&quot;&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://brunch.co.kr/@lunarshore/55&quot;&gt;빅데이터와 비즈니스 프로세스 - 정보 처리가 기업 경쟁력 (취합받고 깨진 파일 신경 쓰느라 날린 시간들)&lt;/a&gt;&lt;/li&gt;
