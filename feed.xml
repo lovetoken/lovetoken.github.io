@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 06 Jun 2017 19:04:22 +0900</pubDate>
-    <lastBuildDate>Tue, 06 Jun 2017 19:04:22 +0900</lastBuildDate>
+    <pubDate>Tue, 06 Jun 2017 23:35:57 +0900</pubDate>
+    <lastBuildDate>Tue, 06 Jun 2017 23:35:57 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -1407,30 +1407,30 @@ Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 �
 아래 사진은 &lt;a href=&quot;https://www.docker.com/products/docker-toolbox&quot;&gt;Docker Toolbox&lt;/a&gt; 로 접속했을 때 모습이다.&lt;/p&gt;
 &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/docker_toolbox.png&quot;&gt;
+&lt;img src=&quot;/assets/docker_toolbox.png&quot; width=90%&gt;
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;왼쪽 맥용 다운로드 링크를 누르면 &lt;code&gt;.pkg&lt;/code&gt; 파일이 다운로드 된다.&lt;br /&gt;
 실행하여 설치를 진행하면 된다.&lt;/p&gt;
 &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_1.png&quot; width=&quot;80%&quot;&gt;
+&lt;img src=&quot;/assets/dtInstall_1.png&quot; width=70%&gt;
 &lt;/center&gt;
 &lt;br&gt; &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_2.png&quot; width=&quot;80%&quot;&gt;
+&lt;img src=&quot;/assets/dtInstall_2.png&quot; width=70%&gt;
 &lt;/center&gt;
 &lt;br&gt; &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_3.png&quot; width=&quot;80%&quot;&gt;
+&lt;img src=&quot;/assets/dtInstall_3.png&quot; width=70%&gt;
 &lt;/center&gt;
 &lt;br&gt; &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_4.png&quot; width=&quot;80%&quot;&gt;
+&lt;img src=&quot;/assets/dtInstall_4.png&quot; width=70%&gt;
 &lt;/center&gt;
 &lt;br&gt; &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_5.png&quot; width=&quot;80%&quot;&gt;
+&lt;img src=&quot;/assets/dtInstall_5.png&quot; width=70%&gt;
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;다른 곳은 특이사항 없이 설치를 진행하면 되는데 이곳에서 무언가를 선택하라고 나온다.&lt;br /&gt;
@@ -1439,32 +1439,37 @@ Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 �
 나는 왼쪽을 눌러 사용하는 터미널을 선택 후 계속 버튼을 눌렀다.&lt;/p&gt;
 &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_6.png&quot; width=&quot;80%&quot;&gt;
+&lt;img src=&quot;/assets/dtInstall_6.png&quot; width=70%&gt;
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;설치가 성공되면 터미널에서 &lt;code&gt;docker&lt;/code&gt;, &lt;code&gt;boot2docker&lt;/code&gt; 가 실행 가능하다.&lt;br /&gt;
 설치가 잘 되었는지 실험삼아 각각의 버전을 확인해보는 커맨드를 입력 해 보았다.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ docker --version
-Docker version 1.12.6, build 78d1802&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;$ boot2docker version
-Boot2Docker-cli version: v1.8.0&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;docker --version
+boot2docker version&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123557.js&quot; id=&quot;asciicast-123557&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;boot2docker-로-docker-vm-준비하기&quot;&gt;boot2docker 로 docker VM 준비하기&lt;/h2&gt;
 &lt;p&gt;&amp;quot;boot2docker&amp;quot; 이름대로 docker 를 이용하기 전에 수행되어야 한다.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ boot2docker
-
-Usage: boot2docker [&amp;lt;options&amp;gt;] {help|init|up|ssh|save|down|poweroff|reset|restart|config|status|info|ip|shellinit|delete|download|upgrade|version} [&amp;lt;args&amp;gt;]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;boot2docker&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123558.js&quot; id=&quot;asciicast-123558&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
 &lt;p&gt;boot2docker 의 사용법을 살펴보면 많은 기능이 있는 것을 볼 수 있는데, 이 중에서 지금은 &lt;code&gt;init&lt;/code&gt;, &lt;code&gt;up&lt;/code&gt;, &lt;code&gt;ssh&lt;/code&gt; 만 알고 넘어가도 되겠다.&lt;br /&gt;
 아래와 같이 입력해 실행한다.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ boot2docker init
-$ boot2docker up&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;boot2docker init
+boot2docker up&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123559.js&quot; id=&quot;asciicast-123559&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
 &lt;p&gt;&lt;code&gt;boot2docker init&lt;/code&gt; 로 docker daemon 에 대한 VM 을 처음으로 준비한다.&lt;br /&gt;
-그다음 &lt;code&gt;boot2docker up&lt;/code&gt; 로 docker daemon VM 을 실행시키는데 수십초 정도가 걸린다.&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Waiting for VM and Docker daemon to start...
-........ooooooooo
-Started.&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;그 이후에&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ boot2docker ssh&lt;/code&gt;&lt;/pre&gt;
+그다음 &lt;code&gt;boot2docker up&lt;/code&gt; 로 docker daemon VM 을 실행시키는데 수십초 정도가 걸린다.&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;br /&gt;
+그 이후에&lt;/p&gt;
+&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;$ boot2docker ssh&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123561.js&quot; id=&quot;asciicast-123561&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
 &lt;p&gt;를 실행하여 접속하면&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ boot2docker ssh
 

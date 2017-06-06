@@ -149,30 +149,30 @@ Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 �
 아래 사진은 <a href="https://www.docker.com/products/docker-toolbox">Docker Toolbox</a> 로 접속했을 때 모습이다.</p>
 <br>
 <center>
-<img src="/assets/docker_toolbox.png">
+<img src="/assets/docker_toolbox.png" width=90%>
 </center>
 <p><br></p>
 <p>왼쪽 맥용 다운로드 링크를 누르면 <code>.pkg</code> 파일이 다운로드 된다.<br />
 실행하여 설치를 진행하면 된다.</p>
 <br>
 <center>
-<img src="/assets/dtInstall_1.png" width="80%">
+<img src="/assets/dtInstall_1.png" width=70%>
 </center>
 <br> <br>
 <center>
-<img src="/assets/dtInstall_2.png" width="80%">
+<img src="/assets/dtInstall_2.png" width=70%>
 </center>
 <br> <br>
 <center>
-<img src="/assets/dtInstall_3.png" width="80%">
+<img src="/assets/dtInstall_3.png" width=70%>
 </center>
 <br> <br>
 <center>
-<img src="/assets/dtInstall_4.png" width="80%">
+<img src="/assets/dtInstall_4.png" width=70%>
 </center>
 <br> <br>
 <center>
-<img src="/assets/dtInstall_5.png" width="80%">
+<img src="/assets/dtInstall_5.png" width=70%>
 </center>
 <p><br></p>
 <p>다른 곳은 특이사항 없이 설치를 진행하면 되는데 이곳에서 무언가를 선택하라고 나온다.<br />
@@ -181,32 +181,37 @@ Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 �
 나는 왼쪽을 눌러 사용하는 터미널을 선택 후 계속 버튼을 눌렀다.</p>
 <br>
 <center>
-<img src="/assets/dtInstall_6.png" width="80%">
+<img src="/assets/dtInstall_6.png" width=70%>
 </center>
 <p><br></p>
 <p>설치가 성공되면 터미널에서 <code>docker</code>, <code>boot2docker</code> 가 실행 가능하다.<br />
 설치가 잘 되었는지 실험삼아 각각의 버전을 확인해보는 커맨드를 입력 해 보았다.</p>
-<pre><code>$ docker --version
-Docker version 1.12.6, build 78d1802</code></pre>
-<pre><code>$ boot2docker version
-Boot2Docker-cli version: v1.8.0</code></pre>
+<pre class="sh"><code>docker --version
+boot2docker version</code></pre>
+<center>
+<script type="text/javascript" src="https://asciinema.org/a/123557.js" id="asciicast-123557" async></script>
+</center>
 <p><br><br></p>
 <h2 id="boot2docker-로-docker-vm-준비하기">boot2docker 로 docker VM 준비하기</h2>
 <p>&quot;boot2docker&quot; 이름대로 docker 를 이용하기 전에 수행되어야 한다.</p>
-<pre><code>$ boot2docker
-
-Usage: boot2docker [&lt;options&gt;] {help|init|up|ssh|save|down|poweroff|reset|restart|config|status|info|ip|shellinit|delete|download|upgrade|version} [&lt;args&gt;]</code></pre>
+<pre class="sh"><code>boot2docker</code></pre>
+<center>
+<script type="text/javascript" src="https://asciinema.org/a/123558.js" id="asciicast-123558" async></script>
+</center>
 <p>boot2docker 의 사용법을 살펴보면 많은 기능이 있는 것을 볼 수 있는데, 이 중에서 지금은 <code>init</code>, <code>up</code>, <code>ssh</code> 만 알고 넘어가도 되겠다.<br />
 아래와 같이 입력해 실행한다.</p>
-<pre><code>$ boot2docker init
-$ boot2docker up</code></pre>
+<pre class="sh"><code>boot2docker init
+boot2docker up</code></pre>
+<center>
+<script type="text/javascript" src="https://asciinema.org/a/123559.js" id="asciicast-123559" async></script>
+</center>
 <p><code>boot2docker init</code> 로 docker daemon 에 대한 VM 을 처음으로 준비한다.<br />
-그다음 <code>boot2docker up</code> 로 docker daemon VM 을 실행시키는데 수십초 정도가 걸린다.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
-<pre><code>Waiting for VM and Docker daemon to start...
-........ooooooooo
-Started.</code></pre>
-<p>그 이후에</p>
-<pre><code>$ boot2docker ssh</code></pre>
+그다음 <code>boot2docker up</code> 로 docker daemon VM 을 실행시키는데 수십초 정도가 걸린다.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a><br />
+그 이후에</p>
+<pre class="sh"><code>$ boot2docker ssh</code></pre>
+<center>
+<script type="text/javascript" src="https://asciinema.org/a/123561.js" id="asciicast-123561" async></script>
+</center>
 <p>를 실행하여 접속하면</p>
 <pre><code>$ boot2docker ssh
 

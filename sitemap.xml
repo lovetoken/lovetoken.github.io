@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 06 Jun 2017 19:04:22 +0900</pubDate>
-    <lastBuildDate>Tue, 06 Jun 2017 19:04:22 +0900</lastBuildDate>
+    <pubDate>Tue, 06 Jun 2017 23:35:57 +0900</pubDate>
+    <lastBuildDate>Tue, 06 Jun 2017 23:35:57 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -1407,30 +1407,30 @@ Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 �
 아래 사진은 &lt;a href=&quot;https://www.docker.com/products/docker-toolbox&quot;&gt;Docker Toolbox&lt;/a&gt; 로 접속했을 때 모습이다.&lt;/p&gt;
 &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/docker_toolbox.png&quot;&gt;
+&lt;img src=&quot;/assets/docker_toolbox.png&quot; width=90%&gt;
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;왼쪽 맥용 다운로드 링크를 누르면 &lt;code&gt;.pkg&lt;/code&gt; 파일이 다운로드 된다.&lt;br /&gt;
 실행하여 설치를 진행하면 된다.&lt;/p&gt;
 &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_1.png&quot; width=&quot;80%&quot;&gt;
+&lt;img src=&quot;/assets/dtInstall_1.png&quot; width=70%&gt;
 &lt;/center&gt;
 &lt;br&gt; &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_2.png&quot; width=&quot;80%&quot;&gt;
+&lt;img src=&quot;/assets/dtInstall_2.png&quot; width=70%&gt;
 &lt;/center&gt;
 &lt;br&gt; &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_3.png&quot; width=&quot;80%&quot;&gt;
+&lt;img src=&quot;/assets/dtInstall_3.png&quot; width=70%&gt;
 &lt;/center&gt;
 &lt;br&gt; &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_4.png&quot; width=&quot;80%&quot;&gt;
+&lt;img src=&quot;/assets/dtInstall_4.png&quot; width=70%&gt;
 &lt;/center&gt;
 &lt;br&gt; &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_5.png&quot; width=&quot;80%&quot;&gt;
+&lt;img src=&quot;/assets/dtInstall_5.png&quot; width=70%&gt;
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;다른 곳은 특이사항 없이 설치를 진행하면 되는데 이곳에서 무언가를 선택하라고 나온다.&lt;br /&gt;
@@ -1439,32 +1439,37 @@ Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 �
 나는 왼쪽을 눌러 사용하는 터미널을 선택 후 계속 버튼을 눌렀다.&lt;/p&gt;
 &lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_6.png&quot; width=&quot;80%&quot;&gt;
+&lt;img src=&quot;/assets/dtInstall_6.png&quot; width=70%&gt;
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;설치가 성공되면 터미널에서 &lt;code&gt;docker&lt;/code&gt;, &lt;code&gt;boot2docker&lt;/code&gt; 가 실행 가능하다.&lt;br /&gt;
 설치가 잘 되었는지 실험삼아 각각의 버전을 확인해보는 커맨드를 입력 해 보았다.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ docker --version
-Docker version 1.12.6, build 78d1802&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;$ boot2docker version
-Boot2Docker-cli version: v1.8.0&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;docker --version
+boot2docker version&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123557.js&quot; id=&quot;asciicast-123557&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;boot2docker-로-docker-vm-준비하기&quot;&gt;boot2docker 로 docker VM 준비하기&lt;/h2&gt;
 &lt;p&gt;&amp;quot;boot2docker&amp;quot; 이름대로 docker 를 이용하기 전에 수행되어야 한다.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ boot2docker
-
-Usage: boot2docker [&amp;lt;options&amp;gt;] {help|init|up|ssh|save|down|poweroff|reset|restart|config|status|info|ip|shellinit|delete|download|upgrade|version} [&amp;lt;args&amp;gt;]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;boot2docker&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123558.js&quot; id=&quot;asciicast-123558&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
 &lt;p&gt;boot2docker 의 사용법을 살펴보면 많은 기능이 있는 것을 볼 수 있는데, 이 중에서 지금은 &lt;code&gt;init&lt;/code&gt;, &lt;code&gt;up&lt;/code&gt;, &lt;code&gt;ssh&lt;/code&gt; 만 알고 넘어가도 되겠다.&lt;br /&gt;
 아래와 같이 입력해 실행한다.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ boot2docker init
-$ boot2docker up&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;boot2docker init
+boot2docker up&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123559.js&quot; id=&quot;asciicast-123559&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
 &lt;p&gt;&lt;code&gt;boot2docker init&lt;/code&gt; 로 docker daemon 에 대한 VM 을 처음으로 준비한다.&lt;br /&gt;
-그다음 &lt;code&gt;boot2docker up&lt;/code&gt; 로 docker daemon VM 을 실행시키는데 수십초 정도가 걸린다.&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Waiting for VM and Docker daemon to start...
-........ooooooooo
-Started.&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;그 이후에&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ boot2docker ssh&lt;/code&gt;&lt;/pre&gt;
+그다음 &lt;code&gt;boot2docker up&lt;/code&gt; 로 docker daemon VM 을 실행시키는데 수십초 정도가 걸린다.&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;br /&gt;
+그 이후에&lt;/p&gt;
+&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;$ boot2docker ssh&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123561.js&quot; id=&quot;asciicast-123561&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
 &lt;p&gt;를 실행하여 접속하면&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ boot2docker ssh
 
@@ -3545,31 +3550,32 @@ src_href &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;img_tag %&amp;g
     
       <item>
         <title>석사논문 감사의 글</title>
-        <description>&lt;p&gt;완성된 석사 논문 책자를 받고 나서 상당히 아쉬움이 남는다.&lt;br /&gt;
-바로 감사의 글을 논문에 포함하지 않고 빠른 행정처리를 위해 논문을 제출했다는 것이다.&lt;br /&gt;
-제출한 논문을 다시 가져와서 감사의 글을 강제로 집어넣을 수도 없는 노릇이다.&lt;br /&gt;
-그래서 아쉽지만, 감사의 글을 이곳에 남기고자 한다.&lt;/p&gt;
+        <description>&lt;p&gt;완성된 석사 논문 책자를 받고 나서 상당히 아쉬움이 남았습니다.&lt;br /&gt;
+감사의 글을 논문에 포함하지 않고 빠른 행정처리를 위해 논문을 제출했다는 점이 아쉬었어요.&lt;br /&gt;
+제출한 논문을 다시 가져와서 감사의 글을 강제로 집어넣을 수도 없는 노릇이기에, 아쉽지만 감사의 글을 이곳에 남기고자 합니다.&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;strong&gt;감사의 글&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;어떠한 계기 때문에 석사과정을 밟기로 각오하고 이 길을 선택했는지 지금 와서 생각해보면 구체화 시키기가 쉽지 않다. 솔직히 말해서 잘 모르겠다. 전반적으로 볼 때 난 자연스럽게 여기까지 오게 되었다.&lt;br /&gt;
-모든 것이 이러한 식으로 물 흐르듯 화살 같은 속도의 시간이란 버스에 탑승하여 또 어딘가 모르는 곳에 하차하고, 탑승하는 것을 되풀이하다가 또 한 번 도심 속에 하차했다.&lt;br /&gt;
-하지만 분명 대학교를 입학하고 대학원 진학을 희망하던 그때 당시의 선택에 기로에는 여러 가지 사건들과 주변 사람들의 대화 및 조언들이 복합되어 나의 책임하 선택한 나의 길이었다.&lt;br /&gt;
-그리고 면밀하게 기억을 돌이켜 보면 볼수록 수많은 작은 파도들이 있었고 부딪힘이 있었다. 이러한 파도들이 지금의 나를 만든 것이라 생각한다.&lt;br /&gt;
-감사의 글을 적게 된 이유도 길고 거대했던 여정 사이에 숨겨졌던 파도들을 상기시키기 위함이다.&lt;/p&gt;
-&lt;p&gt;나는 어느 시점부터인가 오픈소스에 대한 학문적 열정이 커졌다.&lt;br /&gt;
-이런 열정을 느낄 수 있게 해준, 미흡했던 시절 나에게 오픈소스 중 R이란 언어를 직∙간접적으로 처음 소개했던 이석호 지도 교수님께 감사드리고 싶다.&lt;br /&gt;
-지금 생각해 보면 교수님은 항상 나도 모르게 제자에게 슬며시 간접적으로 영향력을 행사하는데 특별한 능력을 가지신듯 하다.&lt;/p&gt;
-&lt;p&gt;지금도 그렇지만 믿을 수 없을 만큼 많은 사람들이 내가 운영 중인 블로그에 방문하고 지속해서 지지해 주고 있다는 것을 느낀다.&lt;br /&gt;
-이러한 관심이 나의 학문적 열정이란 불씨를 꺼트리지 않게 해준 양초와 같았다.&lt;br /&gt;
-계속해서 아이디어를 공유하고 조화시킬 수 있는 익명의 많은 분들이 있어 나의 사고방식은 이전보다 확실히 성숙해졌다.&lt;/p&gt;
-&lt;p&gt;익명의 분들 중 개인적으로 알게 된 운명적인 분들 역시 감사의 마음을 드리고 싶다.&lt;br /&gt;
-서로 직면해서 이야기를 나눈 것은 2번밖에 없지만, 장문의 이메일을 주고받으며 오픈소스뿐만 아니라 컴퓨터에 전반적인 지식과 광범위한 데이터 과학의 세계로 나를 인도해준 고석범 대표님이 지금 많이 생각난다. 정말 감사드리고 싶다.&lt;br /&gt;
-R에 대해 아직 만족스러울 정도로 배운것이 아닌 당시 나의 어떤 모습이 마음에 들어서 책을 같이 편찬하자 제의하신지 모르겠으나, 내생에 처음이자 마지막이 될 법한 도서편찬의 기회를 주신 박찬성 실장님께 감사의 마음을 전하고 싶다.&lt;br /&gt;
-나에게 또 다른 기회와 새로운 비즈니스 경험을 선사해 주신, 앞으로 계속적으로 감사의 마음이 들 것 같은 박진호 전무님께도 감사의 마음을 표시하고 싶다.&lt;/p&gt;
-&lt;p&gt;사실 내 안의 아집은 남들이 일으키는 파도에 대한 방파제이었다.&lt;br /&gt;
-이 방파제를 뚫고 나에게 메시지를 주기 위하여 계속해서 파도를 일으켜 준 한국외국어대 통계학과 교수님들과, 직접적으로 도움과 후원을 해준 랩실, 그리고 대학원 동기 및 선후배 분들에 대한 그 고마움을 그 당시 느끼지 못했다.&lt;br /&gt;
-나는 상대적으로 보면 확실히 정적인 사람이고 요즘 말로 리액션이 약한 사람이다.&lt;br /&gt;
-따라서 리액션 대신 진심 어린 지금의 글을 통해 조금이나마 나의 고마움에 대한 표시를 남기고 전달하고자 한다.&lt;/p&gt;
+&lt;p&gt;어떠한 계기 때문에 석사과정을 밟기로 각오하고 선택했는지 지금 와서 생각해보면 구체화 시키기 쉽지 않습니다. 솔직히 말해서 잘 모르겠습니다. 전반적으로 볼 때 난 자연스럽게 여기까지 오게 된 것 같습니다.&lt;br /&gt;
+모든 것이 이러한 식으로 물 흐르듯 화살 같은 속도의 시간이란 버스에 타고 또 어딘가 모르는 곳에 하차하고, 탑승하는 것을 되풀이하다가 또 한 번 도심 속에 하차합니다.&lt;br /&gt;
+하지만 분명 대학교를 입학하고 대학원 진학을 희망하던 그때 당시의 선택에 기로에는 여러 가지 사건들과 주변 사람들의 대화 및 조언들이 복합되어 나의 책임하 선택한 나의 길이었습니다.&lt;br /&gt;
+그리고 면밀히 기억을 돌이켜 보면 볼수록 수많은 작은 파도들이 있었고 부딪힘이 있었습니다. 이러한 파도들이 지금의 나를 만든 것이라 생각합니다.&lt;br /&gt;
+감사의 글을 적게 된 이유도 길고 거대했던 여정 사이에 숨겨졌던 파도들을 상기시키기 위함입니다.&lt;/p&gt;
+&lt;p&gt;저는 어느 시점부터인가 오픈소스에 대한 학문적 열정이 커졌습니다.&lt;br /&gt;
+이런 열정을 느낄 수 있게 해준, 미흡했던 시절 나에게 오픈소스 중 R이란 언어를 직∙간접적으로 소개하고 알려주신 이석호 지도 교수님께 감사드립니다.&lt;br /&gt;
+지금 생각해 보면 교수님께선 항상 저도 모르게 제자에게 슬며시 간접적으로 영향력을 행사하는데 특별한 능력을 가지신듯 합니다.&lt;/p&gt;
+&lt;p&gt;지금도 그렇지만 믿을 수 없을 만큼 많은 사람들이 제가 운영 중인 블로그에 방문하고 지속해서 지지해 주고 있다는 것을 느낍니다.&lt;br /&gt;
+이러한 관심이 저의 학문적 열정이란 불씨를 꺼트리지 않게 해준 양초와 같았습니다.&lt;br /&gt;
+계속해서 아이디어를 공유하고 조화시킬 수 있는 익명의 많은 분들이 있어 저의 사고방식은 이전보다 확실히 성숙해 졌습니다.&lt;/p&gt;
+&lt;p&gt;익명의 분들 중 개인적으로 알게 된 운명적인 분들 역시 감사의 마음을 드리고 싶습니다.&lt;br /&gt;
+서로 직면해서 이야기를 나눈 것은 2번밖에 없지만, 장문의 이메일을 주고받으며 오픈소스뿐만 아니라 컴퓨터에 전반적인 지식과 광범위한 데이터 과학의 세계로 저를 인도해주신 고석범 대표님이 많이 생각납니다. 정말 감사드립니다.&lt;br /&gt;
+R에 대해 아직 만족스러울 정도로 배운것이 아닌 당시 저의 어떤 모습이 마음에 들어서 책을 같이 편찬하자 제의하신지 모르겠으나, 내생에 처음이자 마지막이 될 법한 도서편찬의 기회를 주신 박찬성 실장님께 감사의 마음을 전합니다.&lt;br /&gt;
+저에게 또 다른 기회와 새로운 비즈니스 경험을 선사해 주신, 계속적해서 감사의 마음이 들 것 같은 박진호 전무님께도 감사의 마음을 표시하고 싶습니다.&lt;/p&gt;
+&lt;p&gt;사실 제 안의 아집은 남들이 일으키는 파도에 대한 방파제이었던 것 같습니다.&lt;br /&gt;
+이 방파제를 뚫고 메시지를 주기 위하여 계속해서 파도를 일으켜 준 한국외국어대 통계학과 교수님들과, 직접적으로 도움과 후원을 해준 랩실, 그리고 대학원 동기 및 선후배 분들에 대한 그 고마움을 그 당시 느끼지 못했습니다.&lt;br /&gt;
+나는 상대적으로 보면 확실히 정적인 사람이고 요즘 말로 리액션이 약했지만, 그대신 진심 어린 지금의 글을 통해 조금이나마 저의 고마움에 대한 표시를 남기고 전달하고자 합니다.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;송효진 드림&lt;/em&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;em&gt;2017-06-06 : 문어체에서 구어체로 변경&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 01 Jul 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/diary/2016/07/01/Thanks_GS.html</link>
@@ -4374,18 +4380,9 @@ for(i in &lt;span class=&quot;kw&quot;&gt;seq&lt;/span&gt;(&lt;span class=&quot;
 그렇게 만든 객체 &lt;code&gt;pb&lt;/code&gt; 를 반복문 안에 심어주고 이를 째깍째깍 거릴 수 있도록 &lt;code&gt;tick()&lt;/code&gt; 모듈을 심어준다.&lt;br /&gt;
 이것이 가장 기본적인 사용방법이다.&lt;/p&gt;
 &lt;p&gt;실행해보면 R console 에 다음과 같이 진행표시줄이 나타나고, 점진적으로 진행되는 에니메이션을 볼 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;터미널 에서 실행시킨 결과&lt;/em&gt;&lt;/p&gt;
-&lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/Progressbar_1.png&quot; /&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123566.js&quot; id=&quot;asciicast-123566&quot; async&gt;&lt;/script&gt;
 &lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;R studio 에서 실행시킨 결과&lt;/em&gt;&lt;/p&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/Progressbar_2.png&quot; /&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;추가된 2줄 코드의 문법형태가 Python을 사용하는 것처럼 닮았다.&lt;br /&gt;
 R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자유롭게 조절하여 사용 할 수 있는 듯 하다.&lt;br /&gt;
 그 방법에 대해선 &lt;code&gt;?progress_bar&lt;/code&gt; 를 통해 확인할 수 있으며, 예제코드들을 활용하면 상황에 맞게 커스터마이징도 가능할 듯 싶다.&lt;/p&gt;
@@ -4393,7 +4390,7 @@ R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
-&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;물론 로드 이전에 패키지의 설치가 되어야 한다. &lt;code&gt;install.packages(&amp;quot;progress&amp;quot;)&lt;/code&gt; 로 가능하다.&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;물론 로드 이전에 패키지의 설치가 되어야 한다. &lt;code&gt;install.packages(&amp;quot;progress&amp;quot;)&lt;/code&gt; 로 가능하다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;내가 쓰고 있는 텍스트에디터 Sublime text 3 에서 R-box 플러그인을 이용한 환경에선 진행표시줄이 나타나지 않았다&lt;a href=&quot;#fnref2&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/section&gt;
