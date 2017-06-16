@@ -5,9 +5,129 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 06 Jun 2017 23:35:57 +0900</pubDate>
-    <lastBuildDate>Tue, 06 Jun 2017 23:35:57 +0900</lastBuildDate>
+    <pubDate>Fri, 16 Jun 2017 17:57:25 +0900</pubDate>
+    <lastBuildDate>Fri, 16 Jun 2017 17:57:25 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 기본 내장 graphics package를 이용한 데이터 시각화</title>
+        <description>&lt;p&gt;본 글은 R에서 기본 내장 graphics package에 대표격인 &lt;code&gt;plot()&lt;/code&gt; 함수의 기초를 설명해보고자 한다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;plot-함수&quot;&gt;&lt;code&gt;plot()&lt;/code&gt; 함수&lt;/h2&gt;
+&lt;p&gt;x 와 y 의 2개 축을 기준으로 좌표를 찍는 컨셉을 가진 함수이다.&lt;br /&gt;
+가장 대표적으로 산점도를 표현할 때 간단하게 구현이 가능한 함수로 소개되나,&lt;br /&gt;
+범용적으로 사용이 가능한 제너릭 함수 (generic function) 이기 때문에&lt;br /&gt;
+입력되는 데이터의 타입과 클래스에 따라 성격에 맞게 다양한 모습으로 데이터 시각화 결과물이 출력된다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3 id=&quot;좌표-찍기&quot;&gt;좌표 찍기&lt;/h3&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_1-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;plot()&lt;/code&gt; 함수는 &lt;code&gt;x&lt;/code&gt;, &lt;code&gt;y&lt;/code&gt; 인자 2개를 기본적으로 받는다.&lt;br /&gt;
+위의 코드를 실행하면 (2, 1)이라는 좌표 한곳에 점을 찍는 모습을 볼 수 있다.&lt;br /&gt;
+이러한 특성을 잘 이용하면 복수개의 좌표에 점을 찍을 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_2-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;2개의 점이 찍히는데 각각 (1,1), (2,5) 좌표에 찍히는 것을 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;이런 좌표 찍기 특성을 이용하여 자신이 가지고 있는 데이터셋을 &lt;code&gt;plot()&lt;/code&gt; 함수의 &lt;code&gt;x&lt;/code&gt;, &lt;code&gt;y&lt;/code&gt; 인자에게 넘김으로써 산점도를 표현할 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;names&lt;/span&gt;(cars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;speed&amp;quot; &amp;quot;dist&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(cars$speed, cars$dist)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_3-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;built-in 객체 &lt;code&gt;cars&lt;/code&gt;에서 차의 속도 정보를 담은 벡터 &lt;code&gt;cars$speed&lt;/code&gt; 가 x축으로,&lt;br /&gt;
+주행거리 정보를 담은 벡터 &lt;code&gt;cars$dist&lt;/code&gt; 가 y축으로 입력됨으로써&lt;br /&gt;
+차량의 속도와 거리 간의 관계를 대략적으로 살펴볼 수 있는 산점도를 보여주는 예제이다.&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;참고로 위의 코드 &lt;code&gt;plot(cars$speed, cars$dist)&lt;/code&gt; 는 아래의 코드를 실행하는 것과 같다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3 id=&quot;type-인자&quot;&gt;&lt;code&gt;type&lt;/code&gt; 인자&lt;/h3&gt;
+&lt;p&gt;위의 좌표 찍기 두번째 예시인&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_4-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;에서 두 좌표 간 직선을 그리고 싶다면 &lt;code&gt;type&lt;/code&gt; 인자를 조정해보면 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;type =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;l&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_5-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&amp;quot;line&amp;quot;을 의미할 것 같은 &amp;quot;l&amp;quot; 문자를 &lt;code&gt;type&lt;/code&gt; 인자로 넘겨주면 두 좌표가 연결된 선을 그린다.&lt;br /&gt;
+&lt;code&gt;type&lt;/code&gt; 는 그림을 어떻게 그릴 것인지 묻는 인자로써, 이 인자값을 입력하지 않으면 기본적으로 &amp;quot;point&amp;quot;의 의미인 &amp;quot;p&amp;quot; 가 대부분 설정된다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;type&lt;/code&gt; 인자가 받을 수 있는 값들은 아래와 같다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;type = &amp;quot;p&amp;quot;&lt;/code&gt; : 점으로&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;type = &amp;quot;l&amp;quot;&lt;/code&gt; : 선으로&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;type = &amp;quot;b&amp;quot;&lt;/code&gt; : 점과 선 둘 다 동시에&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;type = &amp;quot;o&amp;quot;&lt;/code&gt; : 점과 선 둘 다 동시에 (단 겹쳐짐 : over plotted)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;type = &amp;quot;h&amp;quot;&lt;/code&gt; : 히스토그램과 비슷한 형태로 (histogram)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;type = &amp;quot;s&amp;quot;&lt;/code&gt; : 계단모양으로 (stair steps)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;type = &amp;quot;S&amp;quot;&lt;/code&gt; : 계단모양으로 (upper stair steps)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;type = &amp;quot;n&amp;quot;&lt;/code&gt; : 좌표찍지 않음&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;type = n&lt;/code&gt;인 경우는 특이하게 plot의 토대인 축은 표현되나, 좌표가 찍히지 않음으로써&lt;br /&gt;
+마치 그림을 그리기 이전 스케치북을 펼치는 것과 같다고 볼 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;type =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;n&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_6-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3 id=&quot;이외의-다양한-인자들&quot;&gt;이외의 다양한 인자들&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;plot()&lt;/code&gt; 함수는 그래픽스 파라미터 &lt;code&gt;par&lt;/code&gt;를 상속받게 되어 다양한 인자들을 사용할 수 있는데, 이 특성을 잘 살리면 더 세부적인 조정이 가능하다.&lt;/p&gt;
+&lt;p&gt;그래픽스 파라미터 (Graphical Parameters)의 자세한 내용과 사용 가능 인자가 무엇이 있는지 알고 싶다면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;?par&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;를 실행시켜 도움말을 볼 수 있다.&lt;br /&gt;
+&lt;code&gt;cex&lt;/code&gt;, &lt;code&gt;fg&lt;/code&gt;, &lt;code&gt;lty&lt;/code&gt;, &lt;code&gt;pch&lt;/code&gt; 등의 인자만 살펴보자&lt;/p&gt;
+&lt;p&gt;만약 plotting 결과물에서 좌표 포인트의 크기를 조정하고 싶다면 &lt;code&gt;cex&lt;/code&gt; 인자값을 조정한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars, &lt;span class=&quot;dt&quot;&gt;cex =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# 디폴트로 cex=1 임, 즉 2배 크게&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_7-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars, &lt;span class=&quot;dt&quot;&gt;cex =&lt;/span&gt; .&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# 2배 작게&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_7-2.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;축의 색깔을 바꾸고 싶다면 전경색을 조절할 수 있는 &lt;code&gt;fg&lt;/code&gt; 인자값을 조정한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars, &lt;span class=&quot;dt&quot;&gt;fg =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_8-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;만약 line type의 그림을 그렸다면 선의 성격을 &lt;code&gt;lty&lt;/code&gt; 인자를 통해 바꿀 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;type =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;l&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# lty 를 언급하지 않았을 때&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_9-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;type =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;l&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lty=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;dashed&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_9-2.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;만약 point type의 그림을 그렸다면 점의 모양을 &lt;code&gt;pch&lt;/code&gt; 인자를 통해 바꿀 수도 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars) &lt;span class=&quot;co&quot;&gt;# pch 를 언급하지 않았을 때&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_10-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars, &lt;span class=&quot;dt&quot;&gt;pch =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_10-2.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars, &lt;span class=&quot;dt&quot;&gt;pch =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;25&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# 1 ~ 25개의 모양이 준비되어 있음&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_10-3.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3 id=&quot;좌표-찍기의-특성을-어기는-아니-똑똑한-제너릭-함수&quot;&gt;좌표 찍기의 특성을 어기는, 아니 똑똑한 제너릭 함수&lt;/h3&gt;
+&lt;p&gt;지금까지 보았듯이 &lt;code&gt;plot()&lt;/code&gt;은 좌표 찍기의 컨셉을 이용하여 데이터시각화 결과물을 출력한다.&lt;br /&gt;
+하지만 좌표 찍기에 적합하지 않은 클래스의 데이터가 입력되면 그에 알맞게 좌표 찍기의 컨셉을 버리고 다른 형태로 출력한다.&lt;/p&gt;
+&lt;p&gt;아래 코드를 보면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;fit &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars)
+&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(fit)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_11-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;img src=&quot;/assets/plotFunction_11-2.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;img src=&quot;/assets/plotFunction_11-3.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;img src=&quot;/assets/plotFunction_11-4.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;위의 코드는 &lt;code&gt;cars&lt;/code&gt; 를 대상으로 단순회귀적합을 한 lm class의 &lt;code&gt;fit&lt;/code&gt; 객체를 &lt;code&gt;plot()&lt;/code&gt; 함수에 입력한 결과인데 뭔가 많다.&lt;br /&gt;
+분명 산점도이긴 산점도인데 더 복잡하고 어떠한 선분과 겹쳐져 그려진 4개의 패널로 구분된 시각화 결과물이 출력된다.&lt;br /&gt;
+이는 회귀 적합 이후 모형진단 시 자주 사용하는 데이터 시각화 결과물을 &lt;code&gt;plot()&lt;/code&gt; 함수가 자동으로 알아서 모두 출력해준 것이다.&lt;br /&gt;
+산점도 뿐만 아니라 완전히 성격이 바뀐 결과물을 출력하기도 한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(data.tree)
+&lt;span class=&quot;kw&quot;&gt;data&lt;/span&gt;(acme, &lt;span class=&quot;dt&quot;&gt;package =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;data.tree&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(acme)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_12.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;data.tree 라는 패키지가 있는데,&lt;br /&gt;
+이 패키지에 포함되어 있는 &lt;code&gt;acme&lt;/code&gt; 데이터셋은 class 가 &lt;code&gt;data.tree&lt;/code&gt; 로써 특이한 구조를 가지고 있는 데이터셋 이다.&lt;br /&gt;
+이를 &lt;code&gt;plot()&lt;/code&gt; 함수에 입력하여 plotting 하면 우리가 기존에 알고 있던 방식의 결과물이 나오지 않고 색다른 결과물이 나온다.&lt;br /&gt;
+이러한 이유는 &lt;code&gt;plot()&lt;/code&gt; 이란 함수는 입력되는 데이터의 class에 알맞게 최적으로 표현해줄 수 있는 방법의 코드로 실행되기 때문이다.&lt;br /&gt;
+그리고 이러한 특징을 가진 함수는 R에서 generic function이라고 부른다.&lt;br /&gt;
+generic function은 사용자가 함수에 대한 문법을 정확하게 지키지 않더라도 최대한 사용자가 기대할 것 같은 결과물을 내보내기 위함이다.&lt;br /&gt;
+이러한 R 시스템은 사용자 편의를 올릴 수 있게 해준다.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;R을 공부하다 보면 눈에 자주 띄는 대표적인 그림이기도 하다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Fri, 16 Jun 2017 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2017/06/16/plotFunction.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2017/06/16/plotFunction.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>Hello Scala! (스칼라 시작하기)</title>
@@ -1385,236 +1505,6 @@ svd &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot
         <pubDate>Wed, 22 Feb 2017 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2017/02/22/Profiling.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2017/02/22/Profiling.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>Docker 를 이용해 Rstudio server 띄워보기 (on Mac OSX)</title>
-        <description>&lt;p&gt;가상머신보다 경량화된 &lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker&lt;/a&gt; 기술을 이것저것 만져보며 차차 공부중에 있다.&lt;br /&gt;
-Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 설명하지 못한다.&lt;br /&gt;
-가상머신상에서 실험했을 당시 불편한 점들과 만족스럽지 못한 성능을 대체할만한 기술 중 Docker 라는 것이 있다는 소문을 듣고 추천을 받았으며 인기가 매우 높다는 정도만 알고 있다.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;우선 본 글은 Docker를 이용해 Rstudio server를 띄움으로써 &amp;quot;Hello Docker!&amp;quot; 를 외치는 것이 목표라 하겠다.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;docker-준비&quot;&gt;Docker 준비&lt;/h2&gt;
-&lt;p&gt;Docker 을 OSX 에서 설치하는 방법은 다양하다.&lt;br /&gt;
-&lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker 공식홈페이지&lt;/a&gt;의 튜토리얼 대로 설치하는 것이 가장 정석의 방법이고,&lt;br /&gt;
-&lt;a href=&quot;https://penandpants.com/2014/03/09/docker-via-homebrew/&quot;&gt;Homebrew 를 통해서도 설치&lt;/a&gt;할 수 있으며,&lt;br /&gt;
-&lt;a href=&quot;https://www.docker.com/products/docker-toolbox&quot;&gt;Docker Toolbox&lt;/a&gt; 를 이용해 큰 고민 없이 설치할 수도 있다.&lt;/p&gt;
-&lt;p&gt;필자는 정석방법대로 하다가 진도가 중간에 막히게 되어 Docker Toolbox 를 overwrite 한 시행착오가 있었는데, 현재로썬 Docker Toolbox 로 설치하는 것이 가장 간단한 방법이라 추측된다.&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;br /&gt;
-아래 사진은 &lt;a href=&quot;https://www.docker.com/products/docker-toolbox&quot;&gt;Docker Toolbox&lt;/a&gt; 로 접속했을 때 모습이다.&lt;/p&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/docker_toolbox.png&quot; width=90%&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;왼쪽 맥용 다운로드 링크를 누르면 &lt;code&gt;.pkg&lt;/code&gt; 파일이 다운로드 된다.&lt;br /&gt;
-실행하여 설치를 진행하면 된다.&lt;/p&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_1.png&quot; width=70%&gt;
-&lt;/center&gt;
-&lt;br&gt; &lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_2.png&quot; width=70%&gt;
-&lt;/center&gt;
-&lt;br&gt; &lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_3.png&quot; width=70%&gt;
-&lt;/center&gt;
-&lt;br&gt; &lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_4.png&quot; width=70%&gt;
-&lt;/center&gt;
-&lt;br&gt; &lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_5.png&quot; width=70%&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;다른 곳은 특이사항 없이 설치를 진행하면 되는데 이곳에서 무언가를 선택하라고 나온다.&lt;br /&gt;
-오른쪽의 Kitematic (Beta) 는 Docker 를 GUI 방식으로 이용할 수 있는 것이고,&lt;br /&gt;
-왼쪽은 터미널을 이용해서 빠르게 사용하겠다는 것이다.&lt;br /&gt;
-나는 왼쪽을 눌러 사용하는 터미널을 선택 후 계속 버튼을 눌렀다.&lt;/p&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/dtInstall_6.png&quot; width=70%&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;설치가 성공되면 터미널에서 &lt;code&gt;docker&lt;/code&gt;, &lt;code&gt;boot2docker&lt;/code&gt; 가 실행 가능하다.&lt;br /&gt;
-설치가 잘 되었는지 실험삼아 각각의 버전을 확인해보는 커맨드를 입력 해 보았다.&lt;/p&gt;
-&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;docker --version
-boot2docker version&lt;/code&gt;&lt;/pre&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123557.js&quot; id=&quot;asciicast-123557&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;boot2docker-로-docker-vm-준비하기&quot;&gt;boot2docker 로 docker VM 준비하기&lt;/h2&gt;
-&lt;p&gt;&amp;quot;boot2docker&amp;quot; 이름대로 docker 를 이용하기 전에 수행되어야 한다.&lt;/p&gt;
-&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;boot2docker&lt;/code&gt;&lt;/pre&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123558.js&quot; id=&quot;asciicast-123558&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;boot2docker 의 사용법을 살펴보면 많은 기능이 있는 것을 볼 수 있는데, 이 중에서 지금은 &lt;code&gt;init&lt;/code&gt;, &lt;code&gt;up&lt;/code&gt;, &lt;code&gt;ssh&lt;/code&gt; 만 알고 넘어가도 되겠다.&lt;br /&gt;
-아래와 같이 입력해 실행한다.&lt;/p&gt;
-&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;boot2docker init
-boot2docker up&lt;/code&gt;&lt;/pre&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123559.js&quot; id=&quot;asciicast-123559&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;code&gt;boot2docker init&lt;/code&gt; 로 docker daemon 에 대한 VM 을 처음으로 준비한다.&lt;br /&gt;
-그다음 &lt;code&gt;boot2docker up&lt;/code&gt; 로 docker daemon VM 을 실행시키는데 수십초 정도가 걸린다.&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;br /&gt;
-그 이후에&lt;/p&gt;
-&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;$ boot2docker ssh&lt;/code&gt;&lt;/pre&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123561.js&quot; id=&quot;asciicast-123561&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;를 실행하여 접속하면&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ boot2docker ssh
-
-                        ##         .
-                  ## ## ##        ==
-               ## ## ## ## ##    ===
-           /&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;\___/ ===
-      ~~~ {~~ ~~~~ ~~~ ~~~~ ~~~ ~ /  ===- ~~~
-           \______ o           __/
-             \    \         __/
-              \____\_______/
- _                 _   ____     _            _
-| |__   ___   ___ | |_|___ \ __| | ___   ___| | _____ _ __
-| &amp;#39;_ \ / _ \ / _ \| __| __) / _` |/ _ \ / __| |/ / _ \ &amp;#39;__|
-| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   &amp;lt;  __/ |
-|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
-Boot2Docker version 1.8.0, build master : 7f12e95 - Tue Aug 11 17:55:16 UTC 2015
-Docker version 1.8.0, build 0d03096
-docker@boot2docker:~$&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;docker VM 에 접속되며 호스트 OS 가 아닌 bash 인것을 확인할 수 있다.&lt;br /&gt;
-저 고래의 모습이 터미널에 출력되면 docker를 본격적으로 이용할 수 있는 모든 준비가 되었다는 것으로 이해해도 좋다. 🐳🐳🐳&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;hello-docker-를-위한-rstudio-server-띄우기&quot;&gt;Hello Docker! 를 위한 Rstudio server 띄우기&lt;/h2&gt;
-&lt;p&gt;Docker 의 장점은 여러가지가 있다고 하는데 대표적으로 내세우는 장점이 배포성이라고 한다.&lt;br /&gt;
-&lt;a href=&quot;https://hub.docker.com/&quot;&gt;Docker Hub&lt;/a&gt; 는 개발환경 세팅이 끝난 이미지들을 공유하는 곳인데,&lt;br /&gt;
-지금 예로 들을 Rstudio server 의 경우도 환경세팅이 끝난 이미지를 찾아 바로 이용할 수 있다.&lt;br /&gt;
-이 말은 Rstudio server 구축에 필요한 과정들을 쓸데없이 재발명하지 않고 사용할 수 있다는 것이다.&lt;br /&gt;
-실제로 Rstudio server 구축은 어려우면 어렵지 쉬운 과제가 아니다.&lt;/p&gt;
-&lt;p&gt;docker VM 에 접속된 상황에서&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker@boot2docker:~$ docker search rstudio-server&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;를 입력해 보자.&lt;br /&gt;
-위의 명령어는 Docker Hub 에서 &amp;quot;rstudio-server&amp;quot; 란 검색어로 이미지를 검색하는 것이다.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker@boot2docker:~$ docker search rstudio-server
-
-NAME                                     DESCRIPTION                   STARS  OFFICIAL  AUTOMATED
-rocker/rstudio                           RStudio Server image          107              [OK]
-h2sp/cent65-rstudio-server                                             2                [OK]
-mgymrek/docker-rstudio-server                                          1                [OK]
-analyticsplatform/rstudio-server         Docker Images for RStudio...  0                [OK]
-mjmg/centos-rstudio-opencpu-server       Latest CENTOS with rstudi...  0                [OK]
-mjmgaro/fedora-rstudio-server            Latest Fedora with rstudi...  0                [OK]
-mjmg/fedora-rstudio-opencpu-server       Latest FEDORA with rstudi...  0                [OK]
-davislaboratory/docker-rstudio-serve...  rstudio server for Docker...  0                [OK]
-mjmg/fedora-rstudio-server               Latest Fedora with rstudi...  0                [OK]
-mjmg/centos-rstudio-opencpu-shiny-se...  Latest CENTOS with rstudi...  0                [OK]&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;잘 보면 3번째 열에 &amp;quot;STARS&amp;quot; 라는 것이 있는데 Docker 사용자가 추천한 횟수를 의미한다.&lt;br /&gt;
-가장 높은 별을 받은 첫번째 이미지를 우리 예제로 이용해 볼 것이다.&lt;/p&gt;
-&lt;p&gt;첫번째 이미지의 명칭은 &amp;quot;rocker/rstudio&amp;quot; 이다.&lt;br /&gt;
-이 이미지를 받고 컨테이너를 생성하여(&lt;em&gt;docker VM 에 Rstudio server 를 설치한다고 이해해도 좋다&lt;/em&gt;) Rstudio server 를 실행해 보겠다.&lt;br /&gt;
-&lt;code&gt;docker run&lt;/code&gt; 명령이면 이 모든 것이 한번에 된다.&lt;br /&gt;
-아래 커맨드를 입력해 실행해 보자.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker@boot2docker:~$ docker run --rm -p 8787:8787 rocker/rstudio&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;조금 복잡해 보일지 몰라도 핵심은 &lt;code&gt;docker run &amp;lt;이미지 이름&amp;gt;&lt;/code&gt; 이다.&lt;br /&gt;
-&lt;code&gt;--rm&lt;/code&gt; , &lt;code&gt;-p&lt;/code&gt; 인자들은 부가적인 옵션으로 생각하면 되는데 &lt;code&gt;--rm&lt;/code&gt; 은 컨테이너 종료시 리소스들을 자동으로 반환해주고, &lt;code&gt;-p&lt;/code&gt; 는 포트번호를 직접 입력할 수 있게 한다.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker@boot2docker:~$ docker run --rm -p 8787:8787 rocker/rstudio
-
-[fix-attrs.d] applying owners &amp;amp; permissions fixes...
-[fix-attrs.d] 00-runscripts: applying...
-[fix-attrs.d] 00-runscripts: exited 0.
-[fix-attrs.d] done.
-[cont-init.d] executing container initialization scripts...
-[cont-init.d] conf: executing...
-[cont-init.d] conf: exited 0.
-[cont-init.d] done.
-[services.d] starting services
-[services.d] done.&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;무엇인가 촤라락 실행된다.&lt;br /&gt;
-그리고 실행이 유지되는데, 바로 Rstudio server 를 가동중인 상태인 것이다. 포트번호를 8787로 부여했기 때문에 docker VM 의 IP에서 8787 번 포트로 접속하면 가동중인 Rstudio server 를 띄울 수 있게 된다.&lt;/p&gt;
-&lt;p&gt;그런데 잠깐 docker VM 의 IP 를 모르는 상태에서 설명을 쭉쭉 해버리고 있었다.&lt;br /&gt;
-IP는 &lt;code&gt;ifconfig&lt;/code&gt; 등으로 확인해 볼 수 있는데 잠깐 가동중인 Rstudio server 를 종료하고 bash 로 빠져 나와야 할 상황이다.&lt;br /&gt;
-이럴땐 &lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt; 를 눌러 bash 로 빠져나올 수 있다.&lt;br /&gt;
-그리고 IP 확인을 위해&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker@boot2docker:~$ ifconfig&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;를 실행하여 &amp;quot;eth1&amp;quot; 의 IP 를 확인한다.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker@boot2docker:~$ ifconfig
-
-docker0   Link encap:Ethernet  HWaddr 02:42:22:E3:A5:EA
-          inet addr:172.17.42.1  Bcast:0.0.0.0  Mask:255.255.0.0
-          inet6 addr: fe80::42:22ff:fee3:a5ea/64 Scope:Link
-          UP BROADCAST MULTICAST  MTU:1500  Metric:1
-          RX packets:211 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:448 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:0
-          RX bytes:817705 (798.5 KiB)  TX bytes:48897 (47.7 KiB)
-
-eth0      Link encap:Ethernet  HWaddr 08:00:27:D1:4E:08
-          inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
-          inet6 addr: fe80::a00:27ff:fed1:4e08/64 Scope:Link
-          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          RX packets:1250 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:799 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000
-          RX bytes:129451 (126.4 KiB)  TX bytes:118182 (115.4 KiB)
-
-eth1      Link encap:Ethernet  HWaddr 08:00:27:3D:AA:C9
-          inet addr:192.168.59.103  Bcast:192.168.59.255  Mask:255.255.255.0
-          inet6 addr: fe80::a00:27ff:fe3d:aac9/64 Scope:Link
-          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          RX packets:465 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:226 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000
-          RX bytes:53127 (51.8 KiB)  TX bytes:822933 (803.6 KiB)
-
-lo        Link encap:Local Loopback
-          inet addr:127.0.0.1  Mask:255.0.0.0
-          inet6 addr: ::1/128 Scope:Host
-          UP LOOPBACK RUNNING  MTU:65536  Metric:1
-          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:0
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;필자의 경우 &lt;code&gt;http://192.168.59.103:8787&lt;/code&gt; 가 Rstudio server 를 띄울 수 있는 주소가 된다.&lt;br /&gt;
-다시 Rstudio server 컨테이너를 실행하기 위해&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker@boot2docker:~$ docker run --rm -p 8787:8787 rocker/rstudio&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;이 후 &lt;code&gt;http://192.168.59.103:8787&lt;/code&gt; 로 접속해 본다.&lt;/p&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/rssLogin.png&quot;&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;로그인 화면이 뜬다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;username : rstudio&lt;/li&gt;
-&lt;li&gt;password : rstudio&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;로 로그인을 해보면&lt;/p&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/rss.png&quot;&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;Rstudio server 를 띄울 수 있고 웹상에서 Rstudio 를 이용할 수 있게 된다.&lt;br /&gt;
-이렇게 해서 Docker 를 이용한 Rstudio server 이미지를 이용해 손쉽게 &amp;quot;Hello Docker!&amp;quot; 해보았다.&lt;br /&gt;
-Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 어려운 구축과정 없이 이용할 수 있지 않을까?&lt;/p&gt;
-&lt;section class=&quot;footnotes&quot;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;Docker command 를 사용하던 도중에도 Docker Toolbox 를 설치하는것을 추천하는 경고메세지가 나오기도 한다 (Docker Toolbox (https://docker.com/toolbox) is the recommended install method)&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;&lt;code&gt;boot2docker up&lt;/code&gt; 대신 &lt;code&gt;boot2docker boot&lt;/code&gt;, &lt;code&gt;boot2docker start&lt;/code&gt; 도 똑같다&lt;a href=&quot;#fnref2&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/section&gt;
-</description>
-        <pubDate>Sat, 28 Jan 2017 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2017/01/28/Docker_Rstudio_server.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2017/01/28/Docker_Rstudio_server.html</guid>
         
         
         <category>R</category>
