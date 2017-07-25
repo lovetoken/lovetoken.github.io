@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 06 Jul 2017 23:02:21 +0900</pubDate>
-    <lastBuildDate>Thu, 06 Jul 2017 23:02:21 +0900</lastBuildDate>
+    <pubDate>Mon, 24 Jul 2017 13:29:31 +0900</pubDate>
+    <lastBuildDate>Mon, 24 Jul 2017 13:29:31 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -133,7 +133,10 @@ generic function은 사용자가 함수에 대한 문법을 정확하게 지키�
     
       <item>
         <title>Hello Scala! (스칼라 시작하기)</title>
-        <description>&lt;p&gt;대용량 분산처리 분석시스템인 스파크(Spark)를 알기 위해 항상 마주쳤던, 그리고 발목을 잡는것이 스칼라(Scala)이었다.&lt;br /&gt;
+        <description>&lt;h1 id=&quot;hello-scala-스칼라-시작하기&quot;&gt;Hello Scala! (스칼라 시작하기)&lt;/h1&gt;
+&lt;p&gt;&lt;a href = &quot;https://lovetoken.github.io&quot;&gt;lovetoken&lt;/a&gt;&lt;br /&gt;
+&lt;code&gt;r Sys.Date()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;대용량 분산처리 분석시스템인 스파크(Spark)를 알기 위해 항상 마주쳤던, 그리고 발목을 잡는것이 스칼라(Scala)이었다.&lt;br /&gt;
 스파크를 제대로 이용하기 위해선 스크립팅 기술이 필요한데 가장 대중적인 것이 스칼라이고 그다음이 파이썬(Python) 인 듯 보인다.&lt;br /&gt;
 파이썬으로 해도 되지만 스파크의 철학을 제대로 물려받아 활용하기 위해선 스칼라를 이용할 것을 많은 곳에서 권장했다.&lt;br /&gt;
 스파크에 관련된 구글링 검색만을 해보아도 예제의 코드는 스칼라코드가 더 많이 검색되었고, 이러한 이유가 분명 있을 것이기에 스칼라 공부를 시작했다.&lt;/p&gt;
@@ -141,7 +144,7 @@ generic function은 사용자가 함수에 대한 문법을 정확하게 지키�
 필자는 아래의 책이 스칼라를 공부하기 위한 첫 책이다.&lt;/p&gt;
 &lt;br&gt;&lt;br&gt;&lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;/assets/HelloScala1.jpg&quot;&gt;
+&lt;img src=&quot;image/HelloScala1.jpg&quot;&gt;
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;blockquote&gt;
@@ -269,11 +272,28 @@ today &lt;span class=&quot;kw&quot;&gt;match&lt;/span&gt; {
 &lt;h2 id=&quot;for-loop&quot;&gt;for loop&lt;/h2&gt;
 &lt;p&gt;반복문 for loop 역시 스칼라에서 지원되며 강력한 기능들을 더할 수 있었다.&lt;br /&gt;
 기본적인 사용법은 아래 구문 형태를 이용한다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;for (&amp;lt;식별자&amp;gt; &amp;lt;- &amp;lt;반복범위&amp;gt;) &amp;lt;표현식&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;for (&amp;lt;식별자&amp;gt; &amp;lt;- &amp;lt;반복범위&amp;gt;) &amp;lt;표현식&amp;gt;&lt;/code&gt; 혹은 &lt;code&gt;for {&amp;lt;식별자&amp;gt; &amp;lt;- &amp;lt;반복범위&amp;gt;} &amp;lt;표현식&amp;gt;&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;아래는 for 문을 이용하여 &amp;quot;Day1)&amp;quot; 부터 &amp;quot;Day10)&amp;quot; 까지 10개의 날을 출력하는 예제코드이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;for&lt;/span&gt; (x &amp;lt;- &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;) &lt;span class=&quot;fu&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Day&amp;quot;&lt;/span&gt; + x + &lt;span class=&quot;st&quot;&gt;&amp;quot;) &amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;for&lt;/span&gt; {x &amp;lt;- &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;} &lt;span class=&quot;fu&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Day&amp;quot;&lt;/span&gt; + x + &lt;span class=&quot;st&quot;&gt;&amp;quot;) &amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;center&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/125091.js&quot; id=&quot;asciicast-125091&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
+&lt;h3 id=&quot;nested-for-loop&quot;&gt;Nested for loop&lt;/h3&gt;
+&lt;p&gt;for 반복문을 중첩시키는 예제의 경우 스칼라에선 세련된 방법이 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;for&lt;/span&gt; {x &amp;lt;- &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;}{
+  &lt;span class=&quot;kw&quot;&gt;for&lt;/span&gt; {y &amp;lt;- &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;}{
+    &lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(x * y)
+  }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 예제는 for문 안에 for문이 중첩하여 여섯경우의 곱 결과를 보여준다.&lt;br /&gt;
+그런데 이것을 아래와 같이 간단하게 코딩을 줄이는것이 가능하다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;for&lt;/span&gt; {x &amp;lt;- &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;; y &amp;lt;- &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;} &lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(x * y)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;두 반복자를 &lt;code&gt;;&lt;/code&gt; 를 이용해 for 문에 한꺼번에 입력하거나&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;for&lt;/span&gt; {x &amp;lt;- &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;
+     y &amp;lt;- &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;} &lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(x * y)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;문단을 나누어도 되겠다.&lt;/p&gt;
+&lt;center&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/130236.js&quot; id=&quot;asciicast-130236&quot; async&gt;&lt;/script&gt;
 &lt;/center&gt;
 </description>
         <pubDate>Tue, 06 Jun 2017 00:00:00 +0900</pubDate>
