@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 24 Jul 2017 13:29:31 +0900</pubDate>
-    <lastBuildDate>Mon, 24 Jul 2017 13:29:31 +0900</lastBuildDate>
+    <pubDate>Tue, 25 Jul 2017 20:57:50 +0900</pubDate>
+    <lastBuildDate>Tue, 25 Jul 2017 20:57:50 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -133,10 +133,7 @@ generic function은 사용자가 함수에 대한 문법을 정확하게 지키�
     
       <item>
         <title>Hello Scala! (스칼라 시작하기)</title>
-        <description>&lt;h1 id=&quot;hello-scala-스칼라-시작하기&quot;&gt;Hello Scala! (스칼라 시작하기)&lt;/h1&gt;
-&lt;p&gt;&lt;a href = &quot;https://lovetoken.github.io&quot;&gt;lovetoken&lt;/a&gt;&lt;br /&gt;
-&lt;code&gt;r Sys.Date()&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;대용량 분산처리 분석시스템인 스파크(Spark)를 알기 위해 항상 마주쳤던, 그리고 발목을 잡는것이 스칼라(Scala)이었다.&lt;br /&gt;
+        <description>&lt;p&gt;대용량 분산처리 분석시스템인 스파크(Spark)를 알기 위해 항상 마주쳤던, 그리고 발목을 잡는것이 스칼라(Scala)이었다.&lt;br /&gt;
 스파크를 제대로 이용하기 위해선 스크립팅 기술이 필요한데 가장 대중적인 것이 스칼라이고 그다음이 파이썬(Python) 인 듯 보인다.&lt;br /&gt;
 파이썬으로 해도 되지만 스파크의 철학을 제대로 물려받아 활용하기 위해선 스칼라를 이용할 것을 많은 곳에서 권장했다.&lt;br /&gt;
 스파크에 관련된 구글링 검색만을 해보아도 예제의 코드는 스칼라코드가 더 많이 검색되었고, 이러한 이유가 분명 있을 것이기에 스칼라 공부를 시작했다.&lt;/p&gt;
