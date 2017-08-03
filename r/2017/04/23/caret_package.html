@@ -509,8 +509,7 @@ rda_fit2</code></pre></div>
 <p><br><br></p>
 <h2 id="병렬처리parallel-processing">병렬처리(Parallel Processing)</h2>
 <p>병렬처리를 통해 빠른 탐색 전략을 취할 수 있다.<br />
-doMC 패키지와의 연계를 지원되는 caret 패키지는 학습 시 생기는 많은 연산을 병렬처리를 통해 시간 비용을 낮출 수 있다.<br />
-특히 튜닝파라미터의 조합 수가 많으면 많을수록 병렬처리는 많은 효용이 있을 것이다.</p>
+doMC 패키지와의 연계를 지원하는 caret 패키지는 학습 시 생기는 많은 연산을 병렬처리를 통해 시간 비용을 절감시킬 수 있다. (단 doMC package 는 Unix 계열 머신에서 사용이 가능하다) 특히 튜닝파라미터의 조합 수가 많으면 많을수록 병렬처리는 많은 효용이 있을 것이다.</p>
 <p>필요에 따라 doMC 패키지를 설치하고 로드한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;doMC&quot;)</span>
 <span class="kw">library</span>(<span class="st">&quot;doMC&quot;</span>)</code></pre></div>
