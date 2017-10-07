@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해" />
-        <meta name="keywords" content="R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해, , R" />
+        <meta name="description" content="readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론" />
+        <meta name="keywords" content="readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론, , R" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해" property="og:title">
+          <meta content="readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/02/19/replicate_function.html" property="og:url">
+          <meta content="https://lovetoken.github.io/r/2017/10/07/guessEncoding.html" property="og:url">
         
         
-          <meta content="2016-02-19T00:00:00+09:00" property="article:published_time">
+          <meta content="2017-10-07T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해">
+          <meta name="twitter:title" content="readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/02/19/replicate_function.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2017/10/07/guessEncoding.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,8 +126,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해</h1>
-<span class="time">19 Feb 2016</span>
+                <h1>readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론</h1>
+<span class="time">07 Oct 2017</span>
 
 <span class="categories">
     &raquo; <a href="/category/R">R</a>
@@ -135,51 +135,98 @@
 
 
 <div class="content">
-    <div class="post"><p>R 에서 특정 코드를 반복해서 실행하는 방법은 for, while, repeat, apply 과 같은 반복문을 이용하면 간단히 구현할 수 있다.<br />
-그런데 만약 반복문의 주안점이 반복된 모든 결과들을 저장해야 한다는 것에 있다면 통상적인 반복문에선 조금 오묘한 방법을 통해 이를 구현한다.</p>
+    <div class="post"><p><br><br></p>
+<p>파일을 읽어 들일 때 인코딩 타입에 대한 이슈는 상당히 짜증 나는 유형의 이슈 중 하나라고 생각된다.<br />
+분석환경이 단독 운영체계만을 이용하여 분석한다면 큰 문제는 없겠지만<br />
+Linux 머신이나 Mac, Windows 등으로 넘나들게 되는 순간 데이터의 인코딩 타입을 고려해야 할 것이다.<br />
+통상적으로 이럴 때는 UTF-8 인코딩으로 통일하여 관리하지만<br />
+이것이 어려울 때 2개 이상의 인코딩 타입으로 데이터가 존재하게 될 것이다.</p>
+<p>그런데 인코딩 타입이 2개 이상 혼용되기 시작하면, 데이터를 읽어 들이고 내보내는 단계에서 인코딩타입까지 추가적으로 신경써야 한다는 점이 여러모로 피곤하게 느껴질 것이다.<br />
+데이터 I/O 단계에서 인코딩까지 신경써서 읽어들이는 것은 번거로운 일 일 수 있다.<br />
+애초에 이를 신경쓰는거 자체가 분석 본연에 있어 불필요한 요소일 수 있다.</p>
+<p>이번 글에서는 R에서 readr package 에 있는 <code>guess_encoding()</code> 의 함수를 설명하고 소개할 것인데, R에서 데이터를 읽어 들이고 내보낼 시 인코딩 타입으로 인한 이슈들과 불편함을 겪는 사람들께 조금이나마 편의와 팁, 힌트를 주고자 작성한 글이다.</p>
 <p><br><br></p>
-<h2 id="for문을-이용한-주사위-100회-던지기">for문을 이용한 주사위 100회 던지기</h2>
-<p>for 문을 이용한 간단한 예시 코드를 보면</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">c</span>()
-for(i in <span class="kw">seq</span>(<span class="dv">100</span>)) res[i] &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dv">1</span>)
-res</code></pre></div>
-<pre><code>##   [1] 3 1 5 4 1 6 6 4 5 6 6 1 1 3 2 4 4 2 3 4 4 4 5 1 5 5 6 1 1 3 6 1 3 5 2
-##  [36] 5 1 2 5 3 4 5 2 4 2 5 6 2 3 4 3 1 6 2 1 4 1 1 3 6 4 3 1 5 6 3 4 3 5 3
-##  [71] 2 6 3 4 6 3 2 3 3 1 3 6 4 3 6 1 5 4 2 1 6 6 3 3 2 4 3 5 3 1</code></pre>
-<p>이 코드는 주사위를 100번 던져 나온 숫자들을 <code>res</code> 라는 객체에 벡터형태로 저장하는 코드로 볼 수 있다.</p>
-<p><br><br></p>
-<h2 id="apply를-이용한-주사위-100회-던지기"><code>apply()</code>를 이용한 주사위 100회 던지기</h2>
-<p>반복문 방식을 바꿔보겠다.<br />
-위 예시를 <code>apply()</code> 를 이용해본 코드이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="kw">matrix</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">100</span>), <span class="dv">2</span>, function(x) <span class="kw">sample</span>(x, <span class="dv">1</span>))
-res</code></pre></div>
-<pre><code>##   [1] 4 6 5 6 3 5 4 3 5 1 6 6 2 3 5 6 4 6 2 3 5 4 4 5 1 1 2 5 3 6 6 5 5 4 5
-##  [36] 5 3 6 3 4 6 5 2 2 6 1 3 6 6 3 5 3 6 4 1 1 4 4 5 1 5 3 4 4 4 4 2 4 2 1
-##  [71] 3 1 5 4 4 4 6 1 2 2 4 5 2 1 5 5 2 3 2 1 2 4 5 3 5 1 6 1 1 6</code></pre>
-<p>지금까지 예시로 든 두 가지 방식의 코드는 한가지 공통점이 있다.<br />
-반복문의 내용이 무엇이 되었던 100번의 반복으로 인해 <strong>어떤 무엇인가가 100번 반환될 것이고, 이에 대한 저장공간을 사전에 생각하여 준비</strong>해야 한다는 것이다.</p>
+<h2 id="상황재현">상황재현</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">text =</span> 
+  <span class="st">&quot;이름, 점수</span>
+<span class="st">  홍길동, 80</span>
+<span class="st">  철수, 91</span>
+<span class="st">  영희, 99</span>
+<span class="st">  Steve, 85&quot;</span>
+)
+
+<span class="kw">dir.create</span>(<span class="st">&quot;data&quot;</span>)
+<span class="kw">write.csv</span>(d, <span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>, <span class="dt">fileEncoding =</span> <span class="st">&quot;EUC-KR&quot;</span>)
+<span class="kw">write.csv</span>(d, <span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>,  <span class="dt">fileEncoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</code></pre></div>
+<p>위 코드는 &quot;EUC-KR&quot; 형과 &quot;UTF-8&quot; 형으로 작성된 간단한 데이터 테이블을 data 폴더안 <code>csv</code> 포맷으로 저장시키는 코드이다.<br />
+두개의 다른 인코딩 형의 똑같은 내용의 데이터가 2개 준비된 것이다.<br />
+이 데이터의 인코딩형의 정보를 모른다고 가정하고 R로 읽어 들일 때 어떠한 문제들이 있는지 보겠다.</p>
+<p>csv 포맷의 데이터를 읽어들이는 방법은 여러가지가 있다.<br />
+가장 기본적인 <code>read.csv()</code>함수의 경우이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>)</code></pre></div>
+<pre><code>##   X     이름 점수
+## 1 1   홍길동   80
+## 2 2     철수   91
+## 3 3     영희   99
+## 4 4    Steve   85</code></pre>
+<p>&quot;UTF-8&quot; 형인 데이터를 먼저 불러와 보았는데 필자는 Mac 으로 동작시켰기 때문에 정상적으로 읽어들여진다.<br />
+하지만 Windows 환경에서는 저렇게 읽어들여지지 않을 것이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>)</code></pre></div>
+<pre><code>Error in make.names(col.names, unique = TRUE) : invalid multibyte string at &#39;&lt;ec&gt;&lt;9d&gt;&lt;b4&gt;由&lt;84&gt;&#39;</code></pre>
+<p>Windows 환경에선 이와 같은 에러가 나면서 정말 간단한 예제의 데이터 테이블임에도 불구하고 읽어들이지 못한다.<br />
+이는 <code>read.csv()</code> 함수가 동작할 때 내부적으로 <code>fileEncoding</code> 인자값이 <code>Sys.getlocale(&quot;LC_CTYPE&quot;)</code> 로 반환되는 환경변수값에 의존되어 실행된다.<br />
+Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 &quot;CP949&quot; 라는 인코딩형으로 읽어들이게 되고,<br />
+이 인코딩 형이 원본파일의 인코딩 형(&quot;UTF-8&quot;)과 불일치 하기 때문에,<br />
+한글인 변수명이 유효하지 않은 문자열로 일그러져 인식할 수 없기 때문이다.</p>
+<p>이러한 원리 때문에 반대로 &quot;EUC-KR&quot; 형 데이터를 Mac 환경에서 읽어 들일 경우 마찬가지이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>)</code></pre></div>
+<pre><code>Error in make.names(col.names, unique = TRUE) : invalid multibyte string at &#39;&lt;c0≯&lt;a7&gt;&#39;</code></pre>
+<p>우선 에러없이 데이터를 R로 읽어들이는 해결방법은 이렇다.</p>
 <ol type="1">
-<li>첫 번째 for문 반복문 예제에선 100개의 값이 저장될 <code>res</code> 라는 빈 벡터를 사전에 준비한 <code>res &lt;- c()</code> 코드가 눈에 띈다.<br />
+<li>일어들일 데이터의 텍스트 인코딩형을 알아낸다.<br />
 </li>
-<li>두 번째 <code>apply()</code> 예제에선 일괄함수적용을 위해 1, 2, 3, 4, 5, 6 의 벡터 100개가 열방향으로 bind 된 matrix 를 사전에 준비했고, 이에 대해 무작위로 추출하기 위한 <code>sample()</code> 함수를 일괄 적용했다.</li>
+<li><code>read.csv()</code> 함수의 <code>fileEncoding</code> 인자값을 알아낸 인코딩형으로 직접 입력한다.</li>
+<li>예를 들면 <code>read.csv(&quot;data/Testdata_UTF-8.csv&quot;, fileEncoding = &quot;UTF-8&quot;)</code> 이런 코드가 되겠다. 이 코드를 실행하여 정상적으로 일어졌는지 확인한다.</li>
 </ol>
-<p>이처럼 100회 반복의 모든 결과를 어딘가의 담아 두기 위한 사전 설계의 노력이 따로 필요하다.<br />
-분명 정석적으로 이러한 준비는 반드시 필요하며 틀린 방법이라고 말할 수 없다.</p>
-<p>문제는 위의 예제처럼 간단한 코드가 아닌 복잡한 상황일 때 사전준비 과정들은 곱절 높아질 수 있다는 것이다.<br />
-보통 복잡도는 지수적으로 늘어나기 때문에 이 오묘한 방법이 실전에서 코딩의 비효율로 일어날 수 있다고 생각한다.</p>
+<p>3단계 스텝을 통해 데이터를 일어들이는데 성공한다.<br />
+굳이 세번째 스텝을 설명한 이유는 에러없이 데이터를 일어들였다 하더라도,<br />
+첫번째 스텝에 인코딩형을 제대로 알지 못하여 막장으로 일어들여질 가능성이 있기 때문에<br />
+확인하는 과정이 필요하므로 생겨난 부수적인 스텝이라 할 수 있겠다.</p>
+<p>여하튼 (분석을 하기도 전에) 데이터를 일어들이기 위한 이 3단계는 많은 에너지를 소모하게 만든다.</p>
 <p><br><br></p>
-<h2 id="replicate-함수-소개"><code>replicate()</code> 함수 소개</h2>
-<p>만약 복잡한 상황일 때,<br />
-위의 예제들의 로직을 그대로 가지고 있되 사전준비의 부담을 덜 수 있는 함축된 함수가 있다고 생각하는데<br />
-바로 <code>replicate()</code> 함수이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">100</span>, <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dv">1</span>))
-res</code></pre></div>
-<pre><code>##   [1] 2 5 1 4 2 5 2 2 2 5 1 1 4 5 5 6 3 4 5 1 6 1 3 5 6 2 5 1 5 4 1 1 1 5 6
-##  [36] 3 1 2 3 6 3 5 2 6 5 6 4 6 5 5 4 1 2 6 4 5 1 5 5 1 1 2 2 5 6 2 2 3 1 3
-##  [71] 4 4 4 6 2 1 2 2 2 1 4 6 5 2 4 5 4 6 4 2 4 1 2 2 2 6 1 4 4 1</code></pre>
-<p><code>replicate()</code> 함수는 반복문의 내용(expr)을 두 번째 인자에 부여하고, 첫 번째 인자에 반복회수를 넣어줌으로써 반복 실행된 코드의 결과를 벡터형태로 반환시켜주는 편리한 함수이다.<br />
-사전준비에 대한 로직을 <code>replicate()</code> 함수가 대신해준다.<br />
-따라서 코드 길이도 확실히 줄일 수 있게 된다.</p>
+<h2 id="readrguess_encoding-함수"><code>readr::guess_encoding()</code> 함수</h2>
+<p>이제 본 글의 주제인 readr package 의 <code>guess_encoding()</code> 함수를 소개한다.<br />
+함수명칭에서 볼 수 있듯이 이 함수의 쓰임은 인코딩형을 추론하는 함수인데<br />
+이를 잘 이용하면 위에서 설명한 번잡한 3단계 스텝을 1스텝으로 점프할 수 있다.</p>
+<p>우선 <code>guess_encoding()</code> 함수를 살펴보자.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr) <span class="co"># for guess_encoding()</span>
+
+<span class="kw">guess_encoding</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>)</code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+##     encoding confidence
+##        &lt;chr&gt;      &lt;dbl&gt;
+## 1     EUC-KR       1.00
+## 2    GB18030       0.71
+## 3 ISO-8859-1       0.21</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">guess_encoding</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>)</code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   encoding confidence
+##      &lt;chr&gt;      &lt;dbl&gt;
+## 1    UTF-8          1</code></pre>
+<p><code>guess_encoding()</code> 함수사용법은 간단하다.<br />
+외부 텍스트 파일에 대한 경로를 입력하고 실행하면 된다.<br />
+그러면 외부 텍스트파일의 인코딩형이 무엇일지 자동적으로 추론하고 가능성(confidence) 이 높은 순으로 출력된다.<br />
+&quot;EUC-KR&quot; 형 csv 파일을 일어들인 결과를 보면 &quot;EUC-KR&quot; 형일 가능성이 가장 높고, 그다음 &quot;GB18030&quot;, &quot;ISO-8859-1&quot; 형을 추론하는것을 볼 수 있다.<br />
+위에서 설명한 3단계 스텝에서 첫번째 스텝을 자동적으로 더 정확하게 추론함으로써 수고를 덜어준다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>, 
+         <span class="dt">fileEncoding =</span> <span class="kw">guess_encoding</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>)[<span class="dv">1</span>, <span class="dv">1</span>] %&gt;%<span class="st"> </span>as.character)</code></pre></div>
+<pre><code>##   X     이름 점수
+## 1 1   홍길동   80
+## 2 2     철수   91
+## 3 3     영희   99
+## 4 4    Steve   85</code></pre>
+<p>아예 이런 식으로 내재화시켜버리면 3단계 스텝을 거치지 않고 어떠한 운영체계, 환경이든 융통성 있게 데이터를 잘 읽어 들일 것이다.<br />
+실제로 위 코드는 필자의 Mac 에서 동작했는데도 불구하고 인코딩이슈 없이 한글을 잘 읽어 들인 것을 볼 수 있다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -193,7 +240,7 @@ res</code></pre></div>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/02/19/replicate_function.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2017/10/07/guessEncoding.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -211,20 +258,6 @@ res</code></pre></div>
     
         
             
-                
-                <div class="panel-body">
-                <h4>Related Posts</h4>
-                <ul>
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2017/10/07/guessEncoding.html">readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
         
     
 
@@ -232,6 +265,10 @@ res</code></pre></div>
     
         
             
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
                 
                 <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/data_visualization/2017/06/16/plotFunction.html">R에서 기본 내장 graphics package를 이용한 데이터 시각화</a>
@@ -341,6 +378,16 @@ res</code></pre></div>
     
     
         
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/03/05/Rpackage_install_in.html">인터넷 접속이 불가능 한 내부망에서의 R package 설치방법에 대해</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
             
         
     
@@ -603,10 +650,8 @@ res</code></pre></div>
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/r/2016/02/11/tryfunction.html">&laquo; R에서 try(), tryCatch() 함수 소개</a>
+    <a class="prev" href="/r/data_visualization/2017/06/16/plotFunction.html">&laquo; R에서 기본 내장 graphics package를 이용한 데이터 시각화</a>
   
-  
-    <a class="next" href="/r/2016/03/02/rjson_package.html">R에서 rjson package 의 toJSON(), fromJSON() 함수 알아보기 &raquo;</a>
   
 </div>
 
@@ -617,8 +662,8 @@ res</code></pre></div>
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해";
-        var disqus_title = "R에서 iteration 별 결과를 손쉽게 저장할 수 있는 replicate() 함수에 대해";
+        var disqus_identifier = "https://lovetoken.github.io_readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론";
+        var disqus_title = "readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

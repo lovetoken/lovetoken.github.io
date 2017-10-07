@@ -5,9 +5,113 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 07 Oct 2017 16:45:05 +0900</pubDate>
-    <lastBuildDate>Sat, 07 Oct 2017 16:45:05 +0900</lastBuildDate>
+    <pubDate>Sat, 07 Oct 2017 22:59:15 +0900</pubDate>
+    <lastBuildDate>Sat, 07 Oct 2017 22:59:15 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;파일을 읽어 들일 때 인코딩 타입에 대한 이슈는 상당히 짜증 나는 유형의 이슈 중 하나라고 생각된다.&lt;br /&gt;
+분석환경이 단독 운영체계만을 이용하여 분석한다면 큰 문제는 없겠지만&lt;br /&gt;
+Linux 머신이나 Mac, Windows 등으로 넘나들게 되는 순간 데이터의 인코딩 타입을 고려해야 할 것이다.&lt;br /&gt;
+통상적으로 이럴 때는 UTF-8 인코딩으로 통일하여 관리하지만&lt;br /&gt;
+이것이 어려울 때 2개 이상의 인코딩 타입으로 데이터가 존재하게 될 것이다.&lt;/p&gt;
+&lt;p&gt;그런데 인코딩 타입이 2개 이상 혼용되기 시작하면, 데이터를 읽어 들이고 내보내는 단계에서 인코딩타입까지 추가적으로 신경써야 한다는 점이 여러모로 피곤하게 느껴질 것이다.&lt;br /&gt;
+데이터 I/O 단계에서 인코딩까지 신경써서 읽어들이는 것은 번거로운 일 일 수 있다.&lt;br /&gt;
+애초에 이를 신경쓰는거 자체가 분석 본연에 있어 불필요한 요소일 수 있다.&lt;/p&gt;
+&lt;p&gt;이번 글에서는 R에서 readr package 에 있는 &lt;code&gt;guess_encoding()&lt;/code&gt; 의 함수를 설명하고 소개할 것인데, R에서 데이터를 읽어 들이고 내보낼 시 인코딩 타입으로 인한 이슈들과 불편함을 겪는 사람들께 조금이나마 편의와 팁, 힌트를 주고자 작성한 글이다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;상황재현&quot;&gt;상황재현&lt;/h2&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;d &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;text =&lt;/span&gt; 
+  &lt;span class=&quot;st&quot;&gt;&amp;quot;이름, 점수&lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  홍길동, 80&lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  철수, 91&lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  영희, 99&lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  Steve, 85&amp;quot;&lt;/span&gt;
+)
+
+&lt;span class=&quot;kw&quot;&gt;dir.create&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;write.csv&lt;/span&gt;(d, &lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_EUC-KR.csv&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;fileEncoding =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;EUC-KR&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;write.csv&lt;/span&gt;(d, &lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_UTF-8.csv&amp;quot;&lt;/span&gt;,  &lt;span class=&quot;dt&quot;&gt;fileEncoding =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위 코드는 &amp;quot;EUC-KR&amp;quot; 형과 &amp;quot;UTF-8&amp;quot; 형으로 작성된 간단한 데이터 테이블을 data 폴더안 &lt;code&gt;csv&lt;/code&gt; 포맷으로 저장시키는 코드이다.&lt;br /&gt;
+두개의 다른 인코딩 형의 똑같은 내용의 데이터가 2개 준비된 것이다.&lt;br /&gt;
+이 데이터의 인코딩형의 정보를 모른다고 가정하고 R로 읽어 들일 때 어떠한 문제들이 있는지 보겠다.&lt;/p&gt;
+&lt;p&gt;csv 포맷의 데이터를 읽어들이는 방법은 여러가지가 있다.&lt;br /&gt;
+가장 기본적인 &lt;code&gt;read.csv()&lt;/code&gt;함수의 경우이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_UTF-8.csv&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##   X     이름 점수
+## 1 1   홍길동   80
+## 2 2     철수   91
+## 3 3     영희   99
+## 4 4    Steve   85&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&amp;quot;UTF-8&amp;quot; 형인 데이터를 먼저 불러와 보았는데 필자는 Mac 으로 동작시켰기 때문에 정상적으로 읽어들여진다.&lt;br /&gt;
+하지만 Windows 환경에서는 저렇게 읽어들여지지 않을 것이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_UTF-8.csv&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;Error in make.names(col.names, unique = TRUE) : invalid multibyte string at &amp;#39;&amp;lt;ec&amp;gt;&amp;lt;9d&amp;gt;&amp;lt;b4&amp;gt;由&amp;lt;84&amp;gt;&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Windows 환경에선 이와 같은 에러가 나면서 정말 간단한 예제의 데이터 테이블임에도 불구하고 읽어들이지 못한다.&lt;br /&gt;
+이는 &lt;code&gt;read.csv()&lt;/code&gt; 함수가 동작할 때 내부적으로 &lt;code&gt;fileEncoding&lt;/code&gt; 인자값이 &lt;code&gt;Sys.getlocale(&amp;quot;LC_CTYPE&amp;quot;)&lt;/code&gt; 로 반환되는 환경변수값에 의존되어 실행된다.&lt;br /&gt;
+Windows 환경에선 결과적으로 &lt;code&gt;read.csv()&lt;/code&gt; 함수가 &amp;quot;CP949&amp;quot; 라는 인코딩형으로 읽어들이게 되고,&lt;br /&gt;
+이 인코딩 형이 원본파일의 인코딩 형(&amp;quot;UTF-8&amp;quot;)과 불일치 하기 때문에,&lt;br /&gt;
+한글인 변수명이 유효하지 않은 문자열로 일그러져 인식할 수 없기 때문이다.&lt;/p&gt;
+&lt;p&gt;이러한 원리 때문에 반대로 &amp;quot;EUC-KR&amp;quot; 형 데이터를 Mac 환경에서 읽어 들일 경우 마찬가지이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_EUC-KR.csv&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;Error in make.names(col.names, unique = TRUE) : invalid multibyte string at &amp;#39;&amp;lt;c0≯&amp;lt;a7&amp;gt;&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;우선 에러없이 데이터를 R로 읽어들이는 해결방법은 이렇다.&lt;/p&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;일어들일 데이터의 텍스트 인코딩형을 알아낸다.&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;read.csv()&lt;/code&gt; 함수의 &lt;code&gt;fileEncoding&lt;/code&gt; 인자값을 알아낸 인코딩형으로 직접 입력한다.&lt;/li&gt;
+&lt;li&gt;예를 들면 &lt;code&gt;read.csv(&amp;quot;data/Testdata_UTF-8.csv&amp;quot;, fileEncoding = &amp;quot;UTF-8&amp;quot;)&lt;/code&gt; 이런 코드가 되겠다. 이 코드를 실행하여 정상적으로 일어졌는지 확인한다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;3단계 스텝을 통해 데이터를 일어들이는데 성공한다.&lt;br /&gt;
+굳이 세번째 스텝을 설명한 이유는 에러없이 데이터를 일어들였다 하더라도,&lt;br /&gt;
+첫번째 스텝에 인코딩형을 제대로 알지 못하여 막장으로 일어들여질 가능성이 있기 때문에&lt;br /&gt;
+확인하는 과정이 필요하므로 생겨난 부수적인 스텝이라 할 수 있겠다.&lt;/p&gt;
+&lt;p&gt;여하튼 (분석을 하기도 전에) 데이터를 일어들이기 위한 이 3단계는 많은 에너지를 소모하게 만든다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;readrguess_encoding-함수&quot;&gt;&lt;code&gt;readr::guess_encoding()&lt;/code&gt; 함수&lt;/h2&gt;
+&lt;p&gt;이제 본 글의 주제인 readr package 의 &lt;code&gt;guess_encoding()&lt;/code&gt; 함수를 소개한다.&lt;br /&gt;
+함수명칭에서 볼 수 있듯이 이 함수의 쓰임은 인코딩형을 추론하는 함수인데&lt;br /&gt;
+이를 잘 이용하면 위에서 설명한 번잡한 3단계 스텝을 1스텝으로 점프할 수 있다.&lt;/p&gt;
+&lt;p&gt;우선 &lt;code&gt;guess_encoding()&lt;/code&gt; 함수를 살펴보자.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(readr) &lt;span class=&quot;co&quot;&gt;# for guess_encoding()&lt;/span&gt;
+
+&lt;span class=&quot;kw&quot;&gt;guess_encoding&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_EUC-KR.csv&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 2
+##     encoding confidence
+##        &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;
+## 1     EUC-KR       1.00
+## 2    GB18030       0.71
+## 3 ISO-8859-1       0.21&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;guess_encoding&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_UTF-8.csv&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 2
+##   encoding confidence
+##      &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;
+## 1    UTF-8          1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;guess_encoding()&lt;/code&gt; 함수사용법은 간단하다.&lt;br /&gt;
+외부 텍스트 파일에 대한 경로를 입력하고 실행하면 된다.&lt;br /&gt;
+그러면 외부 텍스트파일의 인코딩형이 무엇일지 자동적으로 추론하고 가능성(confidence) 이 높은 순으로 출력된다.&lt;br /&gt;
+&amp;quot;EUC-KR&amp;quot; 형 csv 파일을 일어들인 결과를 보면 &amp;quot;EUC-KR&amp;quot; 형일 가능성이 가장 높고, 그다음 &amp;quot;GB18030&amp;quot;, &amp;quot;ISO-8859-1&amp;quot; 형을 추론하는것을 볼 수 있다.&lt;br /&gt;
+위에서 설명한 3단계 스텝에서 첫번째 스텝을 자동적으로 더 정확하게 추론함으로써 수고를 덜어준다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_EUC-KR.csv&amp;quot;&lt;/span&gt;, 
+         &lt;span class=&quot;dt&quot;&gt;fileEncoding =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;guess_encoding&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_EUC-KR.csv&amp;quot;&lt;/span&gt;)[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;] %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;as.character)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##   X     이름 점수
+## 1 1   홍길동   80
+## 2 2     철수   91
+## 3 3     영희   99
+## 4 4    Steve   85&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;아예 이런 식으로 내재화시켜버리면 3단계 스텝을 거치지 않고 어떠한 운영체계, 환경이든 융통성 있게 데이터를 잘 읽어 들일 것이다.&lt;br /&gt;
+실제로 위 코드는 필자의 Mac 에서 동작했는데도 불구하고 인코딩이슈 없이 한글을 잘 읽어 들인 것을 볼 수 있다.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 07 Oct 2017 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2017/10/07/guessEncoding.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2017/10/07/guessEncoding.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>R에서 기본 내장 graphics package를 이용한 데이터 시각화</title>
@@ -1372,189 +1476,6 @@ R을 잘 알고 사용하는 사람이라면 방법이 어찌 되었건 간에 �
         <pubDate>Sun, 05 Mar 2017 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2017/03/05/Rpackage_install_in.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2017/03/05/Rpackage_install_in.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>R에서 의미가 있었던 프로파일링 모음</title>
-        <description>&lt;p&gt;훌륭한진 못해도 좋은 개발을 하고 싶다는 생각이 많이 든다.&lt;br /&gt;
-좋은 코드를 짜기 위해 노력중이다.&lt;br /&gt;
-좋은 코드에 필요한 요소들은 여러가지가 있겠지만, 지금 가장 큰 흥미를 가지고 관심가지는 것은 효율성이다.&lt;br /&gt;
-효율성에서도 여러 가지 측면이 있겠지만 코드수행시간에 특히 민감해 하고 있다.&lt;br /&gt;
-&lt;a href=&quot;https://en.wikipedia.org/wiki/Profiling_(computer_programming)&quot;&gt;Profiling&lt;/a&gt; 을 통해 이런저런 실험들을 해보고 있고, 그 중 나름 유의미했던 실험들을 정리해 보고자 한다.&lt;/p&gt;
-&lt;p&gt;프로파일링에 사용한 도구는 rbenchmark package 의 &lt;code&gt;benchmark()&lt;/code&gt; 함수로 통일 하였고, 대조군 코드를 통해 비교적 쉽게 받아들일 수 있도록 작성해 보았다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;lapply-vs-parallelmclapply&quot;&gt;&lt;code&gt;lapply()&lt;/code&gt; VS &lt;code&gt;parallel::mclapply()&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&amp;quot;parallel&amp;quot; package 에 있는 &lt;code&gt;mclapply()&lt;/code&gt; 함수는 &lt;code&gt;lapply()&lt;/code&gt; 함수와 기능이 똑같다.&lt;br /&gt;
-다만 &lt;code&gt;mc.cores&lt;/code&gt; 인자를 가지고 있고 멀티코어 개수를 지정하여 병렬처리를 간편하게 수행할 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(parallel)
-
-&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
-  &lt;span class=&quot;kw&quot;&gt;lapply&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;9999&lt;/span&gt;, rnorm),
-  &lt;span class=&quot;kw&quot;&gt;mclapply&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;9999&lt;/span&gt;, rnorm, &lt;span class=&quot;dt&quot;&gt;mc.cores =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;)
-)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;                                 test replications elapsed relative 
-2 mclapply(1000:9999, rnorm, mc.c ...          100 289.162    1.000 
-1                 lapply(1000:999 ...          100 464.604    1.607 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;위의 실험은 표준정규분포에서 난수발생을 1000번부터 9999번까지 수행하는 것을 100번&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; 반복시킨 후 수행시간을 평가하는 코드이다.&lt;br /&gt;
-&lt;code&gt;mclapply()&lt;/code&gt; 함수로 실행한 결과가 평균 289초, &lt;code&gt;lapply()&lt;/code&gt; 함수로 실행한 결과가 평균 464초 걸렸고 상대적으로 &lt;code&gt;lapply()&lt;/code&gt; 를 사용한 코드가 &lt;code&gt;mclapply()&lt;/code&gt; 로 사용한 코드보다 1.607배 많은 시간이 소요됨을 알 수 있다.&lt;/p&gt;
-&lt;p&gt;반면에 난수발생을 적게 시킬 경우 &lt;code&gt;mclapply()&lt;/code&gt; 는 &lt;code&gt;lapply()&lt;/code&gt; 보다 멍청해(?) 지는 것을 볼 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
-  &lt;span class=&quot;kw&quot;&gt;lapply&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;99&lt;/span&gt;, rnorm),
-  &lt;span class=&quot;kw&quot;&gt;mclapply&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;99&lt;/span&gt;, rnorm, &lt;span class=&quot;dt&quot;&gt;mc.cores =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;)
-)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##                              test replications elapsed relative 
-## 1                 lapply(10:9 ...          100   0.118    1.000 
-## 2 mclapply(10:99, rnorm, mc.c ...          100   1.994   16.898 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;filtering-data.table-data.frame-dplyrfilter&quot;&gt;Filtering data.table, data.frame + &lt;code&gt;dplyr::filter()&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;이번에 수행한 프로파일링은 &lt;a href=&quot;http://using.tistory.com/81&quot;&gt;빵군님의 블로그 글&lt;/a&gt;을 보다가 추가로 생긴 궁금증에 몇 개를 더 추가해 본 경우이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(data.table)
-&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(dplyr)
-
-DF &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;runif&lt;/span&gt;(&lt;span class=&quot;fl&quot;&gt;2.6e+07&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;y =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;rep&lt;/span&gt;(LETTERS, &lt;span class=&quot;dt&quot;&gt;each =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;10000&lt;/span&gt;))
-
-DT &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;as.data.table&lt;/span&gt;(DF)
-&lt;span class=&quot;kw&quot;&gt;setkey&lt;/span&gt;(DT, y) 
-
-&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
-  DF[DF$y ==&lt;span class=&quot;st&quot;&gt; &amp;quot;D&amp;quot;&lt;/span&gt;, ],
-  DT[&lt;span class=&quot;kw&quot;&gt;J&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;D&amp;quot;&lt;/span&gt;), ],
-  DF %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;dplyr::&lt;span class=&quot;kw&quot;&gt;filter&lt;/span&gt;(y ==&lt;span class=&quot;st&quot;&gt; &amp;quot;D&amp;quot;&lt;/span&gt;),
-  DT %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;dplyr::&lt;span class=&quot;kw&quot;&gt;filter&lt;/span&gt;(y ==&lt;span class=&quot;st&quot;&gt; &amp;quot;D&amp;quot;&lt;/span&gt;)
-)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##                             test replications elapsed relative
-## 2                   DT[J(&amp;quot;D&amp;quot;), ]          100   2.500    1.000
-## 4 DT %&amp;gt;% dplyr::filter(y == &amp;quot;D&amp;quot;)          100  23.083    9.233
-## 3 DF %&amp;gt;% dplyr::filter(y == &amp;quot;D&amp;quot;)          100  23.248    9.299
-## 1              DF[DF$y == &amp;quot;D&amp;quot;, ]          100  38.298   15.319&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;비교대상은 4가지이다.&lt;/p&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;&lt;code&gt;data.frame&lt;/code&gt; 형에서 필터링&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;data.table&lt;/code&gt; 형에서 필터링&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;data.frame&lt;/code&gt; 형에서 &lt;code&gt;dplyr::filter()&lt;/code&gt; 를 이용한 필터링&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;data.table&lt;/code&gt; 형에서 &lt;code&gt;dplyr::filter()&lt;/code&gt; 를 이용한 필터링&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;결과는 J표현식을 사용한 data.table 이 가장 우월하다는 것을 볼 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;sqldf-package-를-통해-join-작업을-하다가-생긴-의문&quot;&gt;sqldf package 를 통해 Join 작업을 하다가 생긴 의문&lt;/h2&gt;
-&lt;p&gt;R에서 SQL 문을 통해 data.frame 형을 처리하기 위한 대표적인 패키지가 &lt;a href=&quot;https://cran.r-project.org/web/packages/sqldf/index.html&quot;&gt;sqldf&lt;/a&gt; 이지 않을까?&lt;br /&gt;
-필요에 따라서 R에서 SQL 을 통해 data.frame 을 핸들링 하는 확장성을 이용할 수 있다.&lt;/p&gt;
-&lt;p&gt;하지만 문득 이런 생각이 드는 것도 사실이다.&lt;br /&gt;
-R에서 굳이 다른 문법(SQL)을 이용하는 것은&lt;br /&gt;
-영국 가서 미국발음으로 영어하고, 미국 가서 영국발음으로 영어 하는 것으로 비유해 보고 싶다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;merge()&lt;/code&gt;, &lt;code&gt;dplyr::left_join()&lt;/code&gt;, &lt;code&gt;sqldf()&lt;/code&gt; 3가지 함수를 통해 left join 을 하는 예제로 프로파일링을 해보았는데&lt;br /&gt;
-그 이후 SQL 문법을 불필요하게 남용하지 않아야 겠다는 생각을 가졌다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(sqldf)
-&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(dplyr)
-
-df1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;Key =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;7&lt;/span&gt;), 
-                  &lt;span class=&quot;dt&quot;&gt;Var1 =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;a&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;b&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;c&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;c&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;b&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;c&amp;quot;&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;stringsAsFactors =&lt;/span&gt; F)
-df2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;Key =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;,&lt;span class=&quot;dv&quot;&gt;8&lt;/span&gt;), 
-                  &lt;span class=&quot;dt&quot;&gt;Var2 =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;x&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;y&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;z&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;xx&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;yy&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;zz&amp;quot;&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;stringsAsFactors =&lt;/span&gt; F)
-
-&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
-  df1 %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;merge&lt;/span&gt;(df2, &lt;span class=&quot;dt&quot;&gt;by =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;Key&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;all.x =&lt;/span&gt; T),
-  df1 %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;dplyr::&lt;span class=&quot;kw&quot;&gt;left_join&lt;/span&gt;(df2, &lt;span class=&quot;dt&quot;&gt;by =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;Key&amp;quot;&lt;/span&gt;),
-  &lt;span class=&quot;kw&quot;&gt;sqldf&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;SELECT df1.Key, Var1, Var2 FROM df1 LEFT JOIN df2 on df1.Key=df2.Key&amp;quot;&lt;/span&gt;)
-)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##                                                 test replications elapsed relative 
-## 2                                     df1 %&amp;gt;% dp ...          100   0.033    1.000 
-## 1                                     df1 %&amp;gt;% me ...          100   0.089    2.697 
-## 3 sqldf(&amp;quot;SELECT df1.Key, Var1, Var2 FROM df1 LEF ...          100   2.361   71.545 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;sqldf()&lt;/code&gt; 을 통한 join 이 다른방법보다 71배 더 오래걸려 비교적 느림을 알 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;output&quot;&gt;Output&lt;/h2&gt;
-&lt;p&gt;위의 SQL 프로파일링과도 이어지는 컨셉이다.&lt;br /&gt;
-냉면으로 유명한 집에서 국수를 먹고, 국수가 유명한 집에서 밥을 먹지 않는 것 처럼&lt;br /&gt;
-각 언어의 특색에 맞는 장점들을 충분히 이용하는것이 합리적이라 생각한다.&lt;/p&gt;
-&lt;p&gt;이번 프로파일링도 비슷하다.&lt;br /&gt;
-R에서 처리된 결과물을 R object 이미지로(.rda)로 저장하는것과 .csv 포맷으로 저장하는 것을 비교해 보았다.&lt;br /&gt;
-(R에서 처리된 결과물의 예제를 &lt;code&gt;mtcars&lt;/code&gt; 내장데이터로 가정해보겠다)&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
-  &lt;span class=&quot;kw&quot;&gt;save&lt;/span&gt;(mtcars, &lt;span class=&quot;dt&quot;&gt;file =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;mtcars.rda&amp;quot;&lt;/span&gt;),
-  &lt;span class=&quot;kw&quot;&gt;write.csv&lt;/span&gt;(mtcars, &lt;span class=&quot;dt&quot;&gt;file =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;mtcars.csv&amp;quot;&lt;/span&gt;)
-)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##                                     test replications elapsed relative
-## 1      save(mtcars, file = &amp;quot;mtcars.rda&amp;quot;)          100   0.054    1.000
-## 2 write.csv(mtcars, file = &amp;quot;mtcars.csv&amp;quot;)          100   0.116    2.148&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;결과는 .rda 로 객체이미지를 저장시키는 것이 2배 빠른 것을 볼 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;역행렬-계산시-특이값-분해singular-value-decomposition-이용&quot;&gt;역행렬 계산시 특이값 분해(Singular value decomposition) 이용&lt;/h2&gt;
-&lt;p&gt;(정방)행렬의 차원이 크면 클수록 역행렬을 계산할 때 컴퓨터가 힘들어 한다.&lt;br /&gt;
-조금이라도 빠르게 계산할 수 있는 방법이 없을까 고민하다가 특이값 분해(SVD) 를 알게된 이후로 조금 개선된 방법을 찾게 되었다.&lt;/p&gt;
-&lt;p&gt;SVD 를 아주 간단하게 설명하면 행렬&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;X&lt;/em&gt;&lt;/span&gt; 를 대각행렬 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;D&lt;/em&gt;&lt;/span&gt; 를 중앙으로 하고 3개의 행렬곱으로 나누어 준다.&lt;/p&gt;
-&lt;p&gt;&lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;&lt;em&gt;X&lt;/em&gt; = &lt;em&gt;U&lt;/em&gt;&lt;em&gt;D&lt;/em&gt;&lt;em&gt;V&lt;/em&gt;&lt;sup&gt;&lt;em&gt;T&lt;/em&gt;&lt;/sup&gt;&lt;/span&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p&gt;그리고 이렇게 분해된 행렬곱을 변환하면&lt;/p&gt;
-&lt;p&gt;&lt;br /&gt;&lt;span class=&quot;math display&quot;&gt;&lt;em&gt;X&lt;/em&gt;&lt;sup&gt;−1&lt;/sup&gt; = &lt;em&gt;V&lt;/em&gt;&lt;em&gt;D&lt;/em&gt;&lt;sup&gt;−1&lt;/sup&gt;&lt;em&gt;U&lt;/em&gt;&lt;sup&gt;&lt;em&gt;T&lt;/em&gt;&lt;/sup&gt;&lt;/span&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p&gt;이 되는 특성을 가지고 있다.&lt;br /&gt;
-컴퓨터 입장에선 복잡한 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;X&lt;/em&gt;&lt;/span&gt;를 바로 역행렬 계산하는 것 보다, 부담이 적은 단위행렬 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;D&lt;/em&gt;&lt;/span&gt;를 역행렬 계산하는것을 쉬워할 것이다.&lt;br /&gt;
-이러한 특성을 이용한 것이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;m &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;matrix&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;rnorm&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;^&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;)
-svd &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;svd&lt;/span&gt;(m)
-
-&lt;span class=&quot;kw&quot;&gt;benchmark&lt;/span&gt;(
-  &lt;span class=&quot;kw&quot;&gt;solve&lt;/span&gt;(m),
-  svd$v %*%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;solve&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;diag&lt;/span&gt;(svd$d)) %*%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;t&lt;/span&gt;(svd$u)
-)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##                                        test replications elapsed relative
-## 1                                  solve(m)          100 238.183    1.194
-## 2 svd$v %*% solve(diag(svd$d)) %*% t(svd$u)          100 199.452    1.000&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;SVD로 나눈 행렬을 이용해 역행렬 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;X&lt;/em&gt;&lt;sup&gt;−1&lt;/sup&gt;&lt;/span&gt; 을 구하는것이 조금 빠른것을 볼 수 있다.&lt;br /&gt;
-상대적으로 볼 때 별차이가 없어 보일수도 있지만 행렬의 차원이 크면 클수록 절대소요시간차이는 엄청날 것이다.&lt;/p&gt;
-&lt;p&gt;그런데 여기서 반론을 제기할 수 있다.&lt;br /&gt;
-바로 특이값 분해시 코드수행속도도 포함시켜야 하지 않느냐 이다.&lt;br /&gt;
-즉 엄밀히 말하면 &lt;code&gt;svd &amp;lt;- svd(m)&lt;/code&gt; 코드 수행시간도 더해주어야 할 것이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;system.time&lt;/span&gt;(svd &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;svd&lt;/span&gt;(m))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##   user  system elapsed 
-##  4.101   0.047   4.202 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;하지만 4초내외로 특이값분해는 의외로 많은 시간이 걸리지 않는다.&lt;br /&gt;
-이 4초 내외를 더해보았자 대세에 지장이 없는 수준이다.&lt;br /&gt;
-게다가 &lt;code&gt;svd()&lt;/code&gt; 말고도 이보다 더 빠르게 특이값 분해를 할 수 있는 방법&lt;a href=&quot;#fn3&quot; class=&quot;footnoteRef&quot; id=&quot;fnref3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;들도 있으니 참고해 볼만하다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;to-be-continued&quot;&gt;To be continued&lt;/h2&gt;
-&lt;p&gt;의미 있는 프로파일링이 다음에 또 생기면 이어서 덧붙여질 예정이다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;프로파일링에-사용했던-동작환경&quot;&gt;프로파일링에 사용했던 동작환경&lt;/h2&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sessionInfo&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## R version 3.3.1 (2016-06-21)
-## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-## Running under: OS X 10.12.3 (Sierra)
-## 
-## locale:
-## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-## 
-## attached base packages:
-## [1] parallel  stats     grDevices utils     datasets  graphics  methods  
-## [8] base     
-## 
-## other attached packages:
-## [1] rbenchmark_1.0.0            data.table_1.10.4          
-## [3] ggplot2_2.2.1               dplyr_0.5.0                
-## [5] knitr_1.15.1                useful.lovetoken_0.1.0.0090
-## 
-## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.9      magrittr_1.5     munsell_0.4.3    colorspace_1.3-2
-##  [5] R6_2.2.0         stringr_1.2.0    plyr_1.8.4       tools_3.3.1     
-##  [9] grid_3.3.1       gtable_0.2.0     pacman_0.4.1     DBI_0.5-1       
-## [13] htmltools_0.3.5  yaml_2.1.14      lazyeval_0.2.0   assertthat_0.1  
-## [17] digest_0.6.12    rprojroot_1.2    tibble_1.2       evaluate_0.10   
-## [21] rmarkdown_1.3    stringi_1.1.2    scales_0.4.1     backports_1.0.5&lt;/code&gt;&lt;/pre&gt;
-&lt;section class=&quot;footnotes&quot;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;&lt;code&gt;benchmark()&lt;/code&gt; 함수에서 &lt;code&gt;replications&lt;/code&gt; 인자를 통해 조정이 가능하며, 디폴트 값이 100이다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;이때 행렬은 정방행렬이 아니어도 특이값 분해가 가능하다&lt;a href=&quot;#fnref2&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&quot;fn3&quot;&gt;&lt;p&gt;&lt;code&gt;corpcor::fast.svd()&lt;/code&gt; 와 같은 것도 있다&lt;a href=&quot;#fnref3&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/section&gt;
-</description>
-        <pubDate>Wed, 22 Feb 2017 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2017/02/22/Profiling.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2017/02/22/Profiling.html</guid>
         
         
         <category>R</category>
