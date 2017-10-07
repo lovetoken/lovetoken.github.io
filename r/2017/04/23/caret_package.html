@@ -137,7 +137,7 @@
 <div class="content">
     <div class="post"><p>기계학습(Machine Learning) 에서 기법이 무엇이 되든, 어떤 알고리즘을 사용할 것이든 공통으로 필요한 과정은 &quot;Learning&quot; 즉 &quot;학습&quot;이다.<br />
 학습의 대상은 전통적으로 훈련데이터(Training dataset)이고, 훈련데이터를 학습시키는 아주 다양한 방법들이 존재한다.<br />
-방법별로 특징과 색깔이 완전히 다르며, 무엇보다 <strong>워낙 다양한 방법들이 존재하기 때문</strong>에 아무리 많이 공부를 한 사람이라 한들 모든 알고리즘을 아는것이 한계가 있다고 생각한다.<br />
+방법별로 원리와 특징 및 색깔이 다르며, 무엇보다 <strong>워낙 다양한 방법들이 존재하기 때문</strong>에 아무리 많이 공부를 한 사람이라 한들 모든 알고리즘을 아는것이 한계가 있다고 생각한다.<br />
 때문에 무엇을 채택해서 어느 정도의 파라미터값을 부여해야 알맞은 모델을 만들 수 있을지 현실적인 문제에 부딪히게 된다.</p>
 <p>R에서 배포되고 있는 머신러닝 관련 패키지의 개수는 <a href="https://cran.r-project.org/web/views/MachineLearning.html">CRAN Task View: Machine Learning &amp; Statistical Learning</a>만을 보아도 수십개가 된다.<br />
 이 패키지들을 모두 하나하나 실행해서 상황에 맞는 모델링을 하기 위해 비교실험을 해보는 것도 가능할 것이다.<br />
@@ -196,8 +196,9 @@ training &lt;-<span class="st"> </span>Sonar[ indexTrain, ]
 testing  &lt;-<span class="st"> </span>Sonar[-indexTrain, ]</code></pre></div>
 <p>caret 패키지에 있는 <code>createDataPartition()</code> 함수를 이용해 볼 수도 있다.<br />
 이 함수에는 <code>p</code> 인자가 있어 특정비율로 파티셔닝할 때 편하다.<br />
+또한 위의 예제코드 <code>sample()</code> 함수를 이용할 때는 <a href="https://ko.wikipedia.org/wiki/%EB%8B%A8%EC%88%9C_%EB%AC%B4%EC%9E%91%EC%9C%84_%EC%B6%94%EC%B6%9C%EB%B2%95">완전무작위추출(SRS; Simple Random Sampling)</a> 이 되기 때문에 종속변수의 요인별 비율을 고려하지 않고 무작위 샘플링이 되지만, <code>createDataPartition()</code> 함수를 이용할 경우 종속변수의 요인별 비율만큼 층화랜덤추출을 기본적으로 지원하기 때문에 안전하고 요긴하다.<br />
 단 반환되는 타입이 기본적으로 list 이므로 <code>list</code> 인자값을 <code>FALSE</code>로 해 보았다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">indexTrain &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(Sonar), <span class="dt">p =</span> .<span class="dv">7</span>, <span class="dt">list =</span> F)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">indexTrain &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(Sonar$Class, <span class="dt">p =</span> .<span class="dv">7</span>, <span class="dt">list =</span> F)
 training &lt;-<span class="st"> </span>Sonar[ indexTrain, ]
 testing  &lt;-<span class="st"> </span>Sonar[-indexTrain, ]</code></pre></div>
 <p>7:3 비율만큼 잘 파티셔닝이 되어있는지 확인해 보면</p>
@@ -310,7 +311,7 @@ rf_fit</code></pre></div>
 <pre><code>##  [1] M M R M R R M M R M R R R R M R R R R R R R R M M R R M M R M M M M M
 ## [36] M M M M M M M M M M M R M M R M M M M M M M M M M
 ## Levels: M R</code></pre>
-<p>caret package 의 <code>confusionMatrix()</code> 를 곁들이면 더 간편하게 분류교차표 및 정확도까지 출력된다.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<p>caret package 의 <code>confusionMatrix()</code> 를 곁들이면 <a href="https://en.wikipedia.org/wiki/Confusion_matrix">혼돈메트릭스(Confusion Matrix)</a> 및 정확도외 다양한 통계량까지 출력된다.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(rf_fit, <span class="dt">newdata =</span> testing) %&gt;%<span class="st"> </span><span class="kw">confusionMatrix</span>(testing$Class)</code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
