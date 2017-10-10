@@ -163,15 +163,15 @@ Linux 머신이나 Mac, Windows 등으로 넘나들게 되는 순간 데이터�
 이 데이터의 인코딩형의 정보를 모른다고 가정하고 R로 읽어 들일 때 어떠한 문제들이 있는지 보겠다.</p>
 <p>csv 포맷의 데이터를 읽어들이는 방법은 여러가지가 있다.<br />
 가장 기본적인 <code>read.csv()</code>함수의 경우이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>)</code></pre></div>
-<pre><code>##   X     이름 점수
-## 1 1   홍길동   80
-## 2 2     철수   91
-## 3 3     영희   99
-## 4 4    Steve   85</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>) <span class="co"># on Mac</span></code></pre></div>
+<pre><code>##   X          X.U.C774..U.B984. X.U.C810..U.C218.
+## 1 1   &lt;U+D64D&gt;&lt;U+AE38&gt;&lt;U+B3D9&gt;                80
+## 2 2           &lt;U+CCA0&gt;&lt;U+C218&gt;                91
+## 3 3           &lt;U+C601&gt;&lt;U+D76C&gt;                99
+## 4 4                      Steve                85</code></pre>
 <p>&quot;UTF-8&quot; 형인 데이터를 먼저 불러와 보았는데 필자는 Mac 으로 동작시켰기 때문에 정상적으로 읽어들여진다.<br />
 하지만 Windows 환경에서는 저렇게 읽어들여지지 않을 것이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>) <span class="co"># on Windows</span></code></pre></div>
 <pre><code>Error in make.names(col.names, unique = TRUE) : invalid multibyte string at &#39;&lt;ec&gt;&lt;9d&gt;&lt;b4&gt;由&lt;84&gt;&#39;</code></pre>
 <p>Windows 환경에선 이와 같은 에러가 나면서 정말 간단한 예제의 데이터 테이블임에도 불구하고 읽어들이지 못한다.<br />
 이는 <code>read.csv()</code> 함수가 동작할 때 내부적으로 <code>fileEncoding</code> 인자값이 <code>Sys.getlocale(&quot;LC_CTYPE&quot;)</code> 로 반환되는 환경변수값에 의존되어 실행된다.<br />
@@ -179,7 +179,7 @@ Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 &quot;CP9
 이 인코딩 형이 원본파일의 인코딩 형(&quot;UTF-8&quot;)과 불일치 하기 때문에,<br />
 한글인 변수명이 유효하지 않은 문자열로 일그러져 인식할 수 없기 때문이다.</p>
 <p>이러한 원리 때문에 반대로 &quot;EUC-KR&quot; 형 데이터를 Mac 환경에서 읽어 들일 경우 마찬가지이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>) <span class="co"># on Mac</span></code></pre></div>
 <pre><code>Error in make.names(col.names, unique = TRUE) : invalid multibyte string at &#39;&lt;c0≯&lt;a7&gt;&#39;</code></pre>
 <p>우선 에러없이 데이터를 R로 읽어들이는 해결방법은 이렇다.</p>
 <ol type="1">
@@ -188,7 +188,7 @@ Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 &quot;CP9
 <li><code>read.csv()</code> 함수의 <code>fileEncoding</code> 인자값을 알아낸 인코딩형으로 직접 입력한다.</li>
 <li>예를 들면 <code>read.csv(&quot;data/Testdata_UTF-8.csv&quot;, fileEncoding = &quot;UTF-8&quot;)</code> 이런 코드가 되겠다. 이 코드를 실행하여 정상적으로 일어졌는지 확인한다.</li>
 </ol>
-<p>3단계 스텝을 통해 데이터를 일어들이는데 성공한다.<br />
+<p>3단계 스텝을 통해 데이터를 읽어들이는데 성공한다.<br />
 굳이 세번째 스텝을 설명한 이유는 에러없이 데이터를 일어들였다 하더라도,<br />
 첫번째 스텝에 인코딩형을 제대로 알지 못하여 막장으로 일어들여질 가능성이 있기 때문에<br />
 확인하는 과정이 필요하므로 생겨난 부수적인 스텝이라 할 수 있겠다.</p>
@@ -202,31 +202,32 @@ Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 &quot;CP9
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr) <span class="co"># for guess_encoding()</span>
 
 <span class="kw">guess_encoding</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>)</code></pre></div>
-<pre><code>## # A tibble: 3 x 2
-##     encoding confidence
-##        &lt;chr&gt;      &lt;dbl&gt;
-## 1     EUC-KR       1.00
-## 2    GB18030       0.71
-## 3 ISO-8859-1       0.21</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##   encoding confidence
+##      &lt;chr&gt;      &lt;dbl&gt;
+## 1    ASCII          1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">guess_encoding</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>)</code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   encoding confidence
 ##      &lt;chr&gt;      &lt;dbl&gt;
-## 1    UTF-8          1</code></pre>
+## 1    ASCII          1</code></pre>
 <p><code>guess_encoding()</code> 함수사용법은 간단하다.<br />
 외부 텍스트 파일에 대한 경로를 입력하고 실행하면 된다.<br />
 그러면 외부 텍스트파일의 인코딩형이 무엇일지 자동적으로 추론하고 가능성(confidence) 이 높은 순으로 출력된다.<br />
-&quot;EUC-KR&quot; 형 csv 파일을 일어들인 결과를 보면 &quot;EUC-KR&quot; 형일 가능성이 가장 높고, 그다음 &quot;GB18030&quot;, &quot;ISO-8859-1&quot; 형을 추론하는것을 볼 수 있다.<br />
+&quot;EUC-KR&quot; 형 csv 파일을 일어들여 인코딩을 추론한 결과를 보면 &quot;EUC-KR&quot; 형일 가능성이 가장 높고, 그다음 &quot;GB18030&quot;, &quot;ISO-8859-1&quot; 형을 추론하는것을 볼 수 있다.<br />
 위에서 설명한 3단계 스텝에서 첫번째 스텝을 자동적으로 더 정확하게 추론함으로써 수고를 덜어준다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>, 
          <span class="dt">fileEncoding =</span> <span class="kw">guess_encoding</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>)[<span class="dv">1</span>, <span class="dv">1</span>] %&gt;%<span class="st"> </span>as.character)</code></pre></div>
-<pre><code>##   X     이름 점수
-## 1 1   홍길동   80
-## 2 2     철수   91
-## 3 3     영희   99
-## 4 4    Steve   85</code></pre>
+<pre><code>##   X          X.U.C774..U.B984. X.U.C810..U.C218.
+## 1 1   &lt;U+D64D&gt;&lt;U+AE38&gt;&lt;U+B3D9&gt;                80
+## 2 2           &lt;U+CCA0&gt;&lt;U+C218&gt;                91
+## 3 3           &lt;U+C601&gt;&lt;U+D76C&gt;                99
+## 4 4                      Steve                85</code></pre>
 <p>아예 이런 식으로 내재화시켜버리면 3단계 스텝을 거치지 않고 어떠한 운영체계, 환경이든 융통성 있게 데이터를 잘 읽어 들일 것이다.<br />
 실제로 위 코드는 필자의 Mac 에서 동작했는데도 불구하고 인코딩이슈 없이 한글을 잘 읽어 들인 것을 볼 수 있다.</p>
+<h2 id="맺음말">맺음말</h2>
+<p>본 글은 <code>read.csv()</code> 함수에서 예시로 들었지만 외부 텍스트형 데이터를 읽어들이는 방법은 이 함수 말고도 다양하다.<br />
+필자는 csv 포맷 파일을 읽어들일 때 <code>data.table::fread()</code>, <code>readr::read_csv()</code> 등의 함수를 즐겨쓰는 편인데, 이 때도 마찬가지로 <code>guess_encoding()</code> 함수를 이용해 인코딩 형을 신경쓰지 않고 최대한 분석에 집중하고 있다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
