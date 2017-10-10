@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 10 Oct 2017 11:21:09 +0900</pubDate>
-    <lastBuildDate>Tue, 10 Oct 2017 11:21:09 +0900</lastBuildDate>
+    <pubDate>Tue, 10 Oct 2017 13:25:11 +0900</pubDate>
+    <lastBuildDate>Tue, 10 Oct 2017 13:25:11 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -40,11 +40,11 @@ Linux 머신이나 Mac, Windows 등으로 넘나들게 되는 순간 데이터�
 &lt;p&gt;csv 포맷의 데이터를 읽어들이는 방법은 여러가지가 있다.&lt;br /&gt;
 가장 기본적인 &lt;code&gt;read.csv()&lt;/code&gt;함수의 경우이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_UTF-8.csv&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# on Mac&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##   X          X.U.C774..U.B984. X.U.C810..U.C218.
-## 1 1   &amp;lt;U+D64D&amp;gt;&amp;lt;U+AE38&amp;gt;&amp;lt;U+B3D9&amp;gt;                80
-## 2 2           &amp;lt;U+CCA0&amp;gt;&amp;lt;U+C218&amp;gt;                91
-## 3 3           &amp;lt;U+C601&amp;gt;&amp;lt;U+D76C&amp;gt;                99
-## 4 4                      Steve                85&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##   X     이름 점수
+## 1 1   홍길동   80
+## 2 2     철수   91
+## 3 3     영희   99
+## 4 4    Steve   85&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&amp;quot;UTF-8&amp;quot; 형인 데이터를 먼저 불러와 보았는데 필자는 Mac 으로 동작시켰기 때문에 정상적으로 읽어들여진다.&lt;br /&gt;
 하지만 Windows 환경에서는 저렇게 읽어들여지지 않을 것이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_UTF-8.csv&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# on Windows&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -78,15 +78,17 @@ Windows 환경에선 결과적으로 &lt;code&gt;read.csv()&lt;/code&gt; 함수�
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(readr) &lt;span class=&quot;co&quot;&gt;# for guess_encoding()&lt;/span&gt;
 
 &lt;span class=&quot;kw&quot;&gt;guess_encoding&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_EUC-KR.csv&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 2
-##   encoding confidence
-##      &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;
-## 1    ASCII          1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 2
+##     encoding confidence
+##        &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;
+## 1     EUC-KR       1.00
+## 2    GB18030       0.71
+## 3 ISO-8859-1       0.21&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;guess_encoding&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_UTF-8.csv&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 2
 ##   encoding confidence
 ##      &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;
-## 1    ASCII          1&lt;/code&gt;&lt;/pre&gt;
+## 1    UTF-8          1&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;guess_encoding()&lt;/code&gt; 함수사용법은 간단하다.&lt;br /&gt;
 외부 텍스트 파일에 대한 경로를 입력하고 실행하면 된다.&lt;br /&gt;
 그러면 외부 텍스트파일의 인코딩형이 무엇일지 자동적으로 추론하고 가능성(confidence) 이 높은 순으로 출력된다.&lt;br /&gt;
@@ -94,13 +96,14 @@ Windows 환경에선 결과적으로 &lt;code&gt;read.csv()&lt;/code&gt; 함수�
 위에서 설명한 3단계 스텝에서 첫번째 스텝을 자동적으로 더 정확하게 추론함으로써 수고를 덜어준다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_EUC-KR.csv&amp;quot;&lt;/span&gt;, 
          &lt;span class=&quot;dt&quot;&gt;fileEncoding =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;guess_encoding&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_EUC-KR.csv&amp;quot;&lt;/span&gt;)[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;] %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;as.character)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##   X          X.U.C774..U.B984. X.U.C810..U.C218.
-## 1 1   &amp;lt;U+D64D&amp;gt;&amp;lt;U+AE38&amp;gt;&amp;lt;U+B3D9&amp;gt;                80
-## 2 2           &amp;lt;U+CCA0&amp;gt;&amp;lt;U+C218&amp;gt;                91
-## 3 3           &amp;lt;U+C601&amp;gt;&amp;lt;U+D76C&amp;gt;                99
-## 4 4                      Steve                85&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##   X     이름 점수
+## 1 1   홍길동   80
+## 2 2     철수   91
+## 3 3     영희   99
+## 4 4    Steve   85&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;아예 이런 식으로 내재화시켜버리면 3단계 스텝을 거치지 않고 어떠한 운영체계, 환경이든 융통성 있게 데이터를 잘 읽어 들일 것이다.&lt;br /&gt;
 실제로 위 코드는 필자의 Mac 에서 동작했는데도 불구하고 인코딩이슈 없이 한글을 잘 읽어 들인 것을 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;맺음말&quot;&gt;맺음말&lt;/h2&gt;
 &lt;p&gt;본 글은 &lt;code&gt;read.csv()&lt;/code&gt; 함수에서 예시로 들었지만 외부 텍스트형 데이터를 읽어들이는 방법은 이 함수 말고도 다양하다.&lt;br /&gt;
 필자는 csv 포맷 파일을 읽어들일 때 &lt;code&gt;data.table::fread()&lt;/code&gt;, &lt;code&gt;readr::read_csv()&lt;/code&gt; 등의 함수를 즐겨쓰는 편인데, 이 때도 마찬가지로 &lt;code&gt;guess_encoding()&lt;/code&gt; 함수를 이용해 인코딩 형을 신경쓰지 않고 최대한 분석에 집중하고 있다.&lt;/p&gt;
