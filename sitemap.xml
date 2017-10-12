@@ -5,12 +5,12 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 11 Oct 2017 14:14:46 +0900</pubDate>
-    <lastBuildDate>Wed, 11 Oct 2017 14:14:46 +0900</lastBuildDate>
+    <pubDate>Thu, 12 Oct 2017 10:26:02 +0900</pubDate>
+    <lastBuildDate>Thu, 12 Oct 2017 10:26:02 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
-        <title>readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론</title>
+        <title>R에서 readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론</title>
         <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;파일을 읽어 들일 때 인코딩 타입에 대한 이슈는 상당히 짜증 나는 유형의 이슈 중 하나라고 생각된다.&lt;br /&gt;
 분석환경이 단독 운영체계만을 이용하여 분석한다면 큰 문제는 없겠지만&lt;br /&gt;
