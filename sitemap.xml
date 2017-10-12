@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 12 Oct 2017 10:26:02 +0900</pubDate>
-    <lastBuildDate>Thu, 12 Oct 2017 10:26:02 +0900</lastBuildDate>
+    <pubDate>Thu, 12 Oct 2017 17:51:30 +0900</pubDate>
+    <lastBuildDate>Thu, 12 Oct 2017 17:51:30 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -1882,6 +1882,11 @@ lo        Link encap:Local Loopback
 &lt;p&gt;Rstudio server 를 띄울 수 있고 웹상에서 Rstudio 를 이용할 수 있게 된다.&lt;br /&gt;
 이렇게 해서 Docker 를 이용한 Rstudio server 이미지를 이용해 손쉽게 &amp;quot;Hello Docker!&amp;quot; 해보았다.&lt;br /&gt;
 Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 어려운 구축과정 없이 이용할 수 있지 않을까?&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://subicura.com/2017/01/19/docker-guide-for-beginners-2.html&quot;&gt;초보를 위한 도커 안내서 - 설치하고 컨테이너 실행하기&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
