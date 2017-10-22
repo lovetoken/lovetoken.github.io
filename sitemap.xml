@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 22 Oct 2017 23:14:23 +0900</pubDate>
-    <lastBuildDate>Sun, 22 Oct 2017 23:14:23 +0900</lastBuildDate>
+    <pubDate>Sun, 22 Oct 2017 23:25:16 +0900</pubDate>
+    <lastBuildDate>Sun, 22 Oct 2017 23:25:16 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -88,7 +88,7 @@ yum 은 원격레파지토리를 검색하지 않고 &lt;code&gt;~/python3&lt;/c
 역시 정상적으로 설치되면 &lt;code&gt;python3.6&lt;/code&gt;, &lt;code&gt;pip3.6&lt;/code&gt; 을 실행할 수 있다.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ cd packages&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;~/python3/packages&lt;/code&gt; 폴더로 가서 이젠 konlpy 패캐지 설치를 시도할 것이다.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;pip3.6 install JPype1-0.6.2.tar.gz intervaltree-2.1.0.tar.gz konlpy-0.4.4-py2.py3-none-any.whl sortedcontainers-1.5.7-py2.py3-none-any.whl tag-0.3.3.tar.gz&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$ pip3.6 install JPype1-0.6.2.tar.gz intervaltree-2.1.0.tar.gz konlpy-0.4.4-py2.py3-none-any.whl sortedcontainers-1.5.7-py2.py3-none-any.whl tag-0.3.3.tar.gz&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;이 명령어를 통해서 인터넷 연결없이 konlpy 관련 패키지들을 수동설치하게 된다.&lt;/p&gt;
 </description>
         <pubDate>Sun, 22 Oct 2017 00:00:00 +0900</pubDate>
@@ -2892,11 +2892,11 @@ gss_cat %&amp;gt;%
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 23 Oct 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/open_source_tool/2016/10/23/Alfred_SearchQuery.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/open_source_tool/2016/10/23/Alfred_SearchQuery.html</guid>
+        <link>https://lovetoken.github.io/opensource_tool/2016/10/23/Alfred_SearchQuery.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/opensource_tool/2016/10/23/Alfred_SearchQuery.html</guid>
         
         
-        <category>Open_Source_Tool</category>
+        <category>OpenSource_Tool</category>
         
       </item>
     
@@ -3763,11 +3763,11 @@ Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르�
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 15 Aug 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/open_source_tool/2016/08/15/Itinerary_Japan.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/open_source_tool/2016/08/15/Itinerary_Japan.html</guid>
+        <link>https://lovetoken.github.io/opensource_tool/2016/08/15/Itinerary_Japan.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/opensource_tool/2016/08/15/Itinerary_Japan.html</guid>
         
         
-        <category>Open_Source_Tool</category>
+        <category>OpenSource_Tool</category>
         
       </item>
     
@@ -3799,13 +3799,13 @@ Timezone 변경에 대해서 &lt;code&gt;Sys.time()&lt;/code&gt; 과는 다르�
 때문에 블로그 이전과 동시에 &amp;quot;통계 R 프로그래밍&amp;quot; 커뮤니티 카페와 독립을 꾀하고자 한다.&lt;/p&gt;
 </description>
         <pubDate>Sat, 23 Jul 2016 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/diary/open_source_tool/2016/07/23/Welcome_to_Jekyll.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/diary/open_source_tool/2016/07/23/Welcome_to_Jekyll.html</guid>
+        <link>https://lovetoken.github.io/diary/opensource_tool/2016/07/23/Welcome_to_Jekyll.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/diary/opensource_tool/2016/07/23/Welcome_to_Jekyll.html</guid>
         
         
         <category>Diary</category>
         
-        <category>Open_Source_Tool</category>
+        <category>OpenSource_Tool</category>
         
       </item>
     
