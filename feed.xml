@@ -5,9 +5,100 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 12 Oct 2017 17:51:30 +0900</pubDate>
-    <lastBuildDate>Thu, 12 Oct 2017 17:51:30 +0900</lastBuildDate>
+    <pubDate>Sun, 22 Oct 2017 23:14:23 +0900</pubDate>
+    <lastBuildDate>Sun, 22 Oct 2017 23:14:23 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>인터넷 접속이 안되는 CentOS 머신에서 Python3 및 패키지 설치하기</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;본 글은 CentOS 최소설치버전으로 설치된 서버에서 (내부망 운용등의 이유로)인터넷 접속이 불가한 상황일 때 Python3 및 패키지를 설치하는 법에 대해 설명하기 위한 글이다.&lt;br /&gt;
+패키지의 예시는 &lt;a href=&quot;http://konlpy-ko.readthedocs.io/ko/v0.4.3/&quot;&gt;konlpy&lt;/a&gt; 이다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;가상환경-준비&quot;&gt;가상환경 준비&lt;/h2&gt;
+&lt;p&gt;설명을 위하여&lt;br /&gt;
+설치의 대상이 되는 CentOS 최소설치 환경을 똑같이 재현할 필요가 있다.&lt;br /&gt;
+CentOS 최소설치가 된 가상환경을 &lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker&lt;/a&gt; 을 통해 준비해 보았다.&lt;br /&gt;
+(Docker를 모른다면 본 장은 설명을 위한 CentOS 환경을 그대로 재현하기 위함이구나 하고 넘어가면 되겠다)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ docker run --rm -it centos /bin/bash&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;CentOS 최소설치버전 이미지 다운로드한 후 컨테이너 실행하여 &lt;code&gt;/bin/bash&lt;/code&gt; 를 실행해 CentOS 쉘로 접속하게 된다.&lt;br /&gt;
+접속된 환경은 인터넷이 가능한 상황이지만, 인터넷이 안되는 상황을 전제하에 Python3 및 konlpy 패키지를 수동으로 설치해 볼 것이다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;python3-설치파일-준비&quot;&gt;Python3 설치파일 준비&lt;/h2&gt;
+&lt;p&gt;이제부턴 CentOS 쉘에서의 상황임을 염두해 둔다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+$ yum search python36&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;IUS Community Project의 리포지토리를 yum의 리포지토리에 추가한 후 python36 검색해 본다.&lt;br /&gt;
+&amp;quot;python36&amp;quot; 으로 시작되는 다양한 리스트들이 출력될 것이다.&lt;br /&gt;
+참고로 yum 의 &lt;code&gt;-y&lt;/code&gt; 옵션 의미는 무조건 Yes로 입력하여 설치를 진행토록 하는 의미이다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ mkdir ~/python3
+$ cd ~/python3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;적당한 곳에 &lt;code&gt;python3&lt;/code&gt; 디렉토리를 만들고 그곳으로 간다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ yum install -y --downloadonly ----downloaddir=. python36u python36u-libs python36u-devel python36u-pip&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Python3.6 버전대 패키지들을 설치하지 않고 다운로드만 하는 명령어이다.&lt;br /&gt;
+위 명령어를 실행하면 관련된 패키지들의 설치 rpm 을 워킹디렉토리(&lt;code&gt;~/python3&lt;/code&gt;)에 저장하게 된다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[root@e1e70169f547 python3]# ll
+-rw-r--r-- 1 root root   56192 Aug  3 04:20 python36u-3.6.2-1.ius.centos7.x86_64.rpm
+-rw-r--r-- 1 root root  204112 Aug  3 04:20 python36u-devel-3.6.2-1.ius.centos7.x86_64.rpm
+-rw-r--r-- 1 root root 9689852 Aug  3 04:20 python36u-libs-3.6.2-1.ius.centos7.x86_64.rpm
+-rw-r--r-- 1 root root 1841528 Feb  3  2017 python36u-pip-9.0.1-1.ius.centos7.noarch.rpm
+-rw-r--r-- 1 root root  663324 Mar 22  2017 python36u-setuptools-33.1.1-1.ius.centos7.noarch.rpm&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;실제로 확인해 볼 경우 5개의 rpm 파일들이 준비된 것을 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;konlpy-패키지-리소스-준비&quot;&gt;konlpy 패키지 리소스 준비&lt;/h2&gt;
+&lt;p&gt;파이썬의 패키지를 준비하기 위해선 &lt;code&gt;pip&lt;/code&gt; 를 이용하는것이 좋다.&lt;br /&gt;
+&lt;code&gt;pip&lt;/code&gt; 를 이용하기 위해서 방금 받은 rpm 을 이용해 파이썬을 설치한다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ yum install -y *&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;정상적으로 설치되면 이때부터 &lt;code&gt;python3.6&lt;/code&gt;, &lt;code&gt;pip3.6&lt;/code&gt; 명령어를 이용할 수 있게 된다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ mkdir packages
+$ cd packages&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;적당히 &lt;code&gt;~/python3/packages&lt;/code&gt; 디렉토리를 만들고 그곳으로 가자.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ pip3.6 install --download=. tag
+$ pip3.6 install --download=. konlpy
+$ pip3.6 install --download=. JPype1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위 명령어 중 첫번째는 tag package 에 대한 리소스 압축파일 (&lt;code&gt;.tag.gz&lt;/code&gt;) 을 포함한 의존성이 있는 리소스를 모두 현 워킹디렉토리에 저장만 한다.&lt;br /&gt;
+즉 패키지들이 설치되지는 않는다.&lt;br /&gt;
+konlpy 와 JPype1 패키지 역시 마찬가지로 리소스를 준비시킨다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[root@e1e70169f547 package]# ll
+-rw-r--r-- 1 root root   147893 Oct 20 00:51 JPype1-0.6.2.tar.gz
+-rw-r--r-- 1 root root    38404 Oct 20 00:52 intervaltree-2.1.0.tar.gz
+-rw-r--r-- 1 root root 22454979 Oct 20 00:52 konlpy-0.4.4-py2.py3-none-any.whl
+-rw-r--r-- 1 root root    32267 Oct 20 00:52 sortedcontainers-1.5.7-py2.py3-none-any.whl
+-rw-r--r-- 1 root root    34414 Oct 20 00:52 tag-0.3.3.tar.gz&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;package 리소스 파일들이 준비되어 있는것을 확인할 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;실제-인터넷이-불가한-centos-에서의-python3.6-packages-설치&quot;&gt;실제 인터넷이 불가한 CentOS 에서의 python3.6, packages 설치&lt;/h2&gt;
+&lt;p&gt;인터넷이 불가한 상황을 전제하로 실제 CentOS 서버에서 위에서 준비한 rpm, package 리소스들을 복사하여 가져온다.&lt;/p&gt;
+&lt;p&gt;본 예제의 경우 Docker 가상환경을 기준으로 설명했는데&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ docker cp &amp;lt;컨테이너명&amp;gt;:~/python3/. &amp;lt;호스트 경로&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;의 방식으로 가상환경에 있던 rpm, package 리소스 들을&lt;br /&gt;
+호스트로 떨어트린 후 USB 메모리등을 이용해 복사하여 인터넷이 불가한 CentOS 서버머신에 복사하면 되겠다.&lt;br /&gt;
+참고로 컨테이너 명은 &lt;code&gt;docker ps&lt;/code&gt; 를 통해 확인이 가능하다.&lt;br /&gt;
+또한 &lt;code&gt;&amp;lt;호스트 경로&amp;gt;&lt;/code&gt;는 가상환경 입장에선 원격경로이므로 아래 예제처럼 작성되야겠다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ docker cp e1e70169f547:~/python3/. lovetoken@192.168.25.60:~/Download&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;(이외의 docker 를 이용하지 않은 상황에선 각자 상황에 따라 대처... 자세한 설명은 생략)&lt;/p&gt;
+&lt;p&gt;자 이제부터는 인터넷이 불가한 CentOS 서버상황이라고 가정한다.&lt;br /&gt;
+편의상 &lt;code&gt;~/python3&lt;/code&gt; 에 복사한 것을 붙어넣었다고 가정하겠다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ cd ~/python3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;복사한 python3 폴더로 간다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ yum install -y python36u-3.6.2-1.ius.centos7.x86_64.rpm python36u-devel-3.6.2-1.ius.centos7.x86_64.rpm python36u-libs-3.6.2-1.ius.centos7.x86_64.rpm python36u-pip-9.0.1-1.ius.centos7.noarch.rpm python36u-setuptools-33.1.1-1.ius.centos7.noarch.rpm&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이 명령어를 통해서&lt;br /&gt;
+yum 은 원격레파지토리를 검색하지 않고 &lt;code&gt;~/python3&lt;/code&gt; 에 있는 rpm 에 의존하여 파이썬을 설치하기 시작한다.&lt;br /&gt;
+즉 수동으로 설치가 되는것이다.&lt;br /&gt;
+역시 정상적으로 설치되면 &lt;code&gt;python3.6&lt;/code&gt;, &lt;code&gt;pip3.6&lt;/code&gt; 을 실행할 수 있다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ cd packages&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;~/python3/packages&lt;/code&gt; 폴더로 가서 이젠 konlpy 패캐지 설치를 시도할 것이다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pip3.6 install JPype1-0.6.2.tar.gz intervaltree-2.1.0.tar.gz konlpy-0.4.4-py2.py3-none-any.whl sortedcontainers-1.5.7-py2.py3-none-any.whl tag-0.3.3.tar.gz&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이 명령어를 통해서 인터넷 연결없이 konlpy 관련 패키지들을 수동설치하게 된다.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 22 Oct 2017 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/python/2017/10/22/python3_install_on_CentOS_manually.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/python/2017/10/22/python3_install_on_CentOS_manually.html</guid>
+        
+        
+        <category>Python</category>
+        
+      </item>
     
       <item>
         <title>R에서 readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론</title>
@@ -1452,34 +1543,6 @@ data&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
         <pubDate>Tue, 21 Mar 2017 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2017/03/21/RImpala_package.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2017/03/21/RImpala_package.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>인터넷 접속이 불가능 한 내부망에서의 R package 설치방법에 대해</title>
-        <description>&lt;p&gt;(지금은 그렇지 않은데) 이전에 일하던 환경이 망분리(내부망)의 도입으로 인하여&lt;br /&gt;
-인터넷이 불가능한 상황에서 R을 이용해 분석을 해야 했던 적이 있었다.&lt;br /&gt;
-특히 보안으로 인한 법 개정인지 몰라도 망분리 도입이 공기업을 시작으로 활발하게 진행하는 듯 싶은데,&lt;br /&gt;
-이로인한 많은 이슈를 대응해야 하는 사람들 입장에선 많이 피곤할 것으로 생각한다.&lt;/p&gt;
-&lt;p&gt;오픈소스 도구 특성상 대부분이 그렇겠지만, 인터넷의 의존도는 높을 것이다.&lt;br /&gt;
-그중 하나인 R 언어 역시 마찬가지다.&lt;br /&gt;
-R 패키지의 설치는 기본적으론 &lt;a href=&quot;https://cran.r-project.org/&quot;&gt;CRAN&lt;/a&gt; 을 통해 패키지 리소스들을 요청하고 다운로드 하는데 이것이 불가해진다.&lt;br /&gt;
-그렇다고 패키지 설치가 아예 불가능한 것은 아닌데, 문제는 R을 이용하는 클라이언트 입장에서 매우 불편을 느끼게 된다는 것이 문제다.&lt;br /&gt;
-R을 잘 알고 사용하는 사람이라면 방법이 어찌 되었건 간에 패키지 리소스를 로컬상으로 옮겨서 이슈를 해결하지만, 수동적으로 R 을 분석을 위해서 단편적으로 이용하시는 분들 입장에선 어디까지나 해괴망측한 에러 중 하나로 판단할 것이 당연하다.&lt;br /&gt;
-클라이언트 입장에서 가장 간단한 패키지 설치 방법을 PPT로 제작해 보았다.&lt;/p&gt;
-&lt;iframe src=&quot;https://lovetoken.github.io/assets/assets/player/KeynoteDHTMLPlayer.html#0&quot; width=&quot;100%&quot; height=&quot;500px&quot;&gt;
-&lt;/iframe&gt;
-&lt;p&gt;준비한 슬라이드 쇼에는 가장 간단한 패키지 수동설치법에 대해서&lt;br /&gt;
-5page 로 축약하여 설명을 해 놓았다.&lt;/p&gt;
-&lt;p&gt;망분리란 고립된(?) 환경을 체험 중인 분들에게&lt;br /&gt;
-그나마 해갈이 될 수 있도록 도움이 되었으면 좋겠다 😢&lt;/p&gt;
-</description>
-        <pubDate>Sun, 05 Mar 2017 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2017/03/05/Rpackage_install_in.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2017/03/05/Rpackage_install_in.html</guid>
         
         
         <category>R</category>
