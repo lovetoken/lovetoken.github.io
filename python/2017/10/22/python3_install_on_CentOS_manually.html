@@ -158,7 +158,7 @@ $ yum search python36</code></pre>
 <pre><code>$ mkdir ~/python3
 $ cd ~/python3</code></pre>
 <p>적당한 곳에 <code>python3</code> 디렉토리를 만들고 그곳으로 간다.</p>
-<pre><code>$ yum install -y --downloadonly ----downloaddir=. python36u python36u-libs python36u-devel python36u-pip</code></pre>
+<pre><code>$ yum install -y --downloadonly --downloaddir=. python36u python36u-libs python36u-devel python36u-pip</code></pre>
 <p>Python3.6 버전대 패키지들을 설치하지 않고 다운로드만 하는 명령어이다.<br />
 위 명령어를 실행하면 관련된 패키지들의 설치 rpm 을 워킹디렉토리(<code>~/python3</code>)에 저장하게 된다.</p>
 <pre><code>[root@e1e70169f547 python3]# ll

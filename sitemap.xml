@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 24 Oct 2017 11:37:05 +0900</pubDate>
-    <lastBuildDate>Tue, 24 Oct 2017 11:37:05 +0900</lastBuildDate>
+    <pubDate>Thu, 16 Nov 2017 11:25:02 +0900</pubDate>
+    <lastBuildDate>Thu, 16 Nov 2017 11:25:02 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -34,7 +34,7 @@ $ yum search python36&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;$ mkdir ~/python3
 $ cd ~/python3&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;적당한 곳에 &lt;code&gt;python3&lt;/code&gt; 디렉토리를 만들고 그곳으로 간다.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ yum install -y --downloadonly ----downloaddir=. python36u python36u-libs python36u-devel python36u-pip&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$ yum install -y --downloadonly --downloaddir=. python36u python36u-libs python36u-devel python36u-pip&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Python3.6 버전대 패키지들을 설치하지 않고 다운로드만 하는 명령어이다.&lt;br /&gt;
 위 명령어를 실행하면 관련된 패키지들의 설치 rpm 을 워킹디렉토리(&lt;code&gt;~/python3&lt;/code&gt;)에 저장하게 된다.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[root@e1e70169f547 python3]# ll
