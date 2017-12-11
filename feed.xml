@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 02 Dec 2017 15:42:58 +0900</pubDate>
-    <lastBuildDate>Sat, 02 Dec 2017 15:42:58 +0900</lastBuildDate>
+    <pubDate>Mon, 11 Dec 2017 09:48:27 +0900</pubDate>
+    <lastBuildDate>Mon, 11 Dec 2017 09:48:27 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -837,7 +837,8 @@ Typeform 역시 마찬가지이다. 가입 후에 로그인하는 즉시 웹상�
     
       <item>
         <title>R에서 caret package 를 이용한 데이터 학습 간편화 전략</title>
-        <description>&lt;p&gt;기계학습(Machine Learning) 에서 기법이 무엇이 되든, 어떤 알고리즘을 사용할 것이든 공통으로 필요한 과정은 &amp;quot;Learning&amp;quot; 즉 &amp;quot;학습&amp;quot;이다.&lt;br /&gt;
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;기계학습(Machine Learning) 에서 기법이 무엇이 되든, 어떤 알고리즘을 사용할 것이든 공통으로 필요한 과정은 &amp;quot;Learning&amp;quot; 즉 &amp;quot;학습&amp;quot;이다.&lt;br /&gt;
 학습의 대상은 전통적으로 훈련데이터(Training dataset)이고, 훈련데이터를 학습시키는 아주 다양한 방법들이 존재한다.&lt;br /&gt;
 방법별로 원리와 특징 및 색깔이 다르며, 무엇보다 &lt;strong&gt;워낙 다양한 방법들이 존재하기 때문&lt;/strong&gt;에 아무리 많이 공부를 한 사람이라 한들 모든 알고리즘을 아는것이 한계가 있다고 생각한다.&lt;br /&gt;
 때문에 무엇을 채택해서 어느 정도의 파라미터값을 부여해야 알맞은 모델을 만들 수 있을지 현실적인 문제에 부딪히게 된다.&lt;/p&gt;

@@ -135,22 +135,21 @@
 
 
 <div class="content">
-    <div class="post"><p>회귀분석을 공부하게 되면<br />
+    <div class="post"><p><br><br></p>
+<p>회귀분석을 공부하게 되면<br />
 책이나 인터넷의 포스팅된 글에서 모델적합성의 중요성을 부각시키는 아래의 데이터 시각화 예제를 많이 보았을 것이다.</p>
-<br>
-<center>
-<img src="/assets/anscombe1.png" />
-</center>
 <p><br></p>
-<p>요즘에는 데이터시각화의 중요성을 부각시키는 예제로도 자주 활용되는데<br />
-그만큼 눈으로 직접 보는것이 힘이다.</p>
+<p><img src="/assets/anscombe1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p>위 그림은 4개의 데이터의 패턴이 각기 다름에도 불구하고 단순회귀적합시 모두 동일한 모델을 만듦으로써 일어날 수 있는 오류를 우리에게 상기시킨다.<br />
+데이터시각화의 중요성을 부각시키는 예제로도 자주 활용되는데 그만큼 눈으로 직접 보는것이 힘이다.</p>
 <p>나는 종종 이 예제를 활용하고 싶을때가 많았는데<br />
 이 데이터셋을 구하기 전 처음에는 데이터셋의 이름을 모르고 있어서<br />
 직접 눈대중으로 만들려는 멍청한 짓을 한적이 있었다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
 <p>하지만 위에 사용된 데이터셋 이름이 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's quartet</a> 임을 알고는 구글링을 통해 손쉽게 얻을 수 있었다.</p>
-<p>그런데 또 뒤늦게<br />
-오늘 알아 챈 것이 있는데 R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's quartet</a> 데이터셋이 빌트인 되어 있었다는 것이다.<br />
-데이터셋을 호출하기 위해선 <code>anscombe</code> 만 치면 됬었다...</p>
+<p>그런데 또 뒤늦게 알아 챈 것이 있는데<br />
+R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's quartet</a> 데이터셋이 빌트인 되어 있었다는 것이다.<br />
+데이터셋을 호출하기 위해선 <code>anscombe</code> 만 치면 되었구나...</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">anscombe</code></pre></div>
 <pre><code>##    x1 x2 x3 x4    y1   y2    y3    y4
 ## 1  10 10 10  8  8.04 9.14  7.46  6.58
@@ -164,9 +163,9 @@
 ## 9  12 12 12  8 10.84 9.13  8.15  5.56
 ## 10  7  7  7  8  4.82 7.26  6.42  7.91
 ## 11  5  5  5  8  5.68 4.74  5.73  6.89</code></pre>
-<p>으악.. 허무하다..<br />
-<code>?anscombe</code> 를 하고 나서 예제코드가 잘 준비된 것을 보니 지금까지 과정들이 헛수고임을 깨닫게 되었다...<br />
-그 충격에 이렇게 블로그 글로 포스팅을 하게 되었다. 😅</p>
+<p>으악. 많이 허무했다..<br />
+<code>?anscombe</code> 를 하고 나서 예제코드가 잘 준비된 것을 보니 지금까지 과정들이 헛수고임을 깨닫게 되었다.<br />
+그 충격에 이렇게 글로 포스팅을 하게 되었다.</p>
 <section class="footnotes">
 <hr />
 <ol>

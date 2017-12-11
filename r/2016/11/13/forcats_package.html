@@ -135,11 +135,12 @@
 
 
 <div class="content">
-    <div class="post"><br><br>
+    <div class="post"><p><br><br></p>
+<br>
 <center>
 <img src="/assets/forcats_1.png" />
 </center>
-<p><br><br></p>
+<p><br></p>
 <h2 id="개요">개요</h2>
 <p>R에서 범주형 변수를 다룰 때 factor 형을 이용한다.<br />
 범주형 자료는 연속형 자료와는 다르게 그 자체의 고유한 의미를 가진다는 특성때문에 정성적인 관리가 필요한 편이다.<br />
@@ -150,12 +151,11 @@
 <p>The goal of the <strong>forcats</strong> package is to provide a suite of useful tools that solve common problems with factors.<br />
 - <a href="https://github.com/tidyverse/forcats">forcats package 의 README.md 중</a>에서</p>
 </blockquote>
-<p><br><br></p>
 <h2 id="패키지-설치">패키지 설치</h2>
 <p>CRAN 에 등록되어 있으므로</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;forcats&quot;</span>)</code></pre></div>
 <p>로 설치할 수 있다.</p>
-<p>major 버전은 아직 0 이므로 계속적으로 개발될 가능성이 있는 상태이다.<br />
+<p>major 버전은 아직 0 이므로<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> 지속적으로 개선될 가능성이 높다.<br />
 개발버전을 사용하고 싶다면 Github 를 통해 패키지를 설치해도 되겠다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Or the the development version from GitHub:</span>
 devtools::<span class="kw">install_github</span>(<span class="st">&quot;tidyverse/forcats&quot;</span>)</code></pre></div>
@@ -163,7 +163,6 @@ devtools::<span class="kw">install_github</span>(<span class="st">&quot;tidyvers
 <h2 id="getting-started">Getting started</h2>
 <p>forcats package 의 함수들은 &quot;fct_&quot; 로 시작한다.<br />
 이후의 단어가 함수쓰임의 의미를 담고 있다.</p>
-<p><br></p>
 <table>
 <colgroup>
 <col style="width: 11%" />
@@ -254,13 +253,12 @@ devtools::<span class="kw">install_github</span>(<span class="st">&quot;tidyvers
 </tr>
 </tbody>
 </table>
-<p><br></p>
-<p>접두사 &quot;fct_&quot; 가 코딩할 때 불편할 수도 있겠다 싶지만, 오히려 &quot;fct_&quot; 가 있음으로 변수형자료를 핸들링하는 것임을 정확하게 인지할 수 있는 tag같은 역할을 하는 것 같기도 해서 나는 개인적으로 좋다. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>접두사 &quot;fct_&quot; 가 코딩할 때 불편할 수도 있겠다 싶지만, 오히려 &quot;fct_&quot; 가 있음으로 변수형자료를 핸들링하는 것임을 정확하게 인지할 수 있는 tag같은 역할을 하는 것 같기도 해서 나는 개인적으로 좋다. <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
 <p>여하튼 이 함수들 중 자주 사용하는 것을 몇 개 언급해보고자 한다.</p>
 <p><br></p>
 <h3 id="fct_recode"><code>fct_recode()</code></h3>
 <p>factor 형 자료를 다룰 때 가장 번거로운 것 중 하나는 요인의 성격을 보존한 채 오직 명칭만 변경하는 과정이다.</p>
-<p>예를들면</p>
+<p>예를 들면</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;L&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;small&quot;</span>, <span class="st">&quot;small&quot;</span>, <span class="st">&quot;L&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;L&quot;</span>), 
     <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;small&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;L&quot;</span>))
 ex</code></pre></div>
@@ -284,18 +282,18 @@ R을 제대로 사용하시는 분들이라면 이 의미는 가볍게 알 것�
 아래 코드는 dplyr package 와 함께 <code>fct_recode()</code> 함수를 좀 더 실용적으로 사용해 본 예라고 할 수 있겠다. (참고로 <code>gss_cat</code> 는 forcats 패키지에 내장되어있는 데이터셋이다)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Origin</span>
 gss_cat %&gt;%<span class="st"> </span><span class="kw">count</span>(partyid)</code></pre></div>
-<pre><code>## # A tibble: 10 &lt;U+00D7&gt; 2
+<pre><code>## # A tibble: 10 x 2
 ##               partyid     n
 ##                &lt;fctr&gt; &lt;int&gt;
-## 1           No answer   154
-## 2          Don&#39;t know     1
-## 3         Other party   393
-## 4   Strong republican  2314
-## 5  Not str republican  3032
-## 6        Ind,near rep  1791
-## 7         Independent  4119
-## 8        Ind,near dem  2499
-## 9    Not str democrat  3690
+##  1          No answer   154
+##  2         Don&#39;t know     1
+##  3        Other party   393
+##  4  Strong republican  2314
+##  5 Not str republican  3032
+##  6       Ind,near rep  1791
+##  7        Independent  4119
+##  8       Ind,near dem  2499
+##  9   Not str democrat  3690
 ## 10    Strong democrat  3490</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Change level values</span>
 gss_cat %&gt;%
@@ -308,18 +306,18 @@ gss_cat %&gt;%
     <span class="st">&quot;Democrat, strong&quot;</span>      =<span class="st"> &quot;Strong democrat&quot;</span>
   )) %&gt;%
 <span class="st">  </span><span class="kw">count</span>(partyid)</code></pre></div>
-<pre><code>## # A tibble: 10 &lt;U+00D7&gt; 2
+<pre><code>## # A tibble: 10 x 2
 ##                  partyid     n
 ##                   &lt;fctr&gt; &lt;int&gt;
-## 1              No answer   154
-## 2             Don&#39;t know     1
-## 3            Other party   393
-## 4     Republican, strong  2314
-## 5       Republican, weak  3032
-## 6  Independent, near rep  1791
-## 7            Independent  4119
-## 8  Independent, near dem  2499
-## 9         Democrat, weak  3690
+##  1             No answer   154
+##  2            Don&#39;t know     1
+##  3           Other party   393
+##  4    Republican, strong  2314
+##  5      Republican, weak  3032
+##  6 Independent, near rep  1791
+##  7           Independent  4119
+##  8 Independent, near dem  2499
+##  9        Democrat, weak  3690
 ## 10      Democrat, strong  3490</code></pre>
 <p><br></p>
 <h3 id="fct_lump"><code>fct_lump()</code></h3>
@@ -370,7 +368,8 @@ gss_cat %&gt;%
 <section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Rstudio IDE 를 사용하고 있다면 <kbd>tap</kbd>을 이용한 자동완성을 이용하면 그렇게 불편하지도 않다<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>2017-12-11 기준<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Rstudio IDE 를 사용하고 있다면 <kbd>tap</kbd>을 이용한 자동완성을 이용하면 되니 그렇게 불편하지도 않다<a href="#fnref2">↩</a></p></li>
 </ol>
 </section>
 </div>
