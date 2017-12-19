@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 11 Dec 2017 09:48:27 +0900</pubDate>
-    <lastBuildDate>Mon, 11 Dec 2017 09:48:27 +0900</lastBuildDate>
+    <pubDate>Tue, 19 Dec 2017 23:08:10 +0900</pubDate>
+    <lastBuildDate>Tue, 19 Dec 2017 23:08:10 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -1560,22 +1560,60 @@ data&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
     
       <item>
         <title>인터넷 접속이 불가능 한 내부망에서의 R package 설치방법에 대해</title>
-        <description>&lt;p&gt;(지금은 그렇지 않은데) 이전에 일하던 환경이 망분리(내부망)의 도입으로 인하여&lt;br /&gt;
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;(지금은 그렇지 않은데) 이전에 일하던 환경이 망분리(내부망)의 도입으로 인하여&lt;br /&gt;
 인터넷이 불가능한 상황에서 R을 이용해 분석을 해야 했던 적이 있었다.&lt;br /&gt;
 특히 보안으로 인한 법 개정인지 몰라도 망분리 도입이 공기업을 시작으로 활발하게 진행하는 듯 싶은데,&lt;br /&gt;
 이로인한 많은 이슈를 대응해야 하는 사람들 입장에선 많이 피곤할 것으로 생각한다.&lt;/p&gt;
-&lt;p&gt;오픈소스 도구 특성상 대부분이 그렇겠지만, 인터넷의 의존도는 높을 것이다.&lt;br /&gt;
-그중 하나인 R 언어 역시 마찬가지다.&lt;br /&gt;
+&lt;p&gt;오픈소스 소프트웨어 특성상 대부분이 그렇겠지만 인터넷의 의존도는 높을 것이다. (버전의 업데이트 주기가 빠르고 변화에 빠르게 대응한다) 그중 R 언어 역시 마찬가지다.&lt;br /&gt;
 R 패키지의 설치는 기본적으론 &lt;a href=&quot;https://cran.r-project.org/&quot;&gt;CRAN&lt;/a&gt; 을 통해 패키지 리소스들을 요청하고 다운로드 하는데 이것이 불가해진다.&lt;br /&gt;
-그렇다고 패키지 설치가 아예 불가능한 것은 아닌데, 문제는 R을 이용하는 클라이언트 입장에서 매우 불편을 느끼게 된다는 것이 문제다.&lt;br /&gt;
-R을 잘 알고 사용하는 사람이라면 방법이 어찌 되었건 간에 패키지 리소스를 로컬상으로 옮겨서 이슈를 해결하지만, 수동적으로 R 을 분석을 위해서 단편적으로 이용하시는 분들 입장에선 어디까지나 해괴망측한 에러 중 하나로 판단할 것이 당연하다.&lt;br /&gt;
-클라이언트 입장에서 가장 간단한 패키지 설치 방법을 PPT로 제작해 보았다.&lt;/p&gt;
+그렇다고 패키지 설치가 아예 불가능한 것은 아니다.&lt;br /&gt;
+아래의 &lt;a href=&quot;%22https://lovetoken.github.io/assets/assets/player/KeynoteDHTMLPlayer.html#0%22&quot;&gt;PPT 슬라이드&lt;/a&gt;는 패키지 수동설치에 대한 일반적인 방법 한가지를 설명한다.&lt;/p&gt;
 &lt;iframe src=&quot;https://lovetoken.github.io/assets/assets/player/KeynoteDHTMLPlayer.html#0&quot; width=&quot;100%&quot; height=&quot;500px&quot;&gt;
 &lt;/iframe&gt;
-&lt;p&gt;준비한 슬라이드 쇼에는 가장 간단한 패키지 수동설치법에 대해서&lt;br /&gt;
-5page 로 축약하여 설명을 해 놓았다.&lt;/p&gt;
-&lt;p&gt;망분리란 고립된 환경을 체험 중인 분들에게&lt;br /&gt;
-그나마 해갈을 할 수 있도록 도움이 되었으면 좋겠다. 😢&lt;/p&gt;
+&lt;p&gt;위 설명은 가장 쉬운방법이지만&lt;br /&gt;
+다량의 패키지를 설치하기위해, 그리고 의존성이 걸리는 패키지들까지 설치하기 위한 방법으론 적당하지 않을 수 있다.&lt;br /&gt;
+다량의 패키지를 수동설치 하고자 한다면 아래 방법도 고려해볼만 하다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;명령어로-설치하기&quot;&gt;명령어로 설치하기&lt;/h2&gt;
+&lt;p&gt;방법을 소개하기 전에 한가지 집고 넘어가는것이 좋다.&lt;br /&gt;
+인터넷이 접속안되는 컴퓨터의 환경을 미리 알고 대비하는게 좋다.&lt;br /&gt;
+윈도우라면 윈도우의 가상머신을.. 리눅스면 리눅스 가상머신을 준비할 수 있다면 준비하자. &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; 필자는 편의상 MacOS 인 환경을 기준으로만 설명하겠다.&lt;/p&gt;
+&lt;p&gt;우선 인터넷이 가능한 말끔한 상태의 가상머신에서&lt;br /&gt;
+R 설치 및 실행 후&lt;br /&gt;
+수동설치를 하고자 하는 패키지를 마음껏 &lt;code&gt;install.packages()&lt;/code&gt; 함수를 통해 설치한다.&lt;br /&gt;
+그럼 패키지 리소스인 tgz 압축 파일들이 temp 폴더에 임시로 저장되게 된다.&lt;/p&gt;
+&lt;p&gt;예를 들어 &amp;quot;car&amp;quot; 패키지를 설치하고 싶은 경우 &lt;code&gt;install.packages(&amp;quot;car&amp;quot;)&lt;/code&gt; 로 가상머신에 설치를 진행하면&lt;/p&gt;
+&lt;center&gt;
+&lt;script src=&quot;https://asciinema.org/a/153436.js&quot; id=&quot;asciicast-153436&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;code&gt;/var/folders/tw/crr70_s16xs6frt419xh9b740000gn/T//RtmpkL6bWJ/downloaded_packages&lt;/code&gt; 라는 복잡한 경로에 car 패키지 리소스인 &lt;code&gt;car_2.1-6.tgz&lt;/code&gt; 파일이 임시로 저장된다.&lt;br /&gt;
+만약 &amp;quot;car&amp;quot; 패키지의 의존성 패키지가 설치되어있지 않다면 이를 포함하여 다운로드하게 된다.&lt;/p&gt;
+&lt;p&gt;자신이 임시로 저장하고 싶은 경로를 지정할 수도 있다.&lt;br /&gt;
+&lt;code&gt;destdir&lt;/code&gt; 인자를 이용해 저 복잡한 경로가 아닌 임의의 경로로 지정해 패키지 리소스 파일을 임시로 저장한다.&lt;/p&gt;
+&lt;p&gt;아래의 예제는 &lt;code&gt;~/r_package&lt;/code&gt; 폴더를 만들고 그곳에 &amp;quot;ape&amp;quot;, &amp;quot;Amelia&amp;quot;, &amp;quot;car&amp;quot; 3개의 패키지 리소스를 저장해 보는 예제이다.&lt;/p&gt;
+&lt;center&gt;
+&lt;script src=&quot;https://asciinema.org/a/153439.js&quot; id=&quot;asciicast-153439&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
+&lt;p&gt;이처럼 준비된 패키지 리소스들을 인터넷이 안되는 머신으로 물리적으로 복사한다.&lt;br /&gt;
+이후 인터넷이 안되는 머신의 시점으로 돌아간다.&lt;br /&gt;
+편의상 인터넷 불가한 머신의 &lt;code&gt;~/r_package&lt;/code&gt; 폴더에 &lt;code&gt;Amelia_1.7.4.tgz&lt;/code&gt;, &lt;code&gt;ape_5.0.tgz&lt;/code&gt;, &lt;code&gt;car_2.1-6.tgz&lt;/code&gt; 3개 파일을 복사하였다고 가정하고&lt;/p&gt;
+&lt;center&gt;
+&lt;script src=&quot;https://asciinema.org/a/153441.js&quot; id=&quot;asciicast-153441&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
+&lt;p&gt;위 처럼 &lt;code&gt;install.package()&lt;/code&gt; 함수의 &lt;code&gt;repos = NULL&lt;/code&gt; 옵션으로&lt;br /&gt;
+CRAN의 인터넷 접속에 의존하지 않은 채 수동설치가 가능하다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;맺음말&quot;&gt;맺음말&lt;/h2&gt;
+&lt;p&gt;망분리란 고립된 환경, 그외 여러한 제약들 때문에&lt;br /&gt;
+인터넷을 이용한 패키지 설치가 어려우실 경우&lt;br /&gt;
+이러한 방법들을 이용해 어느정도 해갈이 되었으면 하는 바램이다.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;&lt;a href=&quot;https://www.virtualbox.org/&quot;&gt;Virture box&lt;/a&gt;, &lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker&lt;/a&gt; 등 방법은 다양하다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
 </description>
         <pubDate>Sun, 05 Mar 2017 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2017/03/05/Rpackage_install_manually.html</link>
