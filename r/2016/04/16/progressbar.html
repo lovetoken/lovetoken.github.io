@@ -135,9 +135,10 @@
 
 
 <div class="content">
-    <div class="post"><p>이전에 R에서 진행표시줄(progress bar) 을 만들기 위해 <a href="http://cafe.naver.com/lovetokens/1378">windows OS 에서 작동되는 <code>winProgressBar()</code> 함수에 대해서 설명한 적</a>이 있다.<br />
+    <div class="post"><p><br><br></p>
+<p>이전에 R에서 진행표시줄(progress bar) 을 만들기 위해 <a href="http://cafe.naver.com/lovetokens/1378">windows OS 에서 작동되는 <code>winProgressBar()</code> 함수에 대해서 설명한 적</a>이 있다.<br />
 아쉽게도 윈도우 이외 다른 운영체계에서는 이 함수가 지원되지 않는다.<br />
-결국 상호호환의 문제로 다른 방안을 찾아보아야 하는 상황이 일어났는데 어떠한 운영체계라 하더라도 R에서 진행표시줄을 나타내기 위한 방법을 찾아 정리해보고자 한다.</p>
+결국 상호호환의 문제로 다른 방안을 찾아보아야 하는 상황이 일어났는데 어떠한 운영체계 (<i class="fa fa-windows" aria-hidden="true"></i>, <i class="fa fa-apple" aria-hidden="true"></i>, <i class="fa fa-linux" aria-hidden="true"></i>)라 하더라도 R에서 진행표시줄을 나타내기 위한 방법을 찾아 정리해보고자 한다.</p>
 <p>지금까지 찾아본 방법중 가장 좋은 것은 progress package 를 이용하는 것 이었다.</p>
 <p><br><br></p>
 <h2 id="example-code">example code</h2>
@@ -146,22 +147,19 @@
 예를 들어 반복의 대상이 되는 코드를 한번 수행하는데 걸리는 시간이 iteration 에 상관없이 공통으로 0.01초 라면 for 문이 모두 돌아가기 까지 소요되는 시간은 10초가 된다.<br />
 이러한 가정을 정확하게 구현하는 코드가 바로 아래 같다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for(i in <span class="kw">seq</span>(<span class="dv">1000</span>)){
-
-    <span class="kw">Sys.sleep</span>(<span class="fl">0.01</span>)
-
-}</code></pre></div>
+  <span class="kw">Sys.sleep</span>(<span class="fl">0.01</span>)  
+} </code></pre></div>
 <p><br><br></p>
 <h2 id="progress-package-를-이용해-진행표시줄-만들기">progress package 를 이용해 진행표시줄 만들기</h2>
-<p>progress package 를 로드<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;progress&quot;</span>)</code></pre></div>
+<p>progress package 를 준비하고 로드한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;progress&quot;)</span>
+<span class="kw">library</span>(<span class="st">&quot;progress&quot;</span>)</code></pre></div>
 <p>그 다음 위의 예제코드에 몇 가지 코드를 덧붙인다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pb &lt;-<span class="st"> </span>progress_bar$<span class="kw">new</span>(<span class="dt">total =</span> <span class="dv">1000</span>)
 
 for(i in <span class="kw">seq</span>(<span class="dv">1000</span>)){
-
     pb$<span class="kw">tick</span>()
     <span class="kw">Sys.sleep</span>(<span class="fl">0.01</span>)
-
 }</code></pre></div>
 <p>추가된 코드는 2줄이다.</p>
 <p>우선 첫번째 progress bar 에 대한 사전정보가 담긴 객체 <code>pb</code> 를 만든다.<br />
@@ -176,14 +174,6 @@ for(i in <span class="kw">seq</span>(<span class="dv">1000</span>)){
 <p>추가된 2줄 코드의 문법형태가 Python을 사용하는 것처럼 닮았다.<br />
 R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자유롭게 조절하여 사용 할 수 있는 듯 하다.<br />
 그 방법에 대해선 <code>?progress_bar</code> 를 통해 확인할 수 있으며, 예제코드들을 활용하면 상황에 맞게 커스터마이징도 가능할 듯 싶다.</p>
-<p>참고로 터미널 command line, R studio 에선 실험결과 정상적으로 진행표시줄이 보이는데, 다른 환경<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>에선 진행표시줄이 안보일 수도 있나 보다.</p>
-<section class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>물론 로드 이전에 패키지의 설치가 되어야 한다. <code>install.packages(&quot;progress&quot;)</code> 로 가능하다<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>내가 쓰고 있는 텍스트에디터 Sublime text 3 에서 R-box 플러그인을 이용한 환경에선 진행표시줄이 나타나지 않았다<a href="#fnref2">↩</a></p></li>
-</ol>
-</section>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
