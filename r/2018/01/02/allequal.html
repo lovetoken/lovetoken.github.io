@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>lovetoken</title>
+        <meta name="author" content="Lovetoken" />
+        <meta name="description" content="R에서 all.equal() 함수를 이용한 객체의 동일성 확인하기" />
+        <meta name="keywords" content="R에서 all.equal() 함수를 이용한 객체의 동일성 확인하기, , R" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="" property="fb:app_id">
+        <meta content="" property="og:site_name">
+        
+          <meta content="R에서 all.equal() 함수를 이용한 객체의 동일성 확인하기" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="" property="og:description">
+        
+        
+          <meta content="https://lovetoken.github.io/r/2018/01/02/allequal.html" property="og:url">
+        
+        
+          <meta content="2018-01-02T00:00:00+09:00" property="article:published_time">
+          <meta content="https://lovetoken.github.io/about/" property="article:author">
+        
+        
+          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="R" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:creator" content="@">
+        
+          <meta name="twitter:title" content="R에서 all.equal() 함수를 이용한 객체의 동일성 확인하기">
+        
+        
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2018/01/02/allequal.html">
+        
+        
+          <meta name="twitter:description" content="">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', 'UA-89656101-1', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">Lovetoken</h1>
+                
+                <div id="about">
+                    저는 개발 취향을 가진 데이터 분석가 Jr. 입니다.
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://twitter.com/LT_Lovetoken" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/lovetoken/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>Navigation</strong><br />
+                    &nbsp;&raquo; <a href="/">Home</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">About Me</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/lovetoken">Github</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>R에서 all.equal() 함수를 이용한 객체의 동일성 확인하기</h1>
+<span class="time">02 Jan 2018</span>
+
+<span class="categories">
+    &raquo; <a href="/category/R">R</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><p><br><br></p>
+<p>수학을 공부할 때 종종 이런일이 많았다.</p>
+<p>원 공식에 의해 계산이 불가하거나 손으로 풀기 복잡할 경우 근사치에 대한 간편공식을 배우게 되는 경우가 있다.<br />
+그 간편공식으로써 풀은 결과물이 원 공식으로 풀은 결과물과 동일한지 비교해보는 작업을 R을 이용하여 자주 하곤 했다.<br />
+만약 그 결과물이 어떤 하나의 스칼라값으로 나온다면,<br />
+금방 비교하여 동일한지 여부를 파악할 수 있다.<br />
+R을 이용한다면 논리연산자를 이용해 빠르고 정확하게 비교가 가능할 것이다.<br />
+<code>==</code> 의 기호는 데이터셋의 원소별로 동일하면 TRUE, 틀리면 FALSE 를 반환하게 되므로 좌변과 우변이 같은지를 아래처럼 확인할 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span>/<span class="dv">3</span> ==<span class="st"> </span><span class="dv">804</span>/<span class="dv">1206</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>위의 예시처럼 쉽게 같은지 구분하기 힘든것을 논리연산자를 통해 동일한지 파악할 수 있다.</p>
+<p><br><br></p>
+<h2 id="all.equal-함수"><code>all.equal()</code> 함수</h2>
+<p>그런데 이러한 논리연산자 말고, R에서는 오늘 알아볼 <code>all.equal()</code> 이란 함수가 있다.<br />
+이 함수의 쓰임은 비교하고자 하는 2개의 R객체가 동일한지를 확인해 준다.</p>
+<p>가끔, 아니 곧잘 대용량의 크기가 큰 데이터셋의 동일여부를 파악해야 할 때도 있을것이다.<br />
+아래와 같은 상황을 예로 들어 보겠다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## 일반 행렬곱셈
+A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">600</span> *<span class="st"> </span><span class="dv">400</span>)), <span class="dt">nrow =</span> <span class="dv">600</span>, <span class="dt">ncol =</span> <span class="dv">400</span>)
+B &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">400</span> *<span class="st"> </span><span class="dv">800</span>)), <span class="dt">nrow =</span> <span class="dv">400</span>, <span class="dt">ncol =</span> <span class="dv">800</span>)
+AB &lt;-<span class="st"> </span>A %*%<span class="st"> </span>B
+
+## 분할행렬 생성
+A11 &lt;-<span class="st"> </span>A[<span class="dv">1</span>:<span class="dv">200</span>, <span class="dv">1</span>:<span class="dv">200</span>]
+A12 &lt;-<span class="st"> </span>A[<span class="dv">1</span>:<span class="dv">200</span>, <span class="dv">201</span>:<span class="dv">400</span>]
+A21 &lt;-<span class="st"> </span>A[<span class="dv">201</span>:<span class="dv">600</span>, <span class="dv">1</span>:<span class="dv">200</span>]
+A22 &lt;-<span class="st"> </span>A[<span class="dv">201</span>:<span class="dv">600</span>, <span class="dv">201</span>:<span class="dv">400</span>]
+
+B11 &lt;-<span class="st"> </span>B[<span class="dv">1</span>:<span class="dv">200</span>, <span class="dv">1</span>:<span class="dv">200</span>]
+B12 &lt;-<span class="st"> </span>B[<span class="dv">1</span>:<span class="dv">200</span>, <span class="dv">201</span>:<span class="dv">800</span>]
+B21 &lt;-<span class="st"> </span>B[<span class="dv">201</span>:<span class="dv">400</span>, <span class="dv">1</span>:<span class="dv">200</span>]
+B22 &lt;-<span class="st"> </span>B[<span class="dv">201</span>:<span class="dv">400</span>, <span class="dv">201</span>:<span class="dv">800</span>]
+
+partition_AB &lt;-<span class="st"> </span><span class="kw">rbind</span>(
+  <span class="kw">cbind</span>(A11 %*%<span class="st"> </span>B11 +<span class="st"> </span>A12 %*%<span class="st"> </span>B21, A11 %*%<span class="st"> </span>B12 +<span class="st"> </span>A12 %*%<span class="st"> </span>B22),
+  <span class="kw">cbind</span>(A21 %*%<span class="st"> </span>B11 +<span class="st"> </span>A22 %*%<span class="st"> </span>B21, A21 %*%<span class="st"> </span>B12 +<span class="st"> </span>A22 %*%<span class="st"> </span>B22)
+  ) <span class="co"># 분할행렬 생성 후 행렬곱셈</span></code></pre></div>
+<p>위의 코드가 무엇인지 간략하게 설명하면<br />
+첫번째는 임의의 행렬 <code>A</code>와 행렬 <code>B</code>를 생성시킨 후, 두 행렬의 곱셈을 <code>AB</code>로 할당한 것이며,<br />
+두번째는 행렬 <code>A</code>, <code>B</code> 를 이와 같이 알맞게 분할한 후</p>
+<center>
+<br><img src="/assets/allequal_1.png"><br>
+</center>
+<p>단 <span class="math inline"><em>A</em><sub>11</sub></span>, <span class="math inline"><em>B</em><sub>11</sub></span> 은 200×200 행렬</p>
+<p><br></p>
+<p>로 분할한 행렬을 이용하여 행렬 <code>A</code>, <code>B</code>를 곱한 것 이다.</p>
+<center>
+<br><img src="/assets/allequal_2.png"><br>
+</center>
+<p>이처럼 곱한것을 객체 <code>partition_AB</code>로 할당하였다.</p>
+<p>이론적으로는 첫번째 일반적인 곱셈과, 두번째 분할행렬을 이용한 곱셈과 값이 동일하다.<br />
+단 그것이 믿겨지지 않을 경우 직접 확인해 보고싶을 수 있다.<br />
+그런데 이때 애로사항이 있다.<br />
+<code>AB</code> 와 <code>partition_AB</code> 가 서로 동일하느냐 를 확인하기 위해선<br />
+두 행렬의 사이즈가 600×800 으로 매우 부담이 되는 크기이다.</p>
+<p>물론 논리연산자 == 를 써도 되겠지만, 문제는 이 논리연산자를 써서 아래 코드를 실행하게 될 경우</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AB ==<span class="st"> </span>partition_AB</code></pre></div>
+<p>행렬의 원소별 값이 동일한지에 대한 논리값을 600 × 800 = 480,000 개를 행렬 타입으로 거대하게 반환할 것이다. 거대하므로 눈으로 동일한지 확인이 어려울 것이다.<br />
+480,000개의 원소가 모두 <code>TRUE</code> 인지를 확인하기 위해</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(AB ==<span class="st"> </span>partition_AB)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>처럼 <code>all()</code> 함수의 도움을 받을 수도 있겠지만<br />
+<code>all.equal()</code> 함수를 사용하는것이 더 유용할 때가 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(AB, partition_AB)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>함수이름 그대로 all equal 하면 <code>TRUE</code><br />
+그렇지 않을 경우 어디가 어떻게 틀린지 구체적으로 설명한다.<br />
+본 예제의 경우 원래의 행렬곱과 분할행렬의 곱이 같은경우의 예제이므로 <code>TRUE</code> 를 반환한다.</p>
+<p><code>all.equal()</code> 함수는 객체가 동일한지의 판단하는 함수로써도 편리한 기능의 함수이지만,<br />
+기본적으로는 얼마나 가깝게 동일한지 정도를 확인할 수 있는 일종의 비교함수로 보고 사용하는것이 좋다.<br />
+함수 도움말의 제목에서도 'Test if Two Objects are (Nearly) Equal' 로 나와있고 괄호의 &quot;Nearly&quot; 가 눈에 띈다.</p>
+<p><br><br></p>
+<p>조금 더 체감하기 좋은 행렬의 연산예시를 들어보겠다.<br />
+R에서는 순환소수, 무한소수를 계산할 때, 즉 유리수가 아닌 무리수를 연산할 때 아주 미세한 값의 차이가 존재할 수 있다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a><br />
+하지만 이는 무리수를 굳이 소수점으로 표현하여 어떤 소수점자리 이후는 절단되어 버려지는 시스템 적인 문제일 뿐이다.</p>
+<p>아래 예시는 임의행렬 X와 그의 역행렬을 곱한것을 단위행렬과 비교해본 시뮬레이션이다.<br />
+행렬 X는 5×5 행렬이며 이론상으로는</p>
+<center>
+<br><img src="/assets/allequal_3.png"><br>
+</center>
+<p>이 성립한다. 하지만</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>), <span class="dv">5</span>, <span class="dv">5</span>)
+XtX &lt;-<span class="st"> </span><span class="kw">solve</span>(X) %*%<span class="st"> </span>X
+
+I_5 &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dv">1</span>, <span class="dv">5</span>)
+
+XtX ==<span class="st"> </span>I_5</code></pre></div>
+<pre><code>##       [,1]  [,2]  [,3]  [,4]  [,5]
+## [1,] FALSE FALSE FALSE FALSE FALSE
+## [2,] FALSE FALSE FALSE FALSE FALSE
+## [3,] FALSE FALSE FALSE  TRUE FALSE
+## [4,] FALSE FALSE FALSE  TRUE  TRUE
+## [5,] FALSE FALSE FALSE FALSE FALSE</code></pre>
+<p>결과는 여기저기서 <code>FALSE</code> 가 있고 실제로 값이 다르다. 전부 TRUE 이어야 하지만</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(XtX ==<span class="st"> </span>I_5)</code></pre></div>
+<pre><code>## 
+## FALSE  TRUE 
+##    22     3</code></pre>
+<p>이처럼 3개만 <code>TRUE</code> 로 인식한다.<br />
+이처럼 무리수를 컴퓨터가 정확하게 표현할 수 없기 때문에 일어나는 일로 <code>XtX</code> 나, <code>I_5</code> 를 같지 않다고 판단하는것은 상황에 따라서 용인해야할 때가 있다.<br />
+이때 방금 언급한 <code>all.equal()</code> 함수를 사용해 보면 어떨까?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(XtX, I_5)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p><code>all.equal()</code> 함수 내에는 <code>tolerance</code> 인자가 존재하여 어느 정도의 차이는 단어 뜻대로 관용, 아량을 베풀어주는 로직이 있다.<br />
+따라서 <code>XtX</code> 와, <code>I_5</code> 는 그정도 차이는 무시하고 서로 동일하다고 판단하여 <code>TRUE</code> 를 반환한다.<br />
+만약 관용, 아량을 전혀 베풀지 않는(<code>tolerance = 0</code>)다면</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(XtX, I_5, <span class="dt">tolerance =</span> <span class="dv">0</span>)</code></pre></div>
+<pre><code>## [1] &quot;Mean relative difference: 2.806783e-15&quot;</code></pre>
+<p>두 객체간 차이의 아주 정확한 값을 반환한다.<br />
+분석을 하다보면 위의 예제 말고도 동등성을 확인하여야 할 때가 사뭇 많다.<br />
+이럴 때 <code>all.equal()</code> 함수는 유용하게 사용될 수 있을것이다.</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>이는 <a href="https://ko.wikipedia.org/wiki/%EB%B6%80%EB%8F%99%EC%86%8C%EC%88%98%EC%A0%90">부동소수점</a>으로 인한 문제이다<a href="#fnref1">↩</a></p></li>
+</ol>
+</section>
+</div>
+    <div class="share-page">
+    <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2018/01/02/allequal.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/10/07/guessEncoding.html">R에서 readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/data_visualization/2017/06/16/plotFunction.html">R에서 기본 내장 graphics package를 이용한 데이터 시각화</a>
+                    
+                        (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/05/30/MatrixProduct.html">R에서 행렬 간 이루어지는 다양한 곱셈에 대해 알아보기 (행렬의 곱셈, 하다마드 곱셈, 크로네커 곱셈)</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/04/23/caret_package.html">R에서 caret package 를 이용한 데이터 학습 간편화 전략</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/04/16/vif.html">R에서 car::vif() 함수를 이용한 분산팽창요인(Variance Inflation Factor) 구하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/03/21/RImpala_package.html">R에서 RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/python/2017/10/22/python3_install_on_CentOS_manually.html">&laquo; 인터넷 접속이 안되는 CentOS 머신에서 Python3 및 패키지 설치하기</a>
+  
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+
+        var disqus_shortname = "lovetoken";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 all.equal() 함수를 이용한 객체의 동일성 확인하기";
+        var disqus_title = "R에서 all.equal() 함수를 이용한 객체의 동일성 확인하기";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    /* ]]> */
+    </script>
+</div>
+
+                <footer>
+                    Copyleft by Lovetoken
+                     
+                    - <a href="https://github.com/lovetoken">https://github.com/lovetoken</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>                    
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>
