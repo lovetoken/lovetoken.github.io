@@ -135,37 +135,36 @@
 
 
 <div class="content">
-    <div class="post"><br>
+    <div class="post"><p><br><br></p>
+<br>
 <center>
-<img src="/assets/Rimpala.jpg" width="80%">
+<img src="/assets/impala.png" width=100px>
 </center>
 <p><br></p>
-<p><a href="https://www.cloudera.com/documentation/enterprise/5-8-x/topics/impala.html">Impala</a> 라는걸 사용해 봐야 할 일이 생겼다.<br />
-필자는 Hadoop, SQL 과 같은 기술이 상당히 낯설고 두려움이 있었는데 Impala 를 통해 조금씩 알게 되는 계기가 되었으면 좋겠다.</p>
+<p><a href="https://impala.apache.org/index.html">Impala</a>를 사용해 봐야 할 일이 생겼다.</p>
 <p>Impala 는 아파치 프로젝트에 incubating 단계로 관리되고 있는 프로젝트로써<br />
-HDFS(Hadoop Distributed File System) 안에 있는 데이터를 SQL 을 통해 실시간으로(대화형으로) 분석할 수 있게 도와주는 시스템이라고 한다.<br />
-HDFS 를 이용하기 위해선 MapReduce 프레임워크를 알고 이용했어야 한다는 불편한 제약을 Impala 를 통해 벗어날 수 있다 이해할 수 있겠다.</p>
-<p>Impala 소개는 이쯤 하고 (<del>읔.. 알고있는게 이정도 뿐이다 😅</del>) 여하튼 지금은 <a href="https://www.docker.com/">Docker</a> 을 통해 Impala 를 간단히 구동시켜보고,<br />
+HDFS(Hadoop Distributed File System) 안에 있는 데이터를 SQL를 통해 대화형으로 분석할 수 있게 도와주는 시스템이라고 한다.<br />
+HDFS 를 이용하기 위해선 MapReduce 프레임워크를 알고 있어야 이용할 수 있다는 불편한 제약을 Impala 를 통해 벗어날 수 있다고 이해할 수 있겠다.<br />
+필자는 Hadoop, SQL 과 같은 기술이 낯설고 두려움이 있었는데 Impala 를 통해 조금씩 알게 되는 계기로 작용하기도 했다.</p>
+<p>본 글은 <a href="https://www.docker.com/">Docker</a> 을 통해 Impala 를 간단히 구동시켜보고,<br />
 RImpala package 를 이용해 R 상에서 Impala 와 커넥션을 맺는데 성공했던 과정을 짤막하게 정리하고 적어보고자 한다.</p>
 <p><br><br></p>
 <h2 id="ready-impala">Ready impala</h2>
 <p>Impala 이용 전 <code>.jar</code> 리소스들을 준비해야 한다고 한다.<br />
-아래 R 코드를 통해 다운로드 및 워킹디렉토리에 압축해제가 가능하다.</p>
+아래 코드를 통해 다운로드 및 워킹디렉토리에 압축해제가 가능하다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">download.file</span>(<span class="st">&quot;https://github.com/Mu-Sigma/RImpala/blob/master/impala-jdbc-cdh5.zip?raw=true&quot;</span>, 
               <span class="st">&quot;jdbc.zip&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;curl&quot;</span>, <span class="dt">extra =</span> <span class="st">&quot;-L&quot;</span>)
 <span class="kw">unzip</span>(<span class="st">&quot;jdbc.zip&quot;</span>)</code></pre></div>
 <p><br><br></p>
 <h2 id="docker-images-ready">Docker images ready</h2>
-<p>그다음 터미널을 들어가 Docker 를 구동할 준비를 한다.<br />
+<p>프로젝트 당시 Cloudera 인프라 환경이 잘 갖추어진 상태에서 RImpala 패키지를 통해 R과 연동시켜 분석이 가능했는데<br />
+클라우데라 동작환경을 그대로 본 포스팅 글에 재현하기가 조금 어렵다.</p>
+<p>그래서 Docker 의 도움을 받아 튜토리얼을 작성해 보려 한다.<br />
 여기서 Docker 를 이용하려는 이유를 언급해야 할 것 같은데<br />
 Impala 를 이용하기 위해선 Hadoop 시스템이 사전에 준비되어야 하고, JDBC 를 위한 Java 설정등 다양한 준비(Requirements)가 매우 부담되기 때문이다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a><br />
-이러한 이유로 나는 Docker 를 이용해 누군가 개발해 놓은, 사전에 잘 구축한 환경을 사용하고자 하기 때문에<br />
-Docker 구동을 위해 boot2docker 를 시작했다.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">boot2docker</span> init
-$ <span class="kw">boot2docker</span> up
-$ <span class="kw">boot2docker</span> ssh</code></pre></div>
-<p><code>boot2docker ssh</code> 를 통해 docker 가상머신에 접속 후 &quot;Impala&quot; 를 검색어로 적당한 이미지를 찾아본다.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker@boot2docker</span>:~$ docker search impala</code></pre></div>
+이러한 이유로 나는 Docker 를 이용해 누군가가 사전에 잘 구축한 환경을 사용하고자 하기 때문에 Docker 를 실행시켰다.</p>
+<p>&quot;impala&quot; 라는 검색어로 docker hub 상 이미지를 검색해 본다.</p>
+<pre><code>$ docker search impala</code></pre>
 <pre><code>NAME                                DESCRIPTION                                     STARS
 cloudera/impala-dev                 Impala development environment                  10
 codingtony/impala                                                                   5
@@ -185,14 +184,14 @@ andreysabitov/impala-kudu                                                       
 ... [이하 생략]</code></pre>
 <p>여러 가지가 이미지가 준비되어 있는데 그중 개인적으론 &quot;cloudera/impala-dev&quot; 보단 &quot;codingtony/impala&quot; 가 바로 사용하기 좋았다.<br />
 &quot;codingtony/impala&quot; 이미지를 준비 내려받았다.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker@boot2docker</span>:~$ docker pull codingtony/impala</code></pre></div>
+<pre><code>$ docker pull codingtony/impala</code></pre>
 <p>1.4GB 정도가 다운로드 되는데 시간이 조금 소요된다.<br />
 다운로드 이후 image 가 잘 준비되어 있는지 <code>docker images</code> 를 통해 확인할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker@boot2docker</span>:~$ docker images</code></pre></div>
+<pre><code>$ docker images</code></pre>
 <pre><code>REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
 codingtony/impala   latest              24f0d50712cf        2 years ago         1.452 GB</code></pre>
 <p>다음을 통해 준비한 Impala 이미지를 컨테이너로 실행시킨다.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker@boot2docker</span>:~$ docker run -d --name <span class="st">&quot;impala&quot;</span> -p 9000:9000 -p 50010:50010 -p 50020:50020 -p 50070:50070 -p 50075:50075 -p 21000:21000 -p 21050:21050 -p 25000:25000 -p 25010:25010 -p 25020:25020 codingtony/impala</code></pre></div>
+<pre><code>$ docker run -d --name &quot;impala&quot; -p 9000:9000 -p 50010:50010 -p 50020:50020 -p 50070:50070 -p 50075:50075 -p 21000:21000 -p 21050:21050 -p 25000:25000 -p 25010:25010 -p 25020:25020 codingtony/impala</code></pre>
 <p>참고로 <code>docker run</code> 의 다양한 옵션들 중 <code>-d,</code> <code>--name</code> 은 각각</p>
 <ul>
 <li><code>-d</code> : background 프로세스로 실행해 놓겠다는 의미</li>
@@ -201,7 +200,7 @@ codingtony/impala   latest              24f0d50712cf        2 years ago         
 <p>의 의미를 가지고 있다.<br />
 참고로 Impala 컨테이너가 백그라운드로 잘 실행되는 상태인지 확인을 위해선 <code>docker ps</code> 명령어로 프로세스 확인할 수 있다.<br />
 프로세스가 잘 돌고 있는 것을 확인했다면</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker@boot2docker</span>:~$ docker exec -it impala /bin/bash</code></pre></div>
+<pre><code>$ docker exec -it impala /bin/bash</code></pre>
 <p>를 통해 Impala 컨테이너의 bash 셸을 열어 입력/출력이 가능하도록 사용할 수 있고<br />
 <code>impala-shell</code> 를 실행해 대화형 쿼리를 주고받을 수 있다.</p>
 <pre><code>root@cb4ba4d0f902:/# impala-shell
@@ -218,29 +217,39 @@ Copyright (c) 2012 Cloudera, Inc. All rights reserved.
 <p><br><br></p>
 <h2 id="rimpala-package-이용한-로컬에서의-impala-제어">RImpala package 이용한 로컬에서의 impala 제어</h2>
 <h3 id="docker-vm-ip-확인">Docker VM IP 확인</h3>
-<p>로컬 상에서 RImpala package 이용한 로컬 상의 제어를 위해 docker ip 를 확인할 필요가 있다.<br />
-이는 <code>boot2docker ip</code> 를 통해 쉽게 확인 가능하다.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">boot2docker</span> ip</code></pre></div>
-<p>예를 들어 &quot;192.168.59.103&quot; 임을 위의 커멘드를 통해 확인했다고 가정하겠다.</p>
-<h3 id="r상에-rimpala-패키지를-이용한-커넥션">R상에 RImpala 패키지를 이용한 커넥션</h3>
-<p>R로 되돌아오자.<br />
+<p>로컬 상에서 RImpala package 이용한 로컬 상의 제어를 위해 docker 컨테이너의 ip 를 확인할 필요가 있다.<br />
+boot2docker 를 사용해 docker 를 이용한다면 <code>boot2docker ip</code> 를 통해 확인하거나,</p>
+<pre><code>$ boot2docker ip</code></pre>
+<p>도커 컨테이너에 직접 들어가 <code>ip addr</code> 를 실행시켜 확인하는 방법이 있을 것이다.</p>
+<pre><code>$ docker exec [CONTAINER_ID] ip addr</code></pre>
+<p>예를 들어 ip를 확인해 보니 &quot;192.168.59.103&quot; 임을 위의 커멘드를 통해 확인했다고 가정하겠다.</p>
+<p><br></p>
+<h3 id="r상에서-rimpala-패키지를-이용한-커넥션">R상에서 RImpala 패키지를 이용한 커넥션</h3>
+<p>RImpala 패키지는 현재 <code>install.packages(&quot;RImpala&quot;)</code> 를 통해 설치가 되지 않는다. CRAN 에서 유지보수가 멈춘듯 싶은데<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> <a href="https://cran.r-project.org/src/contrib/Archive/RImpala">이전 아카이브</a>에 설치 리소스가 있다.<br />
+링크를 타고 들어가 보면 0.1.6 버전이 마지막 최신버전인데 tar.gz 압축파일을 다운로드 한 후 다운로드의 경로에서 터미널을 실행해</p>
+<pre><code>$ R CMD install RImpala_0.1.6.tar.gz</code></pre>
+<p>를 입력하거나 R 상에서</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;RImpala_0.1.6.tar.gz&quot;</span>, <span class="dt">repos =</span> <span class="ot">NULL</span>)</code></pre></div>
+<p>을 통해 패키지를 설치할 수 있다. 단 Java 가 시스템상의 요구조건이며, rJava 패키지와 의존성이 있어 rJava 패키지가 정상적으로 설치되었을 때 위의 RImpala 패키지 설치가 가능하다.</p>
+<p>설치 및 로드가 되었다면 R session 으로 시점을 이제 완전히 돌린다.<br />
 먼저 <code>.jar</code> 들을 다운받은 디렉토리 path를 <code>rimpala.init()</code> 함수에 입력한 코드를 먼저 실행하고,<br />
-docker 가상환경의 ip, 그리고 Impala JDBC/ODBC 기본값 포트번호 (21050) 를 <code>rimpala.connect()</code> 에 입력한 코드를 그다음으로 실행하면 <code>TRUE</code> 가 반기면 커넥션이 성공한 것이다.</p>
+docker 컨테이너의 ip, 그리고 Impala JDBC/ODBC 기본값 포트번호 (21050) 를 <code>rimpala.connect()</code> 에 입력한 코드를 그다음으로 실행한다.<br />
+<code>TRUE</code> 가 반환되면 커넥션이 성공한 것이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RImpala)
 
 <span class="kw">rimpala.init</span>(<span class="dt">libs =</span> <span class="st">&quot;impala-jdbc-cdh5&quot;</span>)</code></pre></div>
 <pre><code>## [1] &quot;Classpath added successfully&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rimpala.connect</span>(<span class="dt">IP =</span> <span class="st">&quot;192.168.59.103&quot;</span>, <span class="dt">port =</span> <span class="st">&quot;21050&quot;</span>)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
+<p><br></p>
 <h3 id="use-databases">Use databases</h3>
-<p>자 이제 즐기면(?) 되겠다. database 가 무엇이 있는지 확인부터 해보자.<br />
-<code>show databases;</code> 쿼리를 날려보는 건 <code>rimpala.showdatabases()</code> 을 실행하는 것과 같다.</p>
+<p>자 이제 즐기면 되겠다. database 가 무엇이 있는지 확인부터 해보자.<br />
+<code>show databases;</code> 쿼리를 실행하는 것은 <code>rimpala.showdatabases()</code> 을 실행하는 것과 같다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rimpala.showdatabases</span>()</code></pre></div>
 <pre><code>##               name
 ## 1 _impala_builtins
 ## 2          default</code></pre>
-<p>쿼리문 자체를 이용하고자 한다면 <code>rimpala.query()</code> 함수를 이용하면 된다.<br />
-단 쿼리문 마지막에 세미콜론(;)은 넣지 않아야 에러가 나지 않았다.</p>
+<p>쿼리문 자체를 이용하고자 한다면 <code>rimpala.query()</code> 함수를 이용하면 된다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rimpala.query</span>(<span class="st">&quot;show databases&quot;</span>)</code></pre></div>
 <pre><code>##               name
 ## 1 _impala_builtins
@@ -250,21 +259,17 @@ docker 가상환경의 ip, 그리고 Impala JDBC/ODBC 기본값 포트번호 (21
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rimpala.usedatabase</span>(<span class="st">&quot;default&quot;</span>)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>를 하면된다. <code>use default;</code> 쿼리와 같다.</p>
+<p><br></p>
 <h3 id="send-query-test">Send query test</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tryCatch</span>(<span class="kw">rimpala.query</span>(<span class="st">&quot;drop table sample&quot;</span>), <span class="dt">error =</span> function(e){})</code></pre></div>
-<pre><code>## NULL</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tryCatch</span>(<span class="kw">rimpala.query</span>(<span class="st">&quot;create table sample(no integer)&quot;</span>), <span class="dt">error =</span> function(e){})</code></pre></div>
-<pre><code>## NULL</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tryCatch</span>(<span class="kw">rimpala.query</span>(<span class="st">&quot;insert into sample (no) values (1)&quot;</span>), <span class="dt">error =</span> function(e){})</code></pre></div>
-<pre><code>## NULL</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">rimpala.query</span>(<span class="st">&quot;select * from sample&quot;</span>) <span class="co"># output value is data.frame class</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rimpala.query</span>(<span class="st">&quot;drop table sample&quot;</span>)
+<span class="kw">rimpala.query</span>(<span class="st">&quot;create table sample(no integer)&quot;</span>)
+<span class="kw">rimpala.query</span>(<span class="st">&quot;insert into sample (no) values (1)&quot;</span>)
+
+data &lt;-<span class="st"> </span><span class="kw">rimpala.query</span>(<span class="st">&quot;select * from sample&quot;</span>)
 data</code></pre></div>
 <pre><code>##   no
 ## 1  1</code></pre>
-<p><code>rimpala.query()</code> 함수로 쿼리를 보낼 때 에러를 많이 반환했다.<br />
-하지만 이상하게도 R상에선 에러를 뿜었으나 쿼리가 Impala 에 잘 먹혔다.<br />
-이 때문에 임시방편으로 <code>tryCatch()</code> 를 통해 예외처리를 했다.<br />
-다만 데이터를 끌어오는데는 쿼리는 문제없이 잘 실행됬다.</p>
+<p><br></p>
 <h3 id="close-connect-impala">close connect impala</h3>
 <p>커넥션은 <code>rimpala.close()</code> 로 끊을 수 있다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rimpala.close</span>()</code></pre></div>
@@ -280,7 +285,8 @@ data</code></pre></div>
 <hr />
 <ol>
 <li id="fn1"><p>Cloudera 에서 <a href="https://www.cloudera.com/documentation/enterprise/5-9-x/topics/impala_prereqs.html">Impala install 페이지</a>를 보고 지레 겁먹어서 그렇기도 하다<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p><code>docker pull</code> 과정 없이 바로 <code>docker run</code> 을 해도 된다. 무슨말이냐면 사실 <code>docker run</code> 은 이미지가 없을 경우 자동으로 이미지를 다운로드 하기 때문이다<a href="#fnref2">↩</a></p></li>
+<li id="fn2"><p><code>docker pull</code> 과정 없이 바로 <code>docker run</code> 을 해도 된다. <code>docker run</code> 은 이미지가 없을 경우 자동으로 이미지를 다운로드 하고나서 컨테이너를 준비해 실행시키기 때문이다<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>2018-01-07 부로 그런 듯 싶다<a href="#fnref3">↩</a></p></li>
 </ol>
 </section>
 </div>
