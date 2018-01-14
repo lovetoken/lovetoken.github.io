@@ -5,9 +5,77 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Jan 2018 00:11:20 +0900</pubDate>
-    <lastBuildDate>Sun, 14 Jan 2018 00:11:20 +0900</lastBuildDate>
+    <pubDate>Sun, 14 Jan 2018 15:21:49 +0900</pubDate>
+    <lastBuildDate>Sun, 14 Jan 2018 15:21:49 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>변동계수의 개념과 R에서의 실습</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;변동계수(coefficient of variation, C.V)는 평균이 크게 다른 두개 이상의 집단이 있을때&lt;br /&gt;
+각 집단의 상대적 동질성을 감안한 산포도의 척도이다.&lt;/p&gt;
+&lt;p&gt;변동계수에 대한설명을 위하여 아래 예시를 준비했다.&lt;/p&gt;
+&lt;p&gt;3개의 샘플에 대한 물 용량을 측정한 예시가 있다.&lt;br /&gt;
+이 3개의 샘플을 두 사람이 측정해 보고했다고 치자.&lt;br /&gt;
+그런데 측정 단위에 대한 언급이 따로 없어 한사람은 리터 단위로, 한사람은 밀리리터 단위로 조사를 했다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;l &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;54&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;50&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;52&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# 물 리터단위(L)측정&lt;/span&gt;
+ml &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;54017&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;49980&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;52003&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# 물 밀리리터단위(mL)측정&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(l)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 52&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(ml)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 52000&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(l)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(ml)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2018.502&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;분명 같은 집단을 두 조사자는 조사했지만 측정단위의 차이로 인해 평균과 표준편차가 확연히 다르므로&lt;br /&gt;
+이 내막을 모르는 사람에게는, 그리고 샘플의 개수가 인지하기 힘들정도로 많았을 때&lt;br /&gt;
+두 집단이 다른것으로 대강 판단할 위험이 있다.&lt;/p&gt;
+&lt;p&gt;리터단위로 측정시 표준편차는 2, 평균은 52로 계산되고&lt;br /&gt;
+밀리리터단위로 측정시 표준편차와 평균은 리터단위로 계산한 표준편차보다 1000배 정도 높히 계산된다.&lt;/p&gt;
+&lt;p&gt;여기서 단위의 차이로 생겨버린 이 1000배를 보정하는것이 변동계수의 기능이라고 볼 수 있는데&lt;br /&gt;
+변동계수는 표준편차를 평균으로 나누는것으로 간단히 계산된다.&lt;br /&gt;
+결과적으로 단위와 무관하게 계산되어 다른단위로 측정된 자료들의 산포를 비교할때 표준편차보다 유용한 지표가 된다.&lt;br /&gt;
+이러한 점에서 변동계수를 상대표준편차(relative standard deviation, RSD)라고도 부른다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(l) /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(l) &lt;span class=&quot;co&quot;&gt;# 리터단위 측정 샘플에 대한 변동계수&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.03846154&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(ml) /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(ml) &lt;span class=&quot;co&quot;&gt;# 밀리리터단위 측정 샘플에 대한 변동계수&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.03881734&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;직접 계산해 보면 거의 비슷한 값으로 계산된다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;other-example&quot;&gt;other example&lt;/h2&gt;
+&lt;p&gt;어떠한 백분율 값을 측정한 것으로 보이는 두 그룹이 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;group1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;86&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;85&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;92&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;89&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;83&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;90&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;88&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;91&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;79&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;83&lt;/span&gt;)
+group2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;fl&quot;&gt;0.88&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.91&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.94&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.84&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.97&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.89&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.99&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.88&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.89&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.96&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;group1&lt;/code&gt; 은 100을 곱한 백분율의 상태 &lt;code&gt;group2&lt;/code&gt; 는 0~1 범위의 백분율 상태이다.&lt;br /&gt;
+실제로 위와 같은 예는 조사자의 취향에 따라 단위가 통일되지 못하는 사례로 많다.&lt;/p&gt;
+&lt;p&gt;당연히 이 둘의 데이터 산포도를 측정하고자&lt;br /&gt;
+표준편차를 구하게 될 때 &lt;code&gt;group1&lt;/code&gt; 의 표준편차가 작을것이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(group1)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 4.141927&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(group2)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.04790036&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;산포도의 공평한 비교가 될 수 없기에&lt;br /&gt;
+&lt;code&gt;group2&lt;/code&gt; 자료에 100을 곱한 후 표준편차를 다시 구하거나&lt;br /&gt;
+반대로 &lt;code&gt;group1&lt;/code&gt; 자료에 100을 나누어 표준편차를 구하게 될 것이다.&lt;br /&gt;
+하지만 이는 급한마음에 거치는 절차이며&lt;br /&gt;
+무엇보다 원 데이터를 보존하지 못하는 방법이므로 위험성이 있을 것이다.&lt;br /&gt;
+이때 변동계수를 이용하는것이 좋을것이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(group1) /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(group1)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.04782825&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(group2) /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(group2)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.05235012&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;변동계수를 구한결과 &lt;code&gt;group2&lt;/code&gt; 이 &lt;code&gt;group1&lt;/code&gt; 보다 변동계수가 더 컸다.&lt;br /&gt;
+즉 상대적으로 &lt;code&gt;group2&lt;/code&gt; 의 퍼짐정도가 &lt;code&gt;group1&lt;/code&gt; 보다 크다는 결론을 낼 수 있다.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 14 Jan 2018 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2018/01/14/CV.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2018/01/14/CV.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>라즈베리파이 초기상태의 pi 계정에서 root 비밀번호 변경</title>
