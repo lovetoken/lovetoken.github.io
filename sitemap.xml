@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Jan 2018 15:28:41 +0900</pubDate>
-    <lastBuildDate>Sun, 14 Jan 2018 15:28:41 +0900</lastBuildDate>
+    <pubDate>Sat, 20 Jan 2018 21:17:18 +0900</pubDate>
+    <lastBuildDate>Sat, 20 Jan 2018 21:17:18 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -24,8 +24,10 @@ ml &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;
 &lt;pre&gt;&lt;code&gt;## [1] 52&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(ml)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] 52000&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;sd(l)
-sd(ml)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(l)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(ml)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2018.502&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;분명 같은 집단을 두 조사자는 조사했지만 측정단위의 차이로 인해 평균과 표준편차가 확연히 다르므로&lt;br /&gt;
 이 내막을 모르는 사람에게는, 그리고 샘플의 개수가 인지하기 힘들정도로 많았을 때&lt;br /&gt;
 두 집단이 다른것으로 대강 판단할 위험이 있다.&lt;/p&gt;
@@ -5046,14 +5048,14 @@ R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자
     
       <item>
         <title>R에서 rjson package 의 toJSON(), fromJSON() 함수 알아보기</title>
-        <description>&lt;p&gt;JSON 포맷의 데이터를 R에서 읽어 들인 후 가공하기 위해 JSON 형식을 parser 해야 하는 과정이 필요하다고 한다.&lt;br /&gt;
-rjson 라는 패키지가 이를 도와주는데 이 안에 있는 함수 &lt;code&gt;toJSON()&lt;/code&gt;, &lt;code&gt;fromJSON()&lt;/code&gt; 2개를 기본적으로 이용하여 실습을 해보겠다.&lt;/p&gt;
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;JSON(JavaScript Object Notation) 포맷의 데이터를 R에서 읽어 들이기 위해 파싱해야 하는 과정이 필요하다.&lt;br /&gt;
+rjson 라는 패키지가 이를 도와주는데 패키지 안에는 &lt;code&gt;toJSON()&lt;/code&gt;, &lt;code&gt;fromJSON()&lt;/code&gt; 2개의 함수가 있으며 이를 이용한 json 파일을 읽는 실습을 해 보겠다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;준비&quot;&gt;준비&lt;/h2&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h3 id=&quot;예제-데이터&quot;&gt;예제 데이터&lt;/h3&gt;
-&lt;p&gt;실습을 하기 위하여 아래와 같은 JSON 타입의 데이터가 있다고 가정해 보겠다.&lt;br /&gt;
-아래의 데이터는 &lt;a href=&quot;https://ko.wikipedia.org/wiki/JSON#.EC.98.88.EC.A0.9C&quot;&gt;JSON 을 설명하는 위키백과&lt;/a&gt;의 예제데이터를 적절히 수정한 것이다.&lt;/p&gt;
+&lt;h2 id=&quot;ready&quot;&gt;Ready&lt;/h2&gt;
+&lt;h3 id=&quot;example-data&quot;&gt;Example data&lt;/h3&gt;
+&lt;p&gt;실습을 하기 위하여 아래와 같은 json 타입의 데이터가 있다고 가정한다.&lt;br /&gt;
+아래의 데이터는 &lt;a href=&quot;https://ko.wikipedia.org/wiki/JSON#.EC.98.88.EC.A0.9C&quot;&gt;JSON 형을 설명하는 위키백과&lt;/a&gt;의 예제데이터를 적절히 수정한 것이다.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[
   {
     &amp;quot;Name&amp;quot;: &amp;quot;Test&amp;quot;,
@@ -5063,22 +5065,23 @@ rjson 라는 패키지가 이를 도와주는데 이 안에 있는 함수 &lt;co
     &amp;quot;Hobby&amp;quot;: &amp;quot;Basketball&amp;quot;
   }
 ]&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;이것을 워킹디렉토리에 &lt;code&gt;test.json&lt;/code&gt; 로 저장하고 이를 R에서 적절하게 사용하기 위해 불러와 보겠다.&lt;br /&gt;
-어떠한 텍스트에디터를 이용하던 상관없다, 저장방법은 위의 JSON 형식 텍스트를 복사한 다음 &amp;quot;test.json&amp;quot; 이란 파일명으로 저장만 하면 된다.&lt;/p&gt;
-&lt;figure&gt;
-&lt;img src=&quot;/assets/rjson_1.png&quot; /&gt;
-&lt;/figure&gt;
-&lt;p&gt;나는 Sublime text 3 라는 텍스트 에디터를 이용해 이처럼 저장하였다.&lt;/p&gt;
+&lt;p&gt;위 예제를 워킹디렉토리의 &lt;code&gt;test.json&lt;/code&gt; 로 저장한다.&lt;br /&gt;
+어떠한 텍스트에디터를 이용하던 상관없으며, 저장방법은 위의 JSON 형식 텍스트를 복사한 다음 &amp;quot;test.json&amp;quot; 이란 파일명으로 저장하면 된다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h3 id=&quot;jsonlite-패키지-불러오기&quot;&gt;jsonlite 패키지 불러오기&lt;/h3&gt;
-&lt;p&gt;당연히 rjson 패키지를 불러오는 것이 필요하다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;rjson&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/rjson_1.png&quot;&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;위 그림은 Sublime text 텍스트 에디터를 이용해 저장해 본 예시이다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3 id=&quot;jsonlite-package-load&quot;&gt;jsonlite package load&lt;/h3&gt;
+&lt;p&gt;rjson 패키지 설치 및 로드를 한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;install.packages&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;rjson&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(rjson)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;tojson-fromjson-함수-이용해보기&quot;&gt;&lt;code&gt;toJSON()&lt;/code&gt;, &lt;code&gt;fromJSON()&lt;/code&gt; 함수 이용해보기&lt;/h2&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h3 id=&quot;fromjson&quot;&gt;&lt;code&gt;fromJSON()&lt;/code&gt;&lt;/h3&gt;
-&lt;p&gt;우선 &lt;code&gt;fromJSON()&lt;/code&gt; 함수를 알아보자.&lt;br /&gt;
-JSON 형 데이터를 R에서 가공할 수 있도록 형태를 변환하여 준다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;fromJSON()&lt;/code&gt; 함수는 JSON 형 데이터를 R에서 헨들링 할 수 있도록 한다. (read.JSON 와 같은 함수명이 더 어울릴 수도..)&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;data &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;fromJSON&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;file =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;test.json&amp;quot;&lt;/span&gt;)
 data&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [[1]]
@@ -5098,21 +5101,26 @@ data&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 ## [1] &amp;quot;Basketball&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;class&lt;/span&gt;(data)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;list&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;list 형식으로 반환되는데 적절히 data.frame 형태로 변환하여 보면 다음과 같다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;dataframe &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;as.data.frame&lt;/span&gt;(data)
-dataframe&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;list 형식으로 반환된다.&lt;br /&gt;
+data.frame 형태로 변환해 보면 다음과 같다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;df &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;as.data.frame&lt;/span&gt;(data)
+df&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##   Name Age Sex Address      Hobby
 ## 1 Test  25   F   Seoul Basketball&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h3 id=&quot;tojson&quot;&gt;&lt;code&gt;toJSON()&lt;/code&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;toJSON()&lt;/code&gt; 은 이와 반대의 성격을 가진다.&lt;br /&gt;
-R의 객체를 특히 list, data.frame 등을 JSON 형으로 변환시킨다.&lt;br /&gt;
-방금만든 &lt;code&gt;dataframe&lt;/code&gt; 객체를 다시 JSON 형태로 바꾸기 위해선,&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;toJSON&lt;/span&gt;(dataframe)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;toJSON()&lt;/code&gt; 은 &lt;code&gt;fromJSON()&lt;/code&gt; 의 반대의 성격을 가진다.&lt;br /&gt;
+R의 list, data.frame 형 데이터를 JSON 형으로 변환한다.&lt;br /&gt;
+방금만든 &lt;code&gt;df&lt;/code&gt; 객체를 다시 JSON 형태로 바꾸기 위해서 &lt;code&gt;toJSON(df)&lt;/code&gt; 를 실행시키면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;toJSON&lt;/span&gt;(df)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;{\&amp;quot;Name\&amp;quot;:\&amp;quot;Test\&amp;quot;,\&amp;quot;Age\&amp;quot;:25,\&amp;quot;Sex\&amp;quot;:\&amp;quot;F\&amp;quot;,\&amp;quot;Address\&amp;quot;:\&amp;quot;Seoul\&amp;quot;,\&amp;quot;Hobby\&amp;quot;:\&amp;quot;Basketball\&amp;quot;}&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;로 하면된다.&lt;/p&gt;
-&lt;p&gt;rjson package 말고도 간단히 이용할 수 있는 jsonlite package 도 있는데 이 패키지의 &lt;code&gt;toJSON()&lt;/code&gt; 함수는 pretty 하게 반환하는 기능을 가지고 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;jsonlite::&lt;span class=&quot;kw&quot;&gt;toJSON&lt;/span&gt;(dataframe, &lt;span class=&quot;dt&quot;&gt;pretty =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;다시 JSON 형으로 돌아간다.&lt;/p&gt;
+&lt;p&gt;참고로 rjson package 말고도&lt;br /&gt;
+간단히 이용할 수 있는 jsonlite package 도 있다.&lt;br /&gt;
+이 패키지의 &lt;code&gt;toJSON()&lt;/code&gt; 함수는 pretty 옵션인자가 더 있는데 json 형을 인지하기 쉽게 단락을 나누고 indent 를 주어&lt;br /&gt;
+가시적으로 반환하는 기능이 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(jsonlite)
+&lt;span class=&quot;kw&quot;&gt;toJSON&lt;/span&gt;(df, &lt;span class=&quot;dt&quot;&gt;pretty =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [
 ##   {
 ##     &amp;quot;Name&amp;quot;: &amp;quot;Test&amp;quot;,
@@ -5122,7 +5130,7 @@ R의 객체를 특히 list, data.frame 등을 JSON 형으로 변환시킨다.&lt
 ##     &amp;quot;Hobby&amp;quot;: &amp;quot;Basketball&amp;quot;
 ##   }
 ## ]&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;첫 서두에 있는 예제 데이터와 동일하게 출력된 것을 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;첫 서두에 있는 예제 데이터와 똑같이 출력된 것을 볼 수 있다.&lt;/p&gt;
 </description>
         <pubDate>Wed, 02 Mar 2016 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2016/03/02/rjson_package.html</link>
