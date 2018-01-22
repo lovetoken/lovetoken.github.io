@@ -144,7 +144,7 @@
 마침 DEA 를 해볼 수 있는 R package 가 있었고 그 패키지 이름은 Benchmarking 이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;Benchmarking&quot;</span>)
 <span class="kw">library</span>(Benchmarking)</code></pre></div>
-<p>Benchmarking 패키지의 <code>dea()</code> 함수를 이용하여 얼마든지 벤치마킹의 대상이 되는 의사결정단위<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> 별 efficiencies 값들을 구해낼 수 있었다.<br />
+<p>Benchmarking 패키지의 <code>dea()</code> 함수를 이용하여 얼마든지 벤치마킹의 대상이 되는 의사결정단위(자료포괄분석에서 이를 Decision Making Unit. DMU로 줄여 표현한다) 별 efficiencies 값들을 구해낼 수 있었다.<br />
 우선 투입요소와 산출요소가 정해지고 그에 따른 정량적인 데이터가 존재하면<br />
 각 DMU 에 대한 효율성 평가를 수행할 수 있다.</p>
 <p><br><br></p>
@@ -183,7 +183,7 @@ charnes1981</code></pre></div>
 ## 20    54 82.45 15.52 45.00 44.23    13 59.63 64.41 35.89     0
 ## # ... with 1 more variables: name &lt;fctr&gt;</code></pre>
 <p>data 를 불러온 후<br />
-설명의 편의상 tibble type 으로 <code>charnes1981</code> 형을 변환 및 20개의 샘플링을 하였다. <a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a><br />
+설명의 편의상 tibble type 으로 <code>charnes1981</code> 형을 변환 및 20개의 샘플링을 하였다. <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a><br />
 각 변수들에 대한 설명은 다음과 같다.</p>
 <ul>
 <li><code>firm</code> : 학교별 ID</li>
@@ -263,7 +263,7 @@ dea_res &lt;-<span class="st"> </span><span class="kw">dea</span>(X, Y)</code></
 투입기준의 Variable returns to scale 가정을 기반하에 효율성 평가를 한다. (자세한건 <code>RTS</code>, <code>ORIENTATION</code> 인자의 도움말을 살펴본다)</p>
 <p><br><br></p>
 <h2 id="분석-결과-해석">분석 결과 해석</h2>
-<p>Efficiency 값이 1인 학교는 투입대비 산출 즉 효율성이 70개의 DMU 와 상대적으로 비교했을 때 가장 높다고 할 수 있다.<br />
+<p>Efficiency 값이 1인 학교는 투입대비 산출 즉 효율성이 20개의 DMU 와 상대적으로 비교했을 때 가장 높다고 할 수 있다.<br />
 하지만 이는 절대적인 효율성 평가가 아닌 상대적 효율성 평가라는 것을 항상 염두해야 한다.</p>
 <p>Efficiency 값이 1 미만인 학교는<br />
 1의 값을 가진 학교보다 비효율이 발생하고 있다는것을 의미하며<br />
@@ -277,8 +277,7 @@ dea_res &lt;-<span class="st"> </span><span class="kw">dea</span>(X, Y)</code></
 <hr />
 <ol>
 <li id="fn1"><p>자료포괄분석 으로도 불리는데 무엇이 맞는지는 모르겠다<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>자료포괄분석에서 이를 Decision Making Unit. DMU로 줄여 표현하기도 한다<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>원 데이터의 개수는 70개이며 이중 20개의 랜덤샘플링을 의미함<a href="#fnref3">↩</a></p></li>
+<li id="fn2"><p>원 데이터의 개수는 70개이며 이중 20개의 랜덤샘플링을 의미함<a href="#fnref2">↩</a></p></li>
 </ol>
 </section>
 </div>
