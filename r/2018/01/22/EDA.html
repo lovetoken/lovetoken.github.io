@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="R에서 클립보드의 내용물을 끌어오기" />
-        <meta name="keywords" content="R에서 클립보드의 내용물을 끌어오기, , R" />
+        <meta name="description" content="R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기" />
+        <meta name="keywords" content="R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기, , R" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="R에서 클립보드의 내용물을 끌어오기" property="og:title">
+          <meta content="R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/04/16/using_clipboard.html" property="og:url">
+          <meta content="https://lovetoken.github.io/r/2018/01/22/EDA.html" property="og:url">
         
         
-          <meta content="2016-04-16T00:00:00+09:00" property="article:published_time">
+          <meta content="2018-01-22T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="R에서 클립보드의 내용물을 끌어오기">
+          <meta name="twitter:title" content="R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/04/16/using_clipboard.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2018/01/22/EDA.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,8 +126,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>R에서 클립보드의 내용물을 끌어오기</h1>
-<span class="time">16 Apr 2016</span>
+                <h1>R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기</h1>
+<span class="time">22 Jan 2018</span>
 
 <span class="categories">
     &raquo; <a href="/category/R">R</a>
@@ -135,89 +135,152 @@
 
 
 <div class="content">
-    <div class="post"><p>편하게 데이터를 R에서 불러들이기 위해 간편한 방법이 없을까?<br />
-보통 csv파일을 읽어들이기 위해서 csv파일이 있는 경로를 알고 그경로를 입력해 주어야 한다.<br />
-아래의 코드처럼 말이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./Data/Test.csv&quot;</span>)</code></pre></div>
-<p>워킹디렉토리에서 Data 폴더의 Test.csv 을 읽어들이는 코드이다.<br />
-하지만 간단히 눈앞에 있는 데이터를 R로 불러들이기 위해선 그 데이터 파일의 path 를 알아야 하는 것이 귀찮을 수 있다.<br />
-이러한 귀차니즘까지 발동한다면 Clipboard 를 이용하여 원하는 데이터를 로드하는 것이 현명한 것 같다.</p>
+    <div class="post"><p><br><br></p>
+<p>약 5년전 컨설팅 인턴 일을 하면서 자료포락분석<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>(Data envelopment analysis 이하 DEA)이 필요했던 시점이 있다.<br />
+그때 당시 실제로 분석을 하기 위하여 컴퓨터 프로그램을 이용할 필요가 있었고<br />
+<a href="http://expertchoice.co.kr/expert_choice.html">Export choice</a> 프로그램을 이용해 DEA 분석을 한 논문들을 상당수 찾을 수 있었다.<br />
+하지만 Export choice 는 상용 프로그램이었고 새로 알아야 된다는 점들 때문에 빠르게 시도해 볼 수 없었다.<br />
+이때는 깊은 분석보단 만만하게 시도해 볼 수 있었던 환경이 필요했었는데<br />
+마침 DEA 를 해볼 수 있는 R package 가 있었고 그 패키지 이름은 Benchmarking 이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;Benchmarking&quot;</span>)
+<span class="kw">library</span>(Benchmarking)</code></pre></div>
+<p>Benchmarking 패키지의 <code>dea()</code> 함수를 이용하여 얼마든지 벤치마킹의 대상이 되는 의사결정단위<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> 별 efficiencies 값들을 구해낼 수 있었다.<br />
+우선 투입요소와 산출요소가 정해지고 그에 따른 정량적인 데이터가 존재하면<br />
+각 DMU 에 대한 효율성 평가를 수행할 수 있다.</p>
 <p><br><br></p>
-<h2 id="on-windows">on Windows</h2>
-<p>예를 들어 아래의 모습처럼 우리가 사용하고자 하는 Test.csv 파일이 MS office Excel 에서 열린 상황의 모습이고,<br />
-이것을 R에서 빨리 불러오고 싶다 가정한다.</p>
-<figure>
-<img src="/assets/Clipboard_Windows.png" />
-</figure>
-<p>다음과 같은 스텝을 따른다.</p>
-<ol type="1">
-<li>Test.csv 파일의 데이터셋을 전체 선택하여 <kbd>Ctrl</kbd> + <kbd>C</kbd> 를 한다.</li>
-<li>R로 되돌어가 <code>read.table(&quot;clipboard&quot;)</code> 를 실행하여 복사했던 데이터가 제대로 불러와 졌는지 확인한다.<br />
+<h2 id="예제-데이터에-대한-설명">예제 데이터에 대한 설명</h2>
+<p>Benchmarking package 안에 있는 데이터 셋 중 하나인 <code>charnes1981</code> 을 예제로 DEA를 간단히 수행해 보겠다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1004</span>)
+<span class="kw">library</span>(dplyr)
+
+<span class="kw">data</span>(charnes1981)
+charnes1981 &lt;-<span class="st"> </span>charnes1981 %&gt;%<span class="st"> </span>
+<span class="st">    </span>tbl_df %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">sample_n</span>(<span class="dv">20</span>)
+charnes1981</code></pre></div>
+<pre><code>## # A tibble: 20 x 11
+##     firm    x1    x2    x3    x4    x5    y1    y2    y3   pft
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+##  1    20 25.42  9.05 29.69 31.74     4 29.43 42.63 23.34     1
+##  2    17 22.63  4.43 15.40 15.00     2 17.25 20.80 12.07     1
+##  3    53 16.20  7.02 26.94 26.30     9 18.23 22.05 17.56     0
+##  4    66 23.32  7.10 24.96 28.56    22 16.81 19.72 18.70     0
+##  5    29 10.62  2.55 10.10  9.09     4  6.51  7.02  6.16     1
+##  6    60 16.28  4.81 18.20 18.98     5 15.15 18.04 13.58     0
+##  7    32  6.30  1.93  7.11  7.68     4  4.59  6.16  4.99     1
+##  8    24 19.74  6.43 24.20 25.66     3 25.72 30.81 16.54     1
+##  9    64 28.38  8.91 30.95 33.33     8 18.63 24.48 23.13     0
+## 10    27 27.20  9.38 37.80 31.55     4 31.31 38.32 25.03     1
+## 11    15  4.29  5.42 21.45 17.27     5 14.39 18.30 14.33     1
+## 12    22 16.34  5.84 20.89 22.10     4 19.40 25.18 16.52     1
+## 13     5 11.62  2.21  6.85  6.37     4  7.81  6.94  5.37     1
+## 14     9 34.40 11.04 38.16 42.40     8 26.13 29.80 26.29     1
+## 15    45  8.32  3.64 12.92 13.13     2  9.47 11.92  8.85     1
+## 16     2 29.26 10.24 41.96 40.65     5 24.69 33.89 26.02     1
+## 17    11 52.92 11.67 39.48 39.64     5 39.80 37.73 30.29     1
+## 18    49  7.14  5.29 23.10 19.06     8 12.17 16.03 15.82     1
+## 19    51 11.88  3.59 13.41 13.82     8  9.96 14.34  9.33     0
+## 20    54 82.45 15.52 45.00 44.23    13 59.63 64.41 35.89     0
+## # ... with 1 more variables: name &lt;fctr&gt;</code></pre>
+<p>data 를 불러온 후<br />
+설명의 편의상 tibble type 으로 <code>charnes1981</code> 형을 변환 및 20개의 샘플링을 하였다. <a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a><br />
+각 변수들에 대한 설명은 다음과 같다.</p>
+<ul>
+<li><code>firm</code> : 학교별 ID</li>
+<li><p><code>name</code> : 주소</p></li>
+<li><code>x1</code> : education level of the mother<br />
 </li>
-<li>필요에 따라 <code>read.table()</code> 함수의 <code>header</code>, <code>sep</code> 인자값을 바꾸어 불러온다.</li>
-</ol>
-<p>직접 해본 결과의 스크린샷이다.</p>
-<figure>
-<img src="/assets/Clipboard_Windows2.png" />
-</figure>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="st">&quot;clipboard&quot;</span>)</code></pre></div>
-<pre><code>##     V1   V2
-## 1  Var Test
-## 2    a   14
-## 3    b   25
-## 4    d  646
-## 5    e  773
-## 6    g   12
-## 7    n   45
-## 8    h    3
-## 9    s    6
-## 10   x   72</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="st">&quot;clipboard&quot;</span>, <span class="dt">header =</span> T)</code></pre></div>
-<pre><code>##   Var Test
-## 1   a   14
-## 2   b   25
-## 3   d  646
-## 4   e  773
-## 5   g   12
-## 6   n   45
-## 7   h    3
-## 8   s    6
-## 9   x   72</code></pre>
+<li><code>x2</code> : highest occupation of a family member<br />
+</li>
+<li><code>x3</code> : parental visits to school<br />
+</li>
+<li><code>x4</code> : time spent with children in school-related topics<br />
+</li>
+<li><p><code>x5</code> : the number of teachers at the site</p></li>
+<li><code>y1</code> : reading score<br />
+</li>
+<li><code>y2</code> : math score<br />
+</li>
+<li><p><code>y3</code> : self–esteem score</p></li>
+</ul>
+<p>x로 시작하는 변수들은 각 학교들에 대한 독립변수(투입요소) 로 볼 수 있고<br />
+y로 시작하는 변수들은 그 학교에 대한 평가이므로 종속변수(산출요소) 로 볼 수 있다.</p>
 <p><br><br></p>
-<h2 id="on-mac">on Mac</h2>
-<p>맥이용자라면 윈도우의 <code>&quot;clipboard&quot;</code> 와 같은 약속어로 클립보드 내용물을 불러들일 수 없는것을 확인했다.<br />
-<code>&quot;clipboard&quot;</code> 대신 <code>pipe(&quot;pbpaste&quot;)</code> 을 이용한다.</p>
-<figure>
-<img src="/assets/Clipboard_Mac.png" />
-</figure>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="kw">pipe</span>(<span class="st">&quot;pbpaste&quot;</span>))</code></pre></div>
-<pre><code>##     V1   V2
-## 1  Var Test
-## 2    a   14
-## 3    b   25
-## 4    d  646
-## 5    e  773
-## 6    g   12
-## 7    n   45
-## 8    h    3
-## 9    s    6
-## 10   x   72</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="kw">pipe</span>(<span class="st">&quot;pbpaste&quot;</span>), <span class="dt">header =</span> T)</code></pre></div>
-<pre><code>##   Var Test
-## 1   a   14
-## 2   b   25
-## 3   d  646
-## 4   e  773
-## 5   g   12
-## 6   n   45
-## 7   h    3
-## 8   s    6
-## 9   x   72</code></pre>
-<p>물론 Clipboard 로 데이터를 불러오는 것 이므로 데이터 전체가 아닌 일부분만을 복사하는 것도 가능하다. 아래의 스크린샷은 데이터의 앞 3개의 필드를 복사하여 R로 불러들여본 결과이다.</p>
-<figure>
-<img src="/assets/Clipboard_Mac2.png" />
-</figure>
-<p>이처럼 Clipboard 를 이용하게 되면 사용하고 싶은 데이터를 선택하여 R로 마치 드레그 하는 방식과 같아진다.</p>
+<h2 id="dea-분석">DEA 분석</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span>charnes1981 %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;x&quot;</span>)) %&gt;%<span class="st"> </span>
+<span class="st">    </span>as.matrix
+
+Y &lt;-<span class="st"> </span>charnes1981 %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;y&quot;</span>)) %&gt;%<span class="st"> </span>
+<span class="st">    </span>as.matrix   
+
+dea_res &lt;-<span class="st"> </span><span class="kw">dea</span>(X, Y)</code></pre></div>
+<p><code>dea()</code> 함수의<br />
+첫번째 인자에는 투입변수에 대한 데이터를 matrix 형으로 입력한다.<br />
+위의 예제 경우 5개의 투입변수가 존재하므로 <code>X</code> 처럼 적절하게 묶어주었다.</p>
+<p>두번째 인자에는 산출변수에 대한 데이터를 역시 matrix 형으로 입력한다.<br />
+마찬가지로 3개의 산출변수를 적절히 묶은 <code>Y</code> 를 입력했다.</p>
+<p><code>dea()</code> 함수로 반환되는 결과물들은 다양하다.<br />
+관심대상이 효율성 점수만이라면 아래처럼 <code>eff</code> 속성값만을 호출해 본다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dea_res$eff</code></pre></div>
+<pre><code>##  [1] 1.0000000 1.0000000 0.8844074 0.9541975 0.9326048 0.9964845 1.0000000
+##  [8] 1.0000000 0.9804835 1.0000000 1.0000000 1.0000000 1.0000000 0.9850544
+## [15] 1.0000000 1.0000000 1.0000000 1.0000000 0.9713179 1.0000000</code></pre>
+<p>의사결정단위 70개 별 Efficiencies 값이 출력된다.<br />
+학교주소별 Efficiencies 값을 매치시켜 표현해보거나</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data.frame</span>(<span class="dt">School_site_name =</span> charnes1981$name, <span class="dt">Efficiencies =</span> dea_res$eff)</code></pre></div>
+<pre><code>##    School_site_name Efficiencies
+## 1            Racine    1.0000000
+## 2          New York    1.0000000
+## 3            Fresno    0.8844074
+## 4      Jacksonville    0.9541975
+## 5           Chigago    0.9326048
+## 6      Philidelphia    0.9964845
+## 7      Jacksonville    1.0000000
+## 8      Portageville    1.0000000
+## 9             Flint    0.9804835
+## 10         Meridian    1.0000000
+## 11       Fall River    1.0000000
+## 12         New York    1.0000000
+## 13          Lebanon    1.0000000
+## 14         Lakewood    0.9850544
+## 15         New York    1.0000000
+## 16          Buffalo    1.0000000
+## 17          Wichita    1.0000000
+## 18         San Jose    1.0000000
+## 19          Buffalo    0.9713179
+## 20          Lebanon    1.0000000</code></pre>
+<p>아래 plotting 결과물 처럼<br />
+제공되는 <code>dea.plot.frontier()</code> 함수 결과물인 효율최적선을 통해<br />
+상대적인 효율성 평가를 하는데 용이할 것이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dea.plot.frontier</span>(X, Y, <span class="dt">txt =</span> T)</code></pre></div>
+<p><img src="/assets/DEA_1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><code>dea()</code> 함수는 DEA분석 주제에 대한 대부분의 기능을 총괄하고 있기 때문에 복잡하고, 제공되는 인자들도 많다.<br />
+투입 혹은 산출 관점에 따라 분석방법이 달라지기도 하고,<br />
+가정이 달라지기도 한다.<br />
+위의 예제처럼 인자의 조종 없이 <code>dea()</code> 함수를 이용하면 기본값 설정을 따르는데<br />
+투입기준의 Variable returns to scale 가정을 기반하에 효율성 평가를 한다. (자세한건 <code>RTS</code>, <code>ORIENTATION</code> 인자의 도움말을 살펴본다)</p>
+<p><br><br></p>
+<h2 id="분석-결과-해석">분석 결과 해석</h2>
+<p>Efficiency 값이 1인 학교는 투입대비 산출 즉 효율성이 70개의 DMU 와 상대적으로 비교했을 때 가장 높다고 할 수 있다.<br />
+하지만 이는 절대적인 효율성 평가가 아닌 상대적 효율성 평가라는 것을 항상 염두해야 한다.</p>
+<p>Efficiency 값이 1 미만인 학교는<br />
+1의 값을 가진 학교보다 비효율이 발생하고 있다는것을 의미하며<br />
+그 값이 작으면 작을수록 비효율이 크다고 해석은 가능하다.</p>
+<p><br><br></p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="http://book.naver.com/bookdb/book_detail.nhn?bid=6874299">책 : 효율성분석이론 DEA 자료포락분석법 - 이정동, 오동현 (지필미디어) 2012.03.30</a></li>
+</ul>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>자료포괄분석 으로도 불리는데 무엇이 맞는지는 모르겠다<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>자료포괄분석에서 이를 Decision Making Unit. DMU로 줄여 표현하기도 한다<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>원 데이터의 개수는 70개이며 이중 20개의 랜덤샘플링을 의미함<a href="#fnref3">↩</a></p></li>
+</ol>
+</section>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -231,7 +294,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/04/16/using_clipboard.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2018/01/22/EDA.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -249,20 +312,6 @@
     
         
             
-                
-                <div class="panel-body">
-                <h4>Related Posts</h4>
-                <ul>
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/01/22/EDA.html">R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
         
     
 
@@ -270,6 +319,10 @@
     
         
             
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
                 
                 <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/2018/01/14/CV.html">변동계수의 개념과 R에서의 실습</a>
@@ -393,6 +446,16 @@
     
     
         
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/04/23/caret_package.html">R에서 caret package 를 이용한 데이터 학습 간편화 전략</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
             
         
     
@@ -676,10 +739,8 @@
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/r/2016/04/16/progressbar.html">&laquo; R에서 범용적으로 진행표시줄(progress bar)을 구현할 수 있는 progress package</a>
+    <a class="prev" href="/r/2018/01/14/CV.html">&laquo; 변동계수의 개념과 R에서의 실습</a>
   
-  
-    <a class="next" href="/r/2016/04/30/playsound_in_R.html">R에서 소리, 음원 재생하기 - tuneR, beepr package &raquo;</a>
   
 </div>
 
@@ -690,8 +751,8 @@
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 클립보드의 내용물을 끌어오기";
-        var disqus_title = "R에서 클립보드의 내용물을 끌어오기";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기";
+        var disqus_title = "R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {
