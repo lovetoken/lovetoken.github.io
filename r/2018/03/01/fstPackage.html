@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>lovetoken</title>
+        <meta name="author" content="Lovetoken" />
+        <meta name="description" content="R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package" />
+        <meta name="keywords" content="R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package, , R" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="" property="fb:app_id">
+        <meta content="" property="og:site_name">
+        
+          <meta content="R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="" property="og:description">
+        
+        
+          <meta content="https://lovetoken.github.io/r/2018/03/01/fstPackage.html" property="og:url">
+        
+        
+          <meta content="2018-03-01T00:00:00+09:00" property="article:published_time">
+          <meta content="https://lovetoken.github.io/about/" property="article:author">
+        
+        
+          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="R" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:creator" content="@">
+        
+          <meta name="twitter:title" content="R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package">
+        
+        
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2018/03/01/fstPackage.html">
+        
+        
+          <meta name="twitter:description" content="">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', 'UA-89656101-1', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">Lovetoken</h1>
+                
+                <div id="about">
+                    저는 개발 취향을 가진 데이터 분석가 Jr. 입니다.
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://twitter.com/LT_Lovetoken" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/lovetoken/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>Navigation</strong><br />
+                    &nbsp;&raquo; <a href="/">Home</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">About Me</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/lovetoken">Github</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package</h1>
+<span class="time">01 Mar 2018</span>
+
+<span class="categories">
+    &raquo; <a href="/category/R">R</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><p><br><br></p>
+<p>데이터 프레임 형을 파일단위로 저장할 때 R에서는 다양한 방법들이 있다.<br />
+크게 유형 분류를 하면</p>
+<ol type="1">
+<li>csv 와 같은 텍스트형으로 저장하는 방법</li>
+<li>이진 형태, 즉 binary 파일로 저장하는 방법</li>
+</ol>
+<p>으로 나눌 수 있는데<br />
+호환성을 위해선 1번 방법이 좋지만, 저장 및 로드하는 속도, 파일의 볼륨을 줄이기 위한 압축 부분을 포기해야 하고,<br />
+속도를 위해선 2번 방법이 좋지만 텍스트에디터 등으로 파일을 간편하게 확인하는 것을 포기해야 하는 등<br />
+유형별로 장단점이 있다.</p>
+<p>본 글은 2번 이진 형태의 방법으로 R에서 데이터 프레임의 정보를 파일로 저장하는 방법 중 읽고 쓰는 속도가 상대적으로 빠른 편인 <a href="http://www.fstpackage.org/">fst package</a> 를 이용한 방법을 소개하고자 한다.</p>
+<p><br><br></p>
+<h2 id="benchmark">Benchmark</h2>
+<p>소개에 앞서 처리속도가 다른 방법에 비교해 얼마나 빠른지 결과를 먼저 확인 해 보고 싶었다.<br />
+아래 코드는 샘플 데이터프레임을 만든 다음<br />
+오늘 주제인 fst 형으로 저장하는 방법과 그 외의 방법들로 저장하는 코드별 코드수행 시간을 측정하여 plotting 해 보는 코드이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(microbenchmark)
+
+nr_of_rows &lt;-<span class="st"> </span><span class="dv">10</span>^<span class="dv">8</span>
+
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Logical =</span> <span class="kw">sample</span>(<span class="kw">c</span>(T, F, <span class="ot">NA</span>), <span class="dt">prob =</span> <span class="kw">c</span>(.<span class="dv">85</span>, .<span class="dv">1</span>, .<span class="dv">05</span>), nr_of_rows, <span class="dt">replace =</span> T), 
+                 <span class="dt">Integer =</span> <span class="kw">sample</span>(1L:100L, nr_of_rows, <span class="dt">replace =</span> T), 
+                 <span class="dt">Real =</span> <span class="kw">sample</span>(<span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">10000</span>, <span class="dv">20</span>) /<span class="st"> </span><span class="dv">100</span>, nr_of_rows, <span class="dt">replace =</span> T),
+                 <span class="dt">Factor =</span> <span class="kw">as.factor</span>(<span class="kw">sample</span>(<span class="kw">labels</span>(UScitiesD), nr_of_rows, <span class="dt">replace =</span> T))) %&gt;%<span class="st"> </span>tbl_df
+
+df</code></pre></div>
+<pre><code>## # A tibble: 100,000,000 x 4
+##    Logical Integer  Real Factor       
+##    &lt;lgl&gt;     &lt;int&gt; &lt;dbl&gt; &lt;fct&gt;        
+##  1 T            30  97.6 Chicago      
+##  2 T            42  61.0 Atlanta      
+##  3 NA           21  97.6 Chicago      
+##  4 T             3  97.6 Miami        
+##  5 T            89  48.2 Washington.DC
+##  6 T            52  62.9 SanFrancisco 
+##  7 T            41  31.5 NewYork      
+##  8 T            38  47.1 Chicago      
+##  9 T            21  48.2 Denver       
+## 10 T            78  48.2 Denver       
+## # ... with 99,999,990 more rows</code></pre>
+<p>저장대상으로 테스트에 쓸 데이터프레임 <code>df</code> 를 만들어 보았다.<br />
+1억건의 레코드를 가진 데이터프레임이다.<br />
+이 <code>df</code> 를</p>
+<ul>
+<li><code>write.table</code></li>
+<li><code>data.table::fwrite</code></li>
+<li><code>saveRDS</code></li>
+<li><code>feather::write_feather</code></li>
+<li><code>fst::write_fst</code></li>
+</ul>
+<p>의 5개 방법별로 저장하는 시간을 반복측정하는 것을 microbenchmark package 의 도움을 받아 실행해 본다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bench &lt;-<span class="st"> </span><span class="kw">microbenchmark</span>(<span class="dt">write.table =</span> <span class="kw">write.table</span>(df, <span class="dt">file =</span> <span class="st">&quot;output/df_writetable.csv&quot;</span>, <span class="dt">quote =</span> F, <span class="dt">row.names =</span> F, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>),
+                        <span class="dt">fwrite =</span> <span class="kw">fwrite</span>(df, <span class="dt">file =</span> <span class="st">&quot;output/df_fwrite.csv&quot;</span>),
+                        <span class="dt">saveRDS =</span> <span class="kw">saveRDS</span>(df, <span class="dt">file =</span> <span class="st">&quot;output/df_saveRDS.rds&quot;</span>),
+                        <span class="dt">write_feather =</span> <span class="kw">write_feather</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/df_feather.fea&quot;</span>),
+                        <span class="dt">write_fst =</span> <span class="kw">write_fst</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/df_fst.fst&quot;</span>), <span class="dt">times =</span> <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">autoplot</span>(bench)</code></pre></div>
+<p><img src="/assets/fstPackage.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>fst 형으로 저장하는 방법이 약 2.52초로 다른 방법들에 비해 비약적으로 빠른 것을 볼 수 있다.</p>
+<p>쓰기 속도 외에도 읽기 속도 역시 좋은 성능을 보인다.</p>
+<p>읽기 테스트는 생략하지만 <a href="http://www.fstpackage.org/">fst package 홈페이지</a>에 지금까지의 벤치마킹과 비슷한 실험 결과물이 소개되었으니 참고해 보면 좋겠다.</p>
+<p><br><br></p>
+<h2 id="사용법">사용법</h2>
+<p>벤치마킹 테스트 코드에 fst 형으로 저장하는 방법에 대한 코드가 있었다. 바로 이 부분인데</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write_fst</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/df_fst.fst&quot;</span>)</code></pre></div>
+<p>저장시킬 데이터프레임 객체명, 저장시킬 파일경로를 지정 이 두 가지가 필수이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">read_fst</span>(<span class="st">&quot;output/df_fst.fst&quot;</span>)</code></pre></div>
+<p>읽는 방법은 <code>read_fst()</code> 함수안에 이전에 저장시킨 파일경로를 지정하고 할당하는 방식이다.</p>
+<p><br><br></p>
+<h2 id="특징">특징</h2>
+<p>fst package 는 여러 특징이 있는데 가장 눈에 띄는 특징은<br />
+자동적으로 병렬스레드를 이용하여 저장 및 읽는 처리속도의 효율을 높인다는 것이다.<br />
+볼륨이 큰 데이터프레임을 <code>write_fst()</code> 함수로 저장하곤 할 때 이러한 로그가 나타나는 것을 보면 알 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write_fst</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/df_fst.fst&quot;</span>)</code></pre></div>
+<pre><code>Written 9.6% of 100000000 rows in 2 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 18 secs.      
+Written 15.8% of 100000000 rows in 3 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 15 secs.      
+Written 22.5% of 100000000 rows in 4 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 13 secs.      
+Written 28.7% of 100000000 rows in 5 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 12 secs.      
+Written 33.7% of 100000000 rows in 6 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 11 secs.      
+Written 40.4% of 100000000 rows in 7 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 10 secs.      
+Written 46.6% of 100000000 rows in 8 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 9 secs.      
+Written 51.6% of 100000000 rows in 9 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 8 secs.      
+Written 57.2% of 100000000 rows in 10 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 7 secs.      
+Written 62.8% of 100000000 rows in 11 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 6 secs.      
+Written 67.8% of 100000000 rows in 12 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 5 secs.      
+Written 72.8% of 100000000 rows in 13 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 4 secs.      
+Written 77.9% of 100000000 rows in 14 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 3 secs.      
+Written 82.9% of 100000000 rows in 15 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 3 secs.      
+Written 88.5% of 100000000 rows in 16 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 2 secs.      
+Written 93.5% of 100000000 rows in 17 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 1 secs.      
+Written 97.4% of 100000000 rows in 18 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 0 secs.  </code></pre>
+<p>data.table package 의 <code>fwrite()</code>, <code>fread()</code> 에서도 가지고 있는 기능이지만 fst package가 조금 더 높은 성능을 <a href="http://www.fstpackage.org/README-multi-threading-1.png">보이기도 한다</a>.</p>
+<p>압축저장도 지원한다.<br />
+<code>write_fst()</code> 함수의 인자들을 살펴보면 <code>compress</code> 인자가 있고 기본적으로 50인데 이를 조정하여 압축률을 높이거나 낮출 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write_fst</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/compress_1.fst&quot;</span>,   <span class="dt">compress =</span> <span class="dv">1</span>)
+<span class="kw">write_fst</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/compress_50.fst&quot;</span>,  <span class="dt">compress =</span> <span class="dv">50</span>)
+<span class="kw">write_fst</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/compress_100.fst&quot;</span>, <span class="dt">compress =</span> <span class="dv">100</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system</span>(<span class="st">&quot;ls -lh output/compress*&quot;</span>)</code></pre></div>
+<pre><code>-rw-r--r--@ 1 lovetoken  staff   1.2G Mar  1 10:21 output/compress_1.fst
+-rw-r--r--@ 1 lovetoken  staff   247M Mar  1 10:22 output/compress_100.fst
+-rw-r--r--@ 1 lovetoken  staff   582M Mar  1 10:21 output/compress_50.fst</code></pre>
+<p>압축률을 1로 한 것과 100으로 한 것 간의 파일 용량이 각각 1.2Gb, 247Mb 으로 차이가 큰 것을 볼 수 있다.</p>
+<p>마지막으로..<br />
+fst package 가 혹 <code>save()</code>, <code>saveRDS()</code> 처럼 R 객체를 저장할 수 있다고 생각하면 안 된다.<br />
+서두에도 말했듯이 데이터프레임 형 객체만 저장할 수 있다.<br />
+데이터프레임 형을 저장하는데 특화된 것이 특징이라면 특징이겠다.</p>
+</div>
+    <div class="share-page">
+    <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2018/03/01/fstPackage.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2018/01/22/EDA.html">R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2018/01/14/CV.html">변동계수의 개념과 R에서의 실습</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2018/01/02/allequal.html">R에서 all.equal() 함수를 이용한 객체의 동일성 확인하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/10/07/guessEncoding.html">R에서 readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/data_visualization/2017/06/16/plotFunction.html">R에서 기본 내장 graphics package를 이용한 데이터 시각화</a>
+                    
+                        (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2017/05/30/MatrixProduct.html">R에서 행렬 간 이루어지는 다양한 곱셈에 대해 알아보기 (행렬의 곱셈, 하다마드 곱셈, 크로네커 곱셈)</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/r/2018/01/22/EDA.html">&laquo; R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기</a>
+  
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+
+        var disqus_shortname = "lovetoken";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package";
+        var disqus_title = "R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    /* ]]> */
+    </script>
+</div>
+
+                <footer>
+                    Copyleft by Lovetoken
+                     
+                    - <a href="https://github.com/lovetoken">https://github.com/lovetoken</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>                    
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>
