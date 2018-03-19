@@ -5,18 +5,18 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 19 Mar 2018 16:58:44 +0900</pubDate>
-    <lastBuildDate>Mon, 19 Mar 2018 16:58:44 +0900</lastBuildDate>
+    <pubDate>Mon, 19 Mar 2018 23:24:00 +0900</pubDate>
+    <lastBuildDate>Mon, 19 Mar 2018 23:24:00 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
         <title>Rmarkdown + Shiny + flexdashboard package 의 조합을 통한 대쉬보드 만들기 (네이버 연관검색어를 예제로)</title>
         <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;최근 R dev team 과 세미나를 통해 자발적인 분석 도전과제를 만들고 코워킹을 하고 있다.&lt;br /&gt;
-도전과제 중 첫 번째로 나온 결과물이 네이버 연관검색어 추출 프로그램이다.&lt;br /&gt;
+&lt;p&gt;최근 &lt;a href=&quot;https://lovetoken.gitbooks.io/r-dev-team-open-seminar/content/&quot;&gt;R dev team&lt;/a&gt; 과 세미나를 통해 자발적인 분석 도전과제를 만들고 코워킹을 하고 있다.&lt;br /&gt;
+도전과제 중 첫 번째로 나온 결과물이 &lt;a href=&quot;https://lovetoken.gitbooks.io/r-dev-team-open-seminar/content/b3c4-c804-acfc-c81c/b124-c774-bc84-c5f0-ad00-ac80-c0c9-c5b4-cd94-cd9c-c800-c7a5-d504-b85c-adf8-b7a8-b9cc-b4e4-ae30.html&quot;&gt;네이버 연관검색어 추출 프로그램&lt;/a&gt;이다.&lt;br /&gt;
 패키지화 하여 한 개의 함수만으로 연관검색어의 결과를 저장하고 표출하며 시각화하였다.&lt;br /&gt;
 이어서 R을 모르는 타인에게도 우리가 쉽게 사용토록 해 보고자 shiny application을 만들어 보기로 하였다.&lt;/p&gt;
-&lt;p&gt;필자는 정석적인 Shiny app 개발 방법보단 Rmarkdown 과 flexdashboard package를 조합하여 사용하면&lt;br /&gt;
+&lt;p&gt;필자는 정석적인 Shiny app 개발 방법보단 Rmarkdown 과 &lt;a href=&quot;https://rmarkdown.rstudio.com/flexdashboard/&quot;&gt;flexdashboard package&lt;/a&gt;를 조합하여 사용하면&lt;br /&gt;
 대쉬보드를 손쉽게 만들 수 있고&lt;br /&gt;
 대쉬보드의 특성상 결과물을 최대한 심플하게 만들려 노력할 것이기 때문에&lt;br /&gt;
 자연스럽게 개발량도 줄어들 것으로 생각했다.&lt;/p&gt;
@@ -27,8 +27,7 @@
 &lt;iframe width=&quot;90%&quot; height=&quot;400&quot; src=&quot;https://www.youtube.com/embed/UKw1YxQRPes&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen&gt;
 &lt;/iframe&gt;
 &lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;참고로 R dev team 은 성과물들을 R code 로 남기려 하고 있고 이를 rdevteam 패키지로 관리하려 하고 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt; 참고로 R dev team 은 성과물들을 R code 로 남기려 하고 있고 이를 &lt;a href=&quot;https://github.com/lovetoken/rdevteam&quot;&gt;rdevteam 패키지&lt;/a&gt;로 관리하려 하고 있다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(devtools)
 &lt;span class=&quot;kw&quot;&gt;install_github&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;ntels-BI/ntelsBI&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;를 통해서 설치가 가능하며&lt;br /&gt;
