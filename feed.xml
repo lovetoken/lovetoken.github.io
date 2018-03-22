@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 19 Mar 2018 23:24:00 +0900</pubDate>
-    <lastBuildDate>Mon, 19 Mar 2018 23:24:00 +0900</lastBuildDate>
+    <pubDate>Tue, 20 Mar 2018 13:51:34 +0900</pubDate>
+    <lastBuildDate>Tue, 20 Mar 2018 13:51:34 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -29,7 +29,7 @@
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt; 참고로 R dev team 은 성과물들을 R code 로 남기려 하고 있고 이를 &lt;a href=&quot;https://github.com/lovetoken/rdevteam&quot;&gt;rdevteam 패키지&lt;/a&gt;로 관리하려 하고 있다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(devtools)
-&lt;span class=&quot;kw&quot;&gt;install_github&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;ntels-BI/ntelsBI&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;kw&quot;&gt;install_github&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;lovetoken/rdevteam&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;를 통해서 설치가 가능하며&lt;br /&gt;
 현재 이를 설치하면 영상에 있는 &lt;code&gt;naverRelation()&lt;/code&gt; 함수를 이용할 수 있고&lt;br /&gt;
 그대로 재현할 수 있을 것이다.&lt;/p&gt;
