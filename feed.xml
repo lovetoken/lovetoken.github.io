@@ -5,9 +5,53 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 20 Mar 2018 13:51:34 +0900</pubDate>
-    <lastBuildDate>Tue, 20 Mar 2018 13:51:34 +0900</lastBuildDate>
+    <pubDate>Mon, 02 Apr 2018 01:10:51 +0900</pubDate>
+    <lastBuildDate>Mon, 02 Apr 2018 01:10:51 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 조건화 그래프(Conditioning plot) 를 출력하기 위한 ggplot2::faect_wrap(), coplot() 함수에 대하여</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;R에서 기본 그래픽스로 제공하는 도구 중&lt;br /&gt;
+요인별로 구분된 산점도를 그릴때 심플하게 이용할 수 있는 &lt;code&gt;coplot()&lt;/code&gt; 함수와 ggplot2 package 에서 &lt;code&gt;coplot()&lt;/code&gt; 함수와 비슷한 성격의 &lt;code&gt;faect_wrap()&lt;/code&gt; 함수에 대해 알아보고자 한다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;coplot()&lt;/code&gt; 도움말을 보면 &amp;quot;Conditioning plots&amp;quot; 즉 &amp;quot;조건화 그래프&amp;quot; 라는 제목으로 사용법이 설명되어 있다.&lt;br /&gt;
+조건화 그래프는 언제 필요로 할까?&lt;/p&gt;
+&lt;p&gt;요인이 많은 데이터들을 산점도를 이용하여 시각화 할 때 분간이 쉽지 않아 요인별 특색을 찾기가 어려운 경우가 있다.&lt;br /&gt;
+예시를 통해 설명을 이어가겠다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;ggplot2-package-에서의-faect_wrap-faect_grid-함수&quot;&gt;ggplot2 package 에서의 &lt;code&gt;faect_wrap()&lt;/code&gt;, &lt;code&gt;faect_grid()&lt;/code&gt; 함수&lt;/h2&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ggplot&lt;/span&gt;(diamonds, &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; carat, &lt;span class=&quot;dt&quot;&gt;y =&lt;/span&gt; price, &lt;span class=&quot;dt&quot;&gt;color =&lt;/span&gt; cut)) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_point&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;alpha =&lt;/span&gt; .&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;labs&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;color =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;)
+
+p1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/coplot1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;위 산점도를 간단히 설명하면&lt;br /&gt;
+세공 상태별 다이아몬드의 가격과, 캐럿(다이아몬드의 무게)의 산점도를 &lt;code&gt;ggplot2::daimonds&lt;/code&gt; 데이터셋을 이용해 출력한 결과이다.&lt;br /&gt;
+결과물만을 보았을 때 세공 상태별 가격과, 캐럿의 분포를 뚜렷하게 확인 하기가 쉽지 않다.&lt;br /&gt;
+종류가 5가지나 되고 데이터의 수도 많아지면서 난해하진 이 그래프는 캐럿과 가격이 정비례한다는 정보는 인지하기 쉬우나, 세공상태별로 특색의 차이를 인지하기는 매우 어렵다.&lt;/p&gt;
+&lt;p&gt;세공상태별로의 특색을 눈으로 확인하고 싶다면 아래처럼 요인별로 산점도를 따로 나누는 것도 좋은 방법일 것이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p1 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;facet_wrap&lt;/span&gt;(~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cut, &lt;span class=&quot;dt&quot;&gt;nrow =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/coplot2.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;첫번째 그래프에서는 알기 쉽지 않던 요인별 분포를 적나라 하게 확인할 수 있게 된다.&lt;br /&gt;
+가공상태가 좋지 않은 Fair 군의 다이아몬드 가격분포가 다른 군의 분포와 차이가 조금 있다는것을 첫번째 그래프로는 파악할 수 없었을 것이다.&lt;/p&gt;
+&lt;p&gt;요인별로 패널을 나누어 시각화 하는 스킬들은 도구별로 방법은 다르더라도 기본적으로 제공하는 편이며&lt;br /&gt;
+위의 예시인 ggplot2 package 에서는 &lt;code&gt;faect_wrap()&lt;/code&gt;, &lt;code&gt;faect_grid()&lt;/code&gt; 함수등을 이용하여 구현이 가능하다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;coplot-함수&quot;&gt;&lt;code&gt;coplot()&lt;/code&gt; 함수&lt;/h2&gt;
+&lt;p&gt;ggplot2 package 가 아닌 기본 그래픽스에서 조건화 그래프를 그리려면 아래처럼 &lt;code&gt;coplot()&lt;/code&gt; 함수를 이용하여 간단하게 볼 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;coplot&lt;/span&gt;(price ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;carat |&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cut, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; diamonds)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/coplot3.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;수학에서 조건(given) 을 &amp;quot;bar&amp;quot;(|) 로 표기하는것을 생각하고 formula 를 작성해 이용하면 되겠다.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 02 Apr 2018 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2018/04/02/coplot.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2018/04/02/coplot.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>Rmarkdown + Shiny + flexdashboard package 의 조합을 통한 대쉬보드 만들기 (네이버 연관검색어를 예제로)</title>
@@ -867,177 +911,6 @@ generic function은 사용자가 함수에 대한 문법을 정확하게 지키�
         <category>R</category>
         
         <category>Data_Visualization</category>
-        
-      </item>
-    
-      <item>
-        <title>Hello Scala! (스칼라 시작하기)</title>
-        <description>&lt;p&gt;대용량 분산처리 분석시스템인 스파크(Spark)를 알기 위해 항상 마주쳤던, 그리고 발목을 잡는것이 스칼라(Scala)이었다.&lt;br /&gt;
-스파크를 제대로 이용하기 위해선 스크립팅 기술이 필요한데 가장 대중적인 것이 스칼라이고 그다음이 파이썬(Python) 인 듯 보인다.&lt;br /&gt;
-파이썬으로 해도 되지만 스파크의 철학을 제대로 물려받아 활용하기 위해선 스칼라를 이용할 것을 많은 곳에서 권장했다.&lt;br /&gt;
-스파크에 관련된 구글링 검색만을 해보아도 예제의 코드는 스칼라코드가 더 많이 검색되었고, 이러한 이유가 분명 있을 것이기에 스칼라 공부를 시작했다.&lt;/p&gt;
-&lt;p&gt;첫 공부의 시작에 앞서 책한권은 있어야 마음가짐이 잘 잡힐 것인데&lt;br /&gt;
-필자는 아래의 책이 스칼라를 공부하기 위한 첫 책이다.&lt;/p&gt;
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;image/HelloScala1.jpg&quot;&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&amp;amp;mallGb=KOR&amp;amp;barcode=9791185890791&amp;amp;orderClick=LAH&amp;amp;Kc=#N&quot;&gt;러닝 스칼라 - 제이슨 스와츠 지음 | 김정인, 강성용 옮김 | 제이펍 | 2017년 04월 17일 출간&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;본 글에선 &lt;strong&gt;스칼라 설치와 &amp;quot;Hello world&amp;quot; 의 출력정도의 기본적인 것을 정리&lt;/strong&gt;하는 걸 목표로 한다.&lt;br /&gt;
-(단 앞으로의 내용은 Unix 계열 머신을 기준으로 설명함을 알립니다.)&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;스칼라-설치&quot;&gt;스칼라 설치&lt;/h2&gt;
-&lt;p&gt;스칼라는 수동으로 설치하는 방법과 자동으로 설치하는 방법으로 나뉜다.&lt;/p&gt;
-&lt;h3 id=&quot;수동설치&quot;&gt;수동설치&lt;/h3&gt;
-&lt;p&gt;스칼라를 배포하는 &lt;a href=&quot;http://www.scala-lang.org/&quot;&gt;scala-lang.org&lt;/a&gt; 를 들어가면 다운로드 페이지가 있다.&lt;br /&gt;
-&lt;code&gt;scala-2.XX.X.tgz&lt;/code&gt; 를 다운로드 한 이후 &lt;code&gt;bin&lt;/code&gt; 폴더를 경로에 추가하면 되겠다.&lt;/p&gt;
-&lt;h3 id=&quot;자동설치&quot;&gt;자동설치&lt;/h3&gt;
-&lt;p&gt;수동설치가 번거로우면 패키지 매니저를 이용해 설치하면 된다.&lt;br /&gt;
-OSX 에선 Homebrew 를 통해 &lt;a href=&quot;https://opentutorials.org/course/128/11129&quot;&gt;Homebrew 설치법은 생활코딩 참고&lt;/a&gt;&lt;/p&gt;
-&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;brew install scala&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;리눅스에선 apt-get&lt;/p&gt;
-&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;apt-get install scala&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;혹은 yum 을 통해&lt;/p&gt;
-&lt;pre class=&quot;sh&quot;&gt;&lt;code&gt;yum install scala&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;스칼라 설치가 가능하다.&lt;/p&gt;
-수동설치 혹은 자동설치가 성공했다면 명령줄에서 &lt;code&gt;scala&lt;/code&gt; 명령어를 통해 실행 가능하다.
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123507.js&quot; id=&quot;asciicast-123507&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;위의 예제는 스칼라에서 &lt;code&gt;println()&lt;/code&gt; 함수로 &amp;quot;Hello world&amp;quot; 를 출력하는 예제이다.&lt;br /&gt;
-터미널 상에서 스칼라를 쓰기에는 많은 불편함이 있을 것이다.&lt;br /&gt;
-적당한 텍스트 에디터에 REPL(Read Evaluate Print Loop) 을 연동시켜 사용하거나, 적절한 IDE(ntegrated Development Environment) 를 이용하는 것이 여러모로 이점이 많겠다.&lt;br /&gt;
-이부분은 개인취향이므로 무언가를 추천하지는 않겠지만 필자는 &lt;a href=&quot;https://www.sublimetext.com/&quot;&gt;Sublime text 3&lt;/a&gt; 의 &lt;a href=&quot;https://packagecontrol.io/packages/SublimeREPL&quot;&gt;SublimeREPL 패키지&lt;/a&gt;를 사용해서 스칼라 스크립트를 작성하고 이 글을 작성함을 밝힌다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;값-할당&quot;&gt;값 할당&lt;/h2&gt;
-&lt;p&gt;스칼라의 값 할당 방법은 다음과 같은 구문으로 약속되어 있다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;val &amp;lt;식별자&amp;gt;[: &amp;lt;타입&amp;gt;] = &amp;lt;데이터&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;값(value) 의 앞글자 &amp;quot;val&amp;quot; 로 시작하고 식별자 다음에 데이터 타입을 명시하기 위해 &lt;code&gt;:&lt;/code&gt; 로 구분한다.&lt;br /&gt;
-그다음 할당할 데이터를 &lt;code&gt;=&lt;/code&gt; 이후에 입력한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;val&lt;/span&gt; x: Int = &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;
-&lt;span class=&quot;kw&quot;&gt;val&lt;/span&gt; y: Int = &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;
-x * y&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123515.js&quot; id=&quot;asciicast-123515&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;데이터 타입을 항상 명시해야 하는 것은 아니다.&lt;br /&gt;
-데이터 타입을 입력하지 않을 경우 타입추론에 의해 자동으로 적당한 타입을 판단하여 실행한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;val&lt;/span&gt; x = &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;
-&lt;span class=&quot;kw&quot;&gt;val&lt;/span&gt; y = &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;
-x * y&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123516.js&quot; id=&quot;asciicast-123516&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;데이터 타입을 정수(Int)형으로 명시하지 않았음에도 불구하고 &lt;code&gt;x&lt;/code&gt;, &lt;code&gt;y&lt;/code&gt; 를 정수형으로 정의한 것을 확인할 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;res-변수&quot;&gt;&lt;code&gt;res&lt;/code&gt; 변수&lt;/h2&gt;
-&lt;p&gt;스칼라에선 &amp;quot;res&amp;quot; 그 뒤에 순차적으로 매겨지는 번호와 결합된 변수를 만들어 결과값 정보를 담는다.&lt;br /&gt;
-이 특징을 이용하여 이전에 계산되었던 값을 불러와 재사용할 수 있을 것이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt; + &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt; + &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;
-&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt; + &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt; + &lt;span class=&quot;dv&quot;&gt;6&lt;/span&gt;
-res0 * res1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123517.js&quot; id=&quot;asciicast-123517&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;boolean&quot;&gt;Boolean&lt;/h2&gt;
-&lt;p&gt;스칼라의 Boolean 타입은 &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; 값을 이용한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt; &amp;gt; &lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;
-&lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt; &amp;lt; &lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;
-&lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt; == &lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;
-&lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt; == &lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123520.js&quot; id=&quot;asciicast-123520&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;tuple&quot;&gt;Tuple&lt;/h2&gt;
-&lt;p&gt;튜풀은 데이터를 담는 컨테이너 중에서 순서가 있고 복수개의 값들을 담는 컨테이너를 의미한다.&lt;br /&gt;
-소괄호를 이용하면 데이터 타입을 명시하지 않고도 튜플을 만들 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;val&lt;/span&gt; tuple = (&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;4.0&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;Five&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123522.js&quot; id=&quot;asciicast-123522&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;튜플에 들어가는 각 원소들은 그 원소들끼리의 데이터타입이 통일될 필요는 없다.&lt;br /&gt;
-위의 예제처럼 Int, Double, String 3개의 각기다른 데이터타입이 튜플이라는 컨테이너에 담을 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;표현식-블록&quot;&gt;표현식 블록&lt;/h2&gt;
-&lt;p&gt;실행시킬 복수줄의 코드단위를 중괄호로 묶어 하나의 표현식(expression)으로 관리하는것이 스칼라에선 가능하다.&lt;br /&gt;
-그리고 복잡한 표현식을 실행시킨 결과를 반환값으로 사용할 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;val&lt;/span&gt; result = {
-  &lt;span class=&quot;kw&quot;&gt;val&lt;/span&gt; x: Double = &lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;
-  x * &lt;span class=&quot;fl&quot;&gt;0.5&lt;/span&gt;
-}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123525.js&quot; id=&quot;asciicast-123525&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;주석&quot;&gt;주석&lt;/h2&gt;
-&lt;p&gt;스칼라에서 주석은 &lt;code&gt;//&lt;/code&gt; 을 이용한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;co&quot;&gt;// println(&amp;quot;Comment&amp;quot;)&lt;/span&gt;
-&lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Not comment&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/123526.js&quot; id=&quot;asciicast-123526&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;주석이 처리된 코드는 실행되지 않는 것을 확인할 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;매치표현식을-이용한-조건부-로직&quot;&gt;매치표현식을 이용한 조건부 로직&lt;/h2&gt;
-&lt;p&gt;스칼라에선 if else 구문의 조건문보다 매치표현식을 이용한 조건문을 즐겨 사용한다고 한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;val&lt;/span&gt; today = &lt;span class=&quot;st&quot;&gt;&amp;quot;Tue&amp;quot;&lt;/span&gt;
-
-&lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (today == &lt;span class=&quot;st&quot;&gt;&amp;quot;Mon&amp;quot;&lt;/span&gt;) &lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Weekday&amp;quot;&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (today == &lt;span class=&quot;st&quot;&gt;&amp;quot;Tue&amp;quot;&lt;/span&gt;) &lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Weekday&amp;quot;&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (today == &lt;span class=&quot;st&quot;&gt;&amp;quot;Wed&amp;quot;&lt;/span&gt;) &lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Weekday&amp;quot;&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (today == &lt;span class=&quot;st&quot;&gt;&amp;quot;Thu&amp;quot;&lt;/span&gt;) &lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Weekday&amp;quot;&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (today == &lt;span class=&quot;st&quot;&gt;&amp;quot;Fri&amp;quot;&lt;/span&gt;) &lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Weekday&amp;quot;&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (today == &lt;span class=&quot;st&quot;&gt;&amp;quot;Sat&amp;quot;&lt;/span&gt;) &lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Weekend&amp;quot;&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;if&lt;/span&gt; (today == &lt;span class=&quot;st&quot;&gt;&amp;quot;Sun&amp;quot;&lt;/span&gt;) &lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Weekend&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/125089.js&quot; id=&quot;asciicast-125089&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;위의 if else 구문 코드는 &lt;code&gt;today&lt;/code&gt; 요일이 언제인지에 따라 &amp;quot;Weekday&amp;quot;, &amp;quot;Weekend&amp;quot; 로 주중인지 주말인지를 출력한다.&lt;/p&gt;
-&lt;p&gt;매치표현식을 이용해본 코드는&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;val&lt;/span&gt; today = &lt;span class=&quot;st&quot;&gt;&amp;quot;Tue&amp;quot;&lt;/span&gt;
-
-today &lt;span class=&quot;kw&quot;&gt;match&lt;/span&gt; {
-  &lt;span class=&quot;kw&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;Mon&amp;quot;&lt;/span&gt; | &lt;span class=&quot;st&quot;&gt;&amp;quot;Tue&amp;quot;&lt;/span&gt; | &lt;span class=&quot;st&quot;&gt;&amp;quot;Wed&amp;quot;&lt;/span&gt; | &lt;span class=&quot;st&quot;&gt;&amp;quot;Thu&amp;quot;&lt;/span&gt; | &lt;span class=&quot;st&quot;&gt;&amp;quot;Fri&amp;quot;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;Weekday&amp;quot;&lt;/span&gt;
-  &lt;span class=&quot;kw&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;Sat&amp;quot;&lt;/span&gt; | &lt;span class=&quot;st&quot;&gt;&amp;quot;Sun&amp;quot;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;Weekend&amp;quot;&lt;/span&gt;
-}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/125090.js&quot; id=&quot;asciicast-125090&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;code&gt;match&lt;/code&gt;, &lt;code&gt;case&lt;/code&gt; 를 통해 간결해 진 코드를 볼 때 if else 구문이 상당히 조악하게 보여졌다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;for-loop&quot;&gt;for loop&lt;/h2&gt;
-&lt;p&gt;반복문 for loop 역시 스칼라에서 지원되며 강력한 기능들을 더할 수 있었다.&lt;br /&gt;
-기본적인 사용법은 아래 구문 형태를 이용한다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;for (&amp;lt;식별자&amp;gt; &amp;lt;- &amp;lt;반복범위&amp;gt;) &amp;lt;표현식&amp;gt;&lt;/code&gt; 혹은 &lt;code&gt;for {&amp;lt;식별자&amp;gt; &amp;lt;- &amp;lt;반복범위&amp;gt;} &amp;lt;표현식&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;아래는 for 문을 이용하여 &amp;quot;Day1)&amp;quot; 부터 &amp;quot;Day10)&amp;quot; 까지 10개의 날을 출력하는 예제코드이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;for&lt;/span&gt; {x &amp;lt;- &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;} &lt;span class=&quot;fu&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;Day&amp;quot;&lt;/span&gt; + x + &lt;span class=&quot;st&quot;&gt;&amp;quot;) &amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/125091.js&quot; id=&quot;asciicast-125091&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;h3 id=&quot;nested-for-loop&quot;&gt;Nested for loop&lt;/h3&gt;
-&lt;p&gt;for 반복문을 중첩시키는 예제의 경우 스칼라에선 세련된 방법이 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;for&lt;/span&gt; {x &amp;lt;- &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;}{
-  &lt;span class=&quot;kw&quot;&gt;for&lt;/span&gt; {y &amp;lt;- &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;}{
-    &lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(x * y)
-  }
-}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;위의 예제는 for문 안에 for문이 중첩하여 여섯경우의 곱 결과를 보여준다.&lt;br /&gt;
-그런데 이것을 아래와 같이 간단하게 코딩을 줄이는것이 가능하다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;for&lt;/span&gt; {x &amp;lt;- &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;; y &amp;lt;- &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;} &lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(x * y)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;두 반복자를 &lt;code&gt;;&lt;/code&gt; 를 이용해 for 문에 한꺼번에 입력하거나&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot;&gt;&lt;span class=&quot;kw&quot;&gt;for&lt;/span&gt; {x &amp;lt;- &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;
-     y &amp;lt;- &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt; to &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;} &lt;span class=&quot;fu&quot;&gt;println&lt;/span&gt;(x * y)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;문단을 나누어도 되겠다.&lt;/p&gt;
-&lt;center&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://asciinema.org/a/130236.js&quot; id=&quot;asciicast-130236&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-</description>
-        <pubDate>Tue, 06 Jun 2017 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/scala/2017/06/06/HelloScala.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/scala/2017/06/06/HelloScala.html</guid>
-        
-        
-        <category>Scala</category>
         
       </item>
     
