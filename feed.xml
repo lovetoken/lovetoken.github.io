@@ -5,9 +5,78 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 07 Apr 2018 22:29:57 +0900</pubDate>
-    <lastBuildDate>Sat, 07 Apr 2018 22:29:57 +0900</lastBuildDate>
+    <pubDate>Sat, 07 Apr 2018 23:35:40 +0900</pubDate>
+    <lastBuildDate>Sat, 07 Apr 2018 23:35:40 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 Package란?</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;R은 다양한 사용자들의 희망으로 생겨나는 많은 특수한 목적의 로직들과 코드들의 집합을 패키지(Package)라는 형태로 배포한다.&lt;br /&gt;
+개발자 및 실무진뿐만 아니라 일반 사용자들도 특정 주제에 대하여 완성도가 높고 설계가 잘된 코드들을 제 3자가 이용하기 쉽도록 패키지란 형태로 배포할 수 있으며, 이 배포가 용이하도록 만든 시스템은 R의 아주 중요한 역할을 하고 있다고 본다.&lt;/p&gt;
+&lt;p&gt;패키지 안에는 활용 가능한 함수(function)들과 재현가능연구를 위한 빌트인 예제 데이터셋 객체, 패키지 사용 방법에 대한 개요 및 설명서(Vignette), 함수 도움말(R document) 파일들로 보통 구성되는 편이다.&lt;/p&gt;
+&lt;p&gt;패키지의 공유는 &lt;a href=&quot;https://cran.r-project.org/&quot;&gt;CRAN(The Comprehensive R Archive Network)&lt;/a&gt; 을 통해 공유되고 있고,&lt;br /&gt;
+현존하는 패키지만 (18년 4월 기준) 12,400개가 있다.&lt;br /&gt;
+어떤 패키지들이 CRAN 에 등재되어 있는지 확인하고 싶다면 &lt;code&gt;available.packages()&lt;/code&gt; 함수를 통해 확인이 가능하다.&lt;br /&gt;
+이를 통해 확인한 패키지 중 설치를 희망하는 패키지를 발견하였다면, &lt;code&gt;install.packages()&lt;/code&gt; 함수 안에 패키지명을 넣고 실행해 그 패키지를 설치할 수 있다.&lt;br /&gt;
+기본적으론 CRAN 서버에서 해당하는 패키지를 찾은 후 다운로드 및 설치를 시작하게 되므로 인터넷 연결이 되어있어야 한다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;패키지-설치방법&quot;&gt;패키지 설치방법&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;install.packages()&lt;/code&gt; 함수를 사용하여 설치하는것이 가장 쉬운 기본 방법이다.&lt;br /&gt;
+예를 들어 데이터 시각화에서 대중적으로 이용하는 &lt;a href=&quot;http://ggplot2.tidyverse.org/&quot;&gt;ggplot2&lt;/a&gt; 라는 패키지가 있는데,&lt;br /&gt;
+이 패키지를 설치하고 싶다면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;install.packages&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;ggplot2&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;를 실행하게 되면 아래의 로그와 같이 다운로드 및 설치가 진행된다.&lt;/p&gt;
+&lt;center&gt;
+&lt;script src=&quot;https://asciinema.org/a/174870.js&quot; id=&quot;asciicast-174870&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
+&lt;p&gt;R studio 에선 설치아이콘을 이용해 설치하는것도 가능하지만&lt;br /&gt;
+결국 &lt;code&gt;install.packages(&amp;quot;ggplot2&amp;quot;)&lt;/code&gt; 명령을 실행하는 것과 똑같다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/r_package.png&quot;&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;설치 도입 부분에 CRAN 미러를 선택해 달라는 것은&lt;br /&gt;
+&lt;a href=&quot;https://cran.r-project.org/mirrors.html&quot;&gt;수많은 미러 아카이브&lt;/a&gt; 중 어떤 서버를 이용해 다운로드 할 것인지 묻는 것인데, 정확한 버전관리를 필요로 하는 게 아닌 이상&lt;br /&gt;
+취향에 맞게 대한민국에 해당되는 미러사이트를 이용하든지 맨 위에 있는 &amp;quot;0-Cloud&amp;quot; 를 선택하고 설치를 진행하자.&lt;/p&gt;
+&lt;p&gt;더해서&lt;br /&gt;
+설치 과정의 로그 중 에러 및 경고메세지가 출력되면서 설치가 중단될 변수가 있다.&lt;br /&gt;
+그때의 로그를 잘 살펴보면 필요로 하는 디펜던시 문제일 경우가 대부분일 것이다.&lt;br /&gt;
+이땐 디펜던시에 걸린, 필요로 하는 소프트웨어를 설치 후 패키지 설치를 다시 진행해 보자.&lt;br /&gt;
+그래도 문제가 해결이 안될 땐 에러 로그를 그대로 복사해 구글에서 검색되는 Stackoverflow 들의 질문과 답변을 보고 문제를 직접 해결해 보는것이 현명한 방법일 것이다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;설치된-패키지를-사용하기-위한-방법&quot;&gt;설치된 패키지를 사용하기 위한 방법&lt;/h2&gt;
+&lt;p&gt;설치가 되어있는 패키지를 실제로 사용하기 위해선 R 세션으로 로드하는 과정이 필요하다.&lt;br /&gt;
+마치 패키지란 상자에 담겨있는 내용물을 R에서 사용할 수 있도록 펼쳐놓는 과정으로 필자는 비유하는 편인데&lt;br /&gt;
+펼쳐놓는(로드하는) 방법은 대표적으로 &lt;code&gt;library()&lt;/code&gt;, &lt;code&gt;require()&lt;/code&gt; 함수를 이용하는 방법이다.&lt;br /&gt;
+관습적으론 &lt;code&gt;library()&lt;/code&gt; 를 R User 는 더 많이 이용하는 편이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(ggplot2)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 코드를 실행하게 되면 ggplot2 패키지에 있는 여러 가지 함수들을 사용할 수 있게 된다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;특정-패키지를-공부하고-사용할-때&quot;&gt;특정 패키지를 공부하고 사용할 때&lt;/h2&gt;
+&lt;p&gt;패키지는 특정 주제나 도메인에 대해서 특별한 목적으로 만들어진다.&lt;br /&gt;
+위에서 예로 들은 ggplot2 패키지의 경우 그래프를 그릴 수 있는 또다른 시스템이며 광범위한 세계이다.&lt;br /&gt;
+&amp;quot;ggplot2&amp;quot; 패키지를 로드하는 순간 활성화되는 함수들이 정말 많이 있고(100개 이상) 이를 제대로 활용하기 위해선 이 패키지만의 미니언어를 구사해야 한다.&lt;br /&gt;
+즉 패키지라는 상자를 까는 순간 정체를 알 수 없는, 사용법을 모르는 수많은 부품이 펼쳐진 상태로 비유할 수 있다.&lt;br /&gt;
+이 도구 모두를 아는 것은 많은 시간이 걸리고, 무엇보다 우리가 현재 필요로 하지 않을 도구일 가능성이 높다.&lt;br /&gt;
+따라서 특정 패키지 안에서도 핵심적인 함수와 대표적인 기능들을 추린 후 단계적으로 이해해야 할 필요가 있다.&lt;br /&gt;
+이 대표적인 함수를 조금씩 조금씩 이용해 보면서 연계되는 부수적인 함수들의 기능들을 체감하는 방식이 패키지를 처음 만나게 될 때의 좋은 전략이라고 생각하며,&lt;br /&gt;
+기능이 많고 부피가 큰 패키지일수록 패키지 개발자는 이러한 점을 고려하여 설계했을 가능성이 높다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://r-pkgs.had.co.nz/intro.html&quot;&gt;R packages by Hadley Wickham&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 07 Apr 2018 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2018/04/07/Rpackage.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2018/04/07/Rpackage.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>R에서 조건화 그래프(Conditioning plot) 를 출력하기 위한 ggplot2::faect_wrap(), coplot() 함수에 대하여</title>
@@ -790,128 +859,6 @@ Windows 환경에선 결과적으로 &lt;code&gt;read.csv()&lt;/code&gt; 함수�
         
         
         <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>R에서 기본 내장 graphics package를 이용한 데이터 시각화</title>
-        <description>&lt;p&gt;본 글은 R에서 기본 내장 graphics package에 대표격인 &lt;code&gt;plot()&lt;/code&gt; 함수의 기초를 설명해보고자 한다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;plot-함수&quot;&gt;&lt;code&gt;plot()&lt;/code&gt; 함수&lt;/h2&gt;
-&lt;p&gt;x 와 y 의 2개 축을 기준으로 좌표를 찍는 컨셉을 가진 함수이다.&lt;br /&gt;
-가장 대표적으로 산점도를 표현할 때 간단하게 구현이 가능한 함수로 소개되나,&lt;br /&gt;
-범용적으로 사용이 가능한 제너릭 함수 (generic function) 이기 때문에&lt;br /&gt;
-입력되는 데이터의 타입과 클래스에 따라 성격에 맞게 다양한 모습으로 데이터 시각화 결과물이 출력된다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h3 id=&quot;좌표-찍기&quot;&gt;좌표 찍기&lt;/h3&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_1-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;plot()&lt;/code&gt; 함수는 &lt;code&gt;x&lt;/code&gt;, &lt;code&gt;y&lt;/code&gt; 인자 2개를 기본적으로 받는다.&lt;br /&gt;
-위의 코드를 실행하면 (2, 1)이라는 좌표 한곳에 점을 찍는 모습을 볼 수 있다.&lt;br /&gt;
-이러한 특성을 잘 이용하면 복수개의 좌표에 점을 찍을 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_2-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;2개의 점이 찍히는데 각각 (1,1), (2,5) 좌표에 찍히는 것을 볼 수 있다.&lt;/p&gt;
-&lt;p&gt;이런 좌표 찍기 특성을 이용하여 자신이 가지고 있는 데이터셋을 &lt;code&gt;plot()&lt;/code&gt; 함수의 &lt;code&gt;x&lt;/code&gt;, &lt;code&gt;y&lt;/code&gt; 인자에게 넘김으로써 산점도를 표현할 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;names&lt;/span&gt;(cars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;speed&amp;quot; &amp;quot;dist&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(cars$speed, cars$dist)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_3-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;built-in 객체 &lt;code&gt;cars&lt;/code&gt;에서 차의 속도 정보를 담은 벡터 &lt;code&gt;cars$speed&lt;/code&gt; 가 x축으로,&lt;br /&gt;
-주행거리 정보를 담은 벡터 &lt;code&gt;cars$dist&lt;/code&gt; 가 y축으로 입력됨으로써&lt;br /&gt;
-차량의 속도와 거리 간의 관계를 대략적으로 살펴볼 수 있는 산점도를 보여주는 예제이다.&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;참고로 위의 코드 &lt;code&gt;plot(cars$speed, cars$dist)&lt;/code&gt; 는 아래의 코드를 실행하는 것과 같다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h3 id=&quot;type-인자&quot;&gt;&lt;code&gt;type&lt;/code&gt; 인자&lt;/h3&gt;
-&lt;p&gt;위의 좌표 찍기 두번째 예시인&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_4-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;에서 두 좌표 간 직선을 그리고 싶다면 &lt;code&gt;type&lt;/code&gt; 인자를 조정해보면 된다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;type =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;l&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_5-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&amp;quot;line&amp;quot;을 의미할 것 같은 &amp;quot;l&amp;quot; 문자를 &lt;code&gt;type&lt;/code&gt; 인자로 넘겨주면 두 좌표가 연결된 선을 그린다.&lt;br /&gt;
-&lt;code&gt;type&lt;/code&gt; 는 그림을 어떻게 그릴 것인지 묻는 인자로써, 이 인자값을 입력하지 않으면 기본적으로 &amp;quot;point&amp;quot;의 의미인 &amp;quot;p&amp;quot; 가 대부분 설정된다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;type&lt;/code&gt; 인자가 받을 수 있는 값들은 아래와 같다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;type = &amp;quot;p&amp;quot;&lt;/code&gt; : 점으로&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;type = &amp;quot;l&amp;quot;&lt;/code&gt; : 선으로&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;type = &amp;quot;b&amp;quot;&lt;/code&gt; : 점과 선 둘 다 동시에&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;type = &amp;quot;o&amp;quot;&lt;/code&gt; : 점과 선 둘 다 동시에 (단 겹쳐짐 : over plotted)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;type = &amp;quot;h&amp;quot;&lt;/code&gt; : 히스토그램과 비슷한 형태로 (histogram)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;type = &amp;quot;s&amp;quot;&lt;/code&gt; : 계단모양으로 (stair steps)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;type = &amp;quot;S&amp;quot;&lt;/code&gt; : 계단모양으로 (upper stair steps)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;type = &amp;quot;n&amp;quot;&lt;/code&gt; : 좌표찍지 않음&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;type = n&lt;/code&gt;인 경우는 특이하게 plot의 토대인 축은 표현되나, 좌표가 찍히지 않음으로써&lt;br /&gt;
-마치 그림을 그리기 이전 스케치북을 펼치는 것과 같다고 볼 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;type =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;n&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_6-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h3 id=&quot;이외의-다양한-인자들&quot;&gt;이외의 다양한 인자들&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;plot()&lt;/code&gt; 함수는 그래픽스 파라미터 &lt;code&gt;par&lt;/code&gt;를 상속받게 되어 다양한 인자들을 사용할 수 있는데, 이 특성을 잘 살리면 더 세부적인 조정이 가능하다.&lt;/p&gt;
-&lt;p&gt;그래픽스 파라미터 (Graphical Parameters)의 자세한 내용과 사용 가능 인자가 무엇이 있는지 알고 싶다면&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;?par&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;를 실행시켜 도움말을 볼 수 있다.&lt;br /&gt;
-&lt;code&gt;cex&lt;/code&gt;, &lt;code&gt;fg&lt;/code&gt;, &lt;code&gt;lty&lt;/code&gt;, &lt;code&gt;pch&lt;/code&gt; 등의 인자만 살펴보자&lt;/p&gt;
-&lt;p&gt;만약 plotting 결과물에서 좌표 포인트의 크기를 조정하고 싶다면 &lt;code&gt;cex&lt;/code&gt; 인자값을 조정한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars, &lt;span class=&quot;dt&quot;&gt;cex =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# 디폴트로 cex=1 임, 즉 2배 크게&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_7-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars, &lt;span class=&quot;dt&quot;&gt;cex =&lt;/span&gt; .&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# 2배 작게&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_7-2.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;축의 색깔을 바꾸고 싶다면 전경색을 조절할 수 있는 &lt;code&gt;fg&lt;/code&gt; 인자값을 조정한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars, &lt;span class=&quot;dt&quot;&gt;fg =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_8-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;만약 line type의 그림을 그렸다면 선의 성격을 &lt;code&gt;lty&lt;/code&gt; 인자를 통해 바꿀 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;type =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;l&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# lty 를 언급하지 않았을 때&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_9-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;type =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;l&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;lty=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;dashed&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_9-2.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;만약 point type의 그림을 그렸다면 점의 모양을 &lt;code&gt;pch&lt;/code&gt; 인자를 통해 바꿀 수도 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars) &lt;span class=&quot;co&quot;&gt;# pch 를 언급하지 않았을 때&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_10-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars, &lt;span class=&quot;dt&quot;&gt;pch =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_10-2.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars, &lt;span class=&quot;dt&quot;&gt;pch =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;25&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# 1 ~ 25개의 모양이 준비되어 있음&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_10-3.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h3 id=&quot;좌표-찍기의-특성을-어기는-아니-똑똑한-제너릭-함수&quot;&gt;좌표 찍기의 특성을 어기는, 아니 똑똑한 제너릭 함수&lt;/h3&gt;
-&lt;p&gt;지금까지 보았듯이 &lt;code&gt;plot()&lt;/code&gt;은 좌표 찍기의 컨셉을 이용하여 데이터시각화 결과물을 출력한다.&lt;br /&gt;
-하지만 좌표 찍기에 적합하지 않은 클래스의 데이터가 입력되면 그에 알맞게 좌표 찍기의 컨셉을 버리고 다른 형태로 출력한다.&lt;/p&gt;
-&lt;p&gt;아래 코드를 보면&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;fit &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;lm&lt;/span&gt;(dist ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;speed, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; cars)
-&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(fit)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_11-1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;img src=&quot;/assets/plotFunction_11-2.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;img src=&quot;/assets/plotFunction_11-3.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;img src=&quot;/assets/plotFunction_11-4.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;위의 코드는 &lt;code&gt;cars&lt;/code&gt; 를 대상으로 단순회귀적합을 한 lm class의 &lt;code&gt;fit&lt;/code&gt; 객체를 &lt;code&gt;plot()&lt;/code&gt; 함수에 입력한 결과인데 뭔가 많다.&lt;br /&gt;
-분명 산점도이긴 산점도인데 더 복잡하고 어떠한 선분과 겹쳐져 그려진 4개의 패널로 구분된 시각화 결과물이 출력된다.&lt;br /&gt;
-이는 회귀 적합 이후 모형진단 시 자주 사용하는 데이터 시각화 결과물을 &lt;code&gt;plot()&lt;/code&gt; 함수가 자동으로 알아서 모두 출력해준 것이다.&lt;br /&gt;
-산점도 뿐만 아니라 완전히 성격이 바뀐 결과물을 출력하기도 한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(data.tree)
-&lt;span class=&quot;kw&quot;&gt;data&lt;/span&gt;(acme, &lt;span class=&quot;dt&quot;&gt;package =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;data.tree&amp;quot;&lt;/span&gt;)
-&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(acme)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/plotFunction_12.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;data.tree 라는 패키지가 있는데,&lt;br /&gt;
-이 패키지에 포함되어 있는 &lt;code&gt;acme&lt;/code&gt; 데이터셋은 class 가 &lt;code&gt;data.tree&lt;/code&gt; 로써 특이한 구조를 가지고 있는 데이터셋 이다.&lt;br /&gt;
-이를 &lt;code&gt;plot()&lt;/code&gt; 함수에 입력하여 plotting 하면 우리가 기존에 알고 있던 방식의 결과물이 나오지 않고 색다른 결과물이 나온다.&lt;br /&gt;
-이러한 이유는 &lt;code&gt;plot()&lt;/code&gt; 이란 함수는 입력되는 데이터의 class에 알맞게 최적으로 표현해줄 수 있는 방법의 코드로 실행되기 때문이다.&lt;br /&gt;
-그리고 이러한 특징을 가진 함수는 R에서 generic function이라고 부른다.&lt;br /&gt;
-generic function은 사용자가 함수에 대한 문법을 정확하게 지키지 않더라도 최대한 사용자가 기대할 것 같은 결과물을 내보내기 위함이다.&lt;br /&gt;
-이러한 R 시스템은 사용자 편의를 올릴 수 있게 해준다.&lt;/p&gt;
-&lt;section class=&quot;footnotes&quot;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;R을 공부하다 보면 눈에 자주 띄는 대표적인 그림이기도 하다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/section&gt;
-</description>
-        <pubDate>Fri, 16 Jun 2017 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/data_visualization/2017/06/16/plotFunction.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/data_visualization/2017/06/16/plotFunction.html</guid>
-        
-        
-        <category>R</category>
-        
-        <category>Data_Visualization</category>
         
       </item>
     
