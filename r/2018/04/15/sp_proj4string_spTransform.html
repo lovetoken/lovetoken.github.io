@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>lovetoken</title>
+        <meta name="author" content="Lovetoken" />
+        <meta name="description" content="R에서 sp package 의 proj4string(), spTransform() 함수를 이용한 좌표계 변환 예제" />
+        <meta name="keywords" content="R에서 sp package 의 proj4string(), spTransform() 함수를 이용한 좌표계 변환 예제, , R" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="" property="fb:app_id">
+        <meta content="" property="og:site_name">
+        
+          <meta content="R에서 sp package 의 proj4string(), spTransform() 함수를 이용한 좌표계 변환 예제" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="" property="og:description">
+        
+        
+          <meta content="https://lovetoken.github.io/r/2018/04/15/sp_proj4string_spTransform.html" property="og:url">
+        
+        
+          <meta content="2018-04-15T00:00:00+09:00" property="article:published_time">
+          <meta content="https://lovetoken.github.io/about/" property="article:author">
+        
+        
+          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="R" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:creator" content="@">
+        
+          <meta name="twitter:title" content="R에서 sp package 의 proj4string(), spTransform() 함수를 이용한 좌표계 변환 예제">
+        
+        
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2018/04/15/sp_proj4string_spTransform.html">
+        
+        
+          <meta name="twitter:description" content="">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', 'UA-89656101-1', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">Lovetoken</h1>
+                
+                <div id="about">
+                    저는 개발 취향을 가진 데이터 분석가 Jr. 입니다.
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://twitter.com/LT_Lovetoken" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/lovetoken/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>Navigation</strong><br />
+                    &nbsp;&raquo; <a href="/">Home</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">About Me</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/lovetoken">Github</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>R에서 sp package 의 proj4string(), spTransform() 함수를 이용한 좌표계 변환 예제</h1>
+<span class="time">15 Apr 2018</span>
+
+<span class="categories">
+    &raquo; <a href="/category/R">R</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><p><br><br></p>
+<p>GIS 기반의 프로젝트를 수행중에 있는 어느 날<br />
+어떤 특정한 위경도 좌표가 입력될 때 대한민국의 시군구 중 어디인지를 알려주는 함수를 필요로 하게 되었다.<br />
+API 기반의 서비스를 이용하지 않고 순수 로직에 의해 만드는것을 목표로 하고 있어 다양한 요소에 개발을 필요로 하고 있는데<br />
+큼지막한 요소로는 2가지 미션들이 있다.</p>
+<ul>
+<li>좌표계의 통일을 위한 변환방법</li>
+<li>특정 (x, y) 좌표가 시군구 경계에 해당하는 컨백스홀 안에있는지 밖에있는지를 판단하는 논리 - <em>추후 포스팅 예정</em></li>
+</ul>
+<p>이 중 첫번째 <strong>좌표계의 통일을 위한 변환방법</strong>을 R의 sp 패키지를 기반으로 알아보고자 한다.</p>
+<br>
+<center>
+<img src="/assets/proj4string1.jpg">
+</center>
+<blockquote>
+<p><a href="http://www.biz-gis.com/index.php?mid=pds&amp;document_srl=67326">우리나라에서 사용하는 좌표계의 종류</a> - 출처 : biz-gis.com</p>
+</blockquote>
+<p><br></p>
+<del>
+복잡복잡..
+</del>
+<p>GIS에 대해서 1도 몰랐던 시절 좌표계의 종류가 이렇게 많은지 모르고 있었다.<br />
+더군다나 실제 GIS 데이터들은 이런 좌표단위들을 다양하게 사용하고 있어서 혼란이 많았다.</p>
+<p>예를 들면 이렇다.<br />
+서울의 광화문 중앙의 좌표를 <code>(위도,경도)</code><a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> 라고 할 때<br />
+A 테이블에선 <code>(37.5760336, 126.9769142)</code> 로 사용중이고<br />
+B 테이블에선 <code>(37.5749854, 126.9746067)</code> 로 관리가 되고 있다.<br />
+미세한 차이로 보이지만 실제로 이 위경도값을 그대로 구글지도에 입력하여 찾아보면 멀리 떨어진 지점이다.</p>
+<br>
+<center>
+<img src="/assets/proj4string3.png">
+</center>
+<blockquote>
+<p>Google Map 에서 A 테이블의 <code>(37.5760336, 126.9769142)</code> 를 찍어 보았을 때</p>
+</blockquote>
+<br>
+<center>
+<img src="/assets/proj4string4.png">
+</center>
+<blockquote>
+<p>Google Map 에서 B 테이블의 <code>(37.5749854, 126.9746067)</code> 를 찍어 보았을 때</p>
+</blockquote>
+<p>이런 예제처럼 A테이블 정보와 B테이블의 정보를 매쉬업 하기 위해선 단위를 통일하여야 매쉬업 할 때 왜곡되어지지 않는다.<br />
+자연스럽게 A, B중 하나는 좌표계를 변환할 필요가 생기는데 이 시점에서<br />
+R에서 sp package 를 이용한 좌표계 변환 성공예제를 정리하고 공유하고자 한다.</p>
+<p><br><br></p>
+<h2 id="행정경계-자료-획득---시군구-별-경계">행정경계 자료 획득 - 시군구 별 경계</h2>
+<p>시군구를 구분짓는 경계에 대한 데이터 베이스가 필요했는데<br />
+이 데이터는 구했지만 여기서 부터 문제가 있었다.<br />
+필자에게 익숙한 경위도 지리좌표계가 아닌 다른 단위의 좌표계로 관리가 되고 있다는 점이었다.<br />
+문제의 시군구별 행정경계 데이터는 http://www.biz-gis.com/GISDB/ 에서 제공하고 있다.<br />
+다운로드 하는 방법은 http://www.biz-gis.com/GISDB/ 로 들어간 후 &quot;행정경계-시군구&quot; 항목을 클릭하여 다운로드 버튼을 누르면 된다.</p>
+<br>
+<center>
+<img src="/assets/proj4string2.png">
+</center>
+<p><br></p>
+<p>&quot;vADM2_TM.zip&quot; 이라는 압축파일이 다운로드가 되고, 압축을 풀면 아래와 같은 파일들이 떨어진다.</p>
+<pre><code>## [1] &quot;v시군구_TM.dbf&quot; &quot;v시군구_TM.sbn&quot; &quot;v시군구_TM.sbx&quot; &quot;v시군구_TM.shp&quot;
+## [5] &quot;v시군구_TM.shx&quot;</code></pre>
+<p>행정경계정보가 담긴 이 5개 파일을 R에서 불러와 분석을 하기 위해 <code>rgdal::readORG()</code> 함수를 이용한다. <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgdal)
+d &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="st">&quot;data&quot;</span>)</code></pre></div>
+<pre><code>## OGR data source with driver: ESRI Shapefile 
+## Source: &quot;/Users/lovetoken/Dropbox/02_Study/01_Statistic/31_R/03_Posting/02_Package/sp/proj4string/data&quot;, layer: &quot;v시군구_TM&quot;
+## with 232 features
+## It has 4 fields</code></pre>
+<p><code>readOGR()</code> 함수의 사용법은 .shp 포맷을 포함한 기하정보들을 모두 가진 디렉토리를 첫번째 인자에 입력하면 된다.<br />
+만약 입력한 디렉토리 안에 &quot;vADM2_TM.zip&quot; 파일을 압축해제한 5개 파일 외에 다른 레이어 파일들이 있을때는 무엇을 기준으로 읽어들일지 알 수 없으므로 두번째 <code>layer</code> 인자에 명시하여 알려 줄 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;v시군구_TM&quot;</span>)</code></pre></div>
+<p><code>readOGR()</code> 함수를 통해 불러온 객체 <code>d</code> 를 <code>axes = T</code> 를 통해 축을 표현시켜 무작정 플롯팅을 시켜보면 아래와 같이 뜬다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(d, <span class="dt">axes =</span> T)</code></pre></div>
+<p><img src="/assets/proj4string5.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>시군구 경계가 구분되어 있는 대한민국 지도가 그려지는 것을 확인할 수 있다.<br />
+<code>plot()</code> 함수를 실행할 때 x, y 점들을 포인팅 하는 원리로써 이런 지도가 그려지는것은<br />
+<code>d</code> 객체 안에 경계선에 대해서 수많은 경계점들의 좌표정보를 가지고 있기 때문이란 것을 추측할 수 있고<br />
+직접 까보면 그 실체를 알 수 있게 된다. <code>str(d)</code> 출력의 일부(tail)를 확인해 보면</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(d)</code></pre></div>
+<pre><code>  .. .. .. .. ..$ :Formal class &#39;Polygon&#39; [package &quot;sp&quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 179310 418281
+  .. .. .. .. .. .. ..@ area   : num 4775
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:26, 1:2] 179312 179320 179328 179337 179341 ...
+  .. .. .. .. ..$ :Formal class &#39;Polygon&#39; [package &quot;sp&quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 179400 418308
+  .. .. .. .. .. .. ..@ area   : num 1161
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:24, 1:2] 179420 179419 179420 179414 179410 ...
+  .. .. .. .. ..$ :Formal class &#39;Polygon&#39; [package &quot;sp&quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 179184 418418
+  .. .. .. .. .. .. ..@ area   : num 3849
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:25, 1:2] 179181 179168 179160 179159 179152 ...
+  .. .. .. .. ..$ :Formal class &#39;Polygon&#39; [package &quot;sp&quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 176061 418565
+  .. .. .. .. .. .. ..@ area   : num 9792
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:39, 1:2] 176124 176126 176117 176108 176099 ...
+  .. .. .. .. ..$ :Formal class &#39;Polygon&#39; [package &quot;sp&quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 178754 418658
+  .. .. .. .. .. .. ..@ area   : num 9316
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:37, 1:2] 178730 178736 178751 178760 178761 ...
+  .. .. .. .. ..$ :Formal class &#39;Polygon&#39; [package &quot;sp&quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 171224 419615
+  .. .. .. .. .. .. ..@ area   : num 1090438
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:31, 1:2] 170917 170743 170551 170426 170368 ...
+  .. .. .. .. ..$ :Formal class &#39;Polygon&#39; [package &quot;sp&quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 176879 420421
+  .. .. .. .. .. .. ..@ area   : num 558583
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:47, 1:2] 177012 177056 177119 177237 177352 ...
+  .. .. .. .. ..$ :Formal class &#39;Polygon&#39; [package &quot;sp&quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 188820 407056
+  .. .. .. .. .. .. ..@ area   : num 692251527
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:5345, 1:2] 191196 191278 191338 191358 191399 ...
+  .. .. .. ..@ plotOrder: int [1:29] 29 14 1 27 28 17 20 7 16 2 ...
+  .. .. .. ..@ labpt    : num [1:2] 188820 407056
+  .. .. .. ..@ ID       : chr &quot;97&quot;
+  .. .. .. ..@ area     : num 697667674
+  .. ..$ :Formal class &#39;Polygons&#39; [package &quot;sp&quot;] with 5 slots
+  .. .. .. ..@ Polygons :List of 1
+  .. .. .. .. ..$ :Formal class &#39;Polygon&#39; [package &quot;sp&quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 226596 433472
+  .. .. .. .. .. .. ..@ area   : num 428700798
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:5130, 1:2] 233437 233541 233595 233829 233846 ...
+  .. .. .. ..@ plotOrder: int 1
+  .. .. .. ..@ labpt    : num [1:2] 226596 433472
+  .. .. .. ..@ ID       : chr &quot;98&quot;
+  .. .. .. ..@ area     : num 428700798
+  .. .. [list output truncated]
+  ..@ plotOrder  : int [1:232] 113 121 191 116 189 195 117 208 112 199 ...
+  ..@ bbox       : num [1:2, 1:2] -11603 -42102 548505 569052
+  .. ..- attr(*, &quot;dimnames&quot;)=List of 2
+  .. .. ..$ : chr [1:2] &quot;x&quot; &quot;y&quot;
+  .. .. ..$ : chr [1:2] &quot;min&quot; &quot;max&quot;
+  ..@ proj4string:Formal class &#39;CRS&#39; [package &quot;sp&quot;] with 1 slot
+  .. .. ..@ projargs: chr NA</code></pre>
+<p>&quot;sp&quot; 라는 클래스로 관리되는 <code>d</code> 객체 안에는 coords 라는 속성에 뭔지 모를 수많은 값들이 모여져서 다각형(Polygon)을 구성하게 되는 식이라 추측할 수 있다.<br />
+그런데 플롯팅 된 지도의 x, y 축 단위를 우리에게 낯익은 경위도 지리 좌표계(Geographic Coordinate)로 바꾸려면 어떻게 해야할까?<br />
+지금의 x, y축의 수치를 보면 십만단위 범위값까지 나오는데 이는 구 형의 지구를 평면으로 펼친 후 포인팅하기위한 평면직각좌표계(Projected Coordinate)를 기준으로 측정할 때 나올 수 있는 단위라고 한다.<br />
+필자가 개발하려는 것은 경위도 값(ex. 37.5760336, 126.9769142)이 들어올 때 어떤 시군구에 속하는지를 맵핑하는 함수를 개발하려다 보니 지금 보는 <code>d</code> 객체의 평면좌표계 값을 경위도 지리좌표계로 변형할 필요가 생긴 것이다.</p>
+<p><br><br></p>
+<h2 id="coordinate-reference-system">Coordinate Reference System</h2>
+<p>좌표변형을 위해선 두가지를 사전에 알아야 한다.<br />
+from Coordinate Reference System(fromCRS) 과 to Coordinate Reference System(toCRS) 이다.<br />
+좌표계 시스템(CRS)에 대해선 전문적인 지식들이 필요로 하지만 이에 대한 언급을 자세히 하지 않겠다.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a><br />
+재량을 통해<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> fromCRS 를 알아낸 후 그에 맞게 약속된 문법에 맞추어 준비한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">from_crs =<span class="st"> &quot;+proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=GRS80 +units=m +no_defs&quot;</span></code></pre></div>
+<p>문법에 대해서 간단히 아는선에서 이야기하면<br />
+&quot;+proj&quot; 은 투영방법을 명시하는 부분이고<br />
+&quot;+lat_0&quot;, &quot;+lon_0&quot; 은 어떤 포인트를 중심으로 투영했는지<br />
+&quot;+k&quot; 는 구의 이심률<br />
+&quot;ellps&quot; 는 타원체의 규격을 정의하는 파라미터들이라고 한다.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a></p>
+<p>fromCRS 를 명시했으니 toCRS 도 필요하다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">to_crs =<span class="st"> &quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&quot;</span></code></pre></div>
+<p>경위도 좌표로 바꾸기 위한 toCRS 를 알아낸 후 위처럼 명시했다. fromCRS 과 toCRS 가 준비되었으니 이제 변형만 하면된다.</p>
+<p><br><br></p>
+<h2 id="좌표변형">좌표변형</h2>
+<p>R의 sp package 에서 <code>proj4string()</code>, <code>spTransform()</code> 를 통해 좌표변형을 성공할 수 있었다.<br />
+우선 아까 준비한 fromCRS 정보 <code>from_crs</code> 를 아래처럼 <code>d</code> 객체에 반영할 것이다.<br />
+<code>d</code> 는 sp class 로 coordinate reference 값을 속성으로 따로 관리하는데 &quot;coord. ref.&quot; 부분을 보면 이전에는 <code>NA</code> 로 알 수 없는 상태이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d</code></pre></div>
+<pre><code>## class       : SpatialPolygonsDataFrame 
+## features    : 232 
+## extent      : -11603.22, 548504.6, -42102, 569052  (xmin, xmax, ymin, ymax)
+## coord. ref. : NA 
+## variables   : 4
+## names       : 광역시코드, 광역시명, 시군구코드, 시군구명 
+## min values  :         11,   강원도,       1111,   가평군 
+## max values  :         50, 충청북도,       5013,   횡성군</code></pre>
+<p>이를 fromCRS 로 변형한다.<br />
+coordinate reference 값만 변형하기 위해선 <code>proj4string()</code> 함수를 이용하면 된다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">proj4string</span>(d) &lt;-<span class="st"> </span>from_crs</code></pre></div>
+<p>다시 <code>d</code>를 조회해보면</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d</code></pre></div>
+<pre><code>## class       : SpatialPolygonsDataFrame 
+## features    : 232 
+## extent      : -11603.22, 548504.6, -42102, 569052  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=GRS80 +units=m +no_defs 
+## variables   : 4
+## names       : 광역시코드, 광역시명, 시군구코드, 시군구명 
+## min values  :         11,   강원도,       1111,   가평군 
+## max values  :         50, 충청북도,       5013,   횡성군</code></pre>
+<p>coordinate reference 값이 <code>from_crs</code> 에 담겨있는 string 으로 바뀐것을 확인할 수 있다.<br />
+이 상태에서 <code>spTransform()</code> 함수를 통해 toCRS 형식으로 변경한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d2 &lt;-<span class="st"> </span><span class="kw">spTransform</span>(d, sp::<span class="kw">CRS</span>(to_crs))
+d2</code></pre></div>
+<pre><code>## class       : SpatialPolygonsDataFrame 
+## features    : 232 
+## extent      : 117.5774, 123.0652, 19.38009, 24.93636  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 
+## variables   : 4
+## names       : 광역시코드, 광역시명, 시군구코드, 시군구명 
+## min values  :         11,   강원도,       1111,   가평군 
+## max values  :         50, 충청북도,       5013,   횡성군</code></pre>
+<p>CRS 를 변경시킨 <code>d2</code> 객체를 확인해 보면<br />
+coordinate reference 값이 <code>to_crs</code> string 으로 바뀐것 뿐만 아니라<br />
+extent 에 명시된 xmin, xmax, ymin, ymax 값도 바뀐것을 눈치 챌 수 있을것이다.<br />
+<code>d2</code>를 이번엔 무작정 플랏팅 해 볼까?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(d2, <span class="dt">axes =</span> T)</code></pre></div>
+<p><img src="/assets/proj4string6.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>이로써 경위도 지리좌표계로 변형된 것을 확인할 수 있다.<br />
+sp class 로 이루어진 GIS 테이블들을 좌표통일 후 매쉬업 할 수 있겠다는 생각이 든다.</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>위도와 경도 영어로는 각각 latitude, longitude 이다<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p><code>raster::shapefile()</code> 를 이용하는 방법도 있다<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>국내는 TM(Transverse Mercator)좌표계를 대표적으로 사용중<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>기하정보데이터를 얻을 때 출처를 꼼꼼이 읽어보거나, 그것이 어려울 경우 관리자에게 직접 문의하는 등의... 메타정보를 얻는것이 가장 큰 수고를 필요로 하는듯 하다 😅<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p><a href="https://github.com/Gi-Seop">GIS 를 알고계신분</a>의 도움을 통해 알게 되었다 Thank you<a href="#fnref5">↩</a></p></li>
+</ol>
+</section>
+</div>
+    <div class="share-page">
+    <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2018/04/15/sp_proj4string_spTransform.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2018/04/07/Rpackage.html">R에서 Package란?</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2018/04/02/coplot.html">R에서 조건화 그래프(Conditioning plot) 를 출력하기 위한 ggplot2::faect_wrap(), coplot() 함수에 대하여</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2018/03/19/flexdashboard.html">Rmarkdown + Shiny + flexdashboard package 의 조합을 통한 대쉬보드 만들기 (네이버 연관검색어를 예제로)</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2018/03/01/fstPackage.html">R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2018/01/22/EDA.html">R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2018/01/14/CV.html">변동계수의 개념과 R에서의 실습</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/r/2018/04/07/Rpackage.html">&laquo; R에서 Package란?</a>
+  
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+
+        var disqus_shortname = "lovetoken";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 sp package 의 proj4string(), spTransform() 함수를 이용한 좌표계 변환 예제";
+        var disqus_title = "R에서 sp package 의 proj4string(), spTransform() 함수를 이용한 좌표계 변환 예제";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    /* ]]> */
+    </script>
+</div>
+
+                <footer>
+                    Copyleft by Lovetoken
+                     
+                    - <a href="https://github.com/lovetoken">https://github.com/lovetoken</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>                    
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>

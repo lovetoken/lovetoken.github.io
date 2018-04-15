@@ -5,9 +5,247 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 07 Apr 2018 23:35:40 +0900</pubDate>
-    <lastBuildDate>Sat, 07 Apr 2018 23:35:40 +0900</lastBuildDate>
+    <pubDate>Sun, 15 Apr 2018 23:14:18 +0900</pubDate>
+    <lastBuildDate>Sun, 15 Apr 2018 23:14:18 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 sp package 의 proj4string(), spTransform() 함수를 이용한 좌표계 변환 예제</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;GIS 기반의 프로젝트를 수행중에 있는 어느 날&lt;br /&gt;
+어떤 특정한 위경도 좌표가 입력될 때 대한민국의 시군구 중 어디인지를 알려주는 함수를 필요로 하게 되었다.&lt;br /&gt;
+API 기반의 서비스를 이용하지 않고 순수 로직에 의해 만드는것을 목표로 하고 있어 다양한 요소에 개발을 필요로 하고 있는데&lt;br /&gt;
+큼지막한 요소로는 2가지 미션들이 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;좌표계의 통일을 위한 변환방법&lt;/li&gt;
+&lt;li&gt;특정 (x, y) 좌표가 시군구 경계에 해당하는 컨백스홀 안에있는지 밖에있는지를 판단하는 논리 - &lt;em&gt;추후 포스팅 예정&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;이 중 첫번째 &lt;strong&gt;좌표계의 통일을 위한 변환방법&lt;/strong&gt;을 R의 sp 패키지를 기반으로 알아보고자 한다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/proj4string1.jpg&quot;&gt;
+&lt;/center&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.biz-gis.com/index.php?mid=pds&amp;amp;document_srl=67326&quot;&gt;우리나라에서 사용하는 좌표계의 종류&lt;/a&gt; - 출처 : biz-gis.com&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;del&gt;
+복잡복잡..
+&lt;/del&gt;
+&lt;p&gt;GIS에 대해서 1도 몰랐던 시절 좌표계의 종류가 이렇게 많은지 모르고 있었다.&lt;br /&gt;
+더군다나 실제 GIS 데이터들은 이런 좌표단위들을 다양하게 사용하고 있어서 혼란이 많았다.&lt;/p&gt;
+&lt;p&gt;예를 들면 이렇다.&lt;br /&gt;
+서울의 광화문 중앙의 좌표를 &lt;code&gt;(위도,경도)&lt;/code&gt;&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; 라고 할 때&lt;br /&gt;
+A 테이블에선 &lt;code&gt;(37.5760336, 126.9769142)&lt;/code&gt; 로 사용중이고&lt;br /&gt;
+B 테이블에선 &lt;code&gt;(37.5749854, 126.9746067)&lt;/code&gt; 로 관리가 되고 있다.&lt;br /&gt;
+미세한 차이로 보이지만 실제로 이 위경도값을 그대로 구글지도에 입력하여 찾아보면 멀리 떨어진 지점이다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/proj4string3.png&quot;&gt;
+&lt;/center&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Google Map 에서 A 테이블의 &lt;code&gt;(37.5760336, 126.9769142)&lt;/code&gt; 를 찍어 보았을 때&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/proj4string4.png&quot;&gt;
+&lt;/center&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Google Map 에서 B 테이블의 &lt;code&gt;(37.5749854, 126.9746067)&lt;/code&gt; 를 찍어 보았을 때&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;이런 예제처럼 A테이블 정보와 B테이블의 정보를 매쉬업 하기 위해선 단위를 통일하여야 매쉬업 할 때 왜곡되어지지 않는다.&lt;br /&gt;
+자연스럽게 A, B중 하나는 좌표계를 변환할 필요가 생기는데 이 시점에서&lt;br /&gt;
+R에서 sp package 를 이용한 좌표계 변환 성공예제를 정리하고 공유하고자 한다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;행정경계-자료-획득---시군구-별-경계&quot;&gt;행정경계 자료 획득 - 시군구 별 경계&lt;/h2&gt;
+&lt;p&gt;시군구를 구분짓는 경계에 대한 데이터 베이스가 필요했는데&lt;br /&gt;
+이 데이터는 구했지만 여기서 부터 문제가 있었다.&lt;br /&gt;
+필자에게 익숙한 경위도 지리좌표계가 아닌 다른 단위의 좌표계로 관리가 되고 있다는 점이었다.&lt;br /&gt;
+문제의 시군구별 행정경계 데이터는 http://www.biz-gis.com/GISDB/ 에서 제공하고 있다.&lt;br /&gt;
+다운로드 하는 방법은 http://www.biz-gis.com/GISDB/ 로 들어간 후 &amp;quot;행정경계-시군구&amp;quot; 항목을 클릭하여 다운로드 버튼을 누르면 된다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/proj4string2.png&quot;&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&amp;quot;vADM2_TM.zip&amp;quot; 이라는 압축파일이 다운로드가 되고, 압축을 풀면 아래와 같은 파일들이 떨어진다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;v시군구_TM.dbf&amp;quot; &amp;quot;v시군구_TM.sbn&amp;quot; &amp;quot;v시군구_TM.sbx&amp;quot; &amp;quot;v시군구_TM.shp&amp;quot;
+## [5] &amp;quot;v시군구_TM.shx&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;행정경계정보가 담긴 이 5개 파일을 R에서 불러와 분석을 하기 위해 &lt;code&gt;rgdal::readORG()&lt;/code&gt; 함수를 이용한다. &lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(rgdal)
+d &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;readOGR&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## OGR data source with driver: ESRI Shapefile 
+## Source: &amp;quot;/Users/lovetoken/Dropbox/02_Study/01_Statistic/31_R/03_Posting/02_Package/sp/proj4string/data&amp;quot;, layer: &amp;quot;v시군구_TM&amp;quot;
+## with 232 features
+## It has 4 fields&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;readOGR()&lt;/code&gt; 함수의 사용법은 .shp 포맷을 포함한 기하정보들을 모두 가진 디렉토리를 첫번째 인자에 입력하면 된다.&lt;br /&gt;
+만약 입력한 디렉토리 안에 &amp;quot;vADM2_TM.zip&amp;quot; 파일을 압축해제한 5개 파일 외에 다른 레이어 파일들이 있을때는 무엇을 기준으로 읽어들일지 알 수 없으므로 두번째 &lt;code&gt;layer&lt;/code&gt; 인자에 명시하여 알려 줄 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;d &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;readOGR&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data&amp;quot;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;quot;v시군구_TM&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;readOGR()&lt;/code&gt; 함수를 통해 불러온 객체 &lt;code&gt;d&lt;/code&gt; 를 &lt;code&gt;axes = T&lt;/code&gt; 를 통해 축을 표현시켜 무작정 플롯팅을 시켜보면 아래와 같이 뜬다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(d, &lt;span class=&quot;dt&quot;&gt;axes =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/proj4string5.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;시군구 경계가 구분되어 있는 대한민국 지도가 그려지는 것을 확인할 수 있다.&lt;br /&gt;
+&lt;code&gt;plot()&lt;/code&gt; 함수를 실행할 때 x, y 점들을 포인팅 하는 원리로써 이런 지도가 그려지는것은&lt;br /&gt;
+&lt;code&gt;d&lt;/code&gt; 객체 안에 경계선에 대해서 수많은 경계점들의 좌표정보를 가지고 있기 때문이란 것을 추측할 수 있고&lt;br /&gt;
+직접 까보면 그 실체를 알 수 있게 된다. &lt;code&gt;str(d)&lt;/code&gt; 출력의 일부(tail)를 확인해 보면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;str&lt;/span&gt;(d)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;  .. .. .. .. ..$ :Formal class &amp;#39;Polygon&amp;#39; [package &amp;quot;sp&amp;quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 179310 418281
+  .. .. .. .. .. .. ..@ area   : num 4775
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:26, 1:2] 179312 179320 179328 179337 179341 ...
+  .. .. .. .. ..$ :Formal class &amp;#39;Polygon&amp;#39; [package &amp;quot;sp&amp;quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 179400 418308
+  .. .. .. .. .. .. ..@ area   : num 1161
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:24, 1:2] 179420 179419 179420 179414 179410 ...
+  .. .. .. .. ..$ :Formal class &amp;#39;Polygon&amp;#39; [package &amp;quot;sp&amp;quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 179184 418418
+  .. .. .. .. .. .. ..@ area   : num 3849
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:25, 1:2] 179181 179168 179160 179159 179152 ...
+  .. .. .. .. ..$ :Formal class &amp;#39;Polygon&amp;#39; [package &amp;quot;sp&amp;quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 176061 418565
+  .. .. .. .. .. .. ..@ area   : num 9792
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:39, 1:2] 176124 176126 176117 176108 176099 ...
+  .. .. .. .. ..$ :Formal class &amp;#39;Polygon&amp;#39; [package &amp;quot;sp&amp;quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 178754 418658
+  .. .. .. .. .. .. ..@ area   : num 9316
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:37, 1:2] 178730 178736 178751 178760 178761 ...
+  .. .. .. .. ..$ :Formal class &amp;#39;Polygon&amp;#39; [package &amp;quot;sp&amp;quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 171224 419615
+  .. .. .. .. .. .. ..@ area   : num 1090438
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:31, 1:2] 170917 170743 170551 170426 170368 ...
+  .. .. .. .. ..$ :Formal class &amp;#39;Polygon&amp;#39; [package &amp;quot;sp&amp;quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 176879 420421
+  .. .. .. .. .. .. ..@ area   : num 558583
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:47, 1:2] 177012 177056 177119 177237 177352 ...
+  .. .. .. .. ..$ :Formal class &amp;#39;Polygon&amp;#39; [package &amp;quot;sp&amp;quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 188820 407056
+  .. .. .. .. .. .. ..@ area   : num 692251527
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:5345, 1:2] 191196 191278 191338 191358 191399 ...
+  .. .. .. ..@ plotOrder: int [1:29] 29 14 1 27 28 17 20 7 16 2 ...
+  .. .. .. ..@ labpt    : num [1:2] 188820 407056
+  .. .. .. ..@ ID       : chr &amp;quot;97&amp;quot;
+  .. .. .. ..@ area     : num 697667674
+  .. ..$ :Formal class &amp;#39;Polygons&amp;#39; [package &amp;quot;sp&amp;quot;] with 5 slots
+  .. .. .. ..@ Polygons :List of 1
+  .. .. .. .. ..$ :Formal class &amp;#39;Polygon&amp;#39; [package &amp;quot;sp&amp;quot;] with 5 slots
+  .. .. .. .. .. .. ..@ labpt  : num [1:2] 226596 433472
+  .. .. .. .. .. .. ..@ area   : num 428700798
+  .. .. .. .. .. .. ..@ hole   : logi FALSE
+  .. .. .. .. .. .. ..@ ringDir: int 1
+  .. .. .. .. .. .. ..@ coords : num [1:5130, 1:2] 233437 233541 233595 233829 233846 ...
+  .. .. .. ..@ plotOrder: int 1
+  .. .. .. ..@ labpt    : num [1:2] 226596 433472
+  .. .. .. ..@ ID       : chr &amp;quot;98&amp;quot;
+  .. .. .. ..@ area     : num 428700798
+  .. .. [list output truncated]
+  ..@ plotOrder  : int [1:232] 113 121 191 116 189 195 117 208 112 199 ...
+  ..@ bbox       : num [1:2, 1:2] -11603 -42102 548505 569052
+  .. ..- attr(*, &amp;quot;dimnames&amp;quot;)=List of 2
+  .. .. ..$ : chr [1:2] &amp;quot;x&amp;quot; &amp;quot;y&amp;quot;
+  .. .. ..$ : chr [1:2] &amp;quot;min&amp;quot; &amp;quot;max&amp;quot;
+  ..@ proj4string:Formal class &amp;#39;CRS&amp;#39; [package &amp;quot;sp&amp;quot;] with 1 slot
+  .. .. ..@ projargs: chr NA&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&amp;quot;sp&amp;quot; 라는 클래스로 관리되는 &lt;code&gt;d&lt;/code&gt; 객체 안에는 coords 라는 속성에 뭔지 모를 수많은 값들이 모여져서 다각형(Polygon)을 구성하게 되는 식이라 추측할 수 있다.&lt;br /&gt;
+그런데 플롯팅 된 지도의 x, y 축 단위를 우리에게 낯익은 경위도 지리 좌표계(Geographic Coordinate)로 바꾸려면 어떻게 해야할까?&lt;br /&gt;
+지금의 x, y축의 수치를 보면 십만단위 범위값까지 나오는데 이는 구 형의 지구를 평면으로 펼친 후 포인팅하기위한 평면직각좌표계(Projected Coordinate)를 기준으로 측정할 때 나올 수 있는 단위라고 한다.&lt;br /&gt;
+필자가 개발하려는 것은 경위도 값(ex. 37.5760336, 126.9769142)이 들어올 때 어떤 시군구에 속하는지를 맵핑하는 함수를 개발하려다 보니 지금 보는 &lt;code&gt;d&lt;/code&gt; 객체의 평면좌표계 값을 경위도 지리좌표계로 변형할 필요가 생긴 것이다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;coordinate-reference-system&quot;&gt;Coordinate Reference System&lt;/h2&gt;
+&lt;p&gt;좌표변형을 위해선 두가지를 사전에 알아야 한다.&lt;br /&gt;
+from Coordinate Reference System(fromCRS) 과 to Coordinate Reference System(toCRS) 이다.&lt;br /&gt;
+좌표계 시스템(CRS)에 대해선 전문적인 지식들이 필요로 하지만 이에 대한 언급을 자세히 하지 않겠다.&lt;a href=&quot;#fn3&quot; class=&quot;footnoteRef&quot; id=&quot;fnref3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;&lt;br /&gt;
+재량을 통해&lt;a href=&quot;#fn4&quot; class=&quot;footnoteRef&quot; id=&quot;fnref4&quot;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt; fromCRS 를 알아낸 후 그에 맞게 약속된 문법에 맞추어 준비한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;from_crs =&lt;span class=&quot;st&quot;&gt; &amp;quot;+proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=GRS80 +units=m +no_defs&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;문법에 대해서 간단히 아는선에서 이야기하면&lt;br /&gt;
+&amp;quot;+proj&amp;quot; 은 투영방법을 명시하는 부분이고&lt;br /&gt;
+&amp;quot;+lat_0&amp;quot;, &amp;quot;+lon_0&amp;quot; 은 어떤 포인트를 중심으로 투영했는지&lt;br /&gt;
+&amp;quot;+k&amp;quot; 는 구의 이심률&lt;br /&gt;
+&amp;quot;ellps&amp;quot; 는 타원체의 규격을 정의하는 파라미터들이라고 한다.&lt;a href=&quot;#fn5&quot; class=&quot;footnoteRef&quot; id=&quot;fnref5&quot;&gt;&lt;sup&gt;5&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;fromCRS 를 명시했으니 toCRS 도 필요하다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;to_crs =&lt;span class=&quot;st&quot;&gt; &amp;quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;경위도 좌표로 바꾸기 위한 toCRS 를 알아낸 후 위처럼 명시했다. fromCRS 과 toCRS 가 준비되었으니 이제 변형만 하면된다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;좌표변형&quot;&gt;좌표변형&lt;/h2&gt;
+&lt;p&gt;R의 sp package 에서 &lt;code&gt;proj4string()&lt;/code&gt;, &lt;code&gt;spTransform()&lt;/code&gt; 를 통해 좌표변형을 성공할 수 있었다.&lt;br /&gt;
+우선 아까 준비한 fromCRS 정보 &lt;code&gt;from_crs&lt;/code&gt; 를 아래처럼 &lt;code&gt;d&lt;/code&gt; 객체에 반영할 것이다.&lt;br /&gt;
+&lt;code&gt;d&lt;/code&gt; 는 sp class 로 coordinate reference 값을 속성으로 따로 관리하는데 &amp;quot;coord. ref.&amp;quot; 부분을 보면 이전에는 &lt;code&gt;NA&lt;/code&gt; 로 알 수 없는 상태이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;d&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## class       : SpatialPolygonsDataFrame 
+## features    : 232 
+## extent      : -11603.22, 548504.6, -42102, 569052  (xmin, xmax, ymin, ymax)
+## coord. ref. : NA 
+## variables   : 4
+## names       : 광역시코드, 광역시명, 시군구코드, 시군구명 
+## min values  :         11,   강원도,       1111,   가평군 
+## max values  :         50, 충청북도,       5013,   횡성군&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이를 fromCRS 로 변형한다.&lt;br /&gt;
+coordinate reference 값만 변형하기 위해선 &lt;code&gt;proj4string()&lt;/code&gt; 함수를 이용하면 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;proj4string&lt;/span&gt;(d) &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;from_crs&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;다시 &lt;code&gt;d&lt;/code&gt;를 조회해보면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;d&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## class       : SpatialPolygonsDataFrame 
+## features    : 232 
+## extent      : -11603.22, 548504.6, -42102, 569052  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=GRS80 +units=m +no_defs 
+## variables   : 4
+## names       : 광역시코드, 광역시명, 시군구코드, 시군구명 
+## min values  :         11,   강원도,       1111,   가평군 
+## max values  :         50, 충청북도,       5013,   횡성군&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;coordinate reference 값이 &lt;code&gt;from_crs&lt;/code&gt; 에 담겨있는 string 으로 바뀐것을 확인할 수 있다.&lt;br /&gt;
+이 상태에서 &lt;code&gt;spTransform()&lt;/code&gt; 함수를 통해 toCRS 형식으로 변경한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;d2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;spTransform&lt;/span&gt;(d, sp::&lt;span class=&quot;kw&quot;&gt;CRS&lt;/span&gt;(to_crs))
+d2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## class       : SpatialPolygonsDataFrame 
+## features    : 232 
+## extent      : 117.5774, 123.0652, 19.38009, 24.93636  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 
+## variables   : 4
+## names       : 광역시코드, 광역시명, 시군구코드, 시군구명 
+## min values  :         11,   강원도,       1111,   가평군 
+## max values  :         50, 충청북도,       5013,   횡성군&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;CRS 를 변경시킨 &lt;code&gt;d2&lt;/code&gt; 객체를 확인해 보면&lt;br /&gt;
+coordinate reference 값이 &lt;code&gt;to_crs&lt;/code&gt; string 으로 바뀐것 뿐만 아니라&lt;br /&gt;
+extent 에 명시된 xmin, xmax, ymin, ymax 값도 바뀐것을 눈치 챌 수 있을것이다.&lt;br /&gt;
+&lt;code&gt;d2&lt;/code&gt;를 이번엔 무작정 플랏팅 해 볼까?&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(d2, &lt;span class=&quot;dt&quot;&gt;axes =&lt;/span&gt; T)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/proj4string6.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;이로써 경위도 지리좌표계로 변형된 것을 확인할 수 있다.&lt;br /&gt;
+sp class 로 이루어진 GIS 테이블들을 좌표통일 후 매쉬업 할 수 있겠다는 생각이 든다.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;위도와 경도 영어로는 각각 latitude, longitude 이다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;&lt;code&gt;raster::shapefile()&lt;/code&gt; 를 이용하는 방법도 있다&lt;a href=&quot;#fnref2&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn3&quot;&gt;&lt;p&gt;국내는 TM(Transverse Mercator)좌표계를 대표적으로 사용중&lt;a href=&quot;#fnref3&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn4&quot;&gt;&lt;p&gt;기하정보데이터를 얻을 때 출처를 꼼꼼이 읽어보거나, 그것이 어려울 경우 관리자에게 직접 문의하는 등의... 메타정보를 얻는것이 가장 큰 수고를 필요로 하는듯 하다 😅&lt;a href=&quot;#fnref4&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn5&quot;&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/Gi-Seop&quot;&gt;GIS 를 알고계신분&lt;/a&gt;의 도움을 통해 알게 되었다 Thank you&lt;a href=&quot;#fnref5&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Sun, 15 Apr 2018 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2018/04/15/sp_proj4string_spTransform.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2018/04/15/sp_proj4string_spTransform.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>R에서 Package란?</title>
@@ -751,114 +989,6 @@ yum 은 원격레파지토리를 검색하지 않고 &lt;code&gt;~/python3&lt;/c
         
         
         <category>Python</category>
-        
-      </item>
-    
-      <item>
-        <title>R에서 readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론</title>
-        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;파일을 읽어 들일 때 인코딩 타입에 대한 이슈는 상당히 짜증 나는 유형의 이슈 중 하나라고 생각된다.&lt;br /&gt;
-분석환경이 단독 운영체계만을 이용하여 분석한다면 큰 문제는 없겠지만&lt;br /&gt;
-Linux 머신이나 Mac, Windows 등으로 넘나들게 되는 순간 데이터의 인코딩 타입을 고려해야 할 것이다.&lt;br /&gt;
-통상적으로 이럴 때는 UTF-8 인코딩으로 통일하여 관리하지만&lt;br /&gt;
-이것이 어려울 때 2개 이상의 인코딩 타입으로 데이터가 존재하게 될 것이다.&lt;/p&gt;
-&lt;p&gt;그런데 인코딩 타입이 2개 이상 혼용되기 시작하면, 데이터를 읽어 들이고 내보내는 단계에서 인코딩타입까지 추가적으로 신경써야 한다는 점이 여러모로 피곤하게 느껴질 것이다.&lt;br /&gt;
-데이터 I/O 단계에서 인코딩까지 신경써서 읽어들이는 것은 번거로운 일 일 수 있다.&lt;br /&gt;
-애초에 이를 신경쓰는거 자체가 분석 본연에 있어 불필요한 요소일 수 있다.&lt;/p&gt;
-&lt;p&gt;이번 글에서는 R에서 readr package 에 있는 &lt;code&gt;guess_encoding()&lt;/code&gt; 의 함수를 설명하고 소개할 것인데, R에서 데이터를 읽어 들이고 내보낼 시 인코딩 타입으로 인한 이슈들과 불편함을 겪는 사람들께 조금이나마 편의와 팁, 힌트를 주고자 작성한 글이다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;상황재현&quot;&gt;상황재현&lt;/h2&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;d &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;text =&lt;/span&gt; 
-  &lt;span class=&quot;st&quot;&gt;&amp;quot;이름, 점수&lt;/span&gt;
-&lt;span class=&quot;st&quot;&gt;  홍길동, 80&lt;/span&gt;
-&lt;span class=&quot;st&quot;&gt;  철수, 91&lt;/span&gt;
-&lt;span class=&quot;st&quot;&gt;  영희, 99&lt;/span&gt;
-&lt;span class=&quot;st&quot;&gt;  Steve, 85&amp;quot;&lt;/span&gt;
-)
-
-&lt;span class=&quot;kw&quot;&gt;dir.create&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data&amp;quot;&lt;/span&gt;)
-&lt;span class=&quot;kw&quot;&gt;write.csv&lt;/span&gt;(d, &lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_EUC-KR.csv&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;fileEncoding =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;EUC-KR&amp;quot;&lt;/span&gt;)
-&lt;span class=&quot;kw&quot;&gt;write.csv&lt;/span&gt;(d, &lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_UTF-8.csv&amp;quot;&lt;/span&gt;,  &lt;span class=&quot;dt&quot;&gt;fileEncoding =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;위 코드는 &amp;quot;EUC-KR&amp;quot; 형과 &amp;quot;UTF-8&amp;quot; 형으로 작성된 간단한 데이터 테이블을 data 폴더안 &lt;code&gt;csv&lt;/code&gt; 포맷으로 저장시키는 코드이다.&lt;br /&gt;
-두개의 다른 인코딩 형의 똑같은 내용의 데이터가 2개 준비된 것이다.&lt;br /&gt;
-이 데이터의 인코딩형의 정보를 모른다고 가정하고 R로 읽어 들일 때 어떠한 문제들이 있는지 보겠다.&lt;/p&gt;
-&lt;p&gt;csv 포맷의 데이터를 읽어들이는 방법은 여러가지가 있다.&lt;br /&gt;
-가장 기본적인 &lt;code&gt;read.csv()&lt;/code&gt;함수의 경우이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_UTF-8.csv&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# on Mac&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##   X     이름 점수
-## 1 1   홍길동   80
-## 2 2     철수   91
-## 3 3     영희   99
-## 4 4    Steve   85&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&amp;quot;UTF-8&amp;quot; 형인 데이터를 먼저 불러와 보았는데 필자는 Mac 으로 동작시켰기 때문에 정상적으로 읽어들여진다.&lt;br /&gt;
-하지만 Windows 환경에서는 저렇게 읽어들여지지 않을 것이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_UTF-8.csv&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# on Windows&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;Error in make.names(col.names, unique = TRUE) : invalid multibyte string at &amp;#39;&amp;lt;ec&amp;gt;&amp;lt;9d&amp;gt;&amp;lt;b4&amp;gt;由&amp;lt;84&amp;gt;&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Windows 환경에선 이와 같은 에러가 나면서 정말 간단한 예제의 데이터 테이블임에도 불구하고 읽어들이지 못한다.&lt;br /&gt;
-이는 &lt;code&gt;read.csv()&lt;/code&gt; 함수가 동작할 때 내부적으로 &lt;code&gt;fileEncoding&lt;/code&gt; 인자값이 &lt;code&gt;Sys.getlocale(&amp;quot;LC_CTYPE&amp;quot;)&lt;/code&gt; 로 반환되는 환경변수값에 의존되어 실행된다.&lt;br /&gt;
-Windows 환경에선 결과적으로 &lt;code&gt;read.csv()&lt;/code&gt; 함수가 &amp;quot;CP949&amp;quot; 라는 인코딩형으로 읽어들이게 되고,&lt;br /&gt;
-이 인코딩 형이 원본파일의 인코딩 형(&amp;quot;UTF-8&amp;quot;)과 불일치 하기 때문에,&lt;br /&gt;
-한글인 변수명이 유효하지 않은 문자열로 일그러져 인식할 수 없기 때문이다.&lt;/p&gt;
-&lt;p&gt;이러한 원리 때문에 반대로 &amp;quot;EUC-KR&amp;quot; 형 데이터를 Mac 환경에서 읽어 들일 경우 마찬가지이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_EUC-KR.csv&amp;quot;&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# on Mac&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;Error in make.names(col.names, unique = TRUE) : invalid multibyte string at &amp;#39;&amp;lt;c0≯&amp;lt;a7&amp;gt;&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;우선 에러없이 데이터를 R로 읽어들이는 해결방법은 이렇다.&lt;/p&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;일어들일 데이터의 텍스트 인코딩형을 알아낸다.&lt;br /&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;read.csv()&lt;/code&gt; 함수의 &lt;code&gt;fileEncoding&lt;/code&gt; 인자값을 알아낸 인코딩형으로 직접 입력한다.&lt;/li&gt;
-&lt;li&gt;예를 들면 &lt;code&gt;read.csv(&amp;quot;data/Testdata_UTF-8.csv&amp;quot;, fileEncoding = &amp;quot;UTF-8&amp;quot;)&lt;/code&gt; 이런 코드가 되겠다. 이 코드를 실행하여 정상적으로 일어졌는지 확인한다.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;3단계 스텝을 통해 데이터를 읽어들이는데 성공한다.&lt;br /&gt;
-굳이 세번째 스텝을 설명한 이유는 에러없이 데이터를 일어들였다 하더라도,&lt;br /&gt;
-첫번째 스텝에 인코딩형을 제대로 알지 못하여 막장으로 일어들여질 가능성이 있기 때문에&lt;br /&gt;
-확인하는 과정이 필요하므로 생겨난 부수적인 스텝이라 할 수 있겠다.&lt;/p&gt;
-&lt;p&gt;여하튼 (분석을 하기도 전에) 데이터를 일어들이기 위한 이 3단계는 많은 에너지를 소모하게 만든다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;readrguess_encoding-함수&quot;&gt;&lt;code&gt;readr::guess_encoding()&lt;/code&gt; 함수&lt;/h2&gt;
-&lt;p&gt;이제 본 글의 주제인 readr package 의 &lt;code&gt;guess_encoding()&lt;/code&gt; 함수를 소개한다.&lt;br /&gt;
-함수명칭에서 볼 수 있듯이 이 함수의 쓰임은 인코딩형을 추론하는 함수인데&lt;br /&gt;
-이를 잘 이용하면 위에서 설명한 번잡한 3단계 스텝을 1스텝으로 점프할 수 있다.&lt;/p&gt;
-&lt;p&gt;우선 &lt;code&gt;guess_encoding()&lt;/code&gt; 함수를 살펴보자.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(readr) &lt;span class=&quot;co&quot;&gt;# for guess_encoding()&lt;/span&gt;
-
-&lt;span class=&quot;kw&quot;&gt;guess_encoding&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_EUC-KR.csv&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 2
-##     encoding confidence
-##        &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;
-## 1     EUC-KR       1.00
-## 2    GB18030       0.71
-## 3 ISO-8859-1       0.21&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;guess_encoding&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_UTF-8.csv&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 2
-##   encoding confidence
-##      &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;
-## 1    UTF-8          1&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;guess_encoding()&lt;/code&gt; 함수사용법은 간단하다.&lt;br /&gt;
-외부 텍스트 파일에 대한 경로를 입력하고 실행하면 된다.&lt;br /&gt;
-그러면 외부 텍스트파일의 인코딩형이 무엇일지 자동적으로 추론하고 가능성(confidence) 이 높은 순으로 출력된다.&lt;br /&gt;
-&amp;quot;EUC-KR&amp;quot; 형 csv 파일을 일어들여 인코딩을 추론한 결과를 보면 &amp;quot;EUC-KR&amp;quot; 형일 가능성이 가장 높고, 그다음 &amp;quot;GB18030&amp;quot;, &amp;quot;ISO-8859-1&amp;quot; 형을 추론하는것을 볼 수 있다.&lt;br /&gt;
-위에서 설명한 3단계 스텝에서 첫번째 스텝을 자동적으로 더 정확하게 추론함으로써 수고를 덜어준다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;read.csv&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_EUC-KR.csv&amp;quot;&lt;/span&gt;, 
-         &lt;span class=&quot;dt&quot;&gt;fileEncoding =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;guess_encoding&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data/Testdata_EUC-KR.csv&amp;quot;&lt;/span&gt;)[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;] %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;as.character)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##   X     이름 점수
-## 1 1   홍길동   80
-## 2 2     철수   91
-## 3 3     영희   99
-## 4 4    Steve   85&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;아예 이런 식으로 내재화시켜버리면 3단계 스텝을 거치지 않고 어떠한 운영체계, 환경이든 융통성 있게 데이터를 잘 읽어 들일 것이다.&lt;br /&gt;
-실제로 위 코드는 필자의 Mac 에서 동작했는데도 불구하고 인코딩이슈 없이 한글을 잘 읽어 들인 것을 볼 수 있다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;맺음말&quot;&gt;맺음말&lt;/h2&gt;
-&lt;p&gt;본 글은 &lt;code&gt;read.csv()&lt;/code&gt; 함수에서 예시로 들었지만 외부 텍스트형 데이터를 읽어들이는 방법은 이 함수 말고도 다양하다.&lt;br /&gt;
-필자는 csv 포맷 파일을 읽어들일 때 &lt;code&gt;data.table::fread()&lt;/code&gt;, &lt;code&gt;readr::read_csv()&lt;/code&gt; 등의 함수를 즐겨쓰는 편인데, 이 때도 마찬가지로 &lt;code&gt;guess_encoding()&lt;/code&gt; 함수를 이용해 인코딩 형을 신경쓰지 않고 최대한 분석에 집중하고 있다.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 07 Oct 2017 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2017/10/07/guessEncoding.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2017/10/07/guessEncoding.html</guid>
-        
-        
-        <category>R</category>
         
       </item>
     
