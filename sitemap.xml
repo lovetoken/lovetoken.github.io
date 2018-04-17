@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 15 Apr 2018 23:14:18 +0900</pubDate>
-    <lastBuildDate>Sun, 15 Apr 2018 23:14:18 +0900</lastBuildDate>
+    <pubDate>Tue, 17 Apr 2018 10:12:01 +0900</pubDate>
+    <lastBuildDate>Tue, 17 Apr 2018 10:12:01 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -170,15 +170,16 @@ d &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;k
 &lt;p&gt;좌표변형을 위해선 두가지를 사전에 알아야 한다.&lt;br /&gt;
 from Coordinate Reference System(fromCRS) 과 to Coordinate Reference System(toCRS) 이다.&lt;br /&gt;
 좌표계 시스템(CRS)에 대해선 전문적인 지식들이 필요로 하지만 이에 대한 언급을 자세히 하지 않겠다.&lt;a href=&quot;#fn3&quot; class=&quot;footnoteRef&quot; id=&quot;fnref3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;&lt;br /&gt;
-재량을 통해&lt;a href=&quot;#fn4&quot; class=&quot;footnoteRef&quot; id=&quot;fnref4&quot;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt; fromCRS 를 알아낸 후 그에 맞게 약속된 문법에 맞추어 준비한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;from_crs =&lt;span class=&quot;st&quot;&gt; &amp;quot;+proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=GRS80 +units=m +no_defs&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+재량을 통해&lt;a href=&quot;#fn4&quot; class=&quot;footnoteRef&quot; id=&quot;fnref4&quot;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt; fromCRS 를 알아낸 후 그에 맞게 약속된 문법에 맞추어 준비한다.&lt;br /&gt;
+본 예제에서는 중부원점 기준 좌표로 명시되어 있어 그에 맞는 CRS 를 준비했다. 참고로 &lt;code&gt;CRS()&lt;/code&gt; 함수를 이용하여 CRS 임을 명시한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;from_crs =&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;CRS&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=bessel +units=m&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;문법에 대해서 간단히 아는선에서 이야기하면&lt;br /&gt;
 &amp;quot;+proj&amp;quot; 은 투영방법을 명시하는 부분이고&lt;br /&gt;
 &amp;quot;+lat_0&amp;quot;, &amp;quot;+lon_0&amp;quot; 은 어떤 포인트를 중심으로 투영했는지&lt;br /&gt;
 &amp;quot;+k&amp;quot; 는 구의 이심률&lt;br /&gt;
 &amp;quot;ellps&amp;quot; 는 타원체의 규격을 정의하는 파라미터들이라고 한다.&lt;a href=&quot;#fn5&quot; class=&quot;footnoteRef&quot; id=&quot;fnref5&quot;&gt;&lt;sup&gt;5&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;fromCRS 를 명시했으니 toCRS 도 필요하다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;to_crs =&lt;span class=&quot;st&quot;&gt; &amp;quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;to_crs =&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;CRS&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;경위도 좌표로 바꾸기 위한 toCRS 를 알아낸 후 위처럼 명시했다. fromCRS 과 toCRS 가 준비되었으니 이제 변형만 하면된다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;좌표변형&quot;&gt;좌표변형&lt;/h2&gt;
@@ -202,18 +203,19 @@ coordinate reference 값만 변형하기 위해선 &lt;code&gt;proj4string()&lt;
 &lt;pre&gt;&lt;code&gt;## class       : SpatialPolygonsDataFrame 
 ## features    : 232 
 ## extent      : -11603.22, 548504.6, -42102, 569052  (xmin, xmax, ymin, ymax)
-## coord. ref. : +proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=GRS80 +units=m +no_defs 
+## coord. ref. : +proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=bessel +units=m 
 ## variables   : 4
 ## names       : 광역시코드, 광역시명, 시군구코드, 시군구명 
 ## min values  :         11,   강원도,       1111,   가평군 
 ## max values  :         50, 충청북도,       5013,   횡성군&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;coordinate reference 값이 &lt;code&gt;from_crs&lt;/code&gt; 에 담겨있는 string 으로 바뀐것을 확인할 수 있다.&lt;br /&gt;
 이 상태에서 &lt;code&gt;spTransform()&lt;/code&gt; 함수를 통해 toCRS 형식으로 변경한다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;d2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;spTransform&lt;/span&gt;(d, sp::&lt;span class=&quot;kw&quot;&gt;CRS&lt;/span&gt;(to_crs))
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;d2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;spTransform&lt;/span&gt;(d, to_crs)
 d2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## class       : SpatialPolygonsDataFrame 
 ## features    : 232 
-## extent      : 117.5774, 123.0652, 19.38009, 24.93636  (xmin, xmax, ymin, ymax)
+
+## extent      : 124.5918, 130.9408, 33.11139, 38.61427  (xmin, xmax, ymin, ymax)
 ## coord. ref. : +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0 
 ## variables   : 4
 ## names       : 광역시코드, 광역시명, 시군구코드, 시군구명 
