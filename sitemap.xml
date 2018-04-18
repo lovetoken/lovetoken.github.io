@@ -5,9 +5,39 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 17 Apr 2018 10:12:01 +0900</pubDate>
-    <lastBuildDate>Tue, 17 Apr 2018 10:12:01 +0900</lastBuildDate>
+    <pubDate>Wed, 18 Apr 2018 23:51:46 +0900</pubDate>
+    <lastBuildDate>Wed, 18 Apr 2018 23:51:46 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>Mac OS X 에서 hosts 를 추가하려면?</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;최근 클라우데라 메니저(이하 CM)를 사용해 보기 위하여 버추얼 박스를 통해 가상머신들을 준비 후 CDH(Cloudera Distribution Hadoop)를 이용해 설치를 진행중이다.&lt;br /&gt;
+그 과정중 호스트에서 가상머신에 돌아가고 있는 클라우데라 웹 클라이언트 접속을 시도하면 되는데&lt;br /&gt;
+그 전에 로컬상 가상머신의 접속이 원활토록 호스트를 등록해야 하는 과정이 필요했다.&lt;/p&gt;
+&lt;p&gt;참고하는 교재&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;에선 윈도우를 기준으로 설명하고 있어서 Mac OS X 에서는 어떻게 하는지 궁금했는데&lt;br /&gt;
+찾아보니 방법은 아래와 같았다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;script src=&quot;https://asciinema.org/a/176946.js&quot; id=&quot;asciicast-176946&quot; async&gt;&lt;/script&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;이처럼 Mac OS X 에서 hosts 정보를 가지고 있는 파일은 &lt;code&gt;/private/etc/hosts&lt;/code&gt; 이다.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;&lt;a href=&quot;http://book.naver.com/bookdb/book_detail.nhn?bid=12545645&quot;&gt;실무로 배우는 빅데이터 기술 - 김강원 저&lt;/a&gt;&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Wed, 18 Apr 2018 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/etc/2018/04/18/mac_hosts.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/etc/2018/04/18/mac_hosts.html</guid>
+        
+        
+        <category>etc</category>
+        
+      </item>
     
       <item>
         <title>R에서 sp package 의 proj4string(), spTransform() 함수를 이용한 좌표계 변환 예제</title>
