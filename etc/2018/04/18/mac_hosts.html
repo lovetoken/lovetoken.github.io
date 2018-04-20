@@ -136,9 +136,9 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>최근 클라우데라 메니저(이하 CM)를 사용해 보기 위하여 버추얼 박스를 통해 가상머신들을 준비 후 CDH(Cloudera Distribution Hadoop)를 이용해 설치를 진행중이다.<br />
+<p>최근 <a href="http://kr.cloudera.com/products/product-components/cloudera-manager.html">Cloudera Manager</a>를 사용해 보기 위하여 <a href="https://www.virtualbox.org/">Virtual Box</a>를 통해 가상머신들을 준비 후 CDH(Cloudera Distribution Hadoop)를 이용해 Hadoop 및 빅데이터 소프트웨어를 배포 ・ 설치를 진행중이다.<br />
 그 과정중 호스트에서 가상머신에 돌아가고 있는 클라우데라 웹 클라이언트 접속을 시도하면 되는데<br />
-그 전에 로컬상 가상머신의 접속이 원활토록 호스트를 등록해야 하는 과정이 필요했다.</p>
+그 전에 로컬상 가상머신의 접속이 IP address 뿐만 아니라 도메인 주소로도 원활하도록 호스트를 등록해야 하는 과정이 필요했다.</p>
 <p>참고하는 교재<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>에선 윈도우를 기준으로 설명하고 있어서 Mac OS X 에서는 어떻게 하는지 궁금했는데<br />
 찾아보니 방법은 아래와 같았다.</p>
 <br>
@@ -146,7 +146,8 @@
 <script src="https://asciinema.org/a/176946.js" id="asciicast-176946" async></script>
 </center>
 <p><br></p>
-<p>이처럼 Mac OS X 에서 hosts 정보를 가지고 있는 파일은 <code>/private/etc/hosts</code> 이다.</p>
+<p>이처럼 Mac OS X 에서 hosts 정보를 가지고 있는 파일은 <code>/private/etc/hosts</code> 이다.<br />
+이쪽에 등록, 수정하고 싶은 host 에 대한 정보를 편집한 후 재부팅(<code>reboot</code>) 하면 된다.</p>
 <section class="footnotes">
 <hr />
 <ol>
