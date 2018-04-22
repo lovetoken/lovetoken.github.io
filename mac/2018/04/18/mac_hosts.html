@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="Mac 에서 Alfred(알프레드) 검색쿼리 등록을 통한 간편검색" />
-        <meta name="keywords" content="Mac 에서 Alfred(알프레드) 검색쿼리 등록을 통한 간편검색, , OpenSource_Tool" />
+        <meta name="description" content="Mac OS X 에서 hosts 를 추가하려면?" />
+        <meta name="keywords" content="Mac OS X 에서 hosts 를 추가하려면?, , Mac" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="Mac 에서 Alfred(알프레드) 검색쿼리 등록을 통한 간편검색" property="og:title">
+          <meta content="Mac OS X 에서 hosts 를 추가하려면?" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/opensource_tool/2016/10/23/Alfred_SearchQuery.html" property="og:url">
+          <meta content="https://lovetoken.github.io/mac/2018/04/18/mac_hosts.html" property="og:url">
         
         
-          <meta content="2016-10-23T00:00:00+09:00" property="article:published_time">
+          <meta content="2018-04-18T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -35,7 +35,7 @@
         
         
           
-          <meta content="OpenSource_Tool" property="article:section">
+          <meta content="Mac" property="article:section">
           
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="Mac 에서 Alfred(알프레드) 검색쿼리 등록을 통한 간편검색">
+          <meta name="twitter:title" content="Mac OS X 에서 hosts 를 추가하려면?">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/opensource_tool/2016/10/23/Alfred_SearchQuery.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/mac/2018/04/18/mac_hosts.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,69 +126,32 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>Mac 에서 Alfred(알프레드) 검색쿼리 등록을 통한 간편검색</h1>
-<span class="time">23 Oct 2016</span>
+                <h1>Mac OS X 에서 hosts 를 추가하려면?</h1>
+<span class="time">18 Apr 2018</span>
 
 <span class="categories">
-    &raquo; <a href="/category/OpenSource_Tool">OpenSource_Tool</a>
+    &raquo; <a href="/category/Mac">Mac</a>
 </span>
 
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<a href="https://www.alfredapp.com/"><br>
+<p>최근 <a href="http://kr.cloudera.com/products/product-components/cloudera-manager.html">Cloudera Manager</a>를 사용해 보기 위하여 <a href="https://www.virtualbox.org/">Virtual Box</a>를 통해 가상머신들을 준비 후 CDH(Cloudera Distribution Hadoop)를 이용해 Hadoop 및 빅데이터 소프트웨어를 배포 ・ 설치를 진행중이다.<br />
+그 과정중 호스트에서 가상머신에 돌아가고 있는 클라우데라 웹 클라이언트 접속을 시도하면 되는데<br />
+그 전에 로컬상 가상머신의 접속이 IP address 뿐만 아니라 도메인 주소로도 원활하도록 호스트를 등록해야 하는 과정이 필요했다.</p>
+<p>참고하는 교재<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>에선 윈도우를 기준으로 설명하고 있어서 Mac OS X 에서는 어떻게 하는지 궁금했는데<br />
+찾아보니 방법은 아래와 같았다.</p>
+<br>
 <center>
-<img src="/assets/alfred_1.png" />
+<script src="https://asciinema.org/a/176946.js" id="asciicast-176946" async></script>
 </center>
-<p><br></a></p>
-<p>Mac에서 Spotlight 대용으로 <a href="https://www.alfredapp.com/">Alfred</a> 를 사용 중이며 최대한 다양한 기능들을 이용해 보고 있었다.<br />
-개인적으로 가장 생산성이 높은, 그리고 자주 사용하는 기능은 검색쿼리를 등록해 한방에 검색하는 편의를 가장 많이 느끼고 있었다.</p>
-<p><br><br></p>
-<h2 id="alfred-검색쿼리-기능">Alfred 검색쿼리 기능</h2>
-<p>부연설명을 하자면 아래와 같다.<br />
-만약 영어를 잘하고 싶어서 네이버에 &quot;영어를 잘하는 법&quot; 이라는 검색어로 검색을 원할 때 보통 아래와 같은 과정일 것이다. <br><br></p>
-<p><strong>네이버 웹페이지가 뜨는 것을 기다린 후, <code>영어를 잘하는 법</code> 으로 검색바에 타자를 치고 엔터를 누름</strong> <br><br></p>
-<p>그런데 여기서 네이버라는 특정 검색 서비스 웹페이지를 들어가는 과정이 번거로울 수 있다.<br />
-네이버를 Alfred 에 검색 키워드로 등록하고 (예를 들어 <code>na</code> 라고 등록한다면) 검색쿼리 설정을 해놓으면 <br><br></p>
-<p><strong><kbd>⌥</kbd> + <kbd>Space</kbd> 로 Alfred 실행 후 <code>na 영어를 잘하는 법</code> 타자 치고 엔터를 누름</strong> <br><br></p>
-<p>이란 과정으로 검색을 간편하게 할 수 있을 것이다.</p>
-<p><br><br></p>
-<h2 id="alfred-검색쿼리-등록방법-alfred-v3.1.1-을-기준">Alfred 검색쿼리 등록방법 (Alfred v3.1.1 을 기준)</h2>
-<p>등록방법을 구구절절 쓰는 것 보다 스크린캐스트를 보는 것이 좋을 것 같다.<br />
-아래 영상처럼 하면 된다.<br />
-이 영상은 Alfred 에 Github 검색쿼리를 등록한 후 테스트하는 영상이 되겠다.</p>
-<iframe width="100%" height="400" src="https://www.youtube.com/embed/eG_Z5INGfsM" frameborder="0" allowfullscreen>
-</iframe>
-<p><br><br></p>
-<h2 id="alfred-검색쿼리-예시">Alfred 검색쿼리 예시</h2>
-<p>최근에 나는 Alfred 가 3.X 버전을 출시하면서 이전 1.X 버전을 생각 없이 지웠는데<br />
-아쉽게도 1.X 버전에 커스터마이징 된 환경들이 싹 날라가 버렸다. 😓</p>
-<p>특히 검색쿼리를 다시 찾고 세팅하는 것이 번거로웠는데<br />
-이참에 글로 쫙 정리해놓아야 겠다는 생각이 들었다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
-<ul>
-<li><a href="http://www.naver.com/">Naver</a></li>
-</ul>
-<pre><code>http://search.naver.com/search.naver?query={query}</code></pre>
-<ul>
-<li><a href="http://endic.naver.com/?sLn=kr">Naver 영어사전</a></li>
-</ul>
-<pre><code>http://endic.naver.com/search.nhn?sLn=kr&amp;query={query}</code></pre>
-<ul>
-<li><a href="https://soundcloud.com">Soundcloud</a></li>
-</ul>
-<pre><code>https://soundcloud.com/search?q={query}</code></pre>
-<ul>
-<li><a href="https://github.com/">Github</a></li>
-</ul>
-<pre><code>https://github.com/search?q={query}</code></pre>
-<ul>
-<li><a href="https://www.r-bloggers.com/">R-bloggers</a></li>
-</ul>
-<pre><code>https://www.r-bloggers.com/search/{query}/</code></pre>
+<p><br></p>
+<p>이처럼 Mac OS X 에서 hosts 정보를 가지고 있는 파일은 <code>/private/etc/hosts</code> 이다.<br />
+이쪽에 등록, 수정하고 싶은 host 에 대한 정보를 편집한 후 재부팅(<code>reboot</code>) 하면 된다.</p>
 <section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>필자가 자주 이용하는 웹페이지를 기준으로 정리했다. Alfred 에서 기본적으로 지원해주는 구글, 위키, 트위터, 페이스북등의 쿼리를 제외하고 내가 자주 사용하는 사이트들에 대한 부분이다.<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p><a href="http://book.naver.com/bookdb/book_detail.nhn?bid=12545645">실무로 배우는 빅데이터 기술 - 김강원 저</a><a href="#fnref1">↩</a></p></li>
 </ol>
 </section>
 </div>
@@ -204,7 +167,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/opensource_tool/2016/10/23/Alfred_SearchQuery.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/mac/2018/04/18/mac_hosts.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -224,256 +187,6 @@
             
         
     
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-        
-            
-        
-    
-
-    
-    
         
             
                 
@@ -482,9 +195,253 @@
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/opensource_tool/2016/08/15/Itinerary_Japan.html">Timeline JS 소개 (with 나의 일본 여행계획)</a>
+                    <a href="https://lovetoken.github.io/docker/mac/opensource_tool/2018/04/22/docker_CM.html">Docker 를 통해 Cloudera Manager 띄워보기</a>
                     
-                        (Categories: <a href="/category/OpenSource_Tool">OpenSource_Tool</a>)
+                        (Categories: <a href="/category/Docker">Docker</a>, <a href="/category/Mac">Mac</a>, <a href="/category/OpenSource_Tool">OpenSource_Tool</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/mac/2016/10/23/Alfred_SearchQuery.html">Mac 에서 Alfred(알프레드) 검색쿼리 등록을 통한 간편검색</a>
+                    
+                        (Categories: <a href="/category/Mac">Mac</a>)
                     
                 </li>
                 
@@ -501,15 +458,52 @@
     
         
             
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/diary/opensource_tool/2016/07/23/Welcome_to_Jekyll.html">Blog 의 이전 (Wordpress 에서 Jekyll 로)</a>
-                    
-                        (Categories: <a href="/category/Diary">Diary</a>, <a href="/category/OpenSource_Tool">OpenSource_Tool</a>)
-                    
-                </li>
-                
-                
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
             
         
     
@@ -651,10 +645,10 @@
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/r/data_visualization/2016/10/18/ggmap.html">&laquo; R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제</a>
+    <a class="prev" href="/r/data_visualization/2018/04/15/sp_proj4string_spTransform.html">&laquo; R에서 sp package 의 proj4string(), spTransform() 함수를 이용한 좌표계 변환 예제</a>
   
   
-    <a class="next" href="/r/2016/11/13/forcats_package.html">R에서 factor 형 자료 처리를 위한 forcats package 에 대해 &raquo;</a>
+    <a class="next" href="/docker/mac/opensource_tool/2018/04/22/docker_CM.html">Docker 를 통해 Cloudera Manager 띄워보기 &raquo;</a>
   
 </div>
 
@@ -665,8 +659,8 @@
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_Mac 에서 Alfred(알프레드) 검색쿼리 등록을 통한 간편검색";
-        var disqus_title = "Mac 에서 Alfred(알프레드) 검색쿼리 등록을 통한 간편검색";
+        var disqus_identifier = "https://lovetoken.github.io_Mac OS X 에서 hosts 를 추가하려면?";
+        var disqus_title = "Mac OS X 에서 hosts 를 추가하려면?";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {
