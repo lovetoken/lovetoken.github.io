@@ -5,9 +5,104 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 22 Apr 2018 10:18:39 +0900</pubDate>
-    <lastBuildDate>Sun, 22 Apr 2018 10:18:39 +0900</lastBuildDate>
+    <pubDate>Tue, 24 Apr 2018 23:32:34 +0900</pubDate>
+    <lastBuildDate>Tue, 24 Apr 2018 23:32:34 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;통계학과 대학원 수업 때 미분가능한 연속 함수에 대해서 해를 찾는 방법들을 공부한 적이 있다.&lt;br /&gt;
+해를 찾아가는 과정들이 알고리즘 방법별로 특색이 있었는데, 원리를 알아가면 알아갈 수록 재미있기도 한 부분이었다.&lt;br /&gt;
+특히 통계학 수업에선 1학년 학부때 부터 MLE(Maximum Likelihood Estimator) 라는 추정량의 특성을 중요하게 살펴본다.&lt;br /&gt;
+극대값을 알아내기 위하여 1차 도함수에 해를 찾아내기 위한 훈련을 하면서도 나는 과연 이를 실전에 어떻게 적용할 것인가의 고민을 병행했고, 결과론적으로 프로그래밍을 어떻게 해야하는지 추가적인 고민을 더했던 때가 기억이 난다.&lt;/p&gt;
+&lt;p&gt;학생을 벗어나 지금은 빅데이터 프로젝트에서 언제한번 이런 해를 찾는 과제를 수행해 볼지 살짝 의문이 들기는 한다.&lt;br /&gt;
+하지만 빅데이터 프로젝트의 최종 목적지 앞 팔부능선 쯤에는 최적화 문제를 직면하는 분들도 보였고,&lt;br /&gt;
+서비스가 안정화 되는 시점에서 모델과 추가 실데이터에 대한 2차 타당성 검증이 필요 할 때 역시 최적화가 잘 되었는지의 확인하는 문제로 수렴한다는 생각이 문득 든다.&lt;br /&gt;
+이런 근사해를 찾는 이론을 바탕으로 근간한 아이디어를 최적화 관점에서 언제 어디선가 써먹을 일이 있지 않을까 싶다.&lt;br /&gt;
+그런 의미로 대학원 때 배운 Newton Raphson Method 의 시뮬레이션을 회고해 본다.&lt;/p&gt;
+&lt;p&gt;그냥 회고해 보면 약간 심심하니 R의 ggplot2 와 gganimate 패키지를 학습할 겸 곁들여 시뮬레이션을 생동감있게 해보고자 한다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;newton-raphson-method&quot;&gt;Newton Raphson method&lt;/h2&gt;
+&lt;p&gt;Newton Raphson method 는 평균값 정리(mean value theorem) 혹은 테일러 근사(taylor approximation)를 근간으로 근사치를 반복하여 업데이트 하는 개념을 이용한다.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/netwon_raphson_0.png&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;여기서 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;x&lt;/em&gt;&lt;sub&gt;&lt;em&gt;n&lt;/em&gt;&lt;/sub&gt;&lt;/span&gt; 의 n을 계속 증가시켜 가다 보면 수렴하게 되는데 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;x&lt;/em&gt;&lt;sub&gt;∞&lt;/sub&gt;&lt;/span&gt; 을 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;f&lt;/em&gt;(&lt;em&gt;x&lt;/em&gt;)=0&lt;/span&gt; 의 해로 판단한다.&lt;br /&gt;
+단 무한대로 반복할 순 없기 때문에 정지조건을 부여한다.&lt;/p&gt;
+&lt;p&gt;이 Newton Raphson method 를 구현한 R code 는 아래와 같다.&lt;br /&gt;
+&amp;gt; &lt;a href=&quot;https://www.academia.edu/7031789/Newton-Raphson_Method_in_R&quot;&gt;Newton Raphson Method in R&lt;/a&gt; 글을 참조함&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;newton &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(fun, &lt;span class=&quot;dt&quot;&gt;tol =&lt;/span&gt; &lt;span class=&quot;fl&quot;&gt;1e-7&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;x0 =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;N =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;300&lt;/span&gt;){
+  h &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;fl&quot;&gt;1e-7&lt;/span&gt;
+  i &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;
+  x1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;x0
+  p &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;numeric&lt;/span&gt;(N)
+  while(i &amp;lt;=&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;N){
+    df.dx &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;fun&lt;/span&gt;(x0 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;h) -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;fun&lt;/span&gt;(x0)) /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;h
+    x1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;(x0 -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;fun&lt;/span&gt;(x0) /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;df.dx))
+    p[i] &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;x1
+    i =&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;i&lt;span class=&quot;dv&quot;&gt;+1&lt;/span&gt;
+    if(&lt;span class=&quot;kw&quot;&gt;abs&lt;/span&gt;(x1 -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;x0) &amp;lt;&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;tol) break
+    x0 =&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;x1
+  }
+  &lt;span class=&quot;kw&quot;&gt;return&lt;/span&gt;(p[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:(i -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;)])
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;정의된 &lt;code&gt;newton()&lt;/code&gt; 함수를 이용해 초기값을 2로 두고 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;y&lt;/em&gt; = &lt;em&gt;x&lt;/em&gt;&lt;sup&gt;3&lt;/sup&gt; + 2&lt;/span&gt; 의 해를 찾기 시작하면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;fun &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(x) x^&lt;span class=&quot;dv&quot;&gt;3+2&lt;/span&gt;
+&lt;span class=&quot;kw&quot;&gt;newton&lt;/span&gt;(fun, &lt;span class=&quot;dt&quot;&gt;x0 =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##  [1]  1.166667  0.287982 -7.846566 -5.241872 -3.518844 -2.399736 -1.715590
+##  [8] -1.370234 -1.268564 -1.259980 -1.259921 -1.259921&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;이렇게 된다.&lt;br /&gt;
+&lt;code&gt;tol&lt;/code&gt; 값 보다 현시차와 이전시차값의 절대값 차이가 적을 때 정지조건에 의해서 멈추는데&lt;br /&gt;
+멈추고 나서의 마지막 값이 &lt;code&gt;-1.259921&lt;/code&gt; 이며 Newton Raphson method 는 이 값을 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;y&lt;/em&gt; = &lt;em&gt;x&lt;/em&gt;&lt;sup&gt;3&lt;/sup&gt; + 2&lt;/span&gt; 의 해로 계산한다.&lt;/p&gt;
+&lt;p&gt;ggplot2 로 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;y&lt;/em&gt; = &lt;em&gt;x&lt;/em&gt;&lt;sup&gt;3&lt;/sup&gt; + 2&lt;/span&gt; 함수의 그래프를 그린 후 이터레이션 별로 어디에 수렴해 가는지 시각화 해보면 아래와 같다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ggplot&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(-&lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)), &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; x)) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;stat_function&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;fun =&lt;/span&gt; fun, &lt;span class=&quot;dt&quot;&gt;color =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_hline&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;yintercept =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_vline&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;xintercept =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;)
+
+d &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;label =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;kw&quot;&gt;length&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;newton&lt;/span&gt;(fun, &lt;span class=&quot;dt&quot;&gt;x0 =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)), 
+                &lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;newton&lt;/span&gt;(fun, &lt;span class=&quot;dt&quot;&gt;x0 =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;), 
+                &lt;span class=&quot;dt&quot;&gt;y =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;fun&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;newton&lt;/span&gt;(fun, &lt;span class=&quot;dt&quot;&gt;x0 =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;)))
+
+p2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;p +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_point&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; d, &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; x, &lt;span class=&quot;dt&quot;&gt;y =&lt;/span&gt; y, &lt;span class=&quot;dt&quot;&gt;frame =&lt;/span&gt; label)) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_text&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; d, &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; x, &lt;span class=&quot;dt&quot;&gt;y =&lt;/span&gt; y +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;20&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;label =&lt;/span&gt; label, &lt;span class=&quot;dt&quot;&gt;frame =&lt;/span&gt; label), &lt;span class=&quot;dt&quot;&gt;size =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;)
+
+p2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/netwon_raphson_1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;총 12번의 반복을 통해 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;x&lt;/em&gt; = −1.259921&lt;/span&gt; 에 가까워 지는것을 볼 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;ggplot2-에-gganimate-패키지-조합하여-시뮬레이션-시각화-하기&quot;&gt;ggplot2 에 gganimate 패키지 조합하여 시뮬레이션 시각화 하기&lt;/h2&gt;
+&lt;p&gt;(개발단계로써 CRAN 에 등록되지 않은) &lt;a href=&quot;https://github.com/dgrtwo/gganimate&quot;&gt;gganimate package&lt;/a&gt;는&lt;br /&gt;
+ggplot2 결과물을 프레임별로 만들어 에니메이션 그림파일을 만들어주는 재미있는 R package 이다.&lt;br /&gt;
+ggplot2 문법규칙을 그대로 이용하기 때문에 에스테틱에 &lt;code&gt;frame&lt;/code&gt; 인자를 지정하기만 하면 된다.&lt;/p&gt;
+&lt;p&gt;gganimate package 설치는 &lt;code&gt;install_github()&lt;/code&gt; 를 이용한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;devtools::&lt;span class=&quot;kw&quot;&gt;install_github&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;dgrtwo/gganimate&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(gganimate)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;그리고 위에서 시각화한 &lt;code&gt;p2&lt;/code&gt; 를 재활용 한다.&lt;br /&gt;
+&lt;code&gt;gganimate()&lt;/code&gt; 함수에 우선 입력해 보면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;gganimate&lt;/span&gt;(p2)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/netwon_raphson_gif.gif&quot;&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;애니메이션 gif 가 잘 출력되는데 &lt;code&gt;p2&lt;/code&gt; 에 실은 frame 에스테틱을 미리 선언했기 때문이다.&lt;br /&gt;
+입력될 ggplot 객체에 frame 에스테틱이 없을 경우 &lt;code&gt;gganimate(p2)&lt;/code&gt; 은 에러를 내며 수행되지 않는다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Error in gganimate(p2) : 
+  No frame aesthetic found; cannot create animation&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;?gganimate()&lt;/code&gt; 를 실행해 다양한 옵션과 예제코드를 살펴보면 좋을 것이다.&lt;br /&gt;
+gganimate package 에는 &lt;code&gt;saveVideo()&lt;/code&gt;, &lt;code&gt;saveGIF()&lt;/code&gt; 함수가 &lt;code&gt;gganimate()&lt;/code&gt; 함수에 연루되어 있으며,&lt;br /&gt;
+비디오 파일을 만들거나 에니메이션 gif 파일을 만들 때 &lt;a href=&quot;http://ffmpeg.org/documentation.html&quot;&gt;ffmpeg&lt;/a&gt; 를 이용한 다양한 옵션들을 부여할 수 있음을 확인할 수 있을것이다.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 24 Apr 2018 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html</guid>
+        
+        
+        <category>R</category>
+        
+        <category>Data_Visualization</category>
+        
+      </item>
     
       <item>
         <title>Docker 를 통해 Cloudera Manager 띄워보기</title>
@@ -891,30 +986,6 @@ group2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&q
         
         
         <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>라즈베리파이 초기상태의 pi 계정에서 root 비밀번호 변경</title>
-        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;라즈베리파이를 처음 구동하면 pi 계정으로 로그인이 된다.&lt;br /&gt;
-구입 후 초기상태의 상황에서&lt;br /&gt;
-나는 분명분명 라즈베리파이의 주인인데도 불구하고&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ apt-get update&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;를 할때 Permission denied 이 발생하는 등 root 권한을 사용할 수 없는 상태어서 당황스러웠다 &lt;i class=&quot;fa fa-meh-o&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ su&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;로 root 로그인을 하려했으나&lt;br /&gt;
-당연하게도 비밀번호를 알 수 없어 불가능하다.&lt;/p&gt;
-&lt;p&gt;이때&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ sudo passwd root&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;로 root 비밀번호를 처음으로 설정할 수 있고 이후 root 권한을 이용할 수 있다.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 13 Jan 2018 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/etc/2018/01/13/raspberrypi_rootpasswd.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/etc/2018/01/13/raspberrypi_rootpasswd.html</guid>
-        
-        
-        <category>etc</category>
         
       </item>
     

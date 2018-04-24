@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기" />
-        <meta name="keywords" content="R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기, , R, Data_Visualization" />
+        <meta name="description" content="R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)" />
+        <meta name="keywords" content="R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package), , R, Data_Visualization" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기" property="og:title">
+          <meta content="R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/data_visualization/2016/10/14/Choropleth_map_basic.html" property="og:url">
+          <meta content="https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html" property="og:url">
         
         
-          <meta content="2016-10-14T00:00:00+09:00" property="article:published_time">
+          <meta content="2018-04-24T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기">
+          <meta name="twitter:title" content="R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/data_visualization/2016/10/14/Choropleth_map_basic.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,8 +126,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기</h1>
-<span class="time">14 Oct 2016</span>
+                <h1>R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)</h1>
+<span class="time">24 Apr 2018</span>
 
 <span class="categories">
     &raquo; <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>
@@ -136,130 +136,86 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<h2 id="단계-구분도---choropleth-map">단계 구분도 - Choropleth Map</h2>
-<p>데이터 시각화를 주제로 모습을 자주 보이는 단계 구분도 (Choropleth Map)에 대해서 알아보고자 한다.<br />
-<a href="https://en.wikipedia.org/wiki/Choropleth_map">Choropleth map</a>은 지역당 특정주제의 통계치를 활용해 시각적인 요소를 가미하여 나타낸 지도로서, 예시를 하나 들자면 국가별 인구의 밀도를 수치에 따라 색깔의 농도를 달리하여 나타내는 지도로 들 수 있다.</p>
-<p>그림으로 표현하면 다음과 같다.</p>
+<p>통계학과 대학원 수업 때 미분가능한 연속 함수에 대해서 해를 찾는 방법들을 공부한 적이 있다.<br />
+해를 찾아가는 과정들이 알고리즘 방법별로 특색이 있었는데, 원리를 알아가면 알아갈 수록 재미있기도 한 부분이었다.<br />
+특히 통계학 수업에선 1학년 학부때 부터 MLE(Maximum Likelihood Estimator) 라는 추정량의 특성을 중요하게 살펴본다.<br />
+극대값을 알아내기 위하여 1차 도함수에 해를 찾아내기 위한 훈련을 하면서도 나는 과연 이를 실전에 어떻게 적용할 것인가의 고민을 병행했고, 결과론적으로 프로그래밍을 어떻게 해야하는지 추가적인 고민을 더했던 때가 기억이 난다.</p>
+<p>학생을 벗어나 지금은 빅데이터 프로젝트에서 언제한번 이런 해를 찾는 과제를 수행해 볼지 살짝 의문이 들기는 한다.<br />
+하지만 빅데이터 프로젝트의 최종 목적지 앞 팔부능선 쯤에는 최적화 문제를 직면하는 분들도 보였고,<br />
+서비스가 안정화 되는 시점에서 모델과 추가 실데이터에 대한 2차 타당성 검증이 필요 할 때 역시 최적화가 잘 되었는지의 확인하는 문제로 수렴한다는 생각이 문득 든다.<br />
+이런 근사해를 찾는 이론을 바탕으로 근간한 아이디어를 최적화 관점에서 언제 어디선가 써먹을 일이 있지 않을까 싶다.<br />
+그런 의미로 대학원 때 배운 Newton Raphson Method 의 시뮬레이션을 회고해 본다.</p>
+<p>그냥 회고해 보면 약간 심심하니 R의 ggplot2 와 gganimate 패키지를 학습할 겸 곁들여 시뮬레이션을 생동감있게 해보고자 한다.</p>
+<p><br><br></p>
+<h2 id="newton-raphson-method">Newton Raphson method</h2>
+<p>Newton Raphson method 는 평균값 정리(mean value theorem) 혹은 테일러 근사(taylor approximation)를 근간으로 근사치를 반복하여 업데이트 하는 개념을 이용한다.</p>
+<p><img src="/assets/netwon_raphson_0.png" style="display: block; margin: auto;" /></p>
+<p>여기서 <span class="math inline"><em>x</em><sub><em>n</em></sub></span> 의 n을 계속 증가시켜 가다 보면 수렴하게 되는데 <span class="math inline"><em>x</em><sub>∞</sub></span> 을 <span class="math inline"><em>f</em>(<em>x</em>)=0</span> 의 해로 판단한다.<br />
+단 무한대로 반복할 순 없기 때문에 정지조건을 부여한다.</p>
+<p>이 Newton Raphson method 를 구현한 R code 는 아래와 같다.<br />
+&gt; <a href="https://www.academia.edu/7031789/Newton-Raphson_Method_in_R">Newton Raphson Method in R</a> 글을 참조함</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">newton &lt;-<span class="st"> </span>function(fun, <span class="dt">tol =</span> <span class="fl">1e-7</span>, <span class="dt">x0 =</span> <span class="dv">1</span>, <span class="dt">N =</span> <span class="dv">300</span>){
+  h &lt;-<span class="st"> </span><span class="fl">1e-7</span>
+  i &lt;-<span class="st"> </span><span class="dv">1</span>
+  x1 &lt;-<span class="st"> </span>x0
+  p &lt;-<span class="st"> </span><span class="kw">numeric</span>(N)
+  while(i &lt;=<span class="st"> </span>N){
+    df.dx &lt;-<span class="st"> </span>(<span class="kw">fun</span>(x0 +<span class="st"> </span>h) -<span class="st"> </span><span class="kw">fun</span>(x0)) /<span class="st"> </span>h
+    x1 &lt;-<span class="st"> </span>(x0 -<span class="st"> </span>(<span class="kw">fun</span>(x0) /<span class="st"> </span>df.dx))
+    p[i] &lt;-<span class="st"> </span>x1
+    i =<span class="st"> </span>i<span class="dv">+1</span>
+    if(<span class="kw">abs</span>(x1 -<span class="st"> </span>x0) &lt;<span class="st"> </span>tol) break
+    x0 =<span class="st"> </span>x1
+  }
+  <span class="kw">return</span>(p[<span class="dv">1</span>:(i -<span class="st"> </span><span class="dv">1</span>)])
+}</code></pre></div>
+<p>정의된 <code>newton()</code> 함수를 이용해 초기값을 2로 두고 <span class="math inline"><em>y</em> = <em>x</em><sup>3</sup> + 2</span> 의 해를 찾기 시작하면</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fun &lt;-<span class="st"> </span>function(x) x^<span class="dv">3+2</span>
+<span class="kw">newton</span>(fun, <span class="dt">x0 =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>##  [1]  1.166667  0.287982 -7.846566 -5.241872 -3.518844 -2.399736 -1.715590
+##  [8] -1.370234 -1.268564 -1.259980 -1.259921 -1.259921</code></pre>
+<p>이렇게 된다.<br />
+<code>tol</code> 값 보다 현시차와 이전시차값의 절대값 차이가 적을 때 정지조건에 의해서 멈추는데<br />
+멈추고 나서의 마지막 값이 <code>-1.259921</code> 이며 Newton Raphson method 는 이 값을 <span class="math inline"><em>y</em> = <em>x</em><sup>3</sup> + 2</span> 의 해로 계산한다.</p>
+<p>ggplot2 로 <span class="math inline"><em>y</em> = <em>x</em><sup>3</sup> + 2</span> 함수의 그래프를 그린 후 이터레이션 별로 어디에 수렴해 가는지 시각화 해보면 아래와 같다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(-<span class="dv">2</span>, <span class="dv">2</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> x)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> fun, <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>)
+
+d &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">label =</span> <span class="dv">1</span>:<span class="kw">length</span>(<span class="kw">newton</span>(fun, <span class="dt">x0 =</span> <span class="dv">2</span>)), 
+                <span class="dt">x =</span> <span class="kw">newton</span>(fun, <span class="dt">x0 =</span> <span class="dv">2</span>), 
+                <span class="dt">y =</span> <span class="kw">fun</span>(<span class="kw">newton</span>(fun, <span class="dt">x0 =</span> <span class="dv">2</span>)))
+
+p2 &lt;-<span class="st"> </span>p +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> d, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">frame =</span> label)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> d, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y +<span class="st"> </span><span class="dv">20</span>, <span class="dt">label =</span> label, <span class="dt">frame =</span> label), <span class="dt">size =</span> <span class="dv">3</span>)
+
+p2</code></pre></div>
+<p><img src="/assets/netwon_raphson_1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>총 12번의 반복을 통해 <span class="math inline"><em>x</em> = −1.259921</span> 에 가까워 지는것을 볼 수 있다.</p>
+<p><br><br></p>
+<h2 id="ggplot2-에-gganimate-패키지-조합하여-시뮬레이션-시각화-하기">ggplot2 에 gganimate 패키지 조합하여 시뮬레이션 시각화 하기</h2>
+<p>(개발단계로써 CRAN 에 등록되지 않은) <a href="https://github.com/dgrtwo/gganimate">gganimate package</a>는<br />
+ggplot2 결과물을 프레임별로 만들어 에니메이션 그림파일을 만들어주는 재미있는 R package 이다.<br />
+ggplot2 문법규칙을 그대로 이용하기 때문에 에스테틱에 <code>frame</code> 인자를 지정하기만 하면 된다.</p>
+<p>gganimate package 설치는 <code>install_github()</code> 를 이용한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;dgrtwo/gganimate&quot;</span>)
+<span class="kw">library</span>(gganimate)</code></pre></div>
+<p>그리고 위에서 시각화한 <code>p2</code> 를 재활용 한다.<br />
+<code>gganimate()</code> 함수에 우선 입력해 보면</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">gganimate</span>(p2)</code></pre></div>
 <br>
 <center>
-<img src="/assets/choro1.png" />
+<img src="/assets/netwon_raphson_gif.gif">
 </center>
 <p><br></p>
-<blockquote>
-<p><a href="http://gisutd.tistory.com/7">꽤 괜찮은 데이터 지도(data map)를 그려주는 Natural Breaks란?</a></p>
-</blockquote>
-<p>이런 단계구분도를 R을 이용해 구현해 본 예제는 아래와 같다.</p>
-<center>
-<img src="/assets/choro2.png" />
-</center>
-<blockquote>
-<p>R Graphics Cookbook [Programming Insight] - 300page</p>
-</blockquote>
-<p><br><br></p>
-<h2 id="r을-이용한-간단한-예제-실습">R을 이용한 간단한 예제 실습</h2>
-<p>위 예제로 든 것을 실제로 만들어 보며 실습을 해보았다.<br />
-R의 여러 패키지의 도움을 빌렸다.<br />
-&quot;maps&quot;, &quot;dplyr&quot;, &quot;&quot;ggplot2&quot; 3개의 패키지 도움을 빌리기 위해 로드한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;maps&quot;)</span>
-<span class="co"># install.packages(&quot;dplyr&quot;)</span>
-<span class="co"># install.packages(&quot;ggplot2&quot;)</span>
-<span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;maps&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;dplyr&quot;</span>)</code></pre></div>
-<p>&quot;maps&quot; 패키지에는 지도를 그리기 위한 위도, 경도 및 이에 매칭되는 나라에 대한 정보를 데이터프레임셋으로 만들 수 있도록 해주는데,<br />
-모든 나라의 지도정보가 담겨있으므로 Choropleth map 으로 그리고 싶은 나라를 서브세팅하여 전처리하는 것이 가능하다.<br />
-그래픽 엔진으로는 &quot;ggplot2&quot; 패키지를 선택해 Choropleth map을 구현해 볼 것이며,<br />
-&quot;dplyr&quot; 패키지는 데이터 전처리의 간편함수들을 이용하기 위함이다.</p>
-<p>바로 위에 예시로 그린 나라는 미국이다.<br />
-미국만을 서브세팅 하여 그리는 예제만 해보고자 한다.</p>
-<p><code>map_data()</code> 는 해당지도의 경도, 위도, 지역, 지역명, 지도의 다각형을 그릴 수 있게 해 주는 서브정보들이 담겨있는 데이터프레임을 반환시켜주는데 ggplot2 패키지의 함수임을 유의하며 사용했다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">states_map &lt;-<span class="st"> </span><span class="kw">map_data</span>(<span class="st">&quot;state&quot;</span>)</code></pre></div>
-<p>map_data 의 첫 번째 인자를 <code>&quot;state&quot;</code> 로 하여 미국의 주 시에 대한 정보의 데이터프레임을 <code>states_map</code> 명칭의 객체로 저장했다.<br />
-참고로 <code>&quot;state&quot;</code> 는 미국의 주, <code>&quot;world&quot;</code> 는 전세계, <code>&quot;france&quot;</code> 는 프랑스 지도 정보가 반환된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(states_map, <span class="dt">n =</span> <span class="dv">20</span>)</code></pre></div>
-<pre><code>##         long      lat group order  region subregion
-## 1  -87.46201 30.38968     1     1 alabama      &lt;NA&gt;
-## 2  -87.48493 30.37249     1     2 alabama      &lt;NA&gt;
-## 3  -87.52503 30.37249     1     3 alabama      &lt;NA&gt;
-## 4  -87.53076 30.33239     1     4 alabama      &lt;NA&gt;
-## 5  -87.57087 30.32665     1     5 alabama      &lt;NA&gt;
-## 6  -87.58806 30.32665     1     6 alabama      &lt;NA&gt;
-## 7  -87.59379 30.30947     1     7 alabama      &lt;NA&gt;
-## 8  -87.59379 30.28655     1     8 alabama      &lt;NA&gt;
-## 9  -87.67400 30.27509     1     9 alabama      &lt;NA&gt;
-## 10 -87.81152 30.25790     1    10 alabama      &lt;NA&gt;
-## 11 -87.88026 30.24644     1    11 alabama      &lt;NA&gt;
-## 12 -87.92037 30.24644     1    12 alabama      &lt;NA&gt;
-## 13 -87.95475 30.24644     1    13 alabama      &lt;NA&gt;
-## 14 -88.00632 30.24071     1    14 alabama      &lt;NA&gt;
-## 15 -88.01778 30.25217     1    15 alabama      &lt;NA&gt;
-## 16 -88.01205 30.26936     1    16 alabama      &lt;NA&gt;
-## 17 -87.99486 30.27509     1    17 alabama      &lt;NA&gt;
-## 18 -87.95475 30.27509     1    18 alabama      &lt;NA&gt;
-## 19 -87.90318 30.28082     1    19 alabama      &lt;NA&gt;
-## 20 -87.82870 30.28655     1    20 alabama      &lt;NA&gt;</code></pre>
-<p>데이터의 앞부분 일부를 보니,<br />
-&quot;alabama&quot; 지역의 다각형을 그리기 위한 경도(long), 위도(lat) 정보가 있는 것을 볼 수 있다.<br />
-물론 alabama 만 있는 것이 아니라 수많은 미국의 주 region 이 존재하는 데이터이다.<br />
-이를 ggplot2 패키지를 이용해 구체화 시키는 코드를 아래와 같이 작성해 보았다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(states_map, <span class="kw">aes</span>(long, lat, <span class="dt">group =</span> group)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;gray&quot;</span>) +
-<span class="st">  </span><span class="kw">coord_map</span>(<span class="st">&quot;polyconic&quot;</span>)</code></pre></div>
-<center>
-<img src="/assets/choro3.png" />
-</center>
-<p><code>ggplot()</code> 의 첫번째 인자에는 본체 데이터를 입력하고, 두번째 인자에 <code>aes(x = long, y = lat)</code> 을 지정하여 위도, 경도를 각각 x축과 y축에 매칭시킨다.<br />
-다음으로 <code>geom_polygon()</code> 와 <code>coord_map()</code> 함수를 통해 다각형을 그리는 명령을 넣어 구체화 시키면 ggplot2 packages를 이용한 결과물이 위와 같이 나오게 된다.</p>
-<p>그런데 위의 결과물은 단지 지도의 형태만을 볼 수 있고,<br />
-주시내별 어떠한 정보도 담겨있지 않은 공통된 회색이기 때문에<br />
-choropleth map 이라고 할 수 없는 상태이다.<br />
-주시내별 어떠한 정보를 담기 위하여 R의 내장데이터인 <code>USArrests</code> 를 활용해 보았다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(USArrests)</code></pre></div>
-<pre><code>##            Murder Assault UrbanPop Rape
-## Alabama      13.2     236       58 21.2
-## Alaska       10.0     263       48 44.5
-## Arizona       8.1     294       80 31.0
-## Arkansas      8.8     190       50 19.5
-## California    9.0     276       91 40.6
-## Colorado      7.9     204       78 38.7</code></pre>
-<p><code>USArrests</code> 객체는 미국의 주시내별 폭력∙범죄율 정보를 담고 있는 data.frame 빌트인 객체이다.<br />
-이를 이용하여 미국의 어떠한 마을에 범죄율이 강하고 적은지를 쉽게 확인할 수 있는 choropleth map 을 만들어 보면 의미 있는 결과물이 나올 것이라 예상된다.<br />
-앞에서 사용했던 미국 주시내별 지도위치정보를 담은 데이터프레임셋 <code>states_map</code> 를 다시 가지고 와서</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">states_map &lt;-<span class="st"> </span><span class="kw">map_data</span>(<span class="st">&quot;state&quot;</span>)</code></pre></div>
-<p>region 변수와 내장데이터셋 <code>USArrests</code> 의 region 변수를 <code>merge()</code> 함수를 이용해 병합해 보았다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">crime_map &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">region =</span> <span class="kw">tolower</span>(<span class="kw">rownames</span>(USArrests)), USArrests) %&gt;%
-<span class="st">    </span><span class="kw">merge</span>(states_map, <span class="dt">by =</span> <span class="st">&quot;region&quot;</span>)
-<span class="kw">head</span>(crime_map)</code></pre></div>
-<pre><code>##    region Murder Assault UrbanPop Rape      long      lat group order
-## 1 alabama   13.2     236       58 21.2 -87.46201 30.38968     1     1
-## 2 alabama   13.2     236       58 21.2 -87.48493 30.37249     1     2
-## 3 alabama   13.2     236       58 21.2 -87.95475 30.24644     1    13
-## 4 alabama   13.2     236       58 21.2 -88.00632 30.24071     1    14
-## 5 alabama   13.2     236       58 21.2 -88.01778 30.25217     1    15
-## 6 alabama   13.2     236       58 21.2 -87.52503 30.37249     1     3
-##   subregion
-## 1      &lt;NA&gt;
-## 2      &lt;NA&gt;
-## 3      &lt;NA&gt;
-## 4      &lt;NA&gt;
-## 5      &lt;NA&gt;
-## 6      &lt;NA&gt;</code></pre>
-<p>이렇게 만들어진 <code>crime_map</code> 객체의 헤더부분을 살펴보면<br />
-<code>region</code> 변수에 따른 <code>Murder</code>, <code>Assault</code>, <code>UrbanPop</code>, <code>Rape</code> 변수정보들이 붙여진 것을 확인할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">arrange</span>(crime_map, order) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(long, lat, <span class="dt">group =</span> group, <span class="dt">fill =</span> Murder)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_polygon</span>() +
-<span class="st">  </span><span class="kw">coord_map</span>(<span class="st">&quot;polyconic&quot;</span>) +
-<span class="st">  </span><span class="kw">scale_fill_continuous</span>(<span class="dt">low =</span> <span class="st">&quot;pink&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;black&quot;</span>)</code></pre></div>
-<center>
-<img src="/assets/choro4.png" />
-</center>
-<p><code>arrange()</code> 를 이용하여 order 변수 순으로 정렬을 해주었는데,<br />
-정렬을 시키는 이유는 올바른 다각형을 그리기 위함이다.<br />
-병합작업 시 원래 순서대로 정렬되어있던 것이 헝클어졌기 때문에 필요한 전처리 작업이다.<br />
-(정렬작업을 하지 않는다면 도저히 무슨 그림인지 알 수 없는 결과물이 나온다)</p>
-<p>이후 <code>ggplot()</code> 에 <code>fill</code> 인자를 <code>Murder</code> 변수로 지정하여 미국의 주시내별 살인범죄수에 따라 색깔의 농도가 진해지는 결과물을 출력하면 되겠다.<br />
-위의 결과물과 맨 첫 번째 소개했던 결과물이 같은 것을 확인할 수 있다.</p>
+<p>애니메이션 gif 가 잘 출력되는데 <code>p2</code> 에 실은 frame 에스테틱을 미리 선언했기 때문이다.<br />
+입력될 ggplot 객체에 frame 에스테틱이 없을 경우 <code>gganimate(p2)</code> 은 에러를 내며 수행되지 않는다.</p>
+<pre><code>Error in gganimate(p2) : 
+  No frame aesthetic found; cannot create animation</code></pre>
+<p><code>?gganimate()</code> 를 실행해 다양한 옵션과 예제코드를 살펴보면 좋을 것이다.<br />
+gganimate package 에는 <code>saveVideo()</code>, <code>saveGIF()</code> 함수가 <code>gganimate()</code> 함수에 연루되어 있으며,<br />
+비디오 파일을 만들거나 에니메이션 gif 파일을 만들 때 <a href="http://ffmpeg.org/documentation.html">ffmpeg</a> 를 이용한 다양한 옵션들을 부여할 수 있음을 확인할 수 있을것이다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -273,7 +229,7 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/data_visualization/2016/10/14/Choropleth_map_basic.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -291,65 +247,55 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
         
             
+        
+            
+        
+    
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>Related Posts</h4>
                 <ul>
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html">R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
-                    
-                </li>
-                
-                
-            
-        
-            
-        
-    
-        
-            
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-            
-        
-    
-        
-            
-        
-            
-        
-    
-        
-            
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-            
-        
-    
-
-    
-    
-        
-            
                 
                 <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/data_visualization/2018/04/15/sp_proj4string_spTransform.html">R에서 sp package 의 proj4string(), spTransform() 함수를 이용한 좌표계 변환 예제</a>
@@ -456,6 +402,16 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
     
         
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2018/01/22/EDA.html">R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
             
         
             
@@ -940,10 +896,8 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/r/2016/09/18/lubridate_package.html">&laquo; R에서 lubridate package 에 대해</a>
+    <a class="prev" href="/docker/mac/opensource_tool/2018/04/22/docker_CM.html">&laquo; Docker 를 통해 Cloudera Manager 띄워보기</a>
   
-  
-    <a class="next" href="/r/data_visualization/2016/10/18/ggmap.html">R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제 &raquo;</a>
   
 </div>
 
@@ -954,8 +908,8 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기";
-        var disqus_title = "R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)";
+        var disqus_title = "R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {
