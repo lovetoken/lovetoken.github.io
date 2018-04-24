@@ -152,8 +152,10 @@
 <p><img src="/assets/netwon_raphson_0.png" style="display: block; margin: auto;" /></p>
 <p>여기서 <span class="math inline"><em>x</em><sub><em>n</em></sub></span> 의 n을 계속 증가시켜 가다 보면 수렴하게 되는데 <span class="math inline"><em>x</em><sub>∞</sub></span> 을 <span class="math inline"><em>f</em>(<em>x</em>)=0</span> 의 해로 판단한다.<br />
 단 무한대로 반복할 순 없기 때문에 정지조건을 부여한다.</p>
-<p>이 Newton Raphson method 를 구현한 R code 는 아래와 같다.<br />
-&gt; <a href="https://www.academia.edu/7031789/Newton-Raphson_Method_in_R">Newton Raphson Method in R</a> 글을 참조함</p>
+<p>이 Newton Raphson method 를 구현한 R code 는 아래와 같다.</p>
+<blockquote>
+<p><a href="https://www.academia.edu/7031789/Newton-Raphson_Method_in_R">Newton Raphson Method in R</a> 글을 참조함</p>
+</blockquote>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">newton &lt;-<span class="st"> </span>function(fun, <span class="dt">tol =</span> <span class="fl">1e-7</span>, <span class="dt">x0 =</span> <span class="dv">1</span>, <span class="dt">N =</span> <span class="dv">300</span>){
   h &lt;-<span class="st"> </span><span class="fl">1e-7</span>
   i &lt;-<span class="st"> </span><span class="dv">1</span>

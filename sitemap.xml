@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 24 Apr 2018 23:32:34 +0900</pubDate>
-    <lastBuildDate>Tue, 24 Apr 2018 23:32:34 +0900</lastBuildDate>
+    <pubDate>Tue, 24 Apr 2018 23:35:14 +0900</pubDate>
+    <lastBuildDate>Tue, 24 Apr 2018 23:35:14 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -28,8 +28,10 @@
 &lt;p&gt;&lt;img src=&quot;/assets/netwon_raphson_0.png&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;여기서 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;x&lt;/em&gt;&lt;sub&gt;&lt;em&gt;n&lt;/em&gt;&lt;/sub&gt;&lt;/span&gt; 의 n을 계속 증가시켜 가다 보면 수렴하게 되는데 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;x&lt;/em&gt;&lt;sub&gt;∞&lt;/sub&gt;&lt;/span&gt; 을 &lt;span class=&quot;math inline&quot;&gt;&lt;em&gt;f&lt;/em&gt;(&lt;em&gt;x&lt;/em&gt;)=0&lt;/span&gt; 의 해로 판단한다.&lt;br /&gt;
 단 무한대로 반복할 순 없기 때문에 정지조건을 부여한다.&lt;/p&gt;
-&lt;p&gt;이 Newton Raphson method 를 구현한 R code 는 아래와 같다.&lt;br /&gt;
-&amp;gt; &lt;a href=&quot;https://www.academia.edu/7031789/Newton-Raphson_Method_in_R&quot;&gt;Newton Raphson Method in R&lt;/a&gt; 글을 참조함&lt;/p&gt;
+&lt;p&gt;이 Newton Raphson method 를 구현한 R code 는 아래와 같다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.academia.edu/7031789/Newton-Raphson_Method_in_R&quot;&gt;Newton Raphson Method in R&lt;/a&gt; 글을 참조함&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;newton &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;function(fun, &lt;span class=&quot;dt&quot;&gt;tol =&lt;/span&gt; &lt;span class=&quot;fl&quot;&gt;1e-7&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;x0 =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;N =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;300&lt;/span&gt;){
   h &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;fl&quot;&gt;1e-7&lt;/span&gt;
   i &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;
@@ -1483,7 +1485,7 @@ generic function은 사용자가 함수에 대한 문법을 정확하게 지키�
 필자는 아래의 책이 스칼라를 공부하기 위한 첫 책이다.&lt;/p&gt;
 &lt;br&gt;&lt;br&gt;&lt;br&gt;
 &lt;center&gt;
-&lt;img src=&quot;image/HelloScala1.jpg&quot;&gt;
+&lt;img src=&quot;/assets/HelloScala1.jpg&quot;&gt;
 &lt;/center&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;blockquote&gt;
