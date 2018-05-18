@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 29 Apr 2018 18:58:18 +0900</pubDate>
-    <lastBuildDate>Sun, 29 Apr 2018 18:58:18 +0900</lastBuildDate>
+    <pubDate>Fri, 18 May 2018 13:35:23 +0900</pubDate>
+    <lastBuildDate>Fri, 18 May 2018 13:35:23 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -1018,7 +1018,7 @@ group2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&q
       <item>
         <title>R에서 all.equal() 함수를 이용한 객체의 동일성 확인하기</title>
         <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;수학을 공부할 때 종종 이런일이 많았다.&lt;/p&gt;
+&lt;p&gt;수학공부 중 종종 이런일이 많았다.&lt;/p&gt;
 &lt;p&gt;원 공식에 의해 계산이 불가하거나 손으로 풀기 복잡할 경우 근사치에 대한 간편공식을 배우게 되는 경우가 있다.&lt;br /&gt;
 그 간편공식으로써 풀은 결과물이 원 공식으로 풀은 결과물과 동일한지 비교해보는 작업을 R을 이용하여 자주 하곤 했다.&lt;br /&gt;
 만약 그 결과물이 어떤 하나의 스칼라값으로 나온다면,&lt;br /&gt;
@@ -1031,7 +1031,7 @@ R을 이용한다면 논리연산자를 이용해 빠르고 정확하게 비교�
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;all.equal-함수&quot;&gt;&lt;code&gt;all.equal()&lt;/code&gt; 함수&lt;/h2&gt;
 &lt;p&gt;그런데 이러한 논리연산자 말고, R에서는 오늘 알아볼 &lt;code&gt;all.equal()&lt;/code&gt; 이란 함수가 있다.&lt;br /&gt;
-이 함수의 쓰임은 비교하고자 하는 2개의 R객체가 동일한지를 확인해 준다.&lt;/p&gt;
+이 함수의 쓰임은 비교하고자 하는 2개의 R객체가 동일한지를 확인&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;해 준다.&lt;/p&gt;
 &lt;p&gt;가끔, 아니 곧잘 대용량의 크기가 큰 데이터셋의 동일여부를 파악해야 할 때도 있을것이다.&lt;br /&gt;
 아래와 같은 상황을 예로 들어 보겠다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;## 일반 행렬곱셈
@@ -1090,7 +1090,7 @@ partition_AB &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span cl
 함수 도움말의 제목에서도 &#39;Test if Two Objects are (Nearly) Equal&#39; 로 나와있고 괄호의 &amp;quot;Nearly&amp;quot; 가 눈에 띈다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;조금 더 체감하기 좋은 행렬의 연산예시를 들어보겠다.&lt;br /&gt;
-R에서는 순환소수, 무한소수를 계산할 때, 즉 유리수가 아닌 무리수를 연산할 때 아주 미세한 값의 차이가 존재할 수 있다.&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;br /&gt;
+R에서는 순환소수, 무한소수를 계산할 때, 즉 유리수가 아닌 무리수를 연산할 때 아주 미세한 값의 차이가 존재할 수 있다.&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;br /&gt;
 하지만 이는 무리수를 굳이 소수점으로 표현하여 어떤 소수점자리 이후는 절단되어 버려지는 시스템 적인 문제일 뿐이다.&lt;/p&gt;
 &lt;p&gt;아래 예시는 임의행렬 X와 그의 역행렬을 곱한것을 단위행렬과 비교해본 시뮬레이션이다.&lt;br /&gt;
 행렬 X는 5×5 행렬이며 이론상으로는&lt;/p&gt;
@@ -1131,7 +1131,8 @@ XtX ==&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;I_5&lt;/code&gt;&lt;/pre&gt
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
-&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;이는 &lt;a href=&quot;https://ko.wikipedia.org/wiki/%EB%B6%80%EB%8F%99%EC%86%8C%EC%88%98%EC%A0%90&quot;&gt;부동소수점&lt;/a&gt;으로 인한 문제이다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;객체간 똑같은지 확인하는 함수로는 &lt;code&gt;identical()&lt;/code&gt; 도 있다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;이는 &lt;a href=&quot;https://ko.wikipedia.org/wiki/%EB%B6%80%EB%8F%99%EC%86%8C%EC%88%98%EC%A0%90&quot;&gt;부동소수점&lt;/a&gt;으로 인한 문제이다&lt;a href=&quot;#fnref2&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/section&gt;
 </description>
