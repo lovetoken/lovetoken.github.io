@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 18 May 2018 13:35:23 +0900</pubDate>
-    <lastBuildDate>Fri, 18 May 2018 13:35:23 +0900</lastBuildDate>
+    <pubDate>Wed, 30 May 2018 22:17:47 +0900</pubDate>
+    <lastBuildDate>Wed, 30 May 2018 22:17:47 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -316,7 +316,7 @@ R에서 sp package 를 이용한 좌표계 변환 성공예제를 정리하고 �
 &lt;p&gt;&amp;quot;vADM2_TM.zip&amp;quot; 이라는 압축파일이 다운로드가 되고, 압축을 풀면 아래와 같은 파일들이 떨어진다.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;v시군구_TM.dbf&amp;quot; &amp;quot;v시군구_TM.sbn&amp;quot; &amp;quot;v시군구_TM.sbx&amp;quot; &amp;quot;v시군구_TM.shp&amp;quot;
 ## [5] &amp;quot;v시군구_TM.shx&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;행정경계정보가 담긴 이 5개 파일을 R에서 불러와 분석을 하기 위해 &lt;code&gt;rgdal::readORG()&lt;/code&gt; 함수를 이용한다. &lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;행정경계정보가 담긴 이 5개 파일을 R에서 불러와 분석을 하기 위해 &lt;code&gt;rgdal::readOGR()&lt;/code&gt; 함수를 이용한다. &lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(rgdal)
 d &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;readOGR&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## OGR data source with driver: ESRI Shapefile 
@@ -915,8 +915,8 @@ dea_res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&
 &lt;/section&gt;
 </description>
         <pubDate>Mon, 22 Jan 2018 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2018/01/22/EDA.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2018/01/22/EDA.html</guid>
+        <link>https://lovetoken.github.io/r/2018/01/22/DEA.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2018/01/22/DEA.html</guid>
         
         
         <category>R</category>

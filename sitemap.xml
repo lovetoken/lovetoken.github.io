@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 18 May 2018 13:35:23 +0900</pubDate>
-    <lastBuildDate>Fri, 18 May 2018 13:35:23 +0900</lastBuildDate>
+    <pubDate>Wed, 30 May 2018 22:17:47 +0900</pubDate>
+    <lastBuildDate>Wed, 30 May 2018 22:17:47 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -316,7 +316,7 @@ R에서 sp package 를 이용한 좌표계 변환 성공예제를 정리하고 �
 &lt;p&gt;&amp;quot;vADM2_TM.zip&amp;quot; 이라는 압축파일이 다운로드가 되고, 압축을 풀면 아래와 같은 파일들이 떨어진다.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;v시군구_TM.dbf&amp;quot; &amp;quot;v시군구_TM.sbn&amp;quot; &amp;quot;v시군구_TM.sbx&amp;quot; &amp;quot;v시군구_TM.shp&amp;quot;
 ## [5] &amp;quot;v시군구_TM.shx&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;행정경계정보가 담긴 이 5개 파일을 R에서 불러와 분석을 하기 위해 &lt;code&gt;rgdal::readORG()&lt;/code&gt; 함수를 이용한다. &lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;행정경계정보가 담긴 이 5개 파일을 R에서 불러와 분석을 하기 위해 &lt;code&gt;rgdal::readOGR()&lt;/code&gt; 함수를 이용한다. &lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(rgdal)
 d &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;readOGR&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## OGR data source with driver: ESRI Shapefile 
@@ -915,8 +915,8 @@ dea_res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&
 &lt;/section&gt;
 </description>
         <pubDate>Mon, 22 Jan 2018 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2018/01/22/EDA.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2018/01/22/EDA.html</guid>
+        <link>https://lovetoken.github.io/r/2018/01/22/DEA.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2018/01/22/DEA.html</guid>
         
         
         <category>R</category>
@@ -5559,65 +5559,58 @@ verbatim 모드로 Rmarkdown 코드청크 전체를 보여주면 아래와 같�
 &lt;p&gt;오늘 날짜를 기준으로 약 한 달 전 까지의 코스닥 지수를 예제 데이터로 이용해 보고자 한다. (본 포스팅 글의 오늘 날짜는 스크립트를 작성한 기준 날짜를 기준으로 한다)&lt;br /&gt;
 R에서는 특정 주가지수를 자동으로 불러올 수 있는 유용한 패키지가 있는데 바로 quantmod package이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(quantmod)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;quantmod package는 앞서 말한 xts package와 종속관계 이므로 quantmod package를 로드하면 같이 함께 로드된다. (zoo package 도 마찬가지 이다.)&lt;br /&gt;
-여하튼 KOSPI 지수를 받기 위한 코드는 아래와 같다. &lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;quantmod package는 앞서 말한 xts package와 종속관계 이므로 quantmod package를 로드하면 같이 함께 로드된다. (zoo package 도 마찬가지)&lt;br /&gt;
+여하튼 KOSPI 지수를 받기 위한 코드는 아래와 같다.&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;today &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;Sys.Date&lt;/span&gt;()
-kq &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;getSymbols&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;^kq11&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;from =&lt;/span&gt; today&lt;span class=&quot;dv&quot;&gt;-30&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;to =&lt;/span&gt; today, &lt;span class=&quot;dt&quot;&gt;auto.assign =&lt;/span&gt; F)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##     As of 0.4-0, &amp;#39;getSymbols&amp;#39; uses env=parent.frame() and
-##  auto.assign=TRUE by default.
-## 
-##  This  behavior  will be  phased out in 0.5-0  when the call  will
-##  default to use auto.assign=FALSE. getOption(&amp;quot;getSymbols.env&amp;quot;) and 
-##  getOptions(&amp;quot;getSymbols.auto.assign&amp;quot;) are now checked for alternate defaults
-## 
-##  This message is shown once per session and may be disabled by setting 
-##  options(&amp;quot;getSymbols.warning4.0&amp;quot;=FALSE). See ?getSymbols for more details.&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;kq; &lt;span class=&quot;kw&quot;&gt;class&lt;/span&gt;(kq)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+kq &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;getSymbols&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;^kq11&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;from =&lt;/span&gt; today -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;to =&lt;/span&gt; today, &lt;span class=&quot;dt&quot;&gt;auto.assign =&lt;/span&gt; F)
+kq&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##            KQ11.Open KQ11.High KQ11.Low KQ11.Close KQ11.Volume
-## 2016-04-18    695.78    695.98   693.00     695.34      706800
-## 2016-04-19    697.31    701.80   696.22     701.68      684100
-## 2016-04-20    703.55    704.44   699.85     699.86      737300
-## 2016-04-21    702.21    702.32   698.39     701.62      834100
-## 2016-04-22    702.90    703.89   700.98     703.05      702700
-## 2016-04-25    705.37    705.44   702.42     703.70      700200
-## 2016-04-26    705.51    705.51   700.76     702.06      778200
-## 2016-04-27    704.42    704.59   699.41     699.52      757000
-## 2016-04-28    702.04    703.95   699.68     699.70      665300
-## 2016-04-29    699.89    700.14   695.82     699.77      645800
-## 2016-05-02    700.43    700.74   690.27     690.27      681200
-## 2016-05-03    693.67    699.24   693.67     698.66      819100
-## 2016-05-04    698.02    698.30   693.25     694.17      826600
-## 2016-05-09    696.66    697.14   690.85     691.82      630400
-## 2016-05-10    693.47    700.53   693.44     700.23      570000
-## 2016-05-11    704.32    704.53   701.29     703.94      637900
-## 2016-05-12    702.46    706.49   699.87     705.04      614200
-## 2016-05-13    705.85    705.92   703.65     704.37      617600
-## 2016-05-16    705.03    705.04   701.25     701.46      660200
-## 2016-05-17    703.08    703.24   693.07     695.95      712200
+## 2018-04-30    886.29    886.60   870.54     875.95     1351100
+## 2018-05-02    869.52    877.54   863.59     871.03     1357600
+## 2018-05-03    873.34    876.08   866.05     866.07     1354500
+## 2018-05-04    868.35    870.10   856.34     856.34     1132000
+## 2018-05-08    860.56    863.56   827.20     827.22      948400
+## 2018-05-09    833.48    851.28   815.27     850.85      905900
+## 2018-05-10    852.28    855.82   846.14     854.93      857400
+## 2018-05-11    855.25    866.86   855.25     865.93      941500
+## 2018-05-14    869.44    869.92   855.54     858.70      922200
+## 2018-05-15    865.53    867.13   858.55     862.94     1007600
+## 2018-05-16    857.24    857.24   846.90     850.29     1210600
+## 2018-05-17    854.46    857.56   852.91     855.62     1037400
+## 2018-05-18    858.08    869.80   857.66     869.45     1064500
+## 2018-05-21    871.49    876.12   870.52     872.96      998500
+## 2018-05-23    875.12    875.36   867.28     869.16      874600
+## 2018-05-24        NA        NA       NA         NA          NA
+## 2018-05-25    866.20    870.71   859.09     868.35     1115000
+## 2018-05-28    865.58    879.80   865.57     879.69     1270100
+## 2018-05-29    881.53    884.64   868.81     870.08     1147700
+## 2018-05-30    876.42    876.71   861.84     874.22     1117572
 ##            KQ11.Adjusted
-## 2016-04-18        695.34
-## 2016-04-19        701.68
-## 2016-04-20        699.86
-## 2016-04-21        701.62
-## 2016-04-22        703.05
-## 2016-04-25        703.70
-## 2016-04-26        702.06
-## 2016-04-27        699.52
-## 2016-04-28        699.70
-## 2016-04-29        699.77
-## 2016-05-02        690.27
-## 2016-05-03        698.66
-## 2016-05-04        694.17
-## 2016-05-09        691.82
-## 2016-05-10        700.23
-## 2016-05-11        703.94
-## 2016-05-12        705.04
-## 2016-05-13        704.37
-## 2016-05-16        701.46
-## 2016-05-17        695.95&lt;/code&gt;&lt;/pre&gt;
+## 2018-04-30        875.95
+## 2018-05-02        871.03
+## 2018-05-03        866.07
+## 2018-05-04        856.34
+## 2018-05-08        827.22
+## 2018-05-09        850.85
+## 2018-05-10        854.93
+## 2018-05-11        865.93
+## 2018-05-14        858.70
+## 2018-05-15        862.94
+## 2018-05-16        850.29
+## 2018-05-17        855.62
+## 2018-05-18        869.45
+## 2018-05-21        872.96
+## 2018-05-23        869.16
+## 2018-05-24            NA
+## 2018-05-25        868.35
+## 2018-05-28        879.69
+## 2018-05-29        870.08
+## 2018-05-30        874.22&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;class&lt;/span&gt;(kq)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;xts&amp;quot; &amp;quot;zoo&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;다양한 메시지와 함께 우리가 보고 싶은 결과물을 xts class 객체로 반환한다.&lt;br /&gt;
-&lt;code&gt;getSymbols()&lt;/code&gt; 함수의 쓰임 법에 대해서 간략히 설명하자면 조회하고자 하는 주가 심볼 문자열을 첫 번째 인자값으로 넣고 &lt;code&gt;from&lt;/code&gt;, &lt;code&gt;to&lt;/code&gt; 인자에 조회 날짜에 대한 기간 정보를 넣어줌으로써 활용이 가능하다.&lt;br /&gt;
+&lt;code&gt;getSymbols()&lt;/code&gt; 함수의 쓰임 법에 대해서 간략히 설명하자면&lt;br /&gt;
+조회하고자 하는 주가 심볼 문자열을 첫 번째 인자값으로 넣고 &lt;code&gt;from&lt;/code&gt;, &lt;code&gt;to&lt;/code&gt; 인자에 조회 날짜에 대한 기간 정보를 넣어줌으로써 활용이 가능하다.&lt;br /&gt;
 예제데이터로 사용될 우리가 선택한 코스닥 심볼은 &#39;^kq11&#39; 이다.&lt;br /&gt;
 만약 다른 것을 조회하고 싶다면 해당되는 심볼을 찾은 후 기입하면 된다. (ex. 코스피200지수의 경우 &#39;^ks11&#39;)&lt;/p&gt;
 &lt;p&gt;반환된 결과물을 보면 open, high, low, close, volume, adjusted 6개의 상황별 지수가 있는데 종가지수인 close 만 관심의 대상이라 가정하고 subset 을 추출한 데이터 &lt;code&gt;data&lt;/code&gt; 를 최종 예제데이터로 삼겠다.&lt;/p&gt;
@@ -5625,139 +5618,140 @@ kq &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;일일-수익률-계산하기&quot;&gt;일일 수익률 계산하기&lt;/h2&gt;
 &lt;p&gt;예제데이터를 이용하여 일일 수익률을 계산해 보겠다.&lt;br /&gt;
-예를 들어 2016년 4월 19일의 수익률을 계산하기 위해선 해당 시차 지수 701.68 을 직전날시차 지수 695.34 로 나눠 준 후 1을 빼면 된다.&lt;br /&gt;
-이것을 모든 날에 대해 일괄적으로 행하여야 한다.&lt;br /&gt;
+현재의 수익률은 현재 시차 지수를 직전날 시차 지수로 나눠 준 후 1을 빼면 된다.&lt;br /&gt;
+현재가 아닌 i번째 시차의 수익률은 i번째 시차지수를 i-1 시차 지수로 나눠준 후 1을 빼면 된다.&lt;br /&gt;
+모든 i번째 시차에 대해 수익률을 보고싶다면 이를 일괄적으로 수행할 필요가 있다.&lt;br /&gt;
 이를 간편하게 계산하기 위해 &lt;code&gt;lag()&lt;/code&gt; 함수가 유용할 수 있다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;data&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##            KQ11.Close
-## 2016-04-18     695.34
-## 2016-04-19     701.68
-## 2016-04-20     699.86
-## 2016-04-21     701.62
-## 2016-04-22     703.05
-## 2016-04-25     703.70
-## 2016-04-26     702.06
-## 2016-04-27     699.52
-## 2016-04-28     699.70
-## 2016-04-29     699.77
-## 2016-05-02     690.27
-## 2016-05-03     698.66
-## 2016-05-04     694.17
-## 2016-05-09     691.82
-## 2016-05-10     700.23
-## 2016-05-11     703.94
-## 2016-05-12     705.04
-## 2016-05-13     704.37
-## 2016-05-16     701.46
-## 2016-05-17     695.95&lt;/code&gt;&lt;/pre&gt;
+## 2018-04-30     875.95
+## 2018-05-02     871.03
+## 2018-05-03     866.07
+## 2018-05-04     856.34
+## 2018-05-08     827.22
+## 2018-05-09     850.85
+## 2018-05-10     854.93
+## 2018-05-11     865.93
+## 2018-05-14     858.70
+## 2018-05-15     862.94
+## 2018-05-16     850.29
+## 2018-05-17     855.62
+## 2018-05-18     869.45
+## 2018-05-21     872.96
+## 2018-05-23     869.16
+## 2018-05-24         NA
+## 2018-05-25     868.35
+## 2018-05-28     879.69
+## 2018-05-29     870.08
+## 2018-05-30     874.22&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;lag&lt;/span&gt;(data)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##            KQ11.Close
-## 2016-04-18         NA
-## 2016-04-19     695.34
-## 2016-04-20     701.68
-## 2016-04-21     699.86
-## 2016-04-22     701.62
-## 2016-04-25     703.05
-## 2016-04-26     703.70
-## 2016-04-27     702.06
-## 2016-04-28     699.52
-## 2016-04-29     699.70
-## 2016-05-02     699.77
-## 2016-05-03     690.27
-## 2016-05-04     698.66
-## 2016-05-09     694.17
-## 2016-05-10     691.82
-## 2016-05-11     700.23
-## 2016-05-12     703.94
-## 2016-05-13     705.04
-## 2016-05-16     704.37
-## 2016-05-17     701.46&lt;/code&gt;&lt;/pre&gt;
+## 2018-04-30         NA
+## 2018-05-02     875.95
+## 2018-05-03     871.03
+## 2018-05-04     866.07
+## 2018-05-08     856.34
+## 2018-05-09     827.22
+## 2018-05-10     850.85
+## 2018-05-11     854.93
+## 2018-05-14     865.93
+## 2018-05-15     858.70
+## 2018-05-16     862.94
+## 2018-05-17     850.29
+## 2018-05-18     855.62
+## 2018-05-21     869.45
+## 2018-05-23     872.96
+## 2018-05-24     869.16
+## 2018-05-25         NA
+## 2018-05-28     868.35
+## 2018-05-29     879.69
+## 2018-05-30     870.08&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;날짜에 대한 처리 없이 알아서 주가 데이터가 하루 미루어진다.&lt;br /&gt;
-&lt;code&gt;lag()&lt;/code&gt; 함수의 두번째 인자는 &lt;code&gt;k=1&lt;/code&gt; 로 디폴트값이 잡혀있는데, 이를 조정하는것도 가능하다.&lt;br /&gt;
+&lt;code&gt;lag()&lt;/code&gt; 함수의 두번째 인자는 &lt;code&gt;k = 1&lt;/code&gt; 로 디폴트값이 잡혀있는데, 이를 조정하는것도 가능하다.&lt;br /&gt;
 &lt;code&gt;data&lt;/code&gt; 와 &lt;code&gt;lag(data)&lt;/code&gt; 를 나누고 상수 1을 뺌으로써 간단히 일일수익률을 계산할 수 있게 된다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;data/&lt;span class=&quot;kw&quot;&gt;lag&lt;/span&gt;(data)-&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##               KQ11.Close
-## 2016-04-18            NA
-## 2016-04-19  0.0091177924
-## 2016-04-20 -0.0025937864
-## 2016-04-21  0.0025148030
-## 2016-04-22  0.0020381303
-## 2016-04-25  0.0009245772
-## 2016-04-26 -0.0023305584
-## 2016-04-27 -0.0036178931
-## 2016-04-28  0.0002573079
-## 2016-04-29  0.0001000543
-## 2016-05-02 -0.0135758888
-## 2016-05-03  0.0121545957
-## 2016-05-04 -0.0064265740
-## 2016-05-09 -0.0033853034
-## 2016-05-10  0.0121563021
-## 2016-05-11  0.0052982907
-## 2016-05-12  0.0015625991
-## 2016-05-13 -0.0009502766
-## 2016-05-16 -0.0041313131
-## 2016-05-17 -0.0078550592&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;일일수익률이므로 직전시차 데이터가 존재하지 않는 4월 18일 수익률만 결측치로 나오고 이후 시차는 수익률을 잘 산출해 준다.&lt;br /&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;data/&lt;span class=&quot;kw&quot;&gt;lag&lt;/span&gt;(data) -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##              KQ11.Close
+## 2018-04-30           NA
+## 2018-05-02 -0.005616739
+## 2018-05-03 -0.005694433
+## 2018-05-04 -0.011234635
+## 2018-05-08 -0.034005249
+## 2018-05-09  0.028565564
+## 2018-05-10  0.004795225
+## 2018-05-11  0.012866551
+## 2018-05-14 -0.008349383
+## 2018-05-15  0.004937685
+## 2018-05-16 -0.014659216
+## 2018-05-17  0.006268470
+## 2018-05-18  0.016163738
+## 2018-05-21  0.004037046
+## 2018-05-23 -0.004353062
+## 2018-05-24           NA
+## 2018-05-25           NA
+## 2018-05-28  0.013059281
+## 2018-05-29 -0.010924286
+## 2018-05-30  0.004758130&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;일일수익률이므로 직전시차 데이터가 존재하지 않는 날은 NA로 계산되고 이후 시차는 수익률을 잘 산출해 주는것을 볼 수 있다.&lt;br /&gt;
 만약 &lt;code&gt;lag()&lt;/code&gt; 함수를 알지 못한다면 아래와 같은 해괴망측한 수동적인 코드로써 구현해야 했을 것이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;data
 res[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;] &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;ot&quot;&gt;NA&lt;/span&gt;
 
 for(i in &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;:&lt;span class=&quot;kw&quot;&gt;nrow&lt;/span&gt;(data)){
-    res[i] &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;data[[i]] /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;data[[i&lt;span class=&quot;dv&quot;&gt;-1&lt;/span&gt;]]-&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;
+    res[i] &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;data[[i]]/data[[i -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;]] -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;
 } &lt;span class=&quot;co&quot;&gt;# T_T.....&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;로그수익률-계산하기&quot;&gt;로그수익률 계산하기&lt;/h2&gt;
 &lt;p&gt;만약 일일 로그수익률을 계산하고 싶다면 현시차 주가를 직전시차주가로 나눠준 후 로그함수를 씌워주면 되는데&lt;br /&gt;
 방금 알게된 &lt;code&gt;lag()&lt;/code&gt; 함수를 이용하면&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;log&lt;/span&gt;(data) -&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;log&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;lag&lt;/span&gt;(data))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##               KQ11.Close
-## 2016-04-18            NA
-## 2016-04-19  0.0090764763
-## 2016-04-20 -0.0025971561
-## 2016-04-21  0.0025116462
-## 2016-04-22  0.0020360562
-## 2016-04-25  0.0009241501
-## 2016-04-26 -0.0023332784
-## 2016-04-27 -0.0036244535
-## 2016-04-28  0.0002572748
-## 2016-04-29  0.0001000493
-## 2016-05-02 -0.0136688838
-## 2016-05-03  0.0120813217
-## 2016-05-04 -0.0064473133
-## 2016-05-09 -0.0033910465
-## 2016-05-10  0.0120830076
-## 2016-05-11  0.0052843042
-## 2016-05-12  0.0015613795
-## 2016-05-13 -0.0009507284
-## 2016-05-16 -0.0041398706
-## 2016-05-17 -0.0078860727&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##              KQ11.Close
+## 2018-04-30           NA
+## 2018-05-02 -0.005632573
+## 2018-05-03 -0.005710708
+## 2018-05-04 -0.011298220
+## 2018-05-08 -0.034596879
+## 2018-05-09  0.028165175
+## 2018-05-10  0.004783764
+## 2018-05-11  0.012784480
+## 2018-05-14 -0.008384434
+## 2018-05-15  0.004925534
+## 2018-05-16 -0.014767724
+## 2018-05-17  0.006248905
+## 2018-05-18  0.016034495
+## 2018-05-21  0.004028919
+## 2018-05-23 -0.004362564
+## 2018-05-24           NA
+## 2018-05-25           NA
+## 2018-05-28  0.012974743
+## 2018-05-29 -0.010984394
+## 2018-05-30  0.004746846&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;의 코드로 일일 로그수익률을 계산할 수 있다.&lt;br /&gt;
 그런데 &lt;code&gt;log()&lt;/code&gt;, &lt;code&gt;lag()&lt;/code&gt; 비슷비슷한 함수들이 있어 눈에 확 띄지 않고 복잡해 보인다.&lt;br /&gt;
 현재는 현시차와 직전시차의 차이값을 구하는 과정이 필요하다.&lt;br /&gt;
 이 차이를 자동으로 계산해주는 함수가 &lt;code&gt;diff()&lt;/code&gt; 이다.&lt;br /&gt;
 &lt;code&gt;diff()&lt;/code&gt; 함수를 이용하여 코드를 더 간결하게 해본 결과이다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;diff&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;log&lt;/span&gt;(data))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##               KQ11.Close
-## 2016-04-18            NA
-## 2016-04-19  0.0090764763
-## 2016-04-20 -0.0025971561
-## 2016-04-21  0.0025116462
-## 2016-04-22  0.0020360562
-## 2016-04-25  0.0009241501
-## 2016-04-26 -0.0023332784
-## 2016-04-27 -0.0036244535
-## 2016-04-28  0.0002572748
-## 2016-04-29  0.0001000493
-## 2016-05-02 -0.0136688838
-## 2016-05-03  0.0120813217
-## 2016-05-04 -0.0064473133
-## 2016-05-09 -0.0033910465
-## 2016-05-10  0.0120830076
-## 2016-05-11  0.0052843042
-## 2016-05-12  0.0015613795
-## 2016-05-13 -0.0009507284
-## 2016-05-16 -0.0041398706
-## 2016-05-17 -0.0078860727&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##              KQ11.Close
+## 2018-04-30           NA
+## 2018-05-02 -0.005632573
+## 2018-05-03 -0.005710708
+## 2018-05-04 -0.011298220
+## 2018-05-08 -0.034596879
+## 2018-05-09  0.028165175
+## 2018-05-10  0.004783764
+## 2018-05-11  0.012784480
+## 2018-05-14 -0.008384434
+## 2018-05-15  0.004925534
+## 2018-05-16 -0.014767724
+## 2018-05-17  0.006248905
+## 2018-05-18  0.016034495
+## 2018-05-21  0.004028919
+## 2018-05-23 -0.004362564
+## 2018-05-24           NA
+## 2018-05-25           NA
+## 2018-05-28  0.012974743
+## 2018-05-29 -0.010984394
+## 2018-05-30  0.004746846&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;주가종목에 로그를 취한 후 현시차와 직전시차의 차이값을 &lt;code&gt;diff()&lt;/code&gt; 를 통해 계산한다.&lt;br /&gt;
 따라서 &lt;code&gt;log(data) - log(lag(data))&lt;/code&gt; 과 동일한 값이 반환되는 것을 확인할 수 있다.&lt;/p&gt;
 &lt;section class=&quot;footnotes&quot;&gt;

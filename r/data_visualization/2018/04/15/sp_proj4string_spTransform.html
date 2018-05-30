@@ -195,7 +195,7 @@ R에서 sp package 를 이용한 좌표계 변환 성공예제를 정리하고 �
 <p>&quot;vADM2_TM.zip&quot; 이라는 압축파일이 다운로드가 되고, 압축을 풀면 아래와 같은 파일들이 떨어진다.</p>
 <pre><code>## [1] &quot;v시군구_TM.dbf&quot; &quot;v시군구_TM.sbn&quot; &quot;v시군구_TM.sbx&quot; &quot;v시군구_TM.shp&quot;
 ## [5] &quot;v시군구_TM.shx&quot;</code></pre>
-<p>행정경계정보가 담긴 이 5개 파일을 R에서 불러와 분석을 하기 위해 <code>rgdal::readORG()</code> 함수를 이용한다. <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p>행정경계정보가 담긴 이 5개 파일을 R에서 불러와 분석을 하기 위해 <code>rgdal::readOGR()</code> 함수를 이용한다. <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgdal)
 d &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="st">&quot;data&quot;</span>)</code></pre></div>
 <pre><code>## OGR data source with driver: ESRI Shapefile 
@@ -552,7 +552,7 @@ sp class 로 이루어진 GIS 테이블들을 좌표통일 후 매쉬업 할 수
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/01/22/EDA.html">R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기</a>
+                    <a href="https://lovetoken.github.io/r/2018/01/22/DEA.html">R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
