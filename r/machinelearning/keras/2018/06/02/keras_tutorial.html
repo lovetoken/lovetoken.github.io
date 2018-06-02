@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기" />
-        <meta name="keywords" content="R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기, , R, Data_Visualization" />
+        <meta name="description" content="R에서 Keras 튜토리얼 돌려보기" />
+        <meta name="keywords" content="R에서 Keras 튜토리얼 돌려보기, , R, MachineLearning, Keras" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기" property="og:title">
+          <meta content="R에서 Keras 튜토리얼 돌려보기" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/data_visualization/2016/10/14/Choropleth_map_basic.html" property="og:url">
+          <meta content="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html" property="og:url">
         
         
-          <meta content="2016-10-14T00:00:00+09:00" property="article:published_time">
+          <meta content="2018-06-02T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기">
+          <meta name="twitter:title" content="R에서 Keras 튜토리얼 돌려보기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/data_visualization/2016/10/14/Choropleth_map_basic.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,140 +126,131 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기</h1>
-<span class="time">14 Oct 2016</span>
+                <h1>R에서 Keras 튜토리얼 돌려보기</h1>
+<span class="time">02 Jun 2018</span>
 
 <span class="categories">
-    &raquo; <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>
+    &raquo; <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>
 </span>
 
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<h2 id="단계-구분도---choropleth-map">단계 구분도 - Choropleth Map</h2>
-<p>데이터 시각화를 주제로 모습을 자주 보이는 단계 구분도 (Choropleth Map)에 대해서 알아보고자 한다.<br />
-<a href="https://en.wikipedia.org/wiki/Choropleth_map">Choropleth map</a>은 지역당 특정주제의 통계치를 활용해 시각적인 요소를 가미하여 나타낸 지도로서, 예시를 하나 들자면 국가별 인구의 밀도를 수치에 따라 색깔의 농도를 달리하여 나타내는 지도로 들 수 있다.</p>
-<p>그림으로 표현하면 다음과 같다.</p>
-<br>
-<center>
-<img src="/assets/choro1.png" />
-</center>
-<p><br></p>
-<blockquote>
-<p><a href="http://gisutd.tistory.com/7">꽤 괜찮은 데이터 지도(data map)를 그려주는 Natural Breaks란?</a></p>
-</blockquote>
-<p>이런 단계구분도를 R을 이용해 구현해 본 예제는 아래와 같다.</p>
-<center>
-<img src="/assets/choro2.png" />
-</center>
-<blockquote>
-<p>R Graphics Cookbook [Programming Insight] - 300page</p>
-</blockquote>
+<p>필자는 TensorFlow 를 활용한 딥러닝 구현은 아직까지도 직접 해본적이 없었는데<br />
+Keras 가 나오고서야 딥러닝을 처음으로 직접 시도해보게 되었다.<br />
+Keras 를 이용해 보고싶어 <a href="https://tensorflow.rstudio.com/keras/">튜토리얼</a>을 빠르게 훝어본적이 있었는데<br />
+그 과정을 정리한 글이다.</p>
+<p>본글은 R에서 Keras 튜토리얼 예제를 따라해 본 것을 빠르게 정리한 글이며<br />
+딥러닝에 대한 설명 및 기술은 자세히 다루지 않는다.</p>
 <p><br><br></p>
-<h2 id="r을-이용한-간단한-예제-실습">R을 이용한 간단한 예제 실습</h2>
-<p>위 예제로 든 것을 실제로 만들어 보며 실습을 해보았다.<br />
-R의 여러 패키지의 도움을 빌렸다.<br />
-&quot;maps&quot;, &quot;dplyr&quot;, &quot;&quot;ggplot2&quot; 3개의 패키지 도움을 빌리기 위해 로드한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;maps&quot;)</span>
-<span class="co"># install.packages(&quot;dplyr&quot;)</span>
-<span class="co"># install.packages(&quot;ggplot2&quot;)</span>
-<span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;maps&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;dplyr&quot;</span>)</code></pre></div>
-<p>&quot;maps&quot; 패키지에는 지도를 그리기 위한 위도, 경도 및 이에 매칭되는 나라에 대한 정보를 데이터프레임셋으로 만들 수 있도록 해주는데,<br />
-모든 나라의 지도정보가 담겨있으므로 Choropleth map 으로 그리고 싶은 나라를 서브세팅하여 전처리하는 것이 가능하다.<br />
-그래픽 엔진으로는 &quot;ggplot2&quot; 패키지를 선택해 Choropleth map을 구현해 볼 것이며,<br />
-&quot;dplyr&quot; 패키지는 데이터 전처리의 간편함수들을 이용하기 위함이다.</p>
-<p>바로 위에 예시로 그린 나라는 미국이다.<br />
-미국만을 서브세팅 하여 그리는 예제만 해보고자 한다.</p>
-<p><code>map_data()</code> 는 해당지도의 경도, 위도, 지역, 지역명, 지도의 다각형을 그릴 수 있게 해 주는 서브정보들이 담겨있는 데이터프레임을 반환시켜주는데 ggplot2 패키지의 함수임을 유의하며 사용했다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">states_map &lt;-<span class="st"> </span><span class="kw">map_data</span>(<span class="st">&quot;state&quot;</span>)</code></pre></div>
-<p>map_data 의 첫 번째 인자를 <code>&quot;state&quot;</code> 로 하여 미국의 주 시에 대한 정보의 데이터프레임을 <code>states_map</code> 명칭의 객체로 저장했다.<br />
-참고로 <code>&quot;state&quot;</code> 는 미국의 주, <code>&quot;world&quot;</code> 는 전세계, <code>&quot;france&quot;</code> 는 프랑스 지도 정보가 반환된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(states_map, <span class="dt">n =</span> <span class="dv">20</span>)</code></pre></div>
-<pre><code>##         long      lat group order  region subregion
-## 1  -87.46201 30.38968     1     1 alabama      &lt;NA&gt;
-## 2  -87.48493 30.37249     1     2 alabama      &lt;NA&gt;
-## 3  -87.52503 30.37249     1     3 alabama      &lt;NA&gt;
-## 4  -87.53076 30.33239     1     4 alabama      &lt;NA&gt;
-## 5  -87.57087 30.32665     1     5 alabama      &lt;NA&gt;
-## 6  -87.58806 30.32665     1     6 alabama      &lt;NA&gt;
-## 7  -87.59379 30.30947     1     7 alabama      &lt;NA&gt;
-## 8  -87.59379 30.28655     1     8 alabama      &lt;NA&gt;
-## 9  -87.67400 30.27509     1     9 alabama      &lt;NA&gt;
-## 10 -87.81152 30.25790     1    10 alabama      &lt;NA&gt;
-## 11 -87.88026 30.24644     1    11 alabama      &lt;NA&gt;
-## 12 -87.92037 30.24644     1    12 alabama      &lt;NA&gt;
-## 13 -87.95475 30.24644     1    13 alabama      &lt;NA&gt;
-## 14 -88.00632 30.24071     1    14 alabama      &lt;NA&gt;
-## 15 -88.01778 30.25217     1    15 alabama      &lt;NA&gt;
-## 16 -88.01205 30.26936     1    16 alabama      &lt;NA&gt;
-## 17 -87.99486 30.27509     1    17 alabama      &lt;NA&gt;
-## 18 -87.95475 30.27509     1    18 alabama      &lt;NA&gt;
-## 19 -87.90318 30.28082     1    19 alabama      &lt;NA&gt;
-## 20 -87.82870 30.28655     1    20 alabama      &lt;NA&gt;</code></pre>
-<p>데이터의 앞부분 일부를 보니,<br />
-&quot;alabama&quot; 지역의 다각형을 그리기 위한 경도(long), 위도(lat) 정보가 있는 것을 볼 수 있다.<br />
-물론 alabama 만 있는 것이 아니라 수많은 미국의 주 region 이 존재하는 데이터이다.<br />
-이를 ggplot2 패키지를 이용해 구체화 시키는 코드를 아래와 같이 작성해 보았다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(states_map, <span class="kw">aes</span>(long, lat, <span class="dt">group =</span> group)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;gray&quot;</span>) +
-<span class="st">  </span><span class="kw">coord_map</span>(<span class="st">&quot;polyconic&quot;</span>)</code></pre></div>
+<h2 id="keras-를-r에서-설치하기">Keras 를 R에서 설치하기</h2>
+<p>R session 에서 다음 코드를 통해 설치가 가능하다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;rstudio/keras&quot;</span>)
+<span class="kw">library</span>(keras)
+<span class="kw">install_keras</span>()</code></pre></div>
+<p>Keras 를 설치하기 위해서 rstudio 배포판 keras package 를 설치한다.<br />
+이후 keras package 를 로드하고 <code>install_keras()</code> 함수를 통해 실제로 Keras 라이브러리를 설치할 수 있다.</p>
+<p>라이브러리를 추가로 설치하라는 요구사항이 뜨면서 설치가 중단될 경우 (본인의 경우 <code>python-virtualenv</code> 가 없어서 중단됨)</p>
+<pre><code>Error: Prerequisites for installing TensorFlow not available.
+
+Execute the following at a terminal to install the prerequisites:
+
+$ sudo apt-get install python-virtualenv</code></pre>
+<p>안내 받는</p>
+<pre><code>$ sudo apt-get install python-virtualenv</code></pre>
+<p>등을 실행시켜 요구사항을 충족시킨 후 <code>install_keras()</code> 를 실행해 설치를 진행하면 되겠다.</p>
+<p><br><br></p>
+<h2 id="mnist-예제-수행">MNIST 예제 수행</h2>
+<br><br>
 <center>
-<img src="/assets/choro3.png" />
+<img src="/assets/MNIST.png">
 </center>
-<p><code>ggplot()</code> 의 첫번째 인자에는 본체 데이터를 입력하고, 두번째 인자에 <code>aes(x = long, y = lat)</code> 을 지정하여 위도, 경도를 각각 x축과 y축에 매칭시킨다.<br />
-다음으로 <code>geom_polygon()</code> 와 <code>coord_map()</code> 함수를 통해 다각형을 그리는 명령을 넣어 구체화 시키면 ggplot2 packages를 이용한 결과물이 위와 같이 나오게 된다.</p>
-<p>그런데 위의 결과물은 단지 지도의 형태만을 볼 수 있고,<br />
-주시내별 어떠한 정보도 담겨있지 않은 공통된 회색이기 때문에<br />
-choropleth map 이라고 할 수 없는 상태이다.<br />
-주시내별 어떠한 정보를 담기 위하여 R의 내장데이터인 <code>USArrests</code> 를 활용해 보았다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(USArrests)</code></pre></div>
-<pre><code>##            Murder Assault UrbanPop Rape
-## Alabama      13.2     236       58 21.2
-## Alaska       10.0     263       48 44.5
-## Arizona       8.1     294       80 31.0
-## Arkansas      8.8     190       50 19.5
-## California    9.0     276       91 40.6
-## Colorado      7.9     204       78 38.7</code></pre>
-<p><code>USArrests</code> 객체는 미국의 주시내별 폭력∙범죄율 정보를 담고 있는 data.frame 빌트인 객체이다.<br />
-이를 이용하여 미국의 어떠한 마을에 범죄율이 강하고 적은지를 쉽게 확인할 수 있는 choropleth map 을 만들어 보면 의미 있는 결과물이 나올 것이라 예상된다.<br />
-앞에서 사용했던 미국 주시내별 지도위치정보를 담은 데이터프레임셋 <code>states_map</code> 를 다시 가지고 와서</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">states_map &lt;-<span class="st"> </span><span class="kw">map_data</span>(<span class="st">&quot;state&quot;</span>)</code></pre></div>
-<p>region 변수와 내장데이터셋 <code>USArrests</code> 의 region 변수를 <code>merge()</code> 함수를 이용해 병합해 보았다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">crime_map &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">region =</span> <span class="kw">tolower</span>(<span class="kw">rownames</span>(USArrests)), USArrests) %&gt;%
-<span class="st">    </span><span class="kw">merge</span>(states_map, <span class="dt">by =</span> <span class="st">&quot;region&quot;</span>)
-<span class="kw">head</span>(crime_map)</code></pre></div>
-<pre><code>##    region Murder Assault UrbanPop Rape      long      lat group order
-## 1 alabama   13.2     236       58 21.2 -87.46201 30.38968     1     1
-## 2 alabama   13.2     236       58 21.2 -87.48493 30.37249     1     2
-## 3 alabama   13.2     236       58 21.2 -87.95475 30.24644     1    13
-## 4 alabama   13.2     236       58 21.2 -88.00632 30.24071     1    14
-## 5 alabama   13.2     236       58 21.2 -88.01778 30.25217     1    15
-## 6 alabama   13.2     236       58 21.2 -87.52503 30.37249     1     3
-##   subregion
-## 1      &lt;NA&gt;
-## 2      &lt;NA&gt;
-## 3      &lt;NA&gt;
-## 4      &lt;NA&gt;
-## 5      &lt;NA&gt;
-## 6      &lt;NA&gt;</code></pre>
-<p>이렇게 만들어진 <code>crime_map</code> 객체의 헤더부분을 살펴보면<br />
-<code>region</code> 변수에 따른 <code>Murder</code>, <code>Assault</code>, <code>UrbanPop</code>, <code>Rape</code> 변수정보들이 붙여진 것을 확인할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">arrange</span>(crime_map, order) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(long, lat, <span class="dt">group =</span> group, <span class="dt">fill =</span> Murder)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_polygon</span>() +
-<span class="st">  </span><span class="kw">coord_map</span>(<span class="st">&quot;polyconic&quot;</span>) +
-<span class="st">  </span><span class="kw">scale_fill_continuous</span>(<span class="dt">low =</span> <span class="st">&quot;pink&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;black&quot;</span>)</code></pre></div>
-<center>
-<img src="/assets/choro4.png" />
-</center>
-<p><code>arrange()</code> 를 이용하여 order 변수 순으로 정렬을 해주었는데,<br />
-정렬을 시키는 이유는 올바른 다각형을 그리기 위함이다.<br />
-병합작업 시 원래 순서대로 정렬되어있던 것이 헝클어졌기 때문에 필요한 전처리 작업이다.<br />
-(정렬작업을 하지 않는다면 도저히 무슨 그림인지 알 수 없는 결과물이 나온다)</p>
-<p>이후 <code>ggplot()</code> 에 <code>fill</code> 인자를 <code>Murder</code> 변수로 지정하여 미국의 주시내별 살인범죄수에 따라 색깔의 농도가 진해지는 결과물을 출력하면 되겠다.<br />
-위의 결과물과 맨 첫 번째 소개했던 결과물이 같은 것을 확인할 수 있다.</p>
+<p><br><br></p>
+<p>지도학습의 대표적인 MNIST 예제를 수행해봄으로써 Keras 의 설치가 정상적으로 되었는지, 동작은 제대로 하는지 확인해보면 좋겠다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mnist &lt;-<span class="st"> </span><span class="kw">dataset_mnist</span>()
+x_train &lt;-<span class="st"> </span>mnist$train$x
+y_train &lt;-<span class="st"> </span>mnist$train$y
+x_test &lt;-<span class="st"> </span>mnist$test$x
+y_test &lt;-<span class="st"> </span>mnist$test$y
+
+<span class="co"># reshape</span>
+x_train &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(x_train, <span class="kw">c</span>(<span class="kw">nrow</span>(x_train), <span class="dv">784</span>))
+x_test &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(x_test, <span class="kw">c</span>(<span class="kw">nrow</span>(x_test), <span class="dv">784</span>))
+<span class="co"># rescale</span>
+x_train &lt;-<span class="st"> </span>x_train /<span class="st"> </span><span class="dv">255</span>
+x_test &lt;-<span class="st"> </span>x_test /<span class="st"> </span><span class="dv">255</span></code></pre></div>
+<p>위의 코드는 MNIST 의 숫자 사진들을 학습셋과 테스트셋으로 나누고 각각 라벨링을 정리한 것으로 보면 되겠다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y_train &lt;-<span class="st"> </span><span class="kw">to_categorical</span>(y_train, <span class="dv">10</span>)
+y_test &lt;-<span class="st"> </span><span class="kw">to_categorical</span>(y_test, <span class="dv">10</span>)</code></pre></div>
+<p>타겟라벨링 y 경우 맨 처음에는 각각의 그림이 무슨 숫자인지를 벡터형으로 관리했는데 더미화(One-hot encode) 하여야 한다.<br />
+<code>to_categorical()</code> 함수를 통해 10개의 카테고리로써 One-hot encoding 을 간편히 수행할 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">keras_model_sequential</span>() 
+model %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">layer_dense</span>(<span class="dt">units =</span> <span class="dv">256</span>, <span class="dt">activation =</span> <span class="st">&#39;relu&#39;</span>, <span class="dt">input_shape =</span> <span class="kw">c</span>(<span class="dv">784</span>)) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">layer_dropout</span>(<span class="dt">rate =</span> <span class="fl">0.4</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">layer_dense</span>(<span class="dt">units =</span> <span class="dv">128</span>, <span class="dt">activation =</span> <span class="st">&#39;relu&#39;</span>) %&gt;%
+<span class="st">  </span><span class="kw">layer_dropout</span>(<span class="dt">rate =</span> <span class="fl">0.3</span>) %&gt;%
+<span class="st">  </span><span class="kw">layer_dense</span>(<span class="dt">units =</span> <span class="dv">10</span>, <span class="dt">activation =</span> <span class="st">&#39;softmax&#39;</span>)</code></pre></div>
+<p>모델링을 수행하기 전 모델링 방법과 레이어 구성 등의 Rule 을 적용하는 단계이다.<br />
+<code>keras_model_sequential()</code> 로 모델의 레이어를 구성하기 위한 초기 뼈대를 만들어 놓고 그 객체를 <code>model</code> 이 가져갔다면 <code>layer_dense()</code> 함수와 <code>layer_dropout()</code> 등의 함수들로 레이어의 순서와 구성을 기획할 수 있다.<br />
+단 <code>layer_dense()</code>, <code>layer_dropout()</code>, <code>layer_activation()</code>, <code>layer_masking()</code> 등의 함수들을 거친 keras.models.Sequential 클래스 객체는 따로 할당연산자 없이도 레이어 구성이 바로 적용되는것이 (나에게 있어선) 독특했다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>레이어 구성이 어떻게 되었는지 확인해 보고 싶다면 <code>summary(model)</code> 을 실행해 보자.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(model)</code></pre></div>
+<pre><code>## ___________________________________________________________________________
+## Layer (type)                     Output Shape                  Param #     
+## ===========================================================================
+## dense_1 (Dense)                  (None, 256)                   200960      
+## ___________________________________________________________________________
+## dropout_1 (Dropout)              (None, 256)                   0           
+## ___________________________________________________________________________
+## dense_2 (Dense)                  (None, 128)                   32896       
+## ___________________________________________________________________________
+## dropout_2 (Dropout)              (None, 128)                   0           
+## ___________________________________________________________________________
+## dense_3 (Dense)                  (None, 10)                    1290        
+## ===========================================================================
+## Total params: 235,146
+## Trainable params: 235,146
+## Non-trainable params: 0
+## ___________________________________________________________________________</code></pre>
+<p>다음으로 <code>compile()</code> 함수를 통해 비용함수와 최적화 방법, 최적화 평가기준을 설정할 수 있다.<br />
+튜토리얼 코드상에선 아래의 방법으로 설정했는데 그외 다양한 방법이 있는지 살펴보기 위해서 <code>compile()</code> 함수의 도움말을 살펴보았지만 큰 도움이 안되어서 당황스러웠다.<br />
+이때 부터는 Keras document 를 직접 훝어보아야 할듯 하다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model %&gt;%<span class="st"> </span><span class="kw">compile</span>(
+  <span class="dt">loss =</span> <span class="st">&#39;categorical_crossentropy&#39;</span>,
+  <span class="dt">optimizer =</span> <span class="kw">optimizer_rmsprop</span>(),
+  <span class="dt">metrics =</span> <span class="kw">c</span>(<span class="st">&#39;accuracy&#39;</span>)
+)</code></pre></div>
+<p>본격적으로 학습 및 평가를 해보자.</p>
+<p>학습은 <code>fit()</code> 함수를 통해 가능하며 8 epochs 과 128 의 batch 사이즈로 학습을 수행하는 코드이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">history &lt;-<span class="st"> </span>model %&gt;%<span class="st"> </span><span class="kw">fit</span>(
+  x_train, y_train, 
+  <span class="dt">epochs =</span> <span class="dv">8</span>, <span class="dt">batch_size =</span> <span class="dv">128</span>, 
+  <span class="dt">validation_split =</span> <span class="fl">0.2</span>
+)</code></pre></div>
+<p>loss 가 계속 줄어드면서 학습 및 최적화를 하는 과정이 8 epochs 만큼 진행 되는 로그가 출력될 것이다.<br />
+약 1분이 지나면 코드수행이 끝나게 되고 <code>history</code> 객체를 통해 학습수행과정에 대한 정보를 확인할 수 있다.<br />
+plotting 을 하면 학습과정중 training set 과 validation set 기준으로 정확도와 loss 가 epoch 별로 어떻게 변화했는지를 볼 수 있다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(history)</code></pre></div>
+<p><img src="/assets/keras_tuto1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Keras 를 이용한 학습 모델이 테스트셋을 기준으로 얼마만큼 예측성능률을 가지고 잇는지 평가해 보자.<br />
+평가는 <code>evaluate()</code> 함수를 이용한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model %&gt;%<span class="st"> </span><span class="kw">evaluate</span>(x_test, y_test)</code></pre></div>
+<pre><code>## $loss
+## [1] 0.07817918
+## 
+## $acc
+## [1] 0.9783</code></pre>
+<p>실제로 Testset 을 모델에 입력하여 어떤 숫자를 예측하는지 보고 싶다면</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model %&gt;%<span class="st"> </span><span class="kw">predict_classes</span>(x_test[<span class="dv">1</span>:<span class="dv">10</span>, ])</code></pre></div>
+<pre><code>##  [1] 7 2 1 0 4 1 4 9 5 9</code></pre>
+<p>를 통해 뽑을 수 있겠다.</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>물론 다른 이름의 객체로 할당시키는것도 가능했다<a href="#fnref1">↩</a></p></li>
+</ol>
+</section>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -273,7 +264,7 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/data_visualization/2016/10/14/Choropleth_map_basic.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -291,19 +282,15 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
         
             
-                
-                <div class="panel-body">
-                <h4>Related Posts</h4>
-                <ul>
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
+        
+            
+        
+            
+        
+    
+        
+            
+        
             
         
             
@@ -311,10 +298,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
         
             
-        
-            
-        
-    
         
             
         
@@ -326,6 +309,10 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
         
             
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
                 
                 <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html">R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)</a>
@@ -339,7 +326,38 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
+            
+        
     
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
         
             
         
@@ -351,25 +369,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
         
             
-        
-            
-        
-    
-        
-            
-        
-            
-        
-    
-        
-            
-        
-            
-        
-    
-
-    
-    
         
             
         
@@ -394,7 +393,11 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
+            
+        
     
+        
+            
         
             
         
@@ -419,6 +422,8 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
+            
+        
     
 
     
@@ -438,7 +443,11 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
+            
+        
     
+        
+            
         
             
         
@@ -463,13 +472,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
-    
-
-    
-    
-        
-            
-        
             
         
     
@@ -478,22 +480,16 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
         
             
-        
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/2018/03/01/fstPackage.html">R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
             
-        
-    
-
-    
-    
-        
-            
-        
-            
-        
-    
-
-    
-    
         
             
         
@@ -508,13 +504,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
-    
-
-    
-    
-        
-            
-        
             
         
     
@@ -523,19 +512,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
         
             
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-            
-        
-    
         
             
         
@@ -550,13 +526,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
-    
-
-    
-    
-        
-            
-        
             
         
     
@@ -565,13 +534,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
         
             
-        
-            
-        
-    
-
-    
-    
         
             
         
@@ -586,13 +548,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
-    
-
-    
-    
-        
-            
-        
             
         
     
@@ -601,10 +556,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
         
             
-        
-            
-        
-    
         
             
         
@@ -619,25 +570,11 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
-    
-
-    
-    
-        
-            
-        
             
         
     
-
-    
-    
         
             
-        
-            
-        
-    
         
             
         
@@ -652,13 +589,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
-    
-
-    
-    
-        
-            
-        
             
         
     
@@ -667,13 +597,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
         
             
-        
-            
-        
-    
-
-    
-    
         
             
         
@@ -688,13 +611,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
-    
-
-    
-    
-        
-            
-        
             
         
     
@@ -703,19 +619,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
         
             
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-            
-        
-    
         
             
         
@@ -730,7 +633,14 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
+            
+        
     
+
+    
+    
+        
+            
         
             
         
@@ -745,16 +655,11 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
-    
-
-    
-    
-        
-            
-        
             
         
     
+        
+            
         
             
         
@@ -769,25 +674,14 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
-    
-
-    
-    
-        
-            
-        
-            
-        
-    
-        
-            
-        
             
         
     
 
     
     
+        
+            
         
             
         
@@ -802,19 +696,11 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
-    
-
-    
-    
-        
-            
-        
             
         
     
-
-    
-    
+        
+            
         
             
         
@@ -829,25 +715,14 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
-    
-
-    
-    
-        
-            
-        
-            
-        
-    
-        
-            
-        
             
         
     
 
     
     
+        
+            
         
             
         
@@ -862,13 +737,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
-    
-
-    
-    
-        
-            
-        
             
         
     
@@ -877,13 +745,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
         
             
-        
-            
-        
-    
-
-    
-    
         
             
         
@@ -898,13 +759,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
-    
-
-    
-    
-        
-            
-        
             
         
     
@@ -913,13 +767,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
         
             
-        
-            
-        
-    
-
-    
-    
         
             
         
@@ -934,6 +781,8 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
+            
+        
     
 
     
@@ -943,10 +792,296 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         
             
         
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
     
 
     
     
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
         
             
         
@@ -961,10 +1096,8 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/r/2016/09/18/lubridate_package.html">&laquo; R에서 lubridate package 에 대해</a>
+    <a class="prev" href="/r/data_visualization/2018/04/24/netwon_raphson_method.html">&laquo; R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)</a>
   
-  
-    <a class="next" href="/r/data_visualization/2016/10/18/ggmap.html">R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제 &raquo;</a>
   
 </div>
 
@@ -975,8 +1108,8 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기";
-        var disqus_title = "R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 Keras 튜토리얼 돌려보기";
+        var disqus_title = "R에서 Keras 튜토리얼 돌려보기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

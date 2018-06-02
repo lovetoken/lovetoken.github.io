@@ -5,9 +5,141 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 30 May 2018 22:17:47 +0900</pubDate>
-    <lastBuildDate>Wed, 30 May 2018 22:17:47 +0900</lastBuildDate>
+    <pubDate>Sat, 02 Jun 2018 14:22:00 +0900</pubDate>
+    <lastBuildDate>Sat, 02 Jun 2018 14:22:00 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 Keras 튜토리얼 돌려보기</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;필자는 TensorFlow 를 활용한 딥러닝 구현은 아직까지도 직접 해본적이 없었는데&lt;br /&gt;
+Keras 가 나오고서야 딥러닝을 처음으로 직접 시도해보게 되었다.&lt;br /&gt;
+Keras 를 이용해 보고싶어 &lt;a href=&quot;https://tensorflow.rstudio.com/keras/&quot;&gt;튜토리얼&lt;/a&gt;을 빠르게 훝어본적이 있었는데&lt;br /&gt;
+그 과정을 정리한 글이다.&lt;/p&gt;
+&lt;p&gt;본글은 R에서 Keras 튜토리얼 예제를 따라해 본 것을 빠르게 정리한 글이며&lt;br /&gt;
+딥러닝에 대한 설명 및 기술은 자세히 다루지 않는다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;keras-를-r에서-설치하기&quot;&gt;Keras 를 R에서 설치하기&lt;/h2&gt;
+&lt;p&gt;R session 에서 다음 코드를 통해 설치가 가능하다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;devtools::&lt;span class=&quot;kw&quot;&gt;install_github&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;rstudio/keras&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(keras)
+&lt;span class=&quot;kw&quot;&gt;install_keras&lt;/span&gt;()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Keras 를 설치하기 위해서 rstudio 배포판 keras package 를 설치한다.&lt;br /&gt;
+이후 keras package 를 로드하고 &lt;code&gt;install_keras()&lt;/code&gt; 함수를 통해 실제로 Keras 라이브러리를 설치할 수 있다.&lt;/p&gt;
+&lt;p&gt;라이브러리를 추가로 설치하라는 요구사항이 뜨면서 설치가 중단될 경우 (본인의 경우 &lt;code&gt;python-virtualenv&lt;/code&gt; 가 없어서 중단됨)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Error: Prerequisites for installing TensorFlow not available.
+
+Execute the following at a terminal to install the prerequisites:
+
+$ sudo apt-get install python-virtualenv&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;안내 받는&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install python-virtualenv&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;등을 실행시켜 요구사항을 충족시킨 후 &lt;code&gt;install_keras()&lt;/code&gt; 를 실행해 설치를 진행하면 되겠다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;mnist-예제-수행&quot;&gt;MNIST 예제 수행&lt;/h2&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/MNIST.png&quot;&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;지도학습의 대표적인 MNIST 예제를 수행해봄으로써 Keras 의 설치가 정상적으로 되었는지, 동작은 제대로 하는지 확인해보면 좋겠다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;mnist &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;dataset_mnist&lt;/span&gt;()
+x_train &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;mnist$train$x
+y_train &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;mnist$train$y
+x_test &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;mnist$test$x
+y_test &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;mnist$test$y
+
+&lt;span class=&quot;co&quot;&gt;# reshape&lt;/span&gt;
+x_train &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;array_reshape&lt;/span&gt;(x_train, &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;nrow&lt;/span&gt;(x_train), &lt;span class=&quot;dv&quot;&gt;784&lt;/span&gt;))
+x_test &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;array_reshape&lt;/span&gt;(x_test, &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;nrow&lt;/span&gt;(x_test), &lt;span class=&quot;dv&quot;&gt;784&lt;/span&gt;))
+&lt;span class=&quot;co&quot;&gt;# rescale&lt;/span&gt;
+x_train &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;x_train /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;255&lt;/span&gt;
+x_test &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;x_test /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;255&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 코드는 MNIST 의 숫자 사진들을 학습셋과 테스트셋으로 나누고 각각 라벨링을 정리한 것으로 보면 되겠다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;y_train &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;to_categorical&lt;/span&gt;(y_train, &lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;)
+y_test &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;to_categorical&lt;/span&gt;(y_test, &lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;타겟라벨링 y 경우 맨 처음에는 각각의 그림이 무슨 숫자인지를 벡터형으로 관리했는데 더미화(One-hot encode) 하여야 한다.&lt;br /&gt;
+&lt;code&gt;to_categorical()&lt;/code&gt; 함수를 통해 10개의 카테고리로써 One-hot encoding 을 간편히 수행할 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;model &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;keras_model_sequential&lt;/span&gt;() 
+model %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;layer_dense&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;units =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;256&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;activation =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;#39;relu&amp;#39;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;input_shape =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;784&lt;/span&gt;)) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;layer_dropout&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;rate =&lt;/span&gt; &lt;span class=&quot;fl&quot;&gt;0.4&lt;/span&gt;) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;layer_dense&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;units =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;128&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;activation =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;#39;relu&amp;#39;&lt;/span&gt;) %&amp;gt;%
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;layer_dropout&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;rate =&lt;/span&gt; &lt;span class=&quot;fl&quot;&gt;0.3&lt;/span&gt;) %&amp;gt;%
+&lt;span class=&quot;st&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;layer_dense&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;units =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;activation =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;#39;softmax&amp;#39;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;모델링을 수행하기 전 모델링 방법과 레이어 구성 등의 Rule 을 적용하는 단계이다.&lt;br /&gt;
+&lt;code&gt;keras_model_sequential()&lt;/code&gt; 로 모델의 레이어를 구성하기 위한 초기 뼈대를 만들어 놓고 그 객체를 &lt;code&gt;model&lt;/code&gt; 이 가져갔다면 &lt;code&gt;layer_dense()&lt;/code&gt; 함수와 &lt;code&gt;layer_dropout()&lt;/code&gt; 등의 함수들로 레이어의 순서와 구성을 기획할 수 있다.&lt;br /&gt;
+단 &lt;code&gt;layer_dense()&lt;/code&gt;, &lt;code&gt;layer_dropout()&lt;/code&gt;, &lt;code&gt;layer_activation()&lt;/code&gt;, &lt;code&gt;layer_masking()&lt;/code&gt; 등의 함수들을 거친 keras.models.Sequential 클래스 객체는 따로 할당연산자 없이도 레이어 구성이 바로 적용되는것이 (나에게 있어선) 독특했다.&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;레이어 구성이 어떻게 되었는지 확인해 보고 싶다면 &lt;code&gt;summary(model)&lt;/code&gt; 을 실행해 보자.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;summary&lt;/span&gt;(model)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## ___________________________________________________________________________
+## Layer (type)                     Output Shape                  Param #     
+## ===========================================================================
+## dense_1 (Dense)                  (None, 256)                   200960      
+## ___________________________________________________________________________
+## dropout_1 (Dropout)              (None, 256)                   0           
+## ___________________________________________________________________________
+## dense_2 (Dense)                  (None, 128)                   32896       
+## ___________________________________________________________________________
+## dropout_2 (Dropout)              (None, 128)                   0           
+## ___________________________________________________________________________
+## dense_3 (Dense)                  (None, 10)                    1290        
+## ===========================================================================
+## Total params: 235,146
+## Trainable params: 235,146
+## Non-trainable params: 0
+## ___________________________________________________________________________&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;다음으로 &lt;code&gt;compile()&lt;/code&gt; 함수를 통해 비용함수와 최적화 방법, 최적화 평가기준을 설정할 수 있다.&lt;br /&gt;
+튜토리얼 코드상에선 아래의 방법으로 설정했는데 그외 다양한 방법이 있는지 살펴보기 위해서 &lt;code&gt;compile()&lt;/code&gt; 함수의 도움말을 살펴보았지만 큰 도움이 안되어서 당황스러웠다.&lt;br /&gt;
+이때 부터는 Keras document 를 직접 훝어보아야 할듯 하다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;model %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;compile&lt;/span&gt;(
+  &lt;span class=&quot;dt&quot;&gt;loss =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;#39;categorical_crossentropy&amp;#39;&lt;/span&gt;,
+  &lt;span class=&quot;dt&quot;&gt;optimizer =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;optimizer_rmsprop&lt;/span&gt;(),
+  &lt;span class=&quot;dt&quot;&gt;metrics =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;#39;accuracy&amp;#39;&lt;/span&gt;)
+)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;본격적으로 학습 및 평가를 해보자.&lt;/p&gt;
+&lt;p&gt;학습은 &lt;code&gt;fit()&lt;/code&gt; 함수를 통해 가능하며 8 epochs 과 128 의 batch 사이즈로 학습을 수행하는 코드이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;history &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;model %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;fit&lt;/span&gt;(
+  x_train, y_train, 
+  &lt;span class=&quot;dt&quot;&gt;epochs =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;8&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;batch_size =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;128&lt;/span&gt;, 
+  &lt;span class=&quot;dt&quot;&gt;validation_split =&lt;/span&gt; &lt;span class=&quot;fl&quot;&gt;0.2&lt;/span&gt;
+)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;loss 가 계속 줄어드면서 학습 및 최적화를 하는 과정이 8 epochs 만큼 진행 되는 로그가 출력될 것이다.&lt;br /&gt;
+약 1분이 지나면 코드수행이 끝나게 되고 &lt;code&gt;history&lt;/code&gt; 객체를 통해 학습수행과정에 대한 정보를 확인할 수 있다.&lt;br /&gt;
+plotting 을 하면 학습과정중 training set 과 validation set 기준으로 정확도와 loss 가 epoch 별로 어떻게 변화했는지를 볼 수 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(history)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/keras_tuto1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Keras 를 이용한 학습 모델이 테스트셋을 기준으로 얼마만큼 예측성능률을 가지고 잇는지 평가해 보자.&lt;br /&gt;
+평가는 &lt;code&gt;evaluate()&lt;/code&gt; 함수를 이용한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;model %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;evaluate&lt;/span&gt;(x_test, y_test)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## $loss
+## [1] 0.07817918
+## 
+## $acc
+## [1] 0.9783&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;실제로 Testset 을 모델에 입력하여 어떤 숫자를 예측하는지 보고 싶다면&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;model %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;predict_classes&lt;/span&gt;(x_test[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;, ])&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] 7 2 1 0 4 1 4 9 5 9&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;를 통해 뽑을 수 있겠다.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;물론 다른 이름의 객체로 할당시키는것도 가능했다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Sat, 02 Jun 2018 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html</guid>
+        
+        
+        <category>R</category>
+        
+        <category>MachineLearning</category>
+        
+        <category>Keras</category>
+        
+      </item>
     
       <item>
         <title>R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)</title>
@@ -917,74 +1049,6 @@ dea_res &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&
         <pubDate>Mon, 22 Jan 2018 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2018/01/22/DEA.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2018/01/22/DEA.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>변동계수의 개념과 R에서의 실습</title>
-        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;변동계수(coefficient of variation, C.V)는 평균이 크게 다른 두개 이상의 집단이 있을때&lt;br /&gt;
-각 집단의 상대적 동질성을 감안한 산포도의 척도이다.&lt;/p&gt;
-&lt;p&gt;변동계수에 대한설명을 위하여 아래 예시를 준비했다.&lt;/p&gt;
-&lt;p&gt;3개의 샘플에 대한 물 용량을 측정한 예시가 있다.&lt;br /&gt;
-이 3개의 샘플을 두 사람이 측정해 보고했다고 치자.&lt;br /&gt;
-그런데 측정 단위에 대한 언급이 따로 없어 한사람은 리터 단위로, 한사람은 밀리리터 단위로 조사를 했다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;l &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;54&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;50&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;52&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# 물 리터단위(L)측정&lt;/span&gt;
-ml &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;54017&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;49980&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;52003&lt;/span&gt;) &lt;span class=&quot;co&quot;&gt;# 물 밀리리터단위(mL)측정&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(l)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 52&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(ml)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 52000&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(l)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 2&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(ml)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 2018.502&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;분명 같은 집단을 두 조사자는 조사했지만 측정단위의 차이로 인해 평균과 표준편차가 확연히 다르므로&lt;br /&gt;
-이 내막을 모르는 사람에게는, 그리고 샘플의 개수가 인지하기 힘들정도로 많았을 때&lt;br /&gt;
-두 집단이 다른것으로 대강 판단할 위험이 있다.&lt;/p&gt;
-&lt;p&gt;리터단위로 측정시 표준편차는 2, 평균은 52로 계산되고&lt;br /&gt;
-밀리리터단위로 측정시 표준편차와 평균은 리터단위로 계산한 표준편차보다 1000배 정도 높히 계산된다.&lt;/p&gt;
-&lt;p&gt;여기서 단위의 차이로 생겨버린 이 1000배를 보정하는것이 변동계수의 기능이라고 볼 수 있는데&lt;br /&gt;
-변동계수는 표준편차를 평균으로 나누는것으로 간단히 계산된다.&lt;br /&gt;
-결과적으로 단위와 무관하게 계산되어 다른단위로 측정된 자료들의 산포를 비교할때 표준편차보다 유용한 지표가 된다.&lt;br /&gt;
-이러한 점에서 변동계수를 상대표준편차(relative standard deviation, RSD)라고도 부른다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(l) /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(l) &lt;span class=&quot;co&quot;&gt;# 리터단위 측정 샘플에 대한 변동계수&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.03846154&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(ml) /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(ml) &lt;span class=&quot;co&quot;&gt;# 밀리리터단위 측정 샘플에 대한 변동계수&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.03881734&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;직접 계산해 보면 거의 비슷한 값으로 계산된다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;other-example&quot;&gt;other example&lt;/h2&gt;
-&lt;p&gt;어떠한 백분율 값을 측정한 것으로 보이는 두 그룹이 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;group1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;86&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;85&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;92&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;89&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;83&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;90&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;88&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;91&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;79&lt;/span&gt;,   &lt;span class=&quot;dv&quot;&gt;83&lt;/span&gt;)
-group2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;fl&quot;&gt;0.88&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.91&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.94&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.84&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.97&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.89&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.99&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.88&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.89&lt;/span&gt;, &lt;span class=&quot;fl&quot;&gt;0.96&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;group1&lt;/code&gt; 은 100을 곱한 백분율의 상태 &lt;code&gt;group2&lt;/code&gt; 는 0~1 범위의 백분율 상태이다.&lt;br /&gt;
-실제로 위와 같은 예는 조사자의 취향에 따라 단위가 통일되지 못하는 사례로 많다.&lt;/p&gt;
-&lt;p&gt;당연히 이 둘의 데이터 산포도를 측정하고자&lt;br /&gt;
-표준편차를 구하게 될 때 &lt;code&gt;group1&lt;/code&gt; 의 표준편차가 작을것이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(group1)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 4.141927&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(group2)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.04790036&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;산포도의 공평한 비교가 될 수 없기에&lt;br /&gt;
-&lt;code&gt;group2&lt;/code&gt; 자료에 100을 곱한 후 표준편차를 다시 구하거나&lt;br /&gt;
-반대로 &lt;code&gt;group1&lt;/code&gt; 자료에 100을 나누어 표준편차를 구하게 될 것이다.&lt;br /&gt;
-하지만 이는 급한마음에 거치는 긁어 부스럼 같은 절차이며&lt;br /&gt;
-원 데이터를 보존하지 못하는 방법이므로 상황에 따라 위험성이 있을 것이다.&lt;br /&gt;
-이때 변동계수를 이용하는것이 좋을것이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(group1) /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(group1)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.04782825&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;sd&lt;/span&gt;(group2) /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;mean&lt;/span&gt;(group2)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.05235012&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;변동계수를 구한결과 &lt;code&gt;group2&lt;/code&gt; 이 &lt;code&gt;group1&lt;/code&gt; 보다 변동계수가 더 컸다.&lt;br /&gt;
-즉 상대적으로 &lt;code&gt;group2&lt;/code&gt; 의 퍼짐정도가 &lt;code&gt;group1&lt;/code&gt; 보다 크다는 결론을 낼 수 있다.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 14 Jan 2018 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2018/01/14/CV.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2018/01/14/CV.html</guid>
         
         
         <category>R</category>
