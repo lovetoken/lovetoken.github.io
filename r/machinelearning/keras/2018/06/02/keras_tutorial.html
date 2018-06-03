@@ -141,7 +141,7 @@ Keras 가 나오고서야 딥러닝을 처음으로 직접 시도해보게 되�
 Keras 를 이용해 보고싶어 <a href="https://tensorflow.rstudio.com/keras/">튜토리얼</a>을 빠르게 훝어본적이 있었는데<br />
 그 과정을 정리한 글이다.</p>
 <p>본글은 R에서 Keras 튜토리얼 예제를 따라해 본 것을 빠르게 정리한 글이며<br />
-딥러닝에 대한 설명 및 기술은 자세히 다루지 않는다.</p>
+딥러닝에 대한 이론적인 설명, 기술은 자세히 하지 않는다.</p>
 <p><br><br></p>
 <h2 id="keras-를-r에서-설치하기">Keras 를 R에서 설치하기</h2>
 <p>R session 에서 다음 코드를 통해 설치가 가능하다.</p>
@@ -160,7 +160,7 @@ $ sudo apt-get install python-virtualenv</code></pre>
 <pre><code>$ sudo apt-get install python-virtualenv</code></pre>
 <p>등을 실행시켜 요구사항을 충족시킨 후 <code>install_keras()</code> 를 실행해 설치를 진행하면 되겠다.</p>
 <p><br><br></p>
-<h2 id="mnist-예제-수행">MNIST 예제 수행</h2>
+<h2 id="mnist-튜토리얼-예제-수행">MNIST 튜토리얼 예제 수행</h2>
 <br><br>
 <center>
 <img src="/assets/MNIST.png">
@@ -199,15 +199,15 @@ model %&gt;%<span class="st"> </span>
 <pre><code>## ___________________________________________________________________________
 ## Layer (type)                     Output Shape                  Param #     
 ## ===========================================================================
-## dense_1 (Dense)                  (None, 256)                   200960      
+## dense_7 (Dense)                  (None, 256)                   200960      
 ## ___________________________________________________________________________
-## dropout_1 (Dropout)              (None, 256)                   0           
+## dropout_5 (Dropout)              (None, 256)                   0           
 ## ___________________________________________________________________________
-## dense_2 (Dense)                  (None, 128)                   32896       
+## dense_8 (Dense)                  (None, 128)                   32896       
 ## ___________________________________________________________________________
-## dropout_2 (Dropout)              (None, 128)                   0           
+## dropout_6 (Dropout)              (None, 128)                   0           
 ## ___________________________________________________________________________
-## dense_3 (Dense)                  (None, 10)                    1290        
+## dense_9 (Dense)                  (None, 10)                    1290        
 ## ===========================================================================
 ## Total params: 235,146
 ## Trainable params: 235,146
@@ -217,9 +217,9 @@ model %&gt;%<span class="st"> </span>
 튜토리얼 코드상에선 아래의 방법으로 설정했는데 그외 다양한 방법이 있는지 살펴보기 위해서 <code>compile()</code> 함수의 도움말을 살펴보았지만 큰 도움이 안되어서 당황스러웠다.<br />
 이때 부터는 Keras document 를 직접 훝어보아야 할듯 하다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model %&gt;%<span class="st"> </span><span class="kw">compile</span>(
-  <span class="dt">loss =</span> <span class="st">&#39;categorical_crossentropy&#39;</span>,
+  <span class="dt">loss =</span> <span class="st">&quot;categorical_crossentropy&quot;</span>,
   <span class="dt">optimizer =</span> <span class="kw">optimizer_rmsprop</span>(),
-  <span class="dt">metrics =</span> <span class="kw">c</span>(<span class="st">&#39;accuracy&#39;</span>)
+  <span class="dt">metrics =</span> <span class="kw">c</span>(<span class="st">&quot;accuracy&quot;</span>)
 )</code></pre></div>
 <p>본격적으로 학습 및 평가를 해보자.</p>
 <p>학습은 <code>fit()</code> 함수를 통해 가능하며 8 epochs 과 128 의 batch 사이즈로 학습을 수행하는 코드이다.</p>
@@ -237,14 +237,21 @@ plotting 을 하면 학습과정중 training set 과 validation set 기준으로
 평가는 <code>evaluate()</code> 함수를 이용한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model %&gt;%<span class="st"> </span><span class="kw">evaluate</span>(x_test, y_test)</code></pre></div>
 <pre><code>## $loss
-## [1] 0.07817918
+## [1] 0.08196825
 ## 
 ## $acc
-## [1] 0.9783</code></pre>
-<p>실제로 Testset 을 모델에 입력하여 어떤 숫자를 예측하는지 보고 싶다면</p>
+## [1] 0.9788</code></pre>
+<p>테스트셋에 대한 예측정확도가 97.88% 가 나온것을 볼 수 있다.<br />
+실제로 Testset 을 모델에 입력하여 어떤 숫자를 예측하는지 보고 싶다면</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model %&gt;%<span class="st"> </span><span class="kw">predict_classes</span>(x_test[<span class="dv">1</span>:<span class="dv">10</span>, ])</code></pre></div>
 <pre><code>##  [1] 7 2 1 0 4 1 4 9 5 9</code></pre>
 <p>를 통해 뽑을 수 있겠다.</p>
+<p><br><br></p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://keras.rstudio.com/">R interface to Keras</a></li>
+<li><a href="https://tensorflow.rstudio.com/keras/">R interface to Keras (TensorFlow)</a></li>
+</ul>
 <section class="footnotes">
 <hr />
 <ol>

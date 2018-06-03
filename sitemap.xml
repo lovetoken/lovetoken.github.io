@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 02 Jun 2018 14:22:00 +0900</pubDate>
-    <lastBuildDate>Sat, 02 Jun 2018 14:22:00 +0900</lastBuildDate>
+    <pubDate>Sun, 03 Jun 2018 22:32:02 +0900</pubDate>
+    <lastBuildDate>Sun, 03 Jun 2018 22:32:02 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -17,7 +17,7 @@ Keras 가 나오고서야 딥러닝을 처음으로 직접 시도해보게 되�
 Keras 를 이용해 보고싶어 &lt;a href=&quot;https://tensorflow.rstudio.com/keras/&quot;&gt;튜토리얼&lt;/a&gt;을 빠르게 훝어본적이 있었는데&lt;br /&gt;
 그 과정을 정리한 글이다.&lt;/p&gt;
 &lt;p&gt;본글은 R에서 Keras 튜토리얼 예제를 따라해 본 것을 빠르게 정리한 글이며&lt;br /&gt;
-딥러닝에 대한 설명 및 기술은 자세히 다루지 않는다.&lt;/p&gt;
+딥러닝에 대한 이론적인 설명, 기술은 자세히 하지 않는다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;keras-를-r에서-설치하기&quot;&gt;Keras 를 R에서 설치하기&lt;/h2&gt;
 &lt;p&gt;R session 에서 다음 코드를 통해 설치가 가능하다.&lt;/p&gt;
@@ -36,7 +36,7 @@ $ sudo apt-get install python-virtualenv&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;$ sudo apt-get install python-virtualenv&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;등을 실행시켜 요구사항을 충족시킨 후 &lt;code&gt;install_keras()&lt;/code&gt; 를 실행해 설치를 진행하면 되겠다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;mnist-예제-수행&quot;&gt;MNIST 예제 수행&lt;/h2&gt;
+&lt;h2 id=&quot;mnist-튜토리얼-예제-수행&quot;&gt;MNIST 튜토리얼 예제 수행&lt;/h2&gt;
 &lt;br&gt;&lt;br&gt;
 &lt;center&gt;
 &lt;img src=&quot;/assets/MNIST.png&quot;&gt;
@@ -75,15 +75,15 @@ model %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
 &lt;pre&gt;&lt;code&gt;## ___________________________________________________________________________
 ## Layer (type)                     Output Shape                  Param #     
 ## ===========================================================================
-## dense_1 (Dense)                  (None, 256)                   200960      
+## dense_7 (Dense)                  (None, 256)                   200960      
 ## ___________________________________________________________________________
-## dropout_1 (Dropout)              (None, 256)                   0           
+## dropout_5 (Dropout)              (None, 256)                   0           
 ## ___________________________________________________________________________
-## dense_2 (Dense)                  (None, 128)                   32896       
+## dense_8 (Dense)                  (None, 128)                   32896       
 ## ___________________________________________________________________________
-## dropout_2 (Dropout)              (None, 128)                   0           
+## dropout_6 (Dropout)              (None, 128)                   0           
 ## ___________________________________________________________________________
-## dense_3 (Dense)                  (None, 10)                    1290        
+## dense_9 (Dense)                  (None, 10)                    1290        
 ## ===========================================================================
 ## Total params: 235,146
 ## Trainable params: 235,146
@@ -93,9 +93,9 @@ model %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
 튜토리얼 코드상에선 아래의 방법으로 설정했는데 그외 다양한 방법이 있는지 살펴보기 위해서 &lt;code&gt;compile()&lt;/code&gt; 함수의 도움말을 살펴보았지만 큰 도움이 안되어서 당황스러웠다.&lt;br /&gt;
 이때 부터는 Keras document 를 직접 훝어보아야 할듯 하다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;model %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;compile&lt;/span&gt;(
-  &lt;span class=&quot;dt&quot;&gt;loss =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;#39;categorical_crossentropy&amp;#39;&lt;/span&gt;,
+  &lt;span class=&quot;dt&quot;&gt;loss =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;categorical_crossentropy&amp;quot;&lt;/span&gt;,
   &lt;span class=&quot;dt&quot;&gt;optimizer =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;optimizer_rmsprop&lt;/span&gt;(),
-  &lt;span class=&quot;dt&quot;&gt;metrics =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;#39;accuracy&amp;#39;&lt;/span&gt;)
+  &lt;span class=&quot;dt&quot;&gt;metrics =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;accuracy&amp;quot;&lt;/span&gt;)
 )&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;본격적으로 학습 및 평가를 해보자.&lt;/p&gt;
 &lt;p&gt;학습은 &lt;code&gt;fit()&lt;/code&gt; 함수를 통해 가능하며 8 epochs 과 128 의 batch 사이즈로 학습을 수행하는 코드이다.&lt;/p&gt;
@@ -113,14 +113,21 @@ plotting 을 하면 학습과정중 training set 과 validation set 기준으로
 평가는 &lt;code&gt;evaluate()&lt;/code&gt; 함수를 이용한다.&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;model %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;evaluate&lt;/span&gt;(x_test, y_test)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;## $loss
-## [1] 0.07817918
+## [1] 0.08196825
 ## 
 ## $acc
-## [1] 0.9783&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;실제로 Testset 을 모델에 입력하여 어떤 숫자를 예측하는지 보고 싶다면&lt;/p&gt;
+## [1] 0.9788&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;테스트셋에 대한 예측정확도가 97.88% 가 나온것을 볼 수 있다.&lt;br /&gt;
+실제로 Testset 을 모델에 입력하여 어떤 숫자를 예측하는지 보고 싶다면&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;model %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;predict_classes&lt;/span&gt;(x_test[&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;, ])&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;pre&gt;&lt;code&gt;##  [1] 7 2 1 0 4 1 4 9 5 9&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;를 통해 뽑을 수 있겠다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://keras.rstudio.com/&quot;&gt;R interface to Keras&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://tensorflow.rstudio.com/keras/&quot;&gt;R interface to Keras (TensorFlow)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;section class=&quot;footnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
