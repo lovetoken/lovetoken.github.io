@@ -168,6 +168,23 @@ $ sudo apt-get install python-virtualenv</code></pre>
 </center>
 <p><br><br></p>
 <p>지도학습의 대표적인 MNIST 예제를 수행해봄으로써 Keras 의 설치가 정상적으로 되었는지, 동작은 제대로 하는지 확인해보면 좋겠다.</p>
+<p>Keras 를 쓰기전에 코딩과정은 보통 아래의 레파토리를 거치며 진행된다.</p>
+<br><br>
+<center>
+<img src="/assets/keras_tuto.png">
+</center>
+<p><br><br></p>
+<p>진행할 튜토리얼도</p>
+<ol type="1">
+<li>모델 정의</li>
+<li>모델 형태 사전설정</li>
+<li>모델 적합</li>
+<li>모델 평가</li>
+<li>모델을 통한 예측</li>
+</ol>
+<p>이 과정이 모두 담겨있다고 볼 수 있다.</p>
+<p>튜토리얼을 시작해보자.<br />
+우선 MNIST 데이터셋을 준비한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mnist &lt;-<span class="st"> </span><span class="kw">dataset_mnist</span>()
 x_train &lt;-<span class="st"> </span>mnist$train$x
 y_train &lt;-<span class="st"> </span>mnist$train$y
