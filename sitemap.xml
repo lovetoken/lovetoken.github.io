@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 03 Jun 2018 22:51:45 +0900</pubDate>
-    <lastBuildDate>Sun, 03 Jun 2018 22:51:45 +0900</lastBuildDate>
+    <pubDate>Wed, 11 Jul 2018 16:14:16 +0900</pubDate>
+    <lastBuildDate>Wed, 11 Jul 2018 16:14:16 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -1499,6 +1499,11 @@ Windows 환경에선 결과적으로 &lt;code&gt;read.csv()&lt;/code&gt; 함수�
 &lt;h2 id=&quot;맺음말&quot;&gt;맺음말&lt;/h2&gt;
 &lt;p&gt;본 글은 &lt;code&gt;read.csv()&lt;/code&gt; 함수에서 예시로 들었지만 외부 텍스트형 데이터를 읽어들이는 방법은 이 함수 말고도 다양하다.&lt;br /&gt;
 필자는 csv 포맷 파일을 읽어들일 때 &lt;code&gt;data.table::fread()&lt;/code&gt;, &lt;code&gt;readr::read_csv()&lt;/code&gt; 등의 함수를 즐겨쓰는 편인데, 이 때도 마찬가지로 &lt;code&gt;guess_encoding()&lt;/code&gt; 함수를 이용해 인코딩 형을 신경쓰지 않고 최대한 분석에 집중하고 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://statkclee.github.io/ds-authoring/regex-encoding.html&quot;&gt;데이터 과학을 위한 저작도구 - R 유니코드, 인코딩&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Sat, 07 Oct 2017 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2017/10/07/guessEncoding.html</link>
