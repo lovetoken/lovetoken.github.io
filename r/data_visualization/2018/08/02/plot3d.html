@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)" />
-        <meta name="keywords" content="R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package), , R, Data_Visualization" />
+        <meta name="description" content="R에서 plot3d()함수를 이용한 3차원 산점도 만들기" />
+        <meta name="keywords" content="R에서 plot3d()함수를 이용한 3차원 산점도 만들기, , R, Data_Visualization" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)" property="og:title">
+          <meta content="R에서 plot3d()함수를 이용한 3차원 산점도 만들기" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html" property="og:url">
+          <meta content="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html" property="og:url">
         
         
-          <meta content="2018-04-24T00:00:00+09:00" property="article:published_time">
+          <meta content="2018-08-02T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)">
+          <meta name="twitter:title" content="R에서 plot3d()함수를 이용한 3차원 산점도 만들기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,8 +126,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)</h1>
-<span class="time">24 Apr 2018</span>
+                <h1>R에서 plot3d()함수를 이용한 3차원 산점도 만들기</h1>
+<span class="time">02 Aug 2018</span>
 
 <span class="categories">
     &raquo; <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>
@@ -136,88 +136,35 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>통계학과 대학원 수업 때 미분가능한 연속 함수에 대해서 해를 찾는 방법들을 공부한 적이 있다.<br />
-해를 찾아가는 과정들이 알고리즘 방법별로 특색이 있었는데, 원리를 알아가면 알아갈 수록 재미있기도 한 부분이었다.<br />
-특히 통계학 수업에선 1학년 학부때 부터 MLE(Maximum Likelihood Estimator) 라는 추정량의 특성을 중요하게 살펴본다.<br />
-극대값을 알아내기 위하여 1차 도함수에 해를 찾아내기 위한 훈련을 하면서도 나는 과연 이를 실전에 어떻게 적용할 것인가의 고민을 병행했고, 결과론적으로 프로그래밍을 어떻게 해야하는지 추가적인 고민을 더했던 때가 기억이 난다.</p>
-<p>학생을 벗어나 지금은 빅데이터 프로젝트에서 언제한번 이런 해를 찾는 과제를 수행해 볼지 살짝 의문이 들기는 한다.<br />
-하지만 빅데이터 프로젝트의 최종 목적지 앞 팔부능선 쯤에는 최적화 문제를 직면하는 분들도 보였고,<br />
-서비스가 안정화 되는 시점에서 모델과 추가 실데이터에 대한 2차 타당성 검증이 필요 할 때 역시 최적화가 잘 되었는지의 확인하는 문제로 수렴한다는 생각이 문득 든다.<br />
-이런 근사해를 찾는 이론을 바탕으로 근간한 아이디어를 최적화 관점에서 언제 어디선가 써먹을 일이 있지 않을까 싶다.<br />
-그런 의미로 대학원 때 배운 Newton Raphson Method 의 시뮬레이션을 회고해 본다.</p>
-<p>그냥 회고해 보면 약간 심심하니 R의 ggplot2 와 gganimate 패키지를 학습할 겸 곁들여 시뮬레이션을 생동감있게 해보고자 한다.</p>
+<p>다변량 데이터에 대해서 변수와 변수간 관계를 확인하고 설명하고 싶은 분들을 위해<br />
+그 관계성을 간편하고 직관적으로 도울 수 있는 도구들이 필요해 지고 있다.<br />
+특히 변수와 변수간 관계는 주관심 대상의 변수가 많아지면 많아질수록 확인해 보고 규명해야할 케이스도 많아지는데<br />
+이를 시각화 할때 2차원 산점도 에서는 그 많은 케이스를 확인하는데 피로도가 생길 수 있다.<br />
+이보다 한차원 높은 3차원 산점도는 그 케이스를 조금은 줄일 수 있는 방법이기도 하고<br />
+R에서 rgl 패키지를 통해 어려움 없이 구현할 수 있다.<br />
+rgl package 의 <code>plot3d()</code> 함수를 소개해 본다.</p>
 <p><br><br></p>
-<h2 id="newton-raphson-method">Newton Raphson method</h2>
-<p>Newton Raphson method 는 평균값 정리(mean value theorem) 혹은 테일러 근사(taylor approximation)를 근간으로 근사치를 반복하여 업데이트 하는 개념을 이용한다.</p>
-<p><img src="/assets/netwon_raphson_0.png" style="display: block; margin: auto;" /></p>
-<p>여기서 <span class="math inline"><em>x</em><sub><em>n</em></sub></span> 의 n을 계속 증가시켜 가다 보면 수렴하게 되는데 <span class="math inline"><em>x</em><sub>∞</sub></span> 을 <span class="math inline"><em>f</em>(<em>x</em>)=0</span> 의 해로 판단한다.<br />
-단 무한대로 반복할 순 없기 때문에 정지조건을 부여한다.</p>
-<p>이 Newton Raphson method 를 구현한 R code 는 아래와 같다.</p>
-<blockquote>
-<p><a href="https://www.academia.edu/7031789/Newton-Raphson_Method_in_R">Newton Raphson Method in R</a> 글을 참조함</p>
-</blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">newton &lt;-<span class="st"> </span>function(fun, <span class="dt">tol =</span> <span class="fl">1e-7</span>, <span class="dt">x0 =</span> <span class="dv">1</span>, <span class="dt">N =</span> <span class="dv">300</span>){
-  h &lt;-<span class="st"> </span><span class="fl">1e-7</span>
-  i &lt;-<span class="st"> </span><span class="dv">1</span>
-  x1 &lt;-<span class="st"> </span>x0
-  p &lt;-<span class="st"> </span><span class="kw">numeric</span>(N)
-  while(i &lt;=<span class="st"> </span>N){
-    df.dx &lt;-<span class="st"> </span>(<span class="kw">fun</span>(x0 +<span class="st"> </span>h) -<span class="st"> </span><span class="kw">fun</span>(x0)) /<span class="st"> </span>h
-    x1 &lt;-<span class="st"> </span>(x0 -<span class="st"> </span>(<span class="kw">fun</span>(x0) /<span class="st"> </span>df.dx))
-    p[i] &lt;-<span class="st"> </span>x1
-    i =<span class="st"> </span>i<span class="dv">+1</span>
-    if(<span class="kw">abs</span>(x1 -<span class="st"> </span>x0) &lt;<span class="st"> </span>tol) break
-    x0 =<span class="st"> </span>x1
-  }
-  <span class="kw">return</span>(p[<span class="dv">1</span>:(i -<span class="st"> </span><span class="dv">1</span>)])
-}</code></pre></div>
-<p>정의된 <code>newton()</code> 함수를 이용해 <span class="math inline"><em>f</em>(<em>x</em>)=<em>x</em><sup>3</sup> + 2</span> 함수의 <span class="math inline"><em>f</em>(<em>x</em>)=0</span> 의 해를 초기값 2 에서 찾기 시작하면</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fun &lt;-<span class="st"> </span>function(x) x^<span class="dv">3+2</span>
-<span class="kw">newton</span>(fun, <span class="dt">x0 =</span> <span class="dv">2</span>)</code></pre></div>
-<pre><code>##  [1]  1.166667  0.287982 -7.846566 -5.241872 -3.518844 -2.399736 -1.715590
-##  [8] -1.370234 -1.268564 -1.259980 -1.259921 -1.259921</code></pre>
-<p>이렇게 된다.<br />
-<code>tol</code> 값 보다 현시차와 이전시차값의 절대값 차이가 적을 때 정지조건에 의해서 멈추는데<br />
-멈추고 나서의 마지막 값이 <code>-1.259921</code> 이며 Newton Raphson method 는 이 값을 <span class="math inline"><em>x</em><sup>3</sup> + 2 = 0</span> 의 해로 계산한다.</p>
-<p>ggplot2 로 <span class="math inline"><em>y</em> = <em>x</em><sup>3</sup> + 2</span> 함수의 그래프를 그린 후 이터레이션 별로 어디에 수렴해 가는지 시각화 해보면 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(-<span class="dv">2</span>, <span class="dv">2</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> x)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> fun, <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>)
-
-d &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">label =</span> <span class="dv">1</span>:<span class="kw">length</span>(<span class="kw">newton</span>(fun, <span class="dt">x0 =</span> <span class="dv">2</span>)), 
-                <span class="dt">x =</span> <span class="kw">newton</span>(fun, <span class="dt">x0 =</span> <span class="dv">2</span>), 
-                <span class="dt">y =</span> <span class="kw">fun</span>(<span class="kw">newton</span>(fun, <span class="dt">x0 =</span> <span class="dv">2</span>)))
-
-p2 &lt;-<span class="st"> </span>p +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> d, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">frame =</span> label)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> d, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y +<span class="st"> </span><span class="dv">20</span>, <span class="dt">label =</span> label, <span class="dt">frame =</span> label), <span class="dt">size =</span> <span class="dv">3</span>)
-
-p2</code></pre></div>
-<p><img src="/assets/netwon_raphson_1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>총 12번의 반복을 통해 <span class="math inline"><em>x</em> = −1.259921</span> 에 가까워 지는것을 볼 수 있다.</p>
-<p><br><br></p>
-<h2 id="ggplot2-에-gganimate-패키지-조합하여-시뮬레이션-시각화-하기">ggplot2 에 gganimate 패키지 조합하여 시뮬레이션 시각화 하기</h2>
-<p>(개발단계로써 CRAN 에 등록되지 않은) <a href="https://github.com/dgrtwo/gganimate">gganimate package</a>는<br />
-ggplot2 결과물을 프레임별로 만들어 에니메이션 그림파일을 만들어주는 재미있는 R package 이다.<br />
-ggplot2 문법규칙을 그대로 이용하는데 에스테틱에 <code>frame</code> 인자를 지정하기만 하면 된다.</p>
-<p>gganimate package 설치는 <code>install_github()</code> 를 이용한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;dgrtwo/gganimate&quot;</span>)
-<span class="kw">library</span>(gganimate)</code></pre></div>
-<p>그리고 위에서 시각화한 <code>p2</code> 를 재활용 한다.<br />
-<code>gganimate()</code> 함수에 우선 입력해 보면</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">gganimate</span>(p2)</code></pre></div>
+<h2 id="plot3d"><code>plot3d()</code></h2>
+<p><code>plot()</code> 함수에선 <code>plot(x, y)</code> 이었다면<br />
+<code>plot3d()</code> 함수에선 <code>plot3d(x, y, z)</code> 으로 주관심대상 변수 하나를 더 추가하면 된다.</p>
+<p><code>plot3d()</code> 를 이용하기 위해 rgl 패키지를 로드한다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgl)</code></pre></div>
+<p>아래 코드는 <code>plot3d()</code> 의 대표 예제 코드이다.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">rnorm</span>(<span class="dv">1000</span>))
+y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>)
+z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>) +<span class="st"> </span><span class="kw">atan2</span>(x,y)
+<span class="kw">plot3d</span>(x, y, z, <span class="dt">col=</span><span class="kw">rainbow</span>(<span class="dv">1000</span>))</code></pre></div>
+<p>3차원 산점도를 출력시키는 <code>plot3d()</code> 함수는 특수한 엔진을 사용하기 때문에<br />
+시각화 결과물이 (가령 Rstudio 의 경우 Plots창에 뜨지 않고) 새로운 창에 별도로 출력된다.</p>
 <br>
 <center>
-<img src="/assets/netwon_raphson_gif.gif">
+<iframe width="95%" height="420" src="https://www.youtube.com/embed/oPszzgu00Uw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+</iframe>
 </center>
 <p><br></p>
-<p>애니메이션 gif 가 잘 출력되는데 <code>p2</code> 에 실은 frame 에스테틱을 미리 선언했기 때문이다.<br />
-입력될 ggplot 객체에 frame 에스테틱이 없을 경우 <code>gganimate(p2)</code> 은 에러를 내며 수행되지 않는다.</p>
-<pre><code>Error in gganimate(p2) : 
-  No frame aesthetic found; cannot create animation</code></pre>
-<p><code>?gganimate()</code> 를 실행해 다양한 옵션과 예제코드를 살펴보면 좋을 것이다.<br />
-gganimate package 에는 <code>saveVideo()</code>, <code>saveGIF()</code> 함수가 <code>gganimate()</code> 함수에 연루되어 있으며,<br />
-비디오 파일을 만들거나 에니메이션 gif 파일을 만들 때 <a href="http://ffmpeg.org/documentation.html">ffmpeg</a> 를 이용한 다양한 옵션들을 부여할 수 있음을 확인할 수 있을것이다.</p>
+<p>직접실행해 보면 새로운 팝업창이 뜨고(open3d)<br />
+이 안에서 3D산점도가 출력되며, 사용자가 직접 움직여 볼 수 있다.<br />
+또한 휠을 움직이면 줌인과 줌아웃도 된다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -231,7 +178,7 @@ gganimate package 에는 <code>saveVideo()</code>, <code>saveGIF()</code> 함수
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -249,20 +196,6 @@ gganimate package 에는 <code>saveVideo()</code>, <code>saveGIF()</code> 함수
     
         
             
-                
-                <div class="panel-body">
-                <h4>Related Posts</h4>
-                <ul>
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
-                    
-                </li>
-                
-                
-            
         
             
         
@@ -278,6 +211,10 @@ gganimate package 에는 <code>saveVideo()</code>, <code>saveGIF()</code> 함수
     
         
             
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
                 
                 <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
@@ -308,6 +245,16 @@ gganimate package 에는 <code>saveVideo()</code>, <code>saveGIF()</code> 함수
     
     
         
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html">R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)</a>
+                    
+                        (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
+                    
+                </li>
+                
+                
             
         
             
@@ -940,10 +887,8 @@ gganimate package 에는 <code>saveVideo()</code>, <code>saveGIF()</code> 함수
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/docker/mac/opensource_tool/2018/04/22/docker_CM.html">&laquo; Docker 를 통해 Cloudera Manager 띄워보기</a>
+    <a class="prev" href="/r/machinelearning/keras/2018/06/02/keras_tutorial.html">&laquo; R에서 Keras 튜토리얼 돌려보기</a>
   
-  
-    <a class="next" href="/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기 &raquo;</a>
   
 </div>
 
@@ -954,8 +899,8 @@ gganimate package 에는 <code>saveVideo()</code>, <code>saveGIF()</code> 함수
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)";
-        var disqus_title = "R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)";
+        var disqus_identifier = "https://lovetoken.github.io_R에서 plot3d()함수를 이용한 3차원 산점도 만들기";
+        var disqus_title = "R에서 plot3d()함수를 이용한 3차원 산점도 만들기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

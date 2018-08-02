@@ -5,9 +5,53 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 11 Jul 2018 16:14:16 +0900</pubDate>
-    <lastBuildDate>Wed, 11 Jul 2018 16:14:16 +0900</lastBuildDate>
+    <pubDate>Thu, 02 Aug 2018 19:54:23 +0900</pubDate>
+    <lastBuildDate>Thu, 02 Aug 2018 19:54:23 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 plot3d()함수를 이용한 3차원 산점도 만들기</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;다변량 데이터에 대해서 변수와 변수간 관계를 확인하고 설명하고 싶은 분들을 위해&lt;br /&gt;
+그 관계성을 간편하고 직관적으로 도울 수 있는 도구들이 필요해 지고 있다.&lt;br /&gt;
+특히 변수와 변수간 관계는 주관심 대상의 변수가 많아지면 많아질수록 확인해 보고 규명해야할 케이스도 많아지는데&lt;br /&gt;
+이를 시각화 할때 2차원 산점도 에서는 그 많은 케이스를 확인하는데 피로도가 생길 수 있다.&lt;br /&gt;
+이보다 한차원 높은 3차원 산점도는 그 케이스를 조금은 줄일 수 있는 방법이기도 하고&lt;br /&gt;
+R에서 rgl 패키지를 통해 어려움 없이 구현할 수 있다.&lt;br /&gt;
+rgl package 의 &lt;code&gt;plot3d()&lt;/code&gt; 함수를 소개해 본다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;plot3d&quot;&gt;&lt;code&gt;plot3d()&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;plot()&lt;/code&gt; 함수에선 &lt;code&gt;plot(x, y)&lt;/code&gt; 이었다면&lt;br /&gt;
+&lt;code&gt;plot3d()&lt;/code&gt; 함수에선 &lt;code&gt;plot3d(x, y, z)&lt;/code&gt; 으로 주관심대상 변수 하나를 더 추가하면 된다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;plot3d()&lt;/code&gt; 를 이용하기 위해 rgl 패키지를 로드한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(rgl)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;아래 코드는 &lt;code&gt;plot3d()&lt;/code&gt; 의 대표 예제 코드이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;x &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;sort&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;rnorm&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;))
+y &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;rnorm&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;)
+z &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;rnorm&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;atan2&lt;/span&gt;(x,y)
+&lt;span class=&quot;kw&quot;&gt;plot3d&lt;/span&gt;(x, y, z, &lt;span class=&quot;dt&quot;&gt;col=&lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;rainbow&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1000&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;3차원 산점도를 출력시키는 &lt;code&gt;plot3d()&lt;/code&gt; 함수는 특수한 엔진을 사용하기 때문에&lt;br /&gt;
+시각화 결과물이 (가령 Rstudio 의 경우 Plots창에 뜨지 않고) 새로운 창에 별도로 출력된다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;iframe width=&quot;95%&quot; height=&quot;420&quot; src=&quot;https://www.youtube.com/embed/oPszzgu00Uw&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;직접실행해 보면 새로운 팝업창이 뜨고(open3d)&lt;br /&gt;
+이 안에서 3D산점도가 출력되며, 사용자가 직접 움직여 볼 수 있다.&lt;br /&gt;
+또한 휠을 움직이면 줌인과 줌아웃도 된다.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 02 Aug 2018 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html</guid>
+        
+        
+        <category>R</category>
+        
+        <category>Data_Visualization</category>
+        
+      </item>
     
       <item>
         <title>R에서 Keras 튜토리얼 돌려보기</title>
