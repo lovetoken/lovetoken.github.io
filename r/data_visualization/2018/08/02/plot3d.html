@@ -139,15 +139,21 @@
 <p>다변량 데이터에 대해서 변수와 변수간 관계를 확인하고 설명하고 싶은 분들을 위해<br />
 그 관계성을 간편하고 직관적으로 도울 수 있는 도구들이 필요해 지고 있다.<br />
 특히 변수와 변수간 관계는 주관심 대상의 변수가 많아지면 많아질수록 확인해 보고 규명해야할 케이스도 많아지는데<br />
-이를 시각화 할때 2차원 산점도 에서는 그 많은 케이스를 확인하는데 피로도가 생길 수 있다.<br />
-이보다 한차원 높은 3차원 산점도는 그 케이스를 조금은 줄일 수 있는 방법이기도 하고<br />
-R에서 rgl 패키지를 통해 어려움 없이 구현할 수 있다.<br />
+이를 시각화 할때 2차원 산점도 에서는 그 많은 케이스를 확인하는데는 쉽게 피로해 질 수 있다.</p>
+<blockquote>
+<p>너무많아...</p>
+</blockquote>
+<center>
+<img src="/assets/plot3d_1.png">
+</center>
+<p><br></p>
+<p>2차원 산점도 보다 한차원 높은 3차원 산점도는 주관심 대상 변수간 관계를 확인하기 위한 선택폭이 하나가 많고<br />
+조금 더 집중도있게 확인할 수 있는 장점이 있는 것 같다.<br />
+R에서는 rgl 패키지를 통해 3차원 산점도를 어려움 없이 구현할 수 있다.<br />
 rgl package 의 <code>plot3d()</code> 함수를 소개해 본다.</p>
-<p><br><br></p>
-<h2 id="plot3d"><code>plot3d()</code></h2>
-<p><code>plot()</code> 함수에선 <code>plot(x, y)</code> 이었다면<br />
-<code>plot3d()</code> 함수에선 <code>plot3d(x, y, z)</code> 으로 주관심대상 변수 하나를 더 추가하면 된다.</p>
-<p><code>plot3d()</code> 를 이용하기 위해 rgl 패키지를 로드한다.</p>
+<p>2차원 산점도를 그릴 때 R에선 간편히 <code>plot()</code> 함수에서 <code>plot(x, y)</code> 의 형태로 확인이 가능하다.<br />
+<code>plot3d()</code> 함수에선 <code>plot3d(x, y, z)</code> 의 형태로 주관심대상 변수 하나를 더 추가해 사용하면 되므로 이런 측면에선 사용법이 비슷하다.</p>
+<p><code>plot3d()</code> 의 예시코드를 실행해 보기 위해 rgl 패키지를 로드한다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgl)</code></pre></div>
 <p>아래 코드는 <code>plot3d()</code> 의 대표 예제 코드이다.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">rnorm</span>(<span class="dv">1000</span>))
@@ -162,7 +168,7 @@ z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1
 </iframe>
 </center>
 <p><br></p>
-<p>직접실행해 보면 새로운 팝업창이 뜨고(open3d)<br />
+<p>직접실행해 보면 새로운 팝업창이 뜨고(사용환경에 따라 다르다)<br />
 이 안에서 3D산점도가 출력되며, 사용자가 직접 움직여 볼 수 있다.<br />
 또한 휠을 움직이면 줌인과 줌아웃도 된다.</p>
 </div>
