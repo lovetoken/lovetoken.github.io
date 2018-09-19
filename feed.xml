@@ -5,9 +5,213 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 03 Aug 2018 09:13:25 +0900</pubDate>
-    <lastBuildDate>Fri, 03 Aug 2018 09:13:25 +0900</lastBuildDate>
+    <pubDate>Wed, 19 Sep 2018 09:55:41 +0900</pubDate>
+    <lastBuildDate>Wed, 19 Sep 2018 09:55:41 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>POSCO AI Chanllenge 과제 참여 연구노트</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;직원 동료의 이야기를 듣고 함께 참가하게 된 &lt;a href=&quot;https://posco-aichallenge.kr/&quot;&gt;POSCO AI Chanllenge&lt;/a&gt; 에 좋은 성적으로 입상을 하게 되어 본선에서 발표를 준비해야 하는 상황까지 오게 되었다.&lt;br /&gt;
+참여하게 된 과제는 주어진 데이터를 기반으로 과거의 너울성 파도를 예측하는 과제로써, 3차 최종 결과 제출본 기준으로 2등을 하게 되었으며 상위 3팀이 본선을 진출하고 발표는 내일이다. 발표를 준비하는 겸, 지금까지 수행한 과제를 정리도 할겸 글을 정리해 보고자 한다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;과제의-목표&quot;&gt;과제의 목표&lt;/h2&gt;
+&lt;p&gt;필자는 대회 설명회 때 참석하지 못하여 생생함이 덜 하지만&lt;br /&gt;
+설명회의 이야기로는 너울성 파도를 사전에 예측하여 선박의 출항여부에 대해 의사결정에 도움을 받고&lt;br /&gt;
+이어서 경제적, 인명적 손실을 최소화 하기 위함 이라고 전해 들었다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/posco1.png&quot;&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;POSCO 사의 입장으로써 이전부터 고민이 많은 이슈라 생각이 들었고, 그로 인한 계기로 본 과제를 기획한 것으로 생각된다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;데이터-현황과-전처리-수행과정&quot;&gt;데이터 현황과 전처리 수행과정&lt;/h2&gt;
+&lt;p&gt;공급받은 데이터는 포스코 본사에 있는 포항 항구 근처에서 수집한 파고, 및 해수온도, 풍향등의 데이터이며 수집 지점은 월포, 구룡포 두 지점에 대한 약 3년치 자료이다.&lt;br /&gt;
+그리고 과거 3년에 너울이 발생했는지의 여부를 시간단위로 판단할 수 있는 정답지 데이터 (Training dataset), 그리고 과제의 미션으로 예측을 해내야 하는 시점이 언제인지를 알려주는 시험지 데이터(Predict dataset)로 구성되어 있다고 볼 수 있다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 2,247 x 11
+##      loc date       mean_temp max_temp min_temp mean_signi_wh mean_wh
+##    &amp;lt;int&amp;gt; &amp;lt;date&amp;gt;         &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;         &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;
+##  1 22453 2014-01-01      13.7     13.8     13.6           0.6     0.4
+##  2 22453 2014-01-02      14       14.3     13.6           0.7     0.5
+##  3 22453 2014-01-03      14.4     14.9     14.1           0.6     0.4
+##  4 22453 2014-01-04      14.5     14.8     13.9           1.3     0.8
+##  5 22453 2014-01-05      14.4     14.6     14.3           1.5     0.9
+##  6 22453 2014-01-06      14.1     14.3     14             1.1     0.7
+##  7 22453 2014-01-07      13.9     14.3     13.7           0.7     0.4
+##  8 22453 2014-01-08      13.8     14.1     13.4           0.4     0.3
+##  9 22453 2014-01-09      13.8     14.3     13.2           1.4     0.8
+## 10 22453 2014-01-10      13.5     13.9     13.1           1       0.6
+## # ... with 2,237 more rows, and 4 more variables: max_signi_wh &amp;lt;dbl&amp;gt;,
+## #   max_wh &amp;lt;dbl&amp;gt;, mean_cycle &amp;lt;dbl&amp;gt;, max_cycle &amp;lt;dbl&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;제공받은 항구별 수집 정보들의 rawdata 의 샘플&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1,231 x 5
+##    date       swell start_time end_time testset
+##    &amp;lt;date&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;time&amp;gt;     &amp;lt;time&amp;gt;     &amp;lt;int&amp;gt;
+##  1 2014-01-04  NA   15:00      19:00          0
+##  2 2014-01-04  NA   19:00      07:00          0
+##  3 2014-01-05  NA   07:00      10:00          0
+##  4 2014-01-05   3   10:00      13:00          0
+##  5 2014-01-08  NA   10:00      19:00          0
+##  6 2014-01-09   4.5 14:30      19:00          0
+##  7 2014-01-09  12   19:00      07:00          0
+##  8 2014-01-10   3   07:00      10:00          0
+##  9 2014-01-10   2   10:00      13:00          0
+## 10 2014-01-21   1.5 00:30      02:00          0
+## # ... with 1,221 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;제공받은 정답지 데이터와 시험지 데이터의 rawdata 샘플&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;제공받은 데이터 외의 다른 데이터를 이용해도 된다는 주최측의 안내를 받고 자체적으로 추가 수집한 데이터도 있었으며&lt;br /&gt;
+그 데이터는 포항 앞바다의 부이[^해상의 기상 상황을 관측하는 장비를 의미한다]로 부터 수집된 데이터이다.[^출처는 &lt;a href=&quot;http://sts.kma.go.kr/&quot;&gt;기상청 국가 기후 데이터 센터&lt;/a&gt;이다]&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 8,541 x 14
+##    location date  wind_speed wind_direction  GUST local_air_press~ humidity
+##       &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;          &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;            &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;
+##  1    22106 2014~        8.2            259  11.1            1008.       44
+##  2    22106 2014~       10.6            287  15.1            1009.       43
+##  3    22106 2014~       11.7            287  14.9            1009.       42
+##  4    22106 2014~       11.5            302  16.2            1010.       46
+##  5    22106 2014~       11.8            284  16.4            1010.       50
+##  6    22106 2014~        9.1            294  12.4            1010.       48
+##  7    22106 2014~        7.3            293  11.7            1012.       43
+##  8    22106 2014~        6.4            298   8.5            1012.       37
+##  9    22106 2014~        5              296   8.1            1013.       35
+## 10    22106 2014~        6.3            270   9.5            1014.       35
+## # ... with 8,531 more rows, and 7 more variables: temperature &amp;lt;dbl&amp;gt;,
+## #   water_temperature &amp;lt;dbl&amp;gt;, max_wave_height &amp;lt;dbl&amp;gt;,
+## #   mean_wave_height &amp;lt;dbl&amp;gt;, avg_wave_height &amp;lt;dbl&amp;gt;, wave_accurance &amp;lt;dbl&amp;gt;,
+## #   wave_direction &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;추가로 수집한 부이데이터의 rawdata 샘플&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;이러한 데이터들을 충분히 EDA 한 후 머신러닝이나 딥러닝의 프레임워크 툴들이 학습하기 용이하도록 학습데이터 마트로 만들기 위한단계를 거쳤다.&lt;br /&gt;
+너울성 파도의 여부를 &lt;code&gt;swell&lt;/code&gt; 이란 필드명으로 각 시간별 상황데이터(파고, 풍향, 풍속, 수온 등등의 설명변수집합)에 맵핑하는 전처리를 수행하였다.&lt;br /&gt;
+그 결과는 아래와 같다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6,909 x 15
+##    date   time swell wind_speed wind_direction  GUST air_pressure humidity
+##    &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt;      &amp;lt;dbl&amp;gt;          &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;        &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;
+##  1 2014~     0     1       11              302  14          1026.       47
+##  2 2014~     1     1       11.1            315  16.1        1027.       45
+##  3 2014~    10     1        9.9            320  14.1        1030.       54
+##  4 2014~    11     1        9.8            306  13          1030.       54
+##  5 2014~    12     1        8.7            324  13.6        1030        49
+##  6 2014~     2     1       11.7            314  15.4        1027.       46
+##  7 2014~     3     1       12.4            324  16.8        1027.       49
+##  8 2014~     4     1       12.5            320  17.8        1028.       45
+##  9 2014~     5     1       13.7            311  17.5        1029.       49
+## 10 2014~     6     1       14.2            320  17.5        1029.       50
+## # ... with 6,899 more rows, and 7 more variables: temperature &amp;lt;dbl&amp;gt;,
+## #   water_temperature &amp;lt;dbl&amp;gt;, max_wave_height &amp;lt;dbl&amp;gt;,
+## #   mean_wave_height &amp;lt;dbl&amp;gt;, avg_wave_height &amp;lt;dbl&amp;gt;, wave_accurance &amp;lt;dbl&amp;gt;,
+## #   wave_direction &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;정답지가 존재하는 시점을 &lt;code&gt;date&lt;/code&gt;, &lt;code&gt;time&lt;/code&gt; 두 필드로 시점의 정보를 부여하고&lt;br /&gt;
+그 시점의 너울성 파도 여부를 구분하는 &lt;code&gt;swell&lt;/code&gt; 을 맵핑하였으며 (너울성 파도가 일어난 경우 1, 그렇지 않은경우 0)&lt;br /&gt;
+EDA 를 통해 선별한 12개의 설명변수&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;wind_speed&lt;/code&gt; : 풍속&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wind_direction&lt;/code&gt; : 풍향&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GUST&lt;/code&gt; : 돌풍의 정도&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;air_pressure&lt;/code&gt; : 기압&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;humidity&lt;/code&gt; : 주변습도&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;temperature&lt;/code&gt; : 주변온도&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;water_temperature&lt;/code&gt; : 수온&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;max_wave_height&lt;/code&gt; : 파고최대높이&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mean_wave_height&lt;/code&gt; : 파고평균높이&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;avg_wave_height&lt;/code&gt; : 파고유의높이&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wave_accurance&lt;/code&gt; : 파고주기&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wave_direction&lt;/code&gt; : 파도방향&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;를 같이 맵핑하였다.&lt;/p&gt;
+&lt;p&gt;참고로 결측값에 대한 이슈도 있었는데&lt;br /&gt;
+맵핑과정에서 그 시간시점에 해당되는 데이터가 존재하지 않아 결측이 일어나는 경우가 바로 그것이었다.&lt;br /&gt;
+결측행을 제외하는것은 데이터의 손실이 너무 크다고 판단하였고 따라서 결측을 대치하는 방법을 고려했다.&lt;br /&gt;
+대부분 LOCF(Last Observation Carried Forward) 방법으로 가장 최근값을 상속시키는 결측대치법을 이용하였고, LOCF 결측대치가 타당하지 않다고 판단되는 풍속(&lt;code&gt;wind_direction&lt;/code&gt;)의 경우 중앙값 대치를 고려하여 적용했다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;너울성-파도-예측-모형-구현&quot;&gt;너울성 파도 예측 모형 구현&lt;/h2&gt;
+&lt;p&gt;본 과제의 명칭에 걸맞게 AI 기술을 이용하여 너울성 파도를 예측하고자 예측 모형을 구현하고 Validation set 을 통해 모형을 평가하였다.&lt;br /&gt;
+머신러닝 기법과 그중에서도 딥러닝 기법들을 다양하게 테스트 해보고 예측성능이 높게 평가된 것을 선별하여 1,2,3차에 걸쳐 제출하게 되었다.&lt;/p&gt;
+&lt;p&gt;1,2,3차 때는 각 차수별로 대략 2주간의 시간이 주어졌다고 볼 수 있는데&lt;br /&gt;
+각 차수별 아래와 같은 목표로 진행하였다.&lt;/p&gt;
+&lt;p&gt;1차때는 딥러닝 모델을 구현하기 전 손쉽게 적용해 볼 수 있는 전통적인 머신러닝 알고리즘들을 이용하여 Warming up 을 해보는 단계로 계획하여 테스트 해 보았다.&lt;/p&gt;
+&lt;p&gt;2차때는 1차때 선별된 머신러닝 알고리즘의 모형보다 예측성능이 더 높은 딥러닝 기반의 모형을 구현하는 것을 목표로 잡고 딥러닝 모형을 구현하였다.&lt;/p&gt;
+&lt;p&gt;3차때는 역시 2차때 선별된 딥러닝 알고리즘보다 더 높은 예측성능을 보이는 모델을 찾기 위해 더 다른 관점의 고민들을 해보는 기간으로 잡았다.&lt;/p&gt;
+&lt;p&gt;그 결과&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1차 : Weighted Subspace Random Forest 알고리즘 모형&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;2차 : Artificial Neural Network(ANN) 모형&lt;/li&gt;
+&lt;li&gt;3차 : Flexible Discriminant Analysis(FDA) 모형&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;3개의 모형을 구현하였고, 이를 통한 예측값을 제출하게 되었다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;모형-평가&quot;&gt;모형 평가&lt;/h2&gt;
+&lt;p&gt;모형의 예측성능을 평가하기 전&lt;br /&gt;
+무엇을 객관적인 목표로 잡고 각 3개의 모형이 선별되었는지 선발 기준에 대한 설명을 사전에 할 필요가 있을 것 같다.&lt;/p&gt;
+&lt;p&gt;본 과제는 Binary Classification 문제이고, 특히 너울성 파도가 일어난 이벤트의 당시상황이 중요하므로 &amp;quot;너울성파도가 일어난&amp;quot; 시점에 대해서, 모형이 &amp;quot;너울성 파도가 일어남&amp;quot; 이라고 예측하는 것이 더 중요했다.&lt;br /&gt;
+더 중요한 이유는 너울성 파도는 드물게 일어나며, 평시 상황은 너울성파도가 일어나지 않는 상황이어서 &amp;quot;너울성 파도가 일어나지 않은&amp;quot; 시점에 대해서, 모형이 &amp;quot;너울성 파도를 일어나지 않음&amp;quot;으로 예측하는 것은 조금 덜 중요하다고 볼 수 있다.&lt;br /&gt;
+이런 특성때문에 과제 평가 정책을 상황별로 다르게 스코어링 하였었고, 그 공식은 아래와 같다.&lt;br /&gt;
+* 너울성파도가 일어난 시점에 대해서, 모형이 너울성 파도가 일어났다고 예측 : +2 * 너울성파도가 일어난 시점에 대해서, 모형이 너울성 파도가 일어나지 않았다고 예측 : -2 * 너울성 파도가 일어나지 않은 시점에 대해서, 모형이 너울성 파도를 일어나지 않았다고 예측 : +1 * 너울성 파도가 일어나지 않은 시점에 대해서, 모형이 너울성 파도가 일어났다고 예측 : -1&lt;/p&gt;
+&lt;p&gt;이 공식에 의해서 우리가 정한 Validation set 상에서의 최대치 점수는 1943점이었고 각 차수별 모형은 아래의 예측성능 점수를 매길 수 있었다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1차 Weighted Subspace Random Forest 알고리즘 모형 : 1471점&lt;/li&gt;
+&lt;li&gt;2차 Artificial Neural Network(ANN) 모형 : 1507점&lt;/li&gt;
+&lt;li&gt;3차 Flexible Discriminant Analysis(FDA) 모형 : 1545점&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;각-차수별-detail&quot;&gt;각 차수별 Detail&lt;/h2&gt;
+&lt;p&gt;각 차수 별로 각각 아래의 연구를 통해 모형을 구현하고 예측셋 시험지를 풀었다.&lt;/p&gt;
+&lt;h3 id=&quot;차&quot;&gt;1차&lt;/h3&gt;
+&lt;p&gt;머신러닝 알고리즘을 이용한 워밍업 단계라고 설명했는데&lt;br /&gt;
+실제론 1차때 테스트해 본 케이스들이 정말로 많았다.&lt;br /&gt;
+실험 알고리즘 케이스는 R의 caret 패키지의 머신러닝 프레임워크의 도움을 얻어 대표적으로 아래의 테스트를 해보았다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Partial Least Squares&lt;/li&gt;
+&lt;li&gt;Generalized Linear Model&lt;/li&gt;
+&lt;li&gt;Linear Discriminant Analysis&lt;/li&gt;
+&lt;li&gt;ROC-Based Classifier&lt;/li&gt;
+&lt;li&gt;k-Nearest Neighbors # Test 제외&lt;/li&gt;
+&lt;li&gt;CART 5.0(Classification and Regression Tree)&lt;/li&gt;
+&lt;li&gt;Weighted Subspace Random Forest&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;제시된 7개 머신러닝 알고리즘은 분류문제에 특화된 알고리즘으로써 본 데이터에 대해 성능을 기대하였던 알고리즘이다.&lt;br /&gt;
+80%의 과거데이터를 Training set 으로 이용하기 위하여 파티션을 취했고, 이를 재료로 학습을 통해 모형을 구축하였다.&lt;br /&gt;
+k Fold 교차검증으로[^상황에 따라 K를 8, 10 등으로 바꾸어서 하기도 해서 그냥 K라 표기한다] 각 알고리즘별 튜닝파라미터를 선정하였고, 파티션에 남은 20% 최근 데이터를 통해 예측성능을 확인해 보았다.&lt;/p&gt;
+&lt;p&gt;7개 알고리즘 모형중 Weighted Subspace Random Forest 알고리즘을 이용한 모형이 1471점으로 예측성능이 가장 높아 선정하게 되었다.&lt;/p&gt;
+&lt;h3 id=&quot;차-1&quot;&gt;2차&lt;/h3&gt;
+&lt;p&gt;1차때 선정된 Weighted Subspace Random Forest 알고리즘 모형보다 더 높은 예측성능을 내는 딥러닝 구현을 목표로 인공신경망(ANN)에 해당되는 기법들을 테스트 했다.&lt;br /&gt;
+순환신경망(RNN), 심층신경망(DNN) 등을 테스트 하였고, 하이퍼 파라미터들에 대한 실험케이스들을 여러개로 나누어 1차때의 예측성능 보다 높은 모형을 만들기 위해 노력했다.&lt;br /&gt;
+그 결과 1507점을 내는 모형을 찾게 되었다.&lt;/p&gt;
+&lt;h3 id=&quot;차-2&quot;&gt;3차&lt;/h3&gt;
+&lt;p&gt;3차때는 전반적인 데이터의 현황에 대한 검토를 면밀하게 하고 넘어가고자 했다.&lt;br /&gt;
+과제 전부터 한가지 집혔던 것이&lt;br /&gt;
+전처리가 완료된 학습데이터 마트에 대한 EDA 후 확인되었던 이슈지만&lt;br /&gt;
+너울성 파도의 발생 이벤트가 매우 소수이어서, 이 소수인 클래스의 학습력이 상대적으로 부족할 것이라고 우려했었다. 즉 Class imbalance problem 의 문제를 먼저 풀고 모델링에 들어가면 더 유리할 것이라고 생각했었다.&lt;br /&gt;
+이 부분을 해결하기 위해 너울성 파도가 일어난 데이터(&lt;code&gt;swell&lt;/code&gt; = 1)를 늘리면서 너울성 파도가 일어나지 않은 데이터(&lt;code&gt;swell&lt;/code&gt; = 0)와 균형이 맞도록 Random Over Smapling 을 통해 학습셋을 기존 6,000여건에서 20,000여건으로 늘려 재구성 해 보았다.[^구현 방법은 R의 ROSE package 를 이용했다]&lt;/p&gt;
+&lt;p&gt;이후 재구성된 학습셋을 기준으로 이전에 시도했던 알고리즘들을 다시 돌려보고, 추가로&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Radial Basis Function Network&lt;/li&gt;
+&lt;li&gt;Flexible Discriminant Analysis&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;두개의 머신러닝 알고리즘을 더 고려하여 테스트 해보니, 이전보다 더 높은 예측성능을 내는 모형이 나타났고 그 결과 Flexible Discriminant Analysis 모형이 1545점 으로 지금까지 수행한 모형의 예측성능 중 가장 높게 나온 모델을 만들었다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;모델링-이전-신경썼던-부분&quot;&gt;모델링 이전 신경썼던 부분&lt;/h2&gt;
+&lt;p&gt;인공지능 모형이 오버피팅이 되는 것을 사전에 막고, 제한된 학습셋을 통해 우리가 알지 못하는 실제 Test set 에 대해 잘 예측해내는 모형을 만들기 위해선 데이터에 대한 다각도의 이해와 인공지능을 구현하기 위한 머신러닝 &amp;amp; 딥러닝 알고리즘에 대한 어느정도 이론적인 이해도가 필요했다.&lt;br /&gt;
+특히 차원의 저주로 인하여 타겟을(너울성파도) 예측하는데 더 많은 데이터를 필요로 하는것을 막기 위하여 다중공산성을 고려해 상관도가 높은 설명변수의 조합을 줄여보는 시도도 했고,&lt;br /&gt;
+시계열적인 파생변수가 타겟과 유의미한 연관관계가 있는지도 데이터 시각화를 통해 살펴보는 등&lt;br /&gt;
+EDA 를 꽤 정성들여 해 본것이 인상깊었다. (사실 EDA 는 하면 할수록 욕심이 생겨 끝도 없이 해 볼 수 있는 과정이라 생각하는데.. 제한시간이 있었기에 어느 단계에서 멈출수 있었다는 건 함정..)&lt;br /&gt;
+이는 Feature engineering 측면에서 다양한 실험케이스를 만들어 분석을 풍부하게 해 볼 수 있는 요인으로 작용했지만&lt;br /&gt;
+본 과제의 결론은 Full model(가용가능한 설명변수를 모두 이용하는 모델)이 채택이 되었었다.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 19 Sep 2018 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/machinelearning/2018/09/19/posco_ai.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/machinelearning/2018/09/19/posco_ai.html</guid>
+        
+        
+        <category>MachineLearning</category>
+        
+      </item>
     
       <item>
         <title>R에서 plot3d()함수를 이용한 3차원 산점도 만들기</title>
@@ -847,126 +1051,6 @@ p1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
         <pubDate>Mon, 19 Mar 2018 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/r/2018/03/19/flexdashboard.html</link>
         <guid isPermaLink="true">https://lovetoken.github.io/r/2018/03/19/flexdashboard.html</guid>
-        
-        
-        <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package</title>
-        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;데이터 프레임 형을 파일단위로 저장할 때 R에서는 다양한 방법들이 있다.&lt;br /&gt;
-크게 유형 분류를 하면&lt;/p&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;csv 와 같은 텍스트형으로 저장하는 방법&lt;/li&gt;
-&lt;li&gt;이진 형태, 즉 binary 파일로 저장하는 방법&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;으로 나눌 수 있는데&lt;br /&gt;
-호환성을 위해선 1번 방법이 좋지만, 저장 및 로드하는 속도, 파일의 볼륨을 줄이기 위한 압축 부분을 포기해야 하고,&lt;br /&gt;
-속도를 위해선 2번 방법이 좋지만 텍스트에디터 등으로 파일을 간편하게 확인하는 것을 포기해야 하는 등&lt;br /&gt;
-유형별로 장단점이 있다.&lt;/p&gt;
-&lt;p&gt;본 글은 2번 이진 형태의 방법으로 R에서 데이터 프레임의 정보를 파일로 저장하는 방법 중 읽고 쓰는 속도가 상대적으로 빠른 편인 &lt;a href=&quot;http://www.fstpackage.org/&quot;&gt;fst package&lt;/a&gt; 를 이용한 방법을 소개하고자 한다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;benchmark&quot;&gt;Benchmark&lt;/h2&gt;
-&lt;p&gt;소개에 앞서 처리속도가 다른 방법에 비교해 얼마나 빠른지 결과를 먼저 확인 해 보고 싶었다.&lt;br /&gt;
-아래 코드는 샘플 데이터프레임을 만든 다음&lt;br /&gt;
-오늘 주제인 fst 형으로 저장하는 방법과 그 외의 방법들로 저장하는 코드별 코드수행 시간을 측정하여 plotting 해 보는 코드이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(dplyr)
-&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(microbenchmark)
-
-nr_of_rows &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;^&lt;span class=&quot;dv&quot;&gt;8&lt;/span&gt;
-
-df &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;Logical =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(T, F, &lt;span class=&quot;ot&quot;&gt;NA&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;prob =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(.&lt;span class=&quot;dv&quot;&gt;85&lt;/span&gt;, .&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, .&lt;span class=&quot;dv&quot;&gt;05&lt;/span&gt;), nr_of_rows, &lt;span class=&quot;dt&quot;&gt;replace =&lt;/span&gt; T), 
-                 &lt;span class=&quot;dt&quot;&gt;Integer =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(1L:100L, nr_of_rows, &lt;span class=&quot;dt&quot;&gt;replace =&lt;/span&gt; T), 
-                 &lt;span class=&quot;dt&quot;&gt;Real =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;10000&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;20&lt;/span&gt;) /&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;, nr_of_rows, &lt;span class=&quot;dt&quot;&gt;replace =&lt;/span&gt; T),
-                 &lt;span class=&quot;dt&quot;&gt;Factor =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;as.factor&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;labels&lt;/span&gt;(UScitiesD), nr_of_rows, &lt;span class=&quot;dt&quot;&gt;replace =&lt;/span&gt; T))) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;tbl_df
-
-df&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 100,000,000 x 4
-##    Logical Integer  Real Factor       
-##    &amp;lt;lgl&amp;gt;     &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;fct&amp;gt;        
-##  1 T            30  97.6 Chicago      
-##  2 T            42  61.0 Atlanta      
-##  3 NA           21  97.6 Chicago      
-##  4 T             3  97.6 Miami        
-##  5 T            89  48.2 Washington.DC
-##  6 T            52  62.9 SanFrancisco 
-##  7 T            41  31.5 NewYork      
-##  8 T            38  47.1 Chicago      
-##  9 T            21  48.2 Denver       
-## 10 T            78  48.2 Denver       
-## # ... with 99,999,990 more rows&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;저장대상으로 테스트에 쓸 데이터프레임 &lt;code&gt;df&lt;/code&gt; 를 만들어 보았다.&lt;br /&gt;
-1억건의 레코드를 가진 데이터프레임이다.&lt;br /&gt;
-이 &lt;code&gt;df&lt;/code&gt; 를&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;write.table&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;data.table::fwrite&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;saveRDS&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;feather::write_feather&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;fst::write_fst&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;의 5개 방법별로 저장하는 시간을 반복측정하는 것을 microbenchmark package 의 도움을 받아 실행해 본다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;bench &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;microbenchmark&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;write.table =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;write.table&lt;/span&gt;(df, &lt;span class=&quot;dt&quot;&gt;file =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;output/df_writetable.csv&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;quote =&lt;/span&gt; F, &lt;span class=&quot;dt&quot;&gt;row.names =&lt;/span&gt; F, &lt;span class=&quot;dt&quot;&gt;sep =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;,&amp;quot;&lt;/span&gt;),
-                        &lt;span class=&quot;dt&quot;&gt;fwrite =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;fwrite&lt;/span&gt;(df, &lt;span class=&quot;dt&quot;&gt;file =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;output/df_fwrite.csv&amp;quot;&lt;/span&gt;),
-                        &lt;span class=&quot;dt&quot;&gt;saveRDS =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;saveRDS&lt;/span&gt;(df, &lt;span class=&quot;dt&quot;&gt;file =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;output/df_saveRDS.rds&amp;quot;&lt;/span&gt;),
-                        &lt;span class=&quot;dt&quot;&gt;write_feather =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;write_feather&lt;/span&gt;(df, &lt;span class=&quot;dt&quot;&gt;path =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;output/df_feather.fea&amp;quot;&lt;/span&gt;),
-                        &lt;span class=&quot;dt&quot;&gt;write_fst =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;write_fst&lt;/span&gt;(df, &lt;span class=&quot;dt&quot;&gt;path =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;output/df_fst.fst&amp;quot;&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;times =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;autoplot&lt;/span&gt;(bench)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/fstPackage.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;fst 형으로 저장하는 방법이 약 2.52초로 다른 방법들에 비해 비약적으로 빠른 것을 볼 수 있다.&lt;/p&gt;
-&lt;p&gt;쓰기 속도 외에도 읽기 속도 역시 좋은 성능을 보인다.&lt;/p&gt;
-&lt;p&gt;읽기 테스트는 생략하지만 &lt;a href=&quot;http://www.fstpackage.org/&quot;&gt;fst package 홈페이지&lt;/a&gt;에 지금까지의 벤치마킹과 비슷한 실험 결과물이 소개되었으니 참고해 보면 좋겠다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;사용법&quot;&gt;사용법&lt;/h2&gt;
-&lt;p&gt;벤치마킹 테스트 코드에 fst 형으로 저장하는 방법에 대한 코드가 있었다. 바로 이 부분인데&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;write_fst&lt;/span&gt;(df, &lt;span class=&quot;dt&quot;&gt;path =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;output/df_fst.fst&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;저장시킬 데이터프레임 객체명, 저장시킬 파일경로를 지정 이 두 가지가 필수이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;data &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;read_fst&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;output/df_fst.fst&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;읽는 방법은 &lt;code&gt;read_fst()&lt;/code&gt; 함수안에 이전에 저장시킨 파일경로를 지정하고 할당하는 방식이다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;특징&quot;&gt;특징&lt;/h2&gt;
-&lt;p&gt;fst package 는 여러 특징이 있는데 가장 눈에 띄는 특징은&lt;br /&gt;
-자동적으로 병렬스레드를 이용하여 저장 및 읽는 처리속도의 효율을 높인다는 것이다.&lt;br /&gt;
-볼륨이 큰 데이터프레임을 &lt;code&gt;write_fst()&lt;/code&gt; 함수로 저장하곤 할 때 이러한 로그가 나타나는 것을 보면 알 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;write_fst&lt;/span&gt;(df, &lt;span class=&quot;dt&quot;&gt;path =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;output/df_fst.fst&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;Written 9.6% of 100000000 rows in 2 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 18 secs.      
-Written 15.8% of 100000000 rows in 3 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 15 secs.      
-Written 22.5% of 100000000 rows in 4 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 13 secs.      
-Written 28.7% of 100000000 rows in 5 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 12 secs.      
-Written 33.7% of 100000000 rows in 6 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 11 secs.      
-Written 40.4% of 100000000 rows in 7 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 10 secs.      
-Written 46.6% of 100000000 rows in 8 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 9 secs.      
-Written 51.6% of 100000000 rows in 9 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 8 secs.      
-Written 57.2% of 100000000 rows in 10 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 7 secs.      
-Written 62.8% of 100000000 rows in 11 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 6 secs.      
-Written 67.8% of 100000000 rows in 12 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 5 secs.      
-Written 72.8% of 100000000 rows in 13 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 4 secs.      
-Written 77.9% of 100000000 rows in 14 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 3 secs.      
-Written 82.9% of 100000000 rows in 15 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 3 secs.      
-Written 88.5% of 100000000 rows in 16 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 2 secs.      
-Written 93.5% of 100000000 rows in 17 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 1 secs.      
-Written 97.4% of 100000000 rows in 18 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 0 secs.  &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;data.table package 의 &lt;code&gt;fwrite()&lt;/code&gt;, &lt;code&gt;fread()&lt;/code&gt; 에서도 가지고 있는 기능이지만 fst package가 조금 더 높은 성능을 &lt;a href=&quot;http://www.fstpackage.org/README-multi-threading-1.png&quot;&gt;보이기도 한다&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;압축저장도 지원한다.&lt;br /&gt;
-&lt;code&gt;write_fst()&lt;/code&gt; 함수의 인자들을 살펴보면 &lt;code&gt;compress&lt;/code&gt; 인자가 있고 기본적으로 50인데 이를 조정하여 압축률을 높이거나 낮출 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;write_fst&lt;/span&gt;(df, &lt;span class=&quot;dt&quot;&gt;path =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;output/compress_1.fst&amp;quot;&lt;/span&gt;,   &lt;span class=&quot;dt&quot;&gt;compress =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;)
-&lt;span class=&quot;kw&quot;&gt;write_fst&lt;/span&gt;(df, &lt;span class=&quot;dt&quot;&gt;path =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;output/compress_50.fst&amp;quot;&lt;/span&gt;,  &lt;span class=&quot;dt&quot;&gt;compress =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;50&lt;/span&gt;)
-&lt;span class=&quot;kw&quot;&gt;write_fst&lt;/span&gt;(df, &lt;span class=&quot;dt&quot;&gt;path =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;output/compress_100.fst&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;compress =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;system&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;ls -lh output/compress*&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;-rw-r--r--@ 1 lovetoken  staff   1.2G Mar  1 10:21 output/compress_1.fst
--rw-r--r--@ 1 lovetoken  staff   247M Mar  1 10:22 output/compress_100.fst
--rw-r--r--@ 1 lovetoken  staff   582M Mar  1 10:21 output/compress_50.fst&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;압축률을 1로 한 것과 100으로 한 것 간의 파일 용량이 각각 1.2Gb, 247Mb 으로 차이가 큰 것을 볼 수 있다.&lt;/p&gt;
-&lt;p&gt;마지막으로..&lt;br /&gt;
-fst package 가 혹 &lt;code&gt;save()&lt;/code&gt;, &lt;code&gt;saveRDS()&lt;/code&gt; 처럼 R 객체를 저장할 수 있다고 생각하면 안 된다.&lt;br /&gt;
-서두에도 말했듯이 데이터프레임 형 객체만 저장할 수 있다.&lt;br /&gt;
-데이터프레임 형을 저장하는데 특화된 것이 특징이라면 특징이겠다.&lt;/p&gt;
-</description>
-        <pubDate>Thu, 01 Mar 2018 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/2018/03/01/fstPackage.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/2018/03/01/fstPackage.html</guid>
         
         
         <category>R</category>
