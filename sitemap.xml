@@ -5,9 +5,245 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 24 Sep 2018 15:04:26 +0900</pubDate>
-    <lastBuildDate>Mon, 24 Sep 2018 15:04:26 +0900</lastBuildDate>
+    <pubDate>Sat, 24 Nov 2018 19:24:08 +0900</pubDate>
+    <lastBuildDate>Sat, 24 Nov 2018 19:24:08 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>dplyr 문법을 통한 전처리를 SQL 로의 스위칭</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;최근 회사를 이직하게 되었는데 이전과는 새로운 분석환경과 거대한 스케일에 놀라면서 개인적으로 다양한 문제들을 맞닥드리고 있다.&lt;br /&gt;
+특히 가장 다른점은 데이터의 양(Volume)과 이를 관리하기 위해 조성된 조직, 인프라, 시스템 등이다.&lt;/p&gt;
+&lt;p&gt;이전에는 데이터 인프라가 준비되있지 않은 상태에서&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; 작은 분석솔루션 PoC(Proof of Concept) 를 하거나, 의미있는 솔루션을 만들 수 있는 관점으로 분석을 기획된 틀에 맞추거나 근접하면서 진행하였다면,&lt;br /&gt;
+지금은 기 확보된 해상도 높은 데이터를 &lt;strong&gt;적시성&lt;/strong&gt;있게 집계, 분석하는데 초점이 있다.&lt;br /&gt;
+여기서 &lt;strong&gt;적시성&lt;/strong&gt;이란 표현하였는데 이전 환경과 가장 다르게 체감되는 다른점을 대표한 단어이다. 비교적 최근의 일어나는 현상들에 대해 관심이 많고, 과거에 비해 최근 적용한 이벤트의 효과가 어떠한 방식으로 나타나는지 모니터링 해야하는 도메인의 고유한 특성이 있기에&lt;br /&gt;
+&#39;Due Date&#39; 라는 골든타임 안에 인사이트를 공급하는 일이 이전보다 매우 중요하게 느껴지고 있다.&lt;br /&gt;
+즉 이렇게 따끈따끈한 데이터(방금 적재된 데이터)를 접근할 수 있는 권한과 환경은 처음이고, 이를 스피드 있게 파악하고 분석하는 것 또한 경험해 보지 못한 일이다.&lt;/p&gt;
+&lt;p&gt;Database 단 안에서 따끈따끈한 데이터를 집약하여 인사이트를 확인하고 전달하는 가장 빠른 프로세스를 이용하기 위해&lt;br /&gt;
+SQL(Structured Query Language)만을 이용해 1step 만으로 일을 처리하는 점 또한 내게 있어 많이 다른점이다.&lt;br /&gt;
+이전에는 파일시스템을 데이터의 소스로 주로 이용했었기 때문에 R을 이용하는것이 비교적 유리했으며&lt;br /&gt;
+DB 안의 데이터를 다루어야 하는 상황이 있을때도 &lt;a href=&quot;https://cran.r-project.org/web/packages/dbplyr/vignettes/dbplyr.html&quot;&gt;dbplyr package&lt;/a&gt; 와 비교적 손쉽게 호환이 되는 MySQL 환경이 대부분 이었기 때문에 dplyr 문법을 이용해 집약 및 전처리를 했던 편이었다.&lt;/p&gt;
+&lt;p&gt;서론이 길었다.&lt;br /&gt;
+이러저러한 이유로 기존에 즐겨쓰던 dplyr 문법을 SQL 상에선 어떻게 구현해야 하는지 고민이 많아졌는데, 이를 위해 정리한 글이기도 하다.&lt;br /&gt;
+앞으로 아래의 글은&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;특정주제&lt;/li&gt;
+&lt;li&gt;dplyr 문법&lt;/li&gt;
+&lt;li&gt;위 dplyr 문법과 동일한 논리의 SQL 문&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;으로 구성하여 정리한다. 또한 본글을 읽기 전에 아래와 같은 사항을 미리 언급한다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;dplyr 문법을 MSSQL 을 기준으로 스위칭 한 것에 한하여 정리하였다&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;dplyr 의 pipeline 문법이나, 기본적인 집계 매커니즘을 설명하지 않았다. 즉 dplyr 문법에서의 기초사항에 대해 어느정도 알고 있다는 전제하에 글을 정리했다&lt;/li&gt;
+&lt;li&gt;SQL convention 은 최대한 &lt;a href=&quot;https://www.sqlstyle.guide/&quot;&gt;여기&lt;/a&gt;를 따르려 노력했다&lt;/li&gt;
+&lt;li&gt;대표예제로 R의 빌트인 예제인 &lt;code&gt;mtcars&lt;/code&gt; 데이터셋을 이용했다&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;MSSQL 에서는 &lt;code&gt;mtcars&lt;/code&gt; 데이터셋 테이블이 없기 때문에 미리 만들어 놓아야 했다. 아래처럼 준비 하였다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# R session 에서 빌트인 예제 mtcars 를 csv 파일로 외부로 빼낸다&lt;/span&gt;
+&lt;span class=&quot;kw&quot;&gt;write.csv&lt;/span&gt;(mtcars, &lt;span class=&quot;st&quot;&gt;&amp;quot;~/mtcars.csv&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode sql&quot;&gt;&lt;code class=&quot;sourceCode sql&quot;&gt;&lt;span class=&quot;co&quot;&gt;/* SQL session 에서 외부로 빼낸 mtcars.csv 파일을 insert 한다 */&lt;/span&gt;
+&lt;span class=&quot;kw&quot;&gt;BULK&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;INSERT&lt;/span&gt;     [database_name].[table_name]
+&lt;span class=&quot;kw&quot;&gt;FROM&lt;/span&gt;            &lt;span class=&quot;st&quot;&gt;&amp;#39;~/mtcars.csv&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;kw&quot;&gt;WITH&lt;/span&gt;            (
+    FIRSTROW = &lt;span class=&quot;dv&quot;&gt;2&lt;/span&gt;,
+    FIELDTERMINATOR = &lt;span class=&quot;st&quot;&gt;&amp;#39;,&amp;#39;&lt;/span&gt;,
+    ROWTERMINATOR = &lt;span class=&quot;st&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;#39;&lt;/span&gt;,
+    ERRORFILE = &lt;span class=&quot;st&quot;&gt;&amp;#39;~/mtcars_error_rows.csv&amp;#39;&lt;/span&gt;,
+    TABLOCK
+)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;단 &lt;code&gt;BULK INSERT&lt;/code&gt; 의 위 명령어를 실행시키기 위한 권한이 필요할 수 있다.&lt;br /&gt;
+&lt;code&gt;BULK INSERT&lt;/code&gt; 는 MSSQL 에서만 된다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;다중컬럼에-대해-유일한-값-확인하기&quot;&gt;다중컬럼에 대해 유일한 값 확인하기&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;mtcars&lt;/code&gt; 데이터 셋에서 &lt;code&gt;gear&lt;/code&gt; 컬럼의 범주가 몇가지가 있는지를 확인하고 싶다면&lt;br /&gt;
+&lt;code&gt;length(unique())&lt;/code&gt;, &lt;code&gt;dplyr::n_distinct()&lt;/code&gt; 등을 이용하여 아래처럼 확인이 가능하다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;length&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;unique&lt;/span&gt;(mtcars$gear))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;n_distinct&lt;/span&gt;(mtcars$gear)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;그런데 &lt;code&gt;gear&lt;/code&gt; 와 함께 &lt;code&gt;carb&lt;/code&gt; 컬럼도 같이 함께하여 유일한 범주가 몇개가 있는지를 확인하고 싶다면 어떻게 하여야 할까?&lt;br /&gt;
+이때는 &lt;code&gt;length(unique())&lt;/code&gt;, &lt;code&gt;dplyr::n_distinct()&lt;/code&gt; 의 방법으론 어렵다.&lt;br /&gt;
+굳이 쓰고자 한다면 &lt;code&gt;gear&lt;/code&gt; 와 &lt;code&gt;carb&lt;/code&gt; 를 결합하는 별도의 과정이 필요한데, 굳이 예를 들면 아래와 같다고나 할까.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;paste&lt;/span&gt;(mtcars$gear, mtcars$carb) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;n_distinct &lt;span class=&quot;co&quot;&gt;# 혹은 이 자리에 `length(unique(.))` 로 대치&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 11&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;dplyr&quot;&gt;dplyr&lt;/h3&gt;
+&lt;p&gt;이때 dplyr 에선 &lt;code&gt;group_by()&lt;/code&gt;, &lt;code&gt;distinct()&lt;/code&gt; 함수들이 유용한데&lt;br /&gt;
+&lt;code&gt;group_by()&lt;/code&gt; 로 그룹핑을 하게되면 애초에 그룹핑 요소의 개수가 표시된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;mtcars %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;group_by&lt;/span&gt;(gear, carb)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 32 x 11
+## # Groups:   gear, carb [11]
+##      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##  * &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+##  1  21       6  160    110  3.9   2.62  16.5     0     1     4     4
+##  2  21       6  160    110  3.9   2.88  17.0     0     1     4     4
+##  3  22.8     4  108     93  3.85  2.32  18.6     1     1     4     1
+##  4  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1
+##  5  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2
+##  6  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1
+##  7  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4
+##  8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2
+##  9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
+## 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
+## # ... with 22 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;출력물의 두번째 라인을 보면 &lt;code&gt;# Groups:   gear, carb [11]&lt;/code&gt; 에서 대괄호 안의 수가 바로 그것이다.&lt;br /&gt;
+이 카운트 수 11개에 대한 요인 조합들을 직접 반환 하고싶다면 &lt;code&gt;distinct()&lt;/code&gt; 쓰면 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;mtcars %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;distinct&lt;/span&gt;(gear, carb)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##    gear carb
+## 1     4    4
+## 2     4    1
+## 3     3    1
+## 4     3    2
+## 5     3    4
+## 6     4    2
+## 7     3    3
+## 8     5    2
+## 9     5    4
+## 10    5    6
+## 11    5    8&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;sql&quot;&gt;SQL&lt;/h3&gt;
+&lt;p&gt;SQL 에서&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;mtcars %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;distinct&lt;/span&gt;(gear, carb)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##    gear carb
+## 1     4    4
+## 2     4    1
+## 3     3    1
+## 4     3    2
+## 5     3    4
+## 6     4    2
+## 7     3    3
+## 8     5    2
+## 9     5    4
+## 10    5    6
+## 11    5    8&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;와 같은 결과를 반환하는 Query 를 짜면 아래와 같다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode sql&quot;&gt;&lt;code class=&quot;sourceCode sql&quot;&gt;&lt;span class=&quot;kw&quot;&gt;SELECT&lt;/span&gt;  &lt;span class=&quot;kw&quot;&gt;DISTINCT&lt;/span&gt; gear, carb
+&lt;span class=&quot;kw&quot;&gt;FROM&lt;/span&gt;    mtcars;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;샘플링&quot;&gt;샘플링&lt;/h2&gt;
+&lt;p&gt;일부 샘플만 확인 혹은 추출하기 위해선 &lt;code&gt;sample_n()&lt;/code&gt;, &lt;code&gt;sample_frac()&lt;/code&gt; 등을 사용할 수 있다.&lt;br /&gt;
+SQL 에선 어떻게 할 수 있을지 궁금했다.&lt;/p&gt;
+&lt;h3 id=&quot;dplyr-1&quot;&gt;dplyr&lt;/h3&gt;
+&lt;p&gt;dplyr 를 이용할 때 mtcars 에서 단 3건의 샘플만을 추출하고 싶을 경우&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;mtcars %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;sample_n&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Hornet 4 Drive   21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Dodge Challenger 15.5   8  318 150 2.76 3.520 16.87  0  0    3    2
+## Volvo 142E       21.4   4  121 109 4.11 2.780 18.60  1  1    4    2&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;sql-1&quot;&gt;SQL&lt;/h3&gt;
+&lt;p&gt;SQL 에선 랜덤인덱스를 통한 정렬 및 3개의 행을 뽑는 과정을 모두 Query 를 통해 명시한다고 생각하면 된다.&lt;br /&gt;
+이 과정들을 직접 명시해야하므로 다양한 케이스의 방법들이 존재할 수 있다고 생각했는데, &lt;code&gt;NEWID()&lt;/code&gt; 로 랜덤인덱스를 부여하여 샘플링 하는 아래의 방법을 선호하게 되었다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode sql&quot;&gt;&lt;code class=&quot;sourceCode sql&quot;&gt;&lt;span class=&quot;kw&quot;&gt;SELECT&lt;/span&gt;      TOP &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt; *
+&lt;span class=&quot;kw&quot;&gt;FROM&lt;/span&gt;        mtcars
+&lt;span class=&quot;kw&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;BY&lt;/span&gt;    NEWID();&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;요인별-샘플-개수-확인&quot;&gt;요인별 샘플 개수 확인&lt;/h2&gt;
+&lt;h3 id=&quot;dplyr-2&quot;&gt;dplyr&lt;/h3&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;mtcars %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;group_by&lt;/span&gt;(cyl) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;count %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;arrange&lt;/span&gt;(n)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 2
+## # Groups:   cyl [3]
+##     cyl     n
+##   &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt;
+## 1     6     7
+## 2     4    11
+## 3     8    14&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;sql-2&quot;&gt;SQL&lt;/h3&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode sql&quot;&gt;&lt;code class=&quot;sourceCode sql&quot;&gt;&lt;span class=&quot;kw&quot;&gt;SELECT&lt;/span&gt;      cyl, &lt;span class=&quot;fu&quot;&gt;COUNT&lt;/span&gt;(*) &lt;span class=&quot;kw&quot;&gt;AS&lt;/span&gt; n
+&lt;span class=&quot;kw&quot;&gt;FROM&lt;/span&gt;        mtcars
+&lt;span class=&quot;kw&quot;&gt;GROUP&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;BY&lt;/span&gt;    cyl
+&lt;span class=&quot;kw&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;BY&lt;/span&gt;    n;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;요인별-특정값의-최상위-샘플-필터링&quot;&gt;요인별 특정값의 최상위 샘플 필터링&lt;/h2&gt;
+&lt;h3 id=&quot;dplyr-3&quot;&gt;dplyr&lt;/h3&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;mtcars %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;group_by&lt;/span&gt;(cyl) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;filter&lt;/span&gt;(mpg ==&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;max&lt;/span&gt;(mpg)) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;arrange&lt;/span&gt;(cyl)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 11
+## # Groups:   cyl [3]
+##     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+## 1  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1
+## 2  21.4     6 258     110  3.08  3.22  19.4     1     0     3     1
+## 3  19.2     8 400     175  3.08  3.84  17.0     0     0     3     2&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;sql-3&quot;&gt;SQL&lt;/h3&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode sql&quot;&gt;&lt;code class=&quot;sourceCode sql&quot;&gt;&lt;span class=&quot;kw&quot;&gt;SELECT&lt;/span&gt;      t1.*
+&lt;span class=&quot;kw&quot;&gt;FROM&lt;/span&gt;        ( 
+    &lt;span class=&quot;kw&quot;&gt;SELECT&lt;/span&gt;  *, &lt;span class=&quot;fu&quot;&gt;rank&lt;/span&gt;() &lt;span class=&quot;kw&quot;&gt;OVER&lt;/span&gt; (&lt;span class=&quot;kw&quot;&gt;partition&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;BY&lt;/span&gt; cyl &lt;span class=&quot;kw&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;BY&lt;/span&gt; mpg &lt;span class=&quot;kw&quot;&gt;DESC&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;AS&lt;/span&gt; rnk
+    &lt;span class=&quot;kw&quot;&gt;FROM&lt;/span&gt;    mtcars
+) t1
+&lt;span class=&quot;kw&quot;&gt;WHERE&lt;/span&gt;       rnk = &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;kw&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;BY&lt;/span&gt;    cyl&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;두-필드의-문자열-붙인-파생필드-만들기&quot;&gt;두 필드의 문자열 붙인 파생필드 만들기&lt;/h2&gt;
+&lt;h3 id=&quot;dplyr-4&quot;&gt;dplyr&lt;/h3&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;mtcars %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;select&lt;/span&gt;(vs, am) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;mutate&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;new =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;paste0&lt;/span&gt;(vs, &lt;span class=&quot;st&quot;&gt;&amp;quot;+&amp;quot;&lt;/span&gt;, am))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##    vs am new
+## 1   0  1 0+1
+## 2   0  1 0+1
+## 3   1  1 1+1
+## 4   1  0 1+0
+## 5   0  0 0+0
+## 6   1  0 1+0
+## 7   0  0 0+0
+## 8   1  0 1+0
+## 9   1  0 1+0
+## 10  1  0 1+0
+## 11  1  0 1+0
+## 12  0  0 0+0
+## 13  0  0 0+0
+## 14  0  0 0+0
+## 15  0  0 0+0
+## 16  0  0 0+0
+## 17  0  0 0+0
+## 18  1  1 1+1
+## 19  1  1 1+1
+## 20  1  1 1+1
+## 21  1  0 1+0
+## 22  0  0 0+0
+## 23  0  0 0+0
+## 24  0  0 0+0
+## 25  0  0 0+0
+## 26  1  1 1+1
+## 27  0  1 0+1
+## 28  1  1 1+1
+## 29  0  1 0+1
+## 30  0  1 0+1
+## 31  0  1 0+1
+## 32  1  1 1+1&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;sql-4&quot;&gt;SQL&lt;/h3&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode sql&quot;&gt;&lt;code class=&quot;sourceCode sql&quot;&gt;&lt;span class=&quot;kw&quot;&gt;SELECT&lt;/span&gt;      vs, am, vs || &lt;span class=&quot;st&quot;&gt;&amp;#39;+&amp;#39;&lt;/span&gt; || am &lt;span class=&quot;kw&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;new&lt;/span&gt;
+&lt;span class=&quot;kw&quot;&gt;FROM&lt;/span&gt;        mtcars&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;본 글은 계속해서 내용이 추가되고 보강될 예정이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;정확히 말하면 인프라가 우리의 것이 아닌 상황에서&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Sat, 24 Nov 2018 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2018/11/24/dplyrquery.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2018/11/24/dplyrquery.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>POSCO AI Chanllenge 과제 참여 연구노트</title>
