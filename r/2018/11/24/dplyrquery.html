@@ -140,7 +140,7 @@
 특히 가장 다른점은 데이터의 양(Volume)과 이를 관리하기 위해 조성된 조직, 인프라, 시스템 등이다.</p>
 <p>이전에는 데이터 인프라가 준비되있지 않은 상태에서<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> 작은 분석솔루션 PoC(Proof of Concept) 를 하거나, 의미있는 솔루션을 만들 수 있는 관점으로 분석을 기획된 틀에 맞추거나 근접하면서 진행하였다면,<br />
 지금은 기 확보된 해상도 높은 데이터를 <strong>적시성</strong>있게 집계, 분석하는데 초점이 있다.<br />
-여기서 <strong>적시성</strong>이란 표현하였는데 이전 환경과 가장 다르게 체감되는 다른점을 대표한 단어이다. 비교적 최근의 일어나는 현상들에 대해 관심이 많고, 과거에 비해 최근 적용한 이벤트의 효과가 어떠한 방식으로 나타나는지 모니터링 해야하는 도메인의 고유한 특성이 있기에<br />
+여기서 <strong>적시성</strong>이란 표현을 하였는데 이전 환경과 가장 다르게 체감되는 다른점을 대표한 단어이다. 비교적 최근의 일어나는 현상들에 대해 관심이 많고, 과거에 비해 최근 적용한 이벤트의 효과가 어떠한 방식으로 나타나는지 모니터링 해야하는 도메인의 고유한 특성이 있기에<br />
 'Due Date' 라는 골든타임 안에 인사이트를 공급하는 일이 이전보다 매우 중요하게 느껴지고 있다.<br />
 즉 이렇게 따끈따끈한 데이터(방금 적재된 데이터)를 접근할 수 있는 권한과 환경은 처음이고, 이를 스피드 있게 파악하고 분석하는 것 또한 경험해 보지 못한 일이다.</p>
 <p>Database 단 안에서 따끈따끈한 데이터를 집약하여 인사이트를 확인하고 전달하는 가장 빠른 프로세스를 이용하기 위해<br />
@@ -246,9 +246,12 @@ DB 안의 데이터를 다루어야 하는 상황이 있을때도 <a href="https
 ## 9     5    4
 ## 10    5    6
 ## 11    5    8</code></pre>
-<p>와 같은 결과를 반환하는 Query 를 짜면 아래와 같다.</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">SELECT</span>  <span class="kw">DISTINCT</span> gear, carb
-<span class="kw">FROM</span>    mtcars;</code></pre></div>
+<p>와 같은 결과를 반환하는 Query 는 아래등이 있다.</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">SELECT</span>      <span class="kw">DISTINCT</span> gear, carb
+<span class="kw">FROM</span>        mtcars;</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">SELECT</span>      gear, carb
+<span class="kw">FROM</span>        mtcars
+<span class="kw">GROUP</span> <span class="kw">BY</span>    gear, carb;</code></pre></div>
 <p><br><br></p>
 <h2 id="샘플링">샘플링</h2>
 <p>일부 샘플만 확인 혹은 추출하기 위해선 <code>sample_n()</code>, <code>sample_frac()</code> 등을 사용할 수 있다.<br />
@@ -257,10 +260,10 @@ SQL 에선 어떻게 할 수 있을지 궁금했다.</p>
 <p>dplyr 를 이용할 때 mtcars 에서 단 3건의 샘플만을 추출하고 싶을 경우</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mtcars %&gt;%<span class="st"> </span>
 <span class="st">    </span><span class="kw">sample_n</span>(<span class="dv">3</span>)</code></pre></div>
-<pre><code>##                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
-## Hornet 4 Drive   21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-## Dodge Challenger 15.5   8  318 150 2.76 3.520 16.87  0  0    3    2
-## Volvo 142E       21.4   4  121 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+<pre><code>##              mpg cyl  disp hp drat    wt  qsec vs am gear carb
+## Fiat X1-9   27.3   4  79.0 66 4.08 1.935 18.90  1  1    4    1
+## Honda Civic 30.4   4  75.7 52 4.93 1.615 18.52  1  1    4    2
+## Merc 240D   24.4   4 146.7 62 3.69 3.190 20.00  1  0    4    2</code></pre>
 <h3 id="sql-1">SQL</h3>
 <p>SQL 에선 랜덤인덱스를 통한 정렬 및 3개의 행을 뽑는 과정을 모두 Query 를 통해 명시한다고 생각하면 된다.<br />
 이 과정들을 직접 명시해야하므로 다양한 케이스의 방법들이 존재할 수 있다고 생각했는데, <code>NEWID()</code> 로 랜덤인덱스를 부여하여 샘플링 하는 아래의 방법을 선호하게 되었다.</p>
@@ -303,11 +306,12 @@ SQL 에선 어떻게 할 수 있을지 궁금했다.</p>
 <h3 id="sql-3">SQL</h3>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">SELECT</span>      t1.*
 <span class="kw">FROM</span>        ( 
-    <span class="kw">SELECT</span>  *, <span class="fu">rank</span>() <span class="kw">OVER</span> (<span class="kw">partition</span> <span class="kw">BY</span> cyl <span class="kw">ORDER</span> <span class="kw">BY</span> mpg <span class="kw">DESC</span>) <span class="kw">AS</span> rnk
+    <span class="kw">SELECT</span>  *, <span class="fu">ROW_NUMBER</span>() <span class="kw">OVER</span>(<span class="kw">PARTITION</span> <span class="kw">BY</span> cyl <span class="kw">ORDER</span> <span class="kw">BY</span> mpg <span class="kw">DESC</span>) <span class="kw">AS</span> rnk
     <span class="kw">FROM</span>    mtcars
 ) t1
 <span class="kw">WHERE</span>       rnk = <span class="dv">1</span>
 <span class="kw">ORDER</span> <span class="kw">BY</span>    cyl</code></pre></div>
+<p><code>ROW_NUMBER()</code> 대신 <code>RANK()</code> 를 사용해도 같은 결과를 반환한다.</p>
 <p><br><br></p>
 <h2 id="두-필드의-문자열-붙인-파생필드-만들기">두 필드의 문자열 붙인 파생필드 만들기</h2>
 <h3 id="dplyr-4">dplyr</h3>

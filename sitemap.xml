@@ -5,8 +5,8 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 24 Nov 2018 19:24:08 +0900</pubDate>
-    <lastBuildDate>Sat, 24 Nov 2018 19:24:08 +0900</lastBuildDate>
+    <pubDate>Wed, 05 Dec 2018 10:34:15 +0900</pubDate>
+    <lastBuildDate>Wed, 05 Dec 2018 10:34:15 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -16,7 +16,7 @@
 특히 가장 다른점은 데이터의 양(Volume)과 이를 관리하기 위해 조성된 조직, 인프라, 시스템 등이다.&lt;/p&gt;
 &lt;p&gt;이전에는 데이터 인프라가 준비되있지 않은 상태에서&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; 작은 분석솔루션 PoC(Proof of Concept) 를 하거나, 의미있는 솔루션을 만들 수 있는 관점으로 분석을 기획된 틀에 맞추거나 근접하면서 진행하였다면,&lt;br /&gt;
 지금은 기 확보된 해상도 높은 데이터를 &lt;strong&gt;적시성&lt;/strong&gt;있게 집계, 분석하는데 초점이 있다.&lt;br /&gt;
-여기서 &lt;strong&gt;적시성&lt;/strong&gt;이란 표현하였는데 이전 환경과 가장 다르게 체감되는 다른점을 대표한 단어이다. 비교적 최근의 일어나는 현상들에 대해 관심이 많고, 과거에 비해 최근 적용한 이벤트의 효과가 어떠한 방식으로 나타나는지 모니터링 해야하는 도메인의 고유한 특성이 있기에&lt;br /&gt;
+여기서 &lt;strong&gt;적시성&lt;/strong&gt;이란 표현을 하였는데 이전 환경과 가장 다르게 체감되는 다른점을 대표한 단어이다. 비교적 최근의 일어나는 현상들에 대해 관심이 많고, 과거에 비해 최근 적용한 이벤트의 효과가 어떠한 방식으로 나타나는지 모니터링 해야하는 도메인의 고유한 특성이 있기에&lt;br /&gt;
 &#39;Due Date&#39; 라는 골든타임 안에 인사이트를 공급하는 일이 이전보다 매우 중요하게 느껴지고 있다.&lt;br /&gt;
 즉 이렇게 따끈따끈한 데이터(방금 적재된 데이터)를 접근할 수 있는 권한과 환경은 처음이고, 이를 스피드 있게 파악하고 분석하는 것 또한 경험해 보지 못한 일이다.&lt;/p&gt;
 &lt;p&gt;Database 단 안에서 따끈따끈한 데이터를 집약하여 인사이트를 확인하고 전달하는 가장 빠른 프로세스를 이용하기 위해&lt;br /&gt;
@@ -122,9 +122,12 @@ DB 안의 데이터를 다루어야 하는 상황이 있을때도 &lt;a href=&qu
 ## 9     5    4
 ## 10    5    6
 ## 11    5    8&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;와 같은 결과를 반환하는 Query 를 짜면 아래와 같다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode sql&quot;&gt;&lt;code class=&quot;sourceCode sql&quot;&gt;&lt;span class=&quot;kw&quot;&gt;SELECT&lt;/span&gt;  &lt;span class=&quot;kw&quot;&gt;DISTINCT&lt;/span&gt; gear, carb
-&lt;span class=&quot;kw&quot;&gt;FROM&lt;/span&gt;    mtcars;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;와 같은 결과를 반환하는 Query 는 아래등이 있다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode sql&quot;&gt;&lt;code class=&quot;sourceCode sql&quot;&gt;&lt;span class=&quot;kw&quot;&gt;SELECT&lt;/span&gt;      &lt;span class=&quot;kw&quot;&gt;DISTINCT&lt;/span&gt; gear, carb
+&lt;span class=&quot;kw&quot;&gt;FROM&lt;/span&gt;        mtcars;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode sql&quot;&gt;&lt;code class=&quot;sourceCode sql&quot;&gt;&lt;span class=&quot;kw&quot;&gt;SELECT&lt;/span&gt;      gear, carb
+&lt;span class=&quot;kw&quot;&gt;FROM&lt;/span&gt;        mtcars
+&lt;span class=&quot;kw&quot;&gt;GROUP&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;BY&lt;/span&gt;    gear, carb;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;샘플링&quot;&gt;샘플링&lt;/h2&gt;
 &lt;p&gt;일부 샘플만 확인 혹은 추출하기 위해선 &lt;code&gt;sample_n()&lt;/code&gt;, &lt;code&gt;sample_frac()&lt;/code&gt; 등을 사용할 수 있다.&lt;br /&gt;
@@ -133,10 +136,10 @@ SQL 에선 어떻게 할 수 있을지 궁금했다.&lt;/p&gt;
 &lt;p&gt;dplyr 를 이용할 때 mtcars 에서 단 3건의 샘플만을 추출하고 싶을 경우&lt;/p&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;mtcars %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
 &lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;sample_n&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;pre&gt;&lt;code&gt;##                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
-## Hornet 4 Drive   21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-## Dodge Challenger 15.5   8  318 150 2.76 3.520 16.87  0  0    3    2
-## Volvo 142E       21.4   4  121 109 4.11 2.780 18.60  1  1    4    2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##              mpg cyl  disp hp drat    wt  qsec vs am gear carb
+## Fiat X1-9   27.3   4  79.0 66 4.08 1.935 18.90  1  1    4    1
+## Honda Civic 30.4   4  75.7 52 4.93 1.615 18.52  1  1    4    2
+## Merc 240D   24.4   4 146.7 62 3.69 3.190 20.00  1  0    4    2&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&quot;sql-1&quot;&gt;SQL&lt;/h3&gt;
 &lt;p&gt;SQL 에선 랜덤인덱스를 통한 정렬 및 3개의 행을 뽑는 과정을 모두 Query 를 통해 명시한다고 생각하면 된다.&lt;br /&gt;
 이 과정들을 직접 명시해야하므로 다양한 케이스의 방법들이 존재할 수 있다고 생각했는데, &lt;code&gt;NEWID()&lt;/code&gt; 로 랜덤인덱스를 부여하여 샘플링 하는 아래의 방법을 선호하게 되었다.&lt;/p&gt;
@@ -179,11 +182,12 @@ SQL 에선 어떻게 할 수 있을지 궁금했다.&lt;/p&gt;
 &lt;h3 id=&quot;sql-3&quot;&gt;SQL&lt;/h3&gt;
 &lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode sql&quot;&gt;&lt;code class=&quot;sourceCode sql&quot;&gt;&lt;span class=&quot;kw&quot;&gt;SELECT&lt;/span&gt;      t1.*
 &lt;span class=&quot;kw&quot;&gt;FROM&lt;/span&gt;        ( 
-    &lt;span class=&quot;kw&quot;&gt;SELECT&lt;/span&gt;  *, &lt;span class=&quot;fu&quot;&gt;rank&lt;/span&gt;() &lt;span class=&quot;kw&quot;&gt;OVER&lt;/span&gt; (&lt;span class=&quot;kw&quot;&gt;partition&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;BY&lt;/span&gt; cyl &lt;span class=&quot;kw&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;BY&lt;/span&gt; mpg &lt;span class=&quot;kw&quot;&gt;DESC&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;AS&lt;/span&gt; rnk
+    &lt;span class=&quot;kw&quot;&gt;SELECT&lt;/span&gt;  *, &lt;span class=&quot;fu&quot;&gt;ROW_NUMBER&lt;/span&gt;() &lt;span class=&quot;kw&quot;&gt;OVER&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;PARTITION&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;BY&lt;/span&gt; cyl &lt;span class=&quot;kw&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;BY&lt;/span&gt; mpg &lt;span class=&quot;kw&quot;&gt;DESC&lt;/span&gt;) &lt;span class=&quot;kw&quot;&gt;AS&lt;/span&gt; rnk
     &lt;span class=&quot;kw&quot;&gt;FROM&lt;/span&gt;    mtcars
 ) t1
 &lt;span class=&quot;kw&quot;&gt;WHERE&lt;/span&gt;       rnk = &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;
 &lt;span class=&quot;kw&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;BY&lt;/span&gt;    cyl&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;ROW_NUMBER()&lt;/code&gt; 대신 &lt;code&gt;RANK()&lt;/code&gt; 를 사용해도 같은 결과를 반환한다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2 id=&quot;두-필드의-문자열-붙인-파생필드-만들기&quot;&gt;두 필드의 문자열 붙인 파생필드 만들기&lt;/h2&gt;
 &lt;h3 id=&quot;dplyr-4&quot;&gt;dplyr&lt;/h3&gt;
