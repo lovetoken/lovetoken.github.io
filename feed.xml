@@ -5,9 +5,167 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 05 Dec 2018 10:34:15 +0900</pubDate>
-    <lastBuildDate>Wed, 05 Dec 2018 10:34:15 +0900</lastBuildDate>
+    <pubDate>Thu, 03 Jan 2019 23:28:09 +0900</pubDate>
+    <lastBuildDate>Thu, 03 Jan 2019 23:28:09 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;학창시절부터 실질적인 데이터를 접근하기 위해 SQL을 익히는 것은 중요하다는 이야기를 실무를 하시는 분들에게 공통적으로 들어왔었다.&lt;br /&gt;
+데이터를 분석하기 위해서는 분석가가 분석범위로 설정한 데이터를 손에 쥐고 있어야 가능하고, 내 입맛에 맞게 손에 집기 위한 스킬이라는 것이기에 이 말을 매우매우 공감하였었다.&lt;br /&gt;
+하지만 그 당시에 통계적인 학문 자체에 대해 집중적으로 공부하던 &#39;전공&#39;이라는 틀 안에서 노력을 했던 터라 데이터를 굳이 Database 에서 가저와야 할 정도의 필요성을 느낄만한 동기를 가질 수 없었던게 아니었나 회고해 본다.&lt;br /&gt;
+DBMS(DataBases Management System) 안에 있는 데이터를 만나볼 기회는 큰 규모의 프로젝트나, 데이터를 소유하고 있는 회사에서 일을 해 보지 않는 이상 접하기 조차 어려웠던것 아닐까 싶다. (Excel과 같은 스프레드시트로 관리하는게 가장 대중적이고 효율적일테니까)&lt;br /&gt;
+실제로 필자도 위의 생각을 가지고 노력을 했다고 생각했지만, 지금 돌이켜 보면 그 노력은 맹목적이었고&lt;br /&gt;
+저 첫기회를 찾아 접하고 경험하기 까지 걸린 시간이 대학생 막학기 시절 때 이었으니 말이다.&lt;/p&gt;
+&lt;p&gt;모순적이게도 직장을 얻고 관련분야 일을 하면서 SQL을 이용해야하는 참된 이유를 알게 되었고,&lt;br /&gt;
+그 전까지 익히던 SQL이 목적없이 진도빼기 식으로 공부한 것 아닌가 느껴졌다.&lt;/p&gt;
+&lt;p&gt;지금이라도 뒤늦었다 생각하고 목적성 있게 주체적으로 공부해 보기 위해 이런저런 시도들을 해 보고 있다.&lt;br /&gt;
+그 시도중 학창시절당시 DB 를 경험해 보지 못했던 나의 사각지대 환경에 대해서 조금 더 생각들이 많아졌고&lt;br /&gt;
+서버같은 것 없이 로컬상에서도 손쉽게 DB 환경을 구축하여 SQL 을 직접 이용해 볼 수 있는 가벼운 환경을 만들 수 있다면 좋지 않을까 했고, 이 생각을 후배 등에게 전파하기도 용이하겠다는 생각을 덤으로 하면서&lt;br /&gt;
+위의 제목을 주제로한 글을 작성하게 되었다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;sqlite&quot;&gt;&lt;a href=&quot;https://www.sqlite.org/about.html&quot;&gt;SQLite&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;다양한 종류의 데이터베이스들이 있는데&lt;br /&gt;
+관리하여야 할 데이터의 스케일과 특성에 따라 특화되고 강점들이 각기 다른 DB 들이 생기며 현존하는 것 같다.&lt;br /&gt;
+그 중 본 글의 특성(시작하기 쉽고 가벼운)에 맞는 SQLite 이란 DB를 소개하고자 한다.&lt;/p&gt;
+&lt;p&gt;사람들이 컴퓨터를 사용할 때 가장 많이 보고 접하는 것 중 하나가 파일(File)인데&lt;br /&gt;
+이 파일은 컴퓨터에서 정보를 담는 그릇의 가장 대중적인 단위라고 생각한다.&lt;br /&gt;
+때문에 가장 직관적이고 이해하기 쉬운 단위라고 본다.&lt;br /&gt;
+SQLite 라는 DB 는 눈에 보이는 &lt;strong&gt;파일형태&lt;/strong&gt;로 관리가 되기 때문에 거부감이 덜할 것이다.&lt;br /&gt;
+필자는 약 1년전 &lt;a href=&quot;https://lovetoken.gitbooks.io/r-dev-team-open-seminar/content/&quot;&gt;rdevteam&lt;/a&gt; 활동을 하면서 SQLite 를 공유받게 되었고 그때 처음 알게되었다.&lt;/p&gt;
+&lt;p&gt;그리하여&lt;br /&gt;
+본 글에서는 SQLite 라는 파일DB 를 &lt;code&gt;RSQLite&lt;/code&gt; 패키지를 이용해 만들어 보는 것을 주제로 한다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;rsqlite-package-install&quot;&gt;&lt;code&gt;RSQLite&lt;/code&gt; package install&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;RSQLite&lt;/code&gt; 패키지는 R 에서 SQLite 인터페이스를 제공해주는 패키지이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;install.packages&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;RSQLite&amp;quot;&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(RSQLite)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;위의 코드를 통해 패키지를 설치하고 로드한다.&lt;br /&gt;
+또한 R에서 DB 와의 인터페이스 함수를 제공하는 DBI 패키지도 로드한다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(DBI)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;sqlite-가지고-놀아보기&quot;&gt;SQLite 가지고 놀아보기&lt;/h2&gt;
+&lt;p&gt;DB 를 만들기위한 놀이터를 만들것이다. 현 워킹디렉토리에 &lt;code&gt;data&lt;/code&gt; 디렉토리를 만든다.&lt;br /&gt;
+R에서 폴더를 만들수도 있는데 아래 코드를 실행하면 워킹디렉토리를 기준으로 &lt;code&gt;data&lt;/code&gt; 폴더를 생성시킨다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;dir.create&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;data&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;그다음 아래 코드를 실행하게 되면 방금만든 &lt;code&gt;data&lt;/code&gt; 폴더 안에 &lt;code&gt;SQLiteDB.sqlite&lt;/code&gt; 라는 파일이 생성될 것이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;con &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;dbConnect&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;SQLite&lt;/span&gt;(), &lt;span class=&quot;st&quot;&gt;&amp;quot;data/SQLiteDB.sqlite&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이 파일이 파일 DB 이고 이 파일에 연결정보는 &lt;code&gt;con&lt;/code&gt; 으로 관리된다.&lt;br /&gt;
+&lt;code&gt;con&lt;/code&gt; 을 명시하여 데이터테이블을 생성시키고, 삭제하는 실습을 곧 하게 될 것인데&lt;br /&gt;
+그렇게 되면 모두 커넥션이 맺어진 &lt;code&gt;data/SQLiteDB.sqlite&lt;/code&gt; 파일에 적용된다는점을 미리 말해 둔다.&lt;/p&gt;
+&lt;h3 id=&quot;테이블-생성하기&quot;&gt;테이블 생성하기&lt;/h3&gt;
+&lt;p&gt;가지고 놀아볼 데이터를 R에서 생성시켜보자 정말 별거 아닌 데이터지만 쓸데없이 크게 (&lt;code&gt;n = 100000&lt;/code&gt;) 만들어보는 코드이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(stringi)
+n =&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;100000&lt;/span&gt;
+data &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;data.frame&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;id =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;stri_rand_strings&lt;/span&gt;(n, &lt;span class=&quot;dv&quot;&gt;12&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;col1 =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;rnorm&lt;/span&gt;(n), &lt;span class=&quot;dt&quot;&gt;col2 =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;runif&lt;/span&gt;(n)) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;tbl_df
+data&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 100,000 x 3
+##    id             col1  col2
+##    &amp;lt;chr&amp;gt;         &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+##  1 rIE8F9sSaYTg -0.584 0.794
+##  2 VdURMrRBzJnK  1.76  0.444
+##  3 XPalm4OzhTqg  0.680 0.543
+##  4 rDfHVMnc2UxG -0.262 0.804
+##  5 xuRKywMF02vA  0.323 0.938
+##  6 GDsDVNFjHApd -0.818 0.508
+##  7 1zuKONsUMLTw -0.737 0.480
+##  8 VlCzuSv2zIwv  0.320 0.157
+##  9 X4H0KoPkb3Ou  0.821 0.199
+## 10 GbDJhiPZpHJC -0.337 0.456
+## # ... with 99,990 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위의 데이터는 지금 R session 에 있는 장난감 데이터이다.&lt;br /&gt;
+이 장난감이 R 이라는 놀이터 공간에만 있을 뿐이다.&lt;br /&gt;
+우리는 이 장난감을 그대로 SQLite 데이터베이스 라는 놀이터에도 복사해 장난감을 납두고 싶다고 하자.&lt;br /&gt;
+데이터베이스 라는 놀이터는 보통 Database 혹은 Schema 를 상위 단위로 하고, 그 하위 개념을 Table 로 둔다.&lt;br /&gt;
+우리가 R 에서 만든 장난감은 data.frame 형식인데 이것이 Table 과 매우 유사한 형태로 호환이 가능하므로 결국 데이터베이스 하위개념인 Table 안에 얼마든지 복사가 가능하다.&lt;br /&gt;
+SQLite DB안에 테이블 단위로 이 데이터를 저장하고 싶은 경우&lt;br /&gt;
+DBI 패키지에서 제공하는 &lt;code&gt;dbWriteTable()&lt;/code&gt; 함수를 이용해 연결정보가 담긴 &lt;code&gt;con&lt;/code&gt; 을 안에 명시해주고&lt;br /&gt;
+저장하고 싶은 대상과 명칭을 입력하면 된다.&lt;/p&gt;
+&lt;p&gt;즉 아래 코드를 실행하면 된다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;dbWriteTable&lt;/span&gt;(con, &lt;span class=&quot;st&quot;&gt;&amp;quot;data&amp;quot;&lt;/span&gt;, data)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이것이 실행되면 현 상황은 SQLite DB 안에 &lt;code&gt;data&lt;/code&gt; 라는 테이블이 생성된 상태이다.&lt;/p&gt;
+&lt;p&gt;Database 에는 다수의 테이블을 입력할 수 있다.&lt;br /&gt;
+R의 빌트인 데이터 &lt;code&gt;cars&lt;/code&gt; 와 &lt;code&gt;iris&lt;/code&gt; 를 더 저장해보자.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;dbWriteTable&lt;/span&gt;(con, &lt;span class=&quot;st&quot;&gt;&amp;quot;cars&amp;quot;&lt;/span&gt;, cars)
+&lt;span class=&quot;kw&quot;&gt;dbWriteTable&lt;/span&gt;(con, &lt;span class=&quot;st&quot;&gt;&amp;quot;iris&amp;quot;&lt;/span&gt;, iris)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;저장이 정말 잘 되었는지 확인해 보고싶은데&lt;br /&gt;
+그전에 테이블 하나 삭제만 더 해보고 그다음에 확인해 보겠다.&lt;/p&gt;
+&lt;h3 id=&quot;테이블-삭제하기&quot;&gt;테이블 삭제하기&lt;/h3&gt;
+&lt;p&gt;마지막에 실행하여 추가한 &lt;code&gt;iris&lt;/code&gt; 데이터를 삭제해보자&lt;br /&gt;
+&lt;code&gt;dbRemoveTable()&lt;/code&gt; 함수가 테이블 삭제를 해 준다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;dbRemoveTable&lt;/span&gt;(con, &lt;span class=&quot;st&quot;&gt;&amp;quot;iris&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;sql-구문-실행하여-데이터-읽어들이기&quot;&gt;SQL 구문 실행하여 데이터 읽어들이기&lt;/h3&gt;
+&lt;p&gt;위의 실습으로 &lt;code&gt;data&lt;/code&gt;, &lt;code&gt;cars&lt;/code&gt;, &lt;code&gt;iris&lt;/code&gt; 3개의 테이블이 저장되었다가 &lt;code&gt;iris&lt;/code&gt; 테이블은 삭제되었을 것이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;dbListTables&lt;/span&gt;(con)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;cars&amp;quot; &amp;quot;data&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;그렇다 이처럼 두개테이블만이 확인된다.&lt;/p&gt;
+&lt;p&gt;각 테이블의 헤더 샘플을 각각 SQL 구문을 통해 읽어들여 보겠다.&lt;br /&gt;
+SQL 의 &lt;code&gt;LIMIT&lt;/code&gt; 을 통해 10개만 확인해 보았다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;dbGetQuery&lt;/span&gt;(con, &lt;span class=&quot;st&quot;&gt;&amp;quot;SELECT * FROM data LIMIT 10;&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##              id        col1      col2
+## 1  1jnj6MuXod5e  0.66293612 0.7739772
+## 2  Vlm62uuOkaSw -0.59463920 0.4615983
+## 3  aYnQ6gTp3PiU  0.02231377 0.5409450
+## 4  Waf4r9O3ZFwT -1.27770275 0.6610312
+## 5  vpHSpkLLGhaZ -0.05661095 0.6884008
+## 6  RX0hmr2dsIu5 -0.02835238 0.9461622
+## 7  vS6zAovPydaw -0.38382133 0.3351209
+## 8  ltAX54IAsIq9  1.69635626 0.9901561
+## 9  3N1AUeZb4JNa  0.37225877 0.9484985
+## 10 RBnWtY5PKoHG  0.40751041 0.8362601&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;dbGetQuery&lt;/span&gt;(con, &lt;span class=&quot;st&quot;&gt;&amp;quot;SELECT * FROM cars LIMIT 10;&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##    speed dist
+## 1      4    2
+## 2      4   10
+## 3      7    4
+## 4      7   22
+## 5      8   16
+## 6      9   10
+## 7     10   18
+## 8     10   26
+## 9     10   34
+## 10    11   17&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;iris 테이블을 확인해 볼 경우&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;dbGetQuery&lt;/span&gt;(con, &lt;span class=&quot;st&quot;&gt;&amp;quot;SELECT * FROM iris LIMIT 10;&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;Error in result_create(conn@ptr, statement) : no such table: iris&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;삭제가 되었기 때문에 테이블을 찾을 수 없다는 에러가 확인된다.&lt;/p&gt;
+&lt;p&gt;실감을 위해 지금까지 실습한 R 환경에서 잠깐 벗어나&lt;br /&gt;
+데이터베이스 관리도구등으로 &lt;code&gt;data/SQLiteDB.sqlite&lt;/code&gt; 에 연결하여 확인하면 이런모습이다. (&lt;a href=&quot;https://dbeaver.io/&quot;&gt;DBeaver&lt;/a&gt; 이라는 SQL 클라이언트를 예제로 한 사진이다)&lt;/p&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/RSQLite1.png&quot;&gt;
+&lt;/center&gt;
+&lt;p&gt;이처럼 R상에서 SQL 구문을 실행해 볼 수 도 있고&lt;br /&gt;
+위 사진처럼 SQL 클라이언트에서도 (당연히)얼마든지 SQL &#39;질의&#39;를 통해 원하는 데이터를 &#39;답변&#39; 받을 수 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;덧붙여&quot;&gt;덧붙여&lt;/h2&gt;
+&lt;p&gt;DBI package 는 R상에서 DB 간 연결을 돕는 표준화된 함수를 제공한다.&lt;br /&gt;
+그리고 이 틀 안에서 DB의 종류별로 connection 방법이 각기 조금씩 다른부분만 커스터마이징 하는 방식이다.&lt;br /&gt;
+본 글의 예제 DB 는 SQLite 이었다.&lt;br /&gt;
+SQLite 간 연결은 &amp;quot;RSQLite&amp;quot; package 의 도움을 받고 연결 후 연결객체&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;를 사용한 DB 간 통신은 모두 DBI 표준함수를 이용하는 방식이다.&lt;br /&gt;
+위의 실습에서 사용했던 &lt;code&gt;dbWriteTable()&lt;/code&gt;, &lt;code&gt;dbRemoveTable()&lt;/code&gt;, &lt;code&gt;dbListTables()&lt;/code&gt;, &lt;code&gt;dbGetQuery()&lt;/code&gt; 함수들 모두 DBI 패키지 함수들이다.&lt;/p&gt;
+&lt;p&gt;만약 SQLite 가 아닌 다른 DB 이면 그 DB 에 맞는 패키지가 보통 존재한다.&lt;br /&gt;
+예를 들면&lt;br /&gt;
+Impala 로 연결해야할 땐 &amp;quot;RImpala&amp;quot; 라는 패키지를,&lt;br /&gt;
+Presto DB 에 연결해야 할 땐 &amp;quot;RPresto&amp;quot; 패키지를,&lt;br /&gt;
+MySQL 과 연결해야할 땐 &amp;quot;RMySQL&amp;quot; 패키지를 이용했었다.&lt;br /&gt;
+odbc 혹은 jdbc 규격으로 연결해야할 경우 각각 &amp;quot;RODBC&amp;quot;, &amp;quot;RJDBC&amp;quot; 의 패키지를 이용해 각기 다른 방식으로 커넥션을 맺고, 그 커넥션 정보가 담긴 연결객체를 DBI 패키지와 조합하여 사용하는 방식 또한 마찬가지이다.&lt;/p&gt;
+&lt;p&gt;이를 볼 때 DBI package 는 여러가지 데이터베이스 메니지먼트 시스템(DBMS)들에 대해서 표준화 되고 동일기능을 가진 함수로 실행되기 위한 방향성이 아주 오래전 부터 있던 패키지인 것 같다.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;지금 실습의 경우 &lt;code&gt;con&lt;/code&gt; 을 일컫는다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Thu, 03 Jan 2019 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2019/01/03/RSQLite.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2019/01/03/RSQLite.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>dplyr 문법을 통한 전처리를 SQL 로의 스위칭</title>
@@ -305,7 +463,7 @@ SQL 에선 어떻게 할 수 있을지 궁금했다.&lt;/p&gt;
 &lt;p&gt;제공받은 정답지 데이터와 시험지 데이터의 rawdata 샘플&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;제공받은 데이터 외의 다른 데이터를 이용해도 된다는 주최측의 안내를 받고 자체적으로 추가 수집한 데이터도 있었으며&lt;br /&gt;
-그 데이터는 포항 앞바다의 부이[^해상의 기상 상황을 관측하는 장비를 의미한다]로 부터 수집된 데이터이다.[^출처는 &lt;a href=&quot;http://sts.kma.go.kr/&quot;&gt;기상청 국가 기후 데이터 센터&lt;/a&gt;이다]&lt;/p&gt;
+그 데이터는 포항 앞바다의 부이&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;로 부터 수집된 데이터이다.&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 8,541 x 14
 ##    location date  wind_speed wind_direction  GUST local_air_press~ humidity
 ##       &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;          &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;            &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;
@@ -459,6 +617,13 @@ k Fold 교차검증으로[^상황에 따라 K를 8, 10 등으로 바꾸어서 �
 EDA 를 꽤 정성들여 해 본것이 인상깊었다. (사실 EDA 는 하면 할수록 욕심이 생겨 끝도 없이 해 볼 수 있는 과정이라 생각하는데.. 제한시간이 있었기에 어느 단계에서 멈출수 있었다는 건 함정..)&lt;br /&gt;
 이는 Feature engineering 측면에서 다양한 실험케이스를 만들어 분석을 풍부하게 해 볼 수 있는 요인으로 작용했지만&lt;br /&gt;
 본 과제의 결론은 Full model(가용 가능한 설명변수를 모두 이용하는 모델)이 채택이 되었었다.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;해상의 기상 상황을 관측하는 장비를 의미한다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;출처는 &lt;a href=&quot;http://sts.kma.go.kr/&quot;&gt;기상청 국가 기후 데이터 센터&lt;/a&gt;이다&lt;a href=&quot;#fnref2&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
 </description>
         <pubDate>Wed, 19 Sep 2018 00:00:00 +0900</pubDate>
         <link>https://lovetoken.github.io/machinelearning/2018/09/19/posco_ai.html</link>
@@ -1229,52 +1394,6 @@ sp class 로 이루어진 GIS 테이블들을 좌표통일 후 매쉬업 할 수
         
         
         <category>R</category>
-        
-      </item>
-    
-      <item>
-        <title>R에서 조건화 그래프(Conditioning plot) 를 출력하기 위한 ggplot2::faect_wrap(), coplot() 함수에 대하여</title>
-        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;R에서 기본 그래픽스로 제공하는 도구 중&lt;br /&gt;
-요인별로 구분된 산점도를 그릴때 심플하게 이용할 수 있는 &lt;code&gt;coplot()&lt;/code&gt; 함수와 ggplot2 package 에서 &lt;code&gt;coplot()&lt;/code&gt; 함수와 비슷한 성격의 &lt;code&gt;faect_wrap()&lt;/code&gt; 함수에 대해 알아보고자 한다.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;coplot()&lt;/code&gt; 도움말을 보면 &amp;quot;Conditioning plots&amp;quot; 즉 &amp;quot;조건화 그래프&amp;quot; 라는 제목으로 사용법이 설명되어 있다.&lt;br /&gt;
-조건화 그래프는 언제 필요로 할까?&lt;/p&gt;
-&lt;p&gt;요인이 많은 데이터들을 산점도를 이용하여 시각화 할 때 분간이 쉽지 않아 요인별 특색을 찾기가 어려운 경우가 있다.&lt;br /&gt;
-예시를 통해 설명을 이어가겠다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;ggplot2-package-에서의-faect_wrap-faect_grid-함수&quot;&gt;ggplot2 package 에서의 &lt;code&gt;faect_wrap()&lt;/code&gt;, &lt;code&gt;faect_grid()&lt;/code&gt; 함수&lt;/h2&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;ggplot&lt;/span&gt;(diamonds, &lt;span class=&quot;kw&quot;&gt;aes&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; carat, &lt;span class=&quot;dt&quot;&gt;y =&lt;/span&gt; price, &lt;span class=&quot;dt&quot;&gt;color =&lt;/span&gt; cut)) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
-&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;geom_point&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;alpha =&lt;/span&gt; .&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
-&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;labs&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;color =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;)
-
-p1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/coplot1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;위 산점도를 간단히 설명하면&lt;br /&gt;
-세공 상태별 다이아몬드의 가격과, 캐럿(다이아몬드의 무게)의 산점도를 &lt;code&gt;ggplot2::daimonds&lt;/code&gt; 데이터셋을 이용해 출력한 결과이다.&lt;br /&gt;
-결과물만을 보았을 때 세공 상태별 가격과, 캐럿의 분포를 뚜렷하게 확인 하기가 쉽지 않다.&lt;br /&gt;
-종류가 5가지나 되고 데이터의 수도 많아지면서 난해하진 이 그래프는 캐럿과 가격이 정비례한다는 정보는 인지하기 쉬우나, 세공상태별로 특색의 차이를 인지하기는 매우 어렵다.&lt;/p&gt;
-&lt;p&gt;세공상태별로의 특색을 눈으로 확인하고 싶다면 아래처럼 요인별로 산점도를 따로 나누는 것도 좋은 방법일 것이다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;p1 +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;facet_wrap&lt;/span&gt;(~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cut, &lt;span class=&quot;dt&quot;&gt;nrow =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/coplot2.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;첫번째 그래프에서는 알기 쉽지 않던 요인별 분포를 적나라 하게 확인할 수 있게 된다.&lt;br /&gt;
-가공상태가 좋지 않은 Fair 군의 다이아몬드 가격분포가 다른 군의 분포와 차이가 조금 있다는것을 첫번째 그래프로는 파악할 수 없었을 것이다.&lt;/p&gt;
-&lt;p&gt;요인별로 패널을 나누어 시각화 하는 스킬들은 도구별로 방법은 다르더라도 기본적으로 제공하는 편이며&lt;br /&gt;
-위의 예시인 ggplot2 package 에서는 &lt;code&gt;faect_wrap()&lt;/code&gt;, &lt;code&gt;faect_grid()&lt;/code&gt; 함수등을 이용하여 구현이 가능하다.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;coplot-함수&quot;&gt;&lt;code&gt;coplot()&lt;/code&gt; 함수&lt;/h2&gt;
-&lt;p&gt;ggplot2 package 가 아닌 기본 그래픽스에서 조건화 그래프를 그리려면 아래처럼 &lt;code&gt;coplot()&lt;/code&gt; 함수를 이용하여 간단하게 볼 수 있다.&lt;/p&gt;
-&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;coplot&lt;/span&gt;(price ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;carat |&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;cut, &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; diamonds)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/coplot3.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;수학에서 조건(given) 을 &amp;quot;bar&amp;quot;(|) 로 표기하는것을 생각하고 formula 를 작성해 이용하면 되겠다.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 02 Apr 2018 00:00:00 +0900</pubDate>
-        <link>https://lovetoken.github.io/r/data_visualization/2018/04/02/coplot.html</link>
-        <guid isPermaLink="true">https://lovetoken.github.io/r/data_visualization/2018/04/02/coplot.html</guid>
-        
-        
-        <category>R</category>
-        
-        <category>Data_Visualization</category>
         
       </item>
     
