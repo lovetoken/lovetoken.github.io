@@ -5,9 +5,205 @@
     <description></description>
     <link>https://lovetoken.github.io/</link>
     <atom:link href="https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 03 Jan 2019 23:28:09 +0900</pubDate>
-    <lastBuildDate>Thu, 03 Jan 2019 23:28:09 +0900</lastBuildDate>
+    <pubDate>Sun, 24 Feb 2019 01:21:35 +0900</pubDate>
+    <lastBuildDate>Sun, 24 Feb 2019 01:21:35 +0900</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;발렌타인 데이 무렵 즈음 dplyr 패키지가 0.8.0 version 으로 업데이트 되면서 요인 별 집계(group by)의 편의성이 더 증대 되었다.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.tidyverse.org/articles/2018/12/dplyr-0-8-0-release-candidate/&quot;&gt;Tidyverse 에서 올라온 dplyr 0.8.0 버전 릴리즈에 대한 소개글&lt;/a&gt;에 신규 함수들에 대한 튜토리얼도 간략히 제시가 되어 있었는데&lt;br /&gt;
+따라하다 보니 더더욱 편해진 느낌을 받았다.&lt;/p&gt;
+&lt;p&gt;Grouping 의 메이저한 변화는 아래의 신규함수 이었으며&lt;br /&gt;
+실험적으로 도입 및 관리해보는 함수라고 라벨링되어 있었다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;group_nest()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;group_split()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;group_cols()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;group_trim()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;group_map()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;group_walk()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;이 중 다살펴보진 못했고 &lt;code&gt;group_map()&lt;/code&gt; 의 활용예제를 생각해 보는 시간으로 글을 적어보았다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;group_nest-group_split&quot;&gt;&lt;code&gt;group_nest()&lt;/code&gt;, &lt;code&gt;group_split()&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;group_map()&lt;/code&gt; 활용예제를 적기 전에 이 두개 신규함수는 그래도 언급해보고 싶었다.&lt;/p&gt;
+&lt;p&gt;요인별 데이터를 묶어서 관리할 수 있는 &lt;code&gt;group_nest()&lt;/code&gt;&lt;br /&gt;
+요인별로 데이터를 나누어서 볼 수 있는 &lt;code&gt;group_split()&lt;/code&gt; 의 새로운 함수가 요인별 현황을 간단히 보여주는데 쓰임이 좋을 거라 기대되었다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# group_nest() 를 통해 요인별로 묶기&lt;/span&gt;
+mtcars %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;group_nest&lt;/span&gt;(cyl)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 2
+##     cyl data              
+##   &amp;lt;dbl&amp;gt; &amp;lt;list&amp;gt;            
+## 1     4 &amp;lt;tibble [11 x 10]&amp;gt;
+## 2     6 &amp;lt;tibble [7 x 10]&amp;gt; 
+## 3     8 &amp;lt;tibble [14 x 10]&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# group_split() 를 통해 요인별 나누어서 데이터 보기&lt;/span&gt;
+mtcars %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;group_split&lt;/span&gt;(cyl)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [[1]]
+## # A tibble: 11 x 11
+##      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+##  1  22.8     4 108      93  3.85  2.32  18.6     1     1     4     1
+##  2  24.4     4 147.     62  3.69  3.19  20       1     0     4     2
+##  3  22.8     4 141.     95  3.92  3.15  22.9     1     0     4     2
+##  4  32.4     4  78.7    66  4.08  2.2   19.5     1     1     4     1
+##  5  30.4     4  75.7    52  4.93  1.62  18.5     1     1     4     2
+##  6  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1
+##  7  21.5     4 120.     97  3.7   2.46  20.0     1     0     3     1
+##  8  27.3     4  79      66  4.08  1.94  18.9     1     1     4     1
+##  9  26       4 120.     91  4.43  2.14  16.7     0     1     5     2
+## 10  30.4     4  95.1   113  3.77  1.51  16.9     1     1     5     2
+## 11  21.4     4 121     109  4.11  2.78  18.6     1     1     4     2
+## 
+## [[2]]
+## # A tibble: 7 x 11
+##     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+## 1  21       6  160    110  3.9   2.62  16.5     0     1     4     4
+## 2  21       6  160    110  3.9   2.88  17.0     0     1     4     4
+## 3  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1
+## 4  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1
+## 5  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
+## 6  17.8     6  168.   123  3.92  3.44  18.9     1     0     4     4
+## 7  19.7     6  145    175  3.62  2.77  15.5     0     1     5     6
+## 
+## [[3]]
+## # A tibble: 14 x 11
+##      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+##  1  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2
+##  2  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4
+##  3  16.4     8  276.   180  3.07  4.07  17.4     0     0     3     3
+##  4  17.3     8  276.   180  3.07  3.73  17.6     0     0     3     3
+##  5  15.2     8  276.   180  3.07  3.78  18       0     0     3     3
+##  6  10.4     8  472    205  2.93  5.25  18.0     0     0     3     4
+##  7  10.4     8  460    215  3     5.42  17.8     0     0     3     4
+##  8  14.7     8  440    230  3.23  5.34  17.4     0     0     3     4
+##  9  15.5     8  318    150  2.76  3.52  16.9     0     0     3     2
+## 10  15.2     8  304    150  3.15  3.44  17.3     0     0     3     2
+## 11  13.3     8  350    245  3.73  3.84  15.4     0     0     3     4
+## 12  19.2     8  400    175  3.08  3.84  17.0     0     0     3     2
+## 13  15.8     8  351    264  4.22  3.17  14.5     0     1     5     4
+## 14  15       8  301    335  3.54  3.57  14.6     0     1     5     8&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;반환되는 결과가 list 이어서 &lt;code&gt;lapply()&lt;/code&gt; 와의 호환이 부드러워 질 수 있을 것 같아 개인적으로는 환영했다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;group_map&quot;&gt;&lt;code&gt;group_map()&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;dplyr 0.8.0 업데이트 변화의 가장 큰 내용이지 않을까 싶다.&lt;br /&gt;
+요인별 세부적인 연산을 적용시킬 수 있는 &lt;code&gt;group_map()&lt;/code&gt; 함수&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;가 특히 가장 눈에 띄었다.&lt;br /&gt;
+purrr 패키지의 함수형 프로그래밍을 녹인 느낌이 강했는데, 개인적으로 이 함수를 잘 활용해 보고자 마음먹었다.&lt;/p&gt;
+&lt;p&gt;이전에는 요인별 복잡한 알고리즘 연산을 수행하려 할 때는&lt;br /&gt;
+tidyr package 의 &lt;code&gt;nest()&lt;/code&gt; 함수&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;를 통해 요인 별 데이터들을 묶은 후 list object 로 만든 다음 &lt;code&gt;lapply()&lt;/code&gt; 함수단에서 복잡한 연산을 넘기는 방식의 그룹별 연산을 애용했었다.&lt;/p&gt;
+&lt;p&gt;예를 들면 이렇다. 아래 예제는 &lt;code&gt;caret::train()&lt;/code&gt; 함수를 이용해 요인별로 &lt;code&gt;mpg&lt;/code&gt; 필드값을 설명하는 Random Forest 알고리즘의 머신러닝 모델 학습을 독립적으로 수행 후 요인별 각기 다른 모델객체를 반환한 예제 코드이다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;models1 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;mtcars %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;group_by&lt;/span&gt;(am) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;tidyr::&lt;span class=&quot;kw&quot;&gt;nest&lt;/span&gt;() %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;pull&lt;/span&gt;(data) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;co&quot;&gt;# 사실 여기까지가 group_split(mtcars, am) 과 동일함&lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;lapply&lt;/span&gt;(function(x) caret::&lt;span class=&quot;kw&quot;&gt;train&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; x, &lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;rf&amp;quot;&lt;/span&gt;))
+
+models1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [[1]]
+## Random Forest 
+## 
+## 13 samples
+##  9 predictor
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 13, 13, 13, 13, 13, 13, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  RMSE      Rsquared   MAE     
+##   2     3.560203  0.7957677  3.121680
+##   5     3.363679  0.8190277  2.869850
+##   9     3.352473  0.8122625  2.830969
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was mtry = 9.
+## 
+## [[2]]
+## Random Forest 
+## 
+## 19 samples
+##  9 predictor
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 19, 19, 19, 19, 19, 19, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  RMSE      Rsquared   MAE     
+##   2     2.105099  0.7708150  1.901827
+##   5     2.159168  0.7585883  1.935482
+##   9     2.218085  0.7358981  1.987309
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was mtry = 2.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;lapply 를 쓴 만큼 결과 반환물도 list 형태인데&lt;br /&gt;
+요인 &lt;code&gt;am&lt;/code&gt; 이 2개 종류로써 2개 요인별 모델이 네이밍 되지 않은채로 나오는 단점이 있고&lt;br /&gt;
+코드가 약간 번잡한 면이 있는 방법이다.(for 문도 생각해 보았지만 더 복잡해 질 것 같다)&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;group_map()&lt;/code&gt; 을 사용하면 이 과정을 조금 더 직관적이고 간단한 코딩으로 수행할 수 있었다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;models2 &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;mtcars %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;group_by&lt;/span&gt;(am) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;group_map&lt;/span&gt;( ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;tibble&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;train_object =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;list&lt;/span&gt;(caret::&lt;span class=&quot;kw&quot;&gt;train&lt;/span&gt;(mpg ~&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;., &lt;span class=&quot;dt&quot;&gt;data =&lt;/span&gt; .x, &lt;span class=&quot;dt&quot;&gt;method =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;quot;rf&amp;quot;&lt;/span&gt;))))
+
+models2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 2 x 2
+## # Groups:   am [2]
+##      am train_object
+##   &amp;lt;dbl&amp;gt; &amp;lt;list&amp;gt;      
+## 1     0 &amp;lt;S3: train&amp;gt; 
+## 2     1 &amp;lt;S3: train&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;group_map()&lt;/code&gt; 함수 는 요인별로 바인딩을 위해서 dataframe 형태로 결과가 반환되어야 하는 전제조건이 있다.&lt;br /&gt;
+이를 위해 list 결과를 &lt;code&gt;tibble()&lt;/code&gt; 로 감싸주었다.&lt;br /&gt;
+그리하여 2개의 모델을 요인별로 깔끔하게 보관된 모습을 보이고 있다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;am&lt;/code&gt; 요인이 &lt;code&gt;1&lt;/code&gt; 일때의 학습모델을 사용하고자 할 경우 아래처럼 뽑아서 쓰면 되겠다.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;models2 %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;filter&lt;/span&gt;(am ==&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;) %&amp;gt;%&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;
+&lt;span class=&quot;st&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;pull&lt;/span&gt;(train_object)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [[1]]
+## Random Forest 
+## 
+## 13 samples
+##  9 predictor
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 13, 13, 13, 13, 13, 13, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  RMSE      Rsquared   MAE     
+##   2     3.870267  0.8004452  3.335863
+##   5     3.680017  0.8163241  3.111651
+##   9     3.663791  0.8082755  3.094120
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was mtry = 9.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.tidyverse.org/articles/2019/02/dplyr-0-8-0/&quot;&gt;dplyr 0.8.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.tidyverse.org/articles/2018/12/dplyr-0-8-0-release-candidate/&quot;&gt;dplyr 0.8.0 release candidate&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;&lt;code&gt;group_walk()&lt;/code&gt; 도 비슷한 쓰임이다&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;지금의 dplyr 0.8.0 에선 &lt;code&gt;group_nest()&lt;/code&gt; 가 이 역할을 대신한다&lt;a href=&quot;#fnref2&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Sun, 24 Feb 2019 00:00:00 +0900</pubDate>
+        <link>https://lovetoken.github.io/r/2019/02/24/dplyr080.html</link>
+        <guid isPermaLink="true">https://lovetoken.github.io/r/2019/02/24/dplyr080.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</title>
