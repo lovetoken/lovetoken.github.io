@@ -8,14 +8,14 @@
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
         <title>lovetoken</title>
         <meta name="author" content="Lovetoken" />
-        <meta name="description" content="변동계수의 개념과 R에서의 실습" />
-        <meta name="keywords" content="변동계수의 개념과 R에서의 실습, , R" />
+        <meta name="description" content="Tidyverse before & after (Comming Soon)" />
+        <meta name="keywords" content="Tidyverse before & after (Comming Soon), , R" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="" property="fb:app_id">
         <meta content="" property="og:site_name">
         
-          <meta content="변동계수의 개념과 R에서의 실습" property="og:title">
+          <meta content="Tidyverse before & after (Comming Soon)" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2018/01/14/CV.html" property="og:url">
+          <meta content="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html" property="og:url">
         
         
-          <meta content="2018-01-14T00:00:00+09:00" property="article:published_time">
+          <meta content="2019-05-11T00:00:00+09:00" property="article:published_time">
           <meta content="https://lovetoken.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@">
         <meta name="twitter:creator" content="@">
         
-          <meta name="twitter:title" content="변동계수의 개념과 R에서의 실습">
+          <meta name="twitter:title" content="Tidyverse before & after (Comming Soon)">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2018/01/14/CV.html">
+          <meta name="twitter:url" content="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">
         
         
           <meta name="twitter:description" content="">
@@ -126,8 +126,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>변동계수의 개념과 R에서의 실습</h1>
-<span class="time">14 Jan 2018</span>
+                <h1>Tidyverse before & after (Comming Soon)</h1>
+<span class="time">11 May 2019</span>
 
 <span class="categories">
     &raquo; <a href="/category/R">R</a>
@@ -136,61 +136,13 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>변동계수(coefficient of variation, C.V)는 평균이 크게 다른 두개 이상의 집단이 있을때<br />
-각 집단의 상대적 동질성을 감안한 산포도의 척도이다.</p>
-<p>변동계수에 대한설명을 위하여 아래 예시를 준비했다.</p>
-<p>3개의 샘플에 대한 물 용량을 측정한 예시가 있다.<br />
-이 3개의 샘플을 두 사람이 측정해 보고했다고 치자.<br />
-그런데 측정 단위에 대한 언급이 따로 없어 한사람은 리터 단위로, 한사람은 밀리리터 단위로 조사를 했다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">l &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">54</span>, <span class="dv">50</span>, <span class="dv">52</span>) <span class="co"># 물 리터단위(L)측정</span>
-ml &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">54017</span>, <span class="dv">49980</span>, <span class="dv">52003</span>) <span class="co"># 물 밀리리터단위(mL)측정</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(l)</code></pre></div>
-<pre><code>## [1] 52</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(ml)</code></pre></div>
-<pre><code>## [1] 52000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(l)</code></pre></div>
-<pre><code>## [1] 2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(ml)</code></pre></div>
-<pre><code>## [1] 2018.502</code></pre>
-<p>분명 같은 집단을 두 조사자는 조사했지만 측정단위의 차이로 인해 평균과 표준편차가 확연히 다르므로<br />
-이 내막을 모르는 사람에게는, 그리고 샘플의 개수가 인지하기 힘들정도로 많았을 때<br />
-두 집단이 다른것으로 대강 판단할 위험이 있다.</p>
-<p>리터단위로 측정시 표준편차는 2, 평균은 52로 계산되고<br />
-밀리리터단위로 측정시 표준편차와 평균은 리터단위로 계산한 표준편차보다 1000배 정도 높히 계산된다.</p>
-<p>여기서 단위의 차이로 생겨버린 이 1000배를 보정하는것이 변동계수의 기능이라고 볼 수 있는데<br />
-변동계수는 표준편차를 평균으로 나누는것으로 간단히 계산된다.<br />
-결과적으로 단위와 무관하게 계산되어 다른단위로 측정된 자료들의 산포를 비교할때 표준편차보다 유용한 지표가 된다.<br />
-이러한 점에서 변동계수를 상대표준편차(relative standard deviation, RSD)라고도 부른다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(l) /<span class="st"> </span><span class="kw">mean</span>(l) <span class="co"># 리터단위 측정 샘플에 대한 변동계수</span></code></pre></div>
-<pre><code>## [1] 0.03846154</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(ml) /<span class="st"> </span><span class="kw">mean</span>(ml) <span class="co"># 밀리리터단위 측정 샘플에 대한 변동계수</span></code></pre></div>
-<pre><code>## [1] 0.03881734</code></pre>
-<p>직접 계산해 보면 거의 비슷한 값으로 계산된다.</p>
-<p><br><br></p>
-<h2 id="other-example">other example</h2>
-<p>어떠한 백분율 값을 측정한 것으로 보이는 두 그룹이 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">group1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">86</span>,   <span class="dv">85</span>,   <span class="dv">92</span>,   <span class="dv">89</span>,   <span class="dv">83</span>,   <span class="dv">90</span>,   <span class="dv">88</span>,   <span class="dv">91</span>,   <span class="dv">79</span>,   <span class="dv">83</span>)
-group2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.88</span>, <span class="fl">0.91</span>, <span class="fl">0.94</span>, <span class="fl">0.84</span>, <span class="fl">0.97</span>, <span class="fl">0.89</span>, <span class="fl">0.99</span>, <span class="fl">0.88</span>, <span class="fl">0.89</span>, <span class="fl">0.96</span>)</code></pre></div>
-<p><code>group1</code> 은 100을 곱한 백분율의 상태 <code>group2</code> 는 0~1 범위의 백분율 상태이다.<br />
-실제로 위와 같은 예는 조사자의 취향에 따라 단위가 통일되지 못하는 사례로 많다.</p>
-<p>당연히 이 둘의 데이터 산포도를 측정하고자<br />
-표준편차를 구하게 될 때 <code>group1</code> 의 표준편차가 작을것이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(group1)</code></pre></div>
-<pre><code>## [1] 4.141927</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(group2)</code></pre></div>
-<pre><code>## [1] 0.04790036</code></pre>
-<p>산포도의 공평한 비교가 될 수 없기에<br />
-<code>group2</code> 자료에 100을 곱한 후 표준편차를 다시 구하거나<br />
-반대로 <code>group1</code> 자료에 100을 나누어 표준편차를 구하게 될 것이다.<br />
-하지만 이는 급한마음에 거치는 긁어 부스럼 같은 절차이며<br />
-원 데이터를 보존하지 못하는 방법이므로 상황에 따라 위험성이 있을 것이다.<br />
-이때 변동계수를 이용하는것이 좋을것이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(group1) /<span class="st"> </span><span class="kw">mean</span>(group1)</code></pre></div>
-<pre><code>## [1] 0.04782825</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(group2) /<span class="st"> </span><span class="kw">mean</span>(group2)</code></pre></div>
-<pre><code>## [1] 0.05235012</code></pre>
-<p>변동계수를 구한결과 <code>group2</code> 이 <code>group1</code> 보다 변동계수가 더 컸다.<br />
-즉 상대적으로 <code>group2</code> 의 퍼짐정도가 <code>group1</code> 보다 크다는 결론을 낼 수 있다.</p>
+<p><a href="https://tidyverse-korea.github.io/r-meetup-x-presser/">Tidyverse korea 의 데이터 사이언스 Meetup</a> 에서 기회를 주셔서<br />
+5월 Meetup 의 마지막 순서에 'Tidyverse before &amp; after' 의 제목을 가진 발표세션을 할 예정이다.</p>
+<p>블로깅이 너무 뜸해졌는데, 이 세션에서 <a href="https://github.com/lovetoken/Tidyverse-before-after">하고싶은 이야기 및 경험담을 정리</a>하여 발표 한 후<br />
+요기에도 글을 정리해 볼 계획이다. (블로깅을 하기위한 좋은 재료를 찾았다...)</p>
+<center>
+<img src="/assets/Tidyverse_before_and_after.png">
+</center>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -204,7 +156,7 @@ group2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2018/01/14/CV.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -222,20 +174,6 @@ group2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">
     
         
             
-                
-                <div class="panel-body">
-                <h4>Related Posts</h4>
-                <ul>
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
-                    
-                        (Categories: <a href="/category/R">R</a>)
-                    
-                </li>
-                
-                
-            
         
     
 
@@ -243,6 +181,10 @@ group2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">
     
         
             
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
                 
                 <li class="relatedPost">
                     <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
@@ -346,6 +288,16 @@ group2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">
     
     
         
+            
+                
+                <li class="relatedPost">
+                    <a href="https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html">R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)</a>
+                    
+                        (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
+                    
+                </li>
+                
+                
             
         
     
@@ -798,10 +750,8 @@ group2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/etc/2018/01/13/raspberrypi_rootpasswd.html">&laquo; 라즈베리파이 초기상태의 pi 계정에서 root 비밀번호 변경</a>
+    <a class="prev" href="/r/2019/02/24/dplyr080.html">&laquo; R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
   
-  
-    <a class="next" href="/r/2018/01/22/DEA.html">R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기 &raquo;</a>
   
 </div>
 
@@ -812,8 +762,8 @@ group2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_변동계수의 개념과 R에서의 실습";
-        var disqus_title = "변동계수의 개념과 R에서의 실습";
+        var disqus_identifier = "https://lovetoken.github.io_Tidyverse before & after (Comming Soon)";
+        var disqus_title = "Tidyverse before & after (Comming Soon)";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {
