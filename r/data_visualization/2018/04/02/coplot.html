@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/data_visualization/2018/04/02/coplot.html" property="og:url">
+          <meta content="http://localhost:4000/r/data_visualization/2018/04/02/coplot.html" property="og:url">
         
         
           <meta content="2018-04-02T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 조건화 그래프(Conditioning plot) 를 출력하기 위한 ggplot2::faect_wrap(), coplot() 함수에 대하여">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/data_visualization/2018/04/02/coplot.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/data_visualization/2018/04/02/coplot.html">
         
         
           <meta name="twitter:description" content="">
@@ -137,36 +137,54 @@
 <div class="content">
     <div class="post"><p><br><br></p>
 <p>R에서 기본 그래픽스로 제공하는 도구 중<br />
-요인별로 구분된 산점도를 그릴때 심플하게 이용할 수 있는 <code>coplot()</code> 함수와 ggplot2 package 에서 <code>coplot()</code> 함수와 비슷한 성격의 <code>faect_wrap()</code> 함수에 대해 알아보고자 한다.</p>
-<p><code>coplot()</code> 도움말을 보면 &quot;Conditioning plots&quot; 즉 &quot;조건화 그래프&quot; 라는 제목으로 사용법이 설명되어 있다.<br />
+요인별로 구분된 산점도를 그릴때 심플하게 이용할 수 있는
+<code>coplot()</code> 함수와 ggplot2 package 에서 <code>coplot()</code>
+함수와 비슷한 성격의 <code>faect_wrap()</code> 함수에 대해 알아보고자
+한다.</p>
+<p><code>coplot()</code> 도움말을 보면 “Conditioning plots” 즉 “조건화
+그래프” 라는 제목으로 사용법이 설명되어 있다.<br />
 조건화 그래프는 언제 필요로 할까?</p>
-<p>요인이 많은 데이터들을 산점도를 이용하여 시각화 할 때 분간이 쉽지 않아 요인별 특색을 찾기가 어려운 경우가 있다.<br />
+<p>요인이 많은 데이터들을 산점도를 이용하여 시각화 할 때 분간이 쉽지
+않아 요인별 특색을 찾기가 어려운 경우가 있다.<br />
 예시를 통해 설명을 이어가겠다.</p>
 <p><br><br></p>
-<h2 id="ggplot2-package-에서의-faect_wrap-faect_grid-함수">ggplot2 package 에서의 <code>faect_wrap()</code>, <code>faect_grid()</code> 함수</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price, <span class="dt">color =</span> cut)) +<span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> .<span class="dv">5</span>) +<span class="st"> </span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">color =</span> <span class="st">&quot;&quot;</span>)
-
-p1</code></pre></div>
+<h2 id="ggplot2-package-에서의-faect_wrap-faect_grid-함수">ggplot2
+package 에서의 <code>faect_wrap()</code>, <code>faect_grid()</code>
+함수</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> carat, <span class="at">y =</span> price, <span class="at">color =</span> cut)) <span class="sc">+</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>p1</span></code></pre></div>
 <p><img src="/assets/coplot1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>위 산점도를 간단히 설명하면<br />
-세공 상태별 다이아몬드의 가격과, 캐럿(다이아몬드의 무게)의 산점도를 <code>ggplot2::daimonds</code> 데이터셋을 이용해 출력한 결과이다.<br />
-결과물만을 보았을 때 세공 상태별 가격과, 캐럿의 분포를 뚜렷하게 확인 하기가 쉽지 않다.<br />
-종류가 5가지나 되고 데이터의 수도 많아지면서 난해하진 이 그래프는 캐럿과 가격이 정비례한다는 정보는 인지하기 쉬우나, 세공상태별로 특색의 차이를 인지하기는 매우 어렵다.</p>
-<p>세공상태별로의 특색을 눈으로 확인하고 싶다면 아래처럼 요인별로 산점도를 따로 나누는 것도 좋은 방법일 것이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 +<span class="st"> </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>cut, <span class="dt">nrow =</span> <span class="dv">5</span>)</code></pre></div>
+세공 상태별 다이아몬드의 가격과, 캐럿(다이아몬드의 무게)의 산점도를
+<code>ggplot2::daimonds</code> 데이터셋을 이용해 출력한 결과이다.<br />
+결과물만을 보았을 때 세공 상태별 가격과, 캐럿의 분포를 뚜렷하게 확인
+하기가 쉽지 않다.<br />
+종류가 5가지나 되고 데이터의 수도 많아지면서 난해하진 이 그래프는 캐럿과
+가격이 정비례한다는 정보는 인지하기 쉬우나, 세공상태별로 특색의 차이를
+인지하기는 매우 어렵다.</p>
+<p>세공상태별로의 특색을 눈으로 확인하고 싶다면 아래처럼 요인별로
+산점도를 따로 나누는 것도 좋은 방법일 것이다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> cut, <span class="at">nrow =</span> <span class="dv">5</span>)</span></code></pre></div>
 <p><img src="/assets/coplot2.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>첫번째 그래프에서는 알기 쉽지 않던 요인별 분포를 적나라 하게 확인할 수 있게 된다.<br />
-가공상태가 좋지 않은 Fair 군의 다이아몬드 가격분포가 다른 군의 분포와 차이가 조금 있다는것을 첫번째 그래프로는 파악할 수 없었을 것이다.</p>
-<p>요인별로 패널을 나누어 시각화 하는 스킬들은 도구별로 방법은 다르더라도 기본적으로 제공하는 편이며<br />
-위의 예시인 ggplot2 package 에서는 <code>faect_wrap()</code>, <code>faect_grid()</code> 함수등을 이용하여 구현이 가능하다.</p>
+<p>첫번째 그래프에서는 알기 쉽지 않던 요인별 분포를 적나라 하게 확인할
+수 있게 된다.<br />
+가공상태가 좋지 않은 Fair 군의 다이아몬드 가격분포가 다른 군의 분포와
+차이가 조금 있다는것을 첫번째 그래프로는 파악할 수 없었을 것이다.</p>
+<p>요인별로 패널을 나누어 시각화 하는 스킬들은 도구별로 방법은
+다르더라도 기본적으로 제공하는 편이며<br />
+위의 예시인 ggplot2 package 에서는 <code>faect_wrap()</code>,
+<code>faect_grid()</code> 함수등을 이용하여 구현이 가능하다.</p>
 <p><br><br></p>
 <h2 id="coplot-함수"><code>coplot()</code> 함수</h2>
-<p>ggplot2 package 가 아닌 기본 그래픽스에서 조건화 그래프를 그리려면 아래처럼 <code>coplot()</code> 함수를 이용하여 간단하게 볼 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coplot</span>(price ~<span class="st"> </span>carat |<span class="st"> </span>cut, <span class="dt">data =</span> diamonds)</code></pre></div>
+<p>ggplot2 package 가 아닌 기본 그래픽스에서 조건화 그래프를 그리려면
+아래처럼 <code>coplot()</code> 함수를 이용하여 간단하게 볼 수 있다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coplot</span>(price <span class="sc">~</span> carat <span class="sc">|</span> cut, <span class="at">data =</span> diamonds)</span></code></pre></div>
 <p><img src="/assets/coplot3.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>수학에서 조건(given) 을 &quot;bar&quot;(|) 로 표기하는것을 생각하고 formula 를 작성해 이용하면 되겠다.</p>
+<p>수학에서 조건(given) 을 “bar”(|) 로 표기하는것을 생각하고 formula 를
+작성해 이용하면 되겠다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -180,7 +198,7 @@ p1</code></pre></div>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/data_visualization/2018/04/02/coplot.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/data_visualization/2018/04/02/coplot.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -204,7 +222,7 @@ p1</code></pre></div>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -223,7 +241,7 @@ p1</code></pre></div>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -242,7 +260,7 @@ p1</code></pre></div>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -261,7 +279,26 @@ p1</code></pre></div>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -289,7 +326,7 @@ p1</code></pre></div>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -311,16 +348,6 @@ p1</code></pre></div>
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
             
@@ -948,7 +975,7 @@ p1</code></pre></div>
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 조건화 그래프(Conditioning plot) 를 출력하기 위한 ggplot2::faect_wrap(), coplot() 함수에 대하여";
+        var disqus_identifier = "http://localhost:4000_R에서 조건화 그래프(Conditioning plot) 를 출력하기 위한 ggplot2::faect_wrap(), coplot() 함수에 대하여";
         var disqus_title = "R에서 조건화 그래프(Conditioning plot) 를 출력하기 위한 ggplot2::faect_wrap(), coplot() 함수에 대하여";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

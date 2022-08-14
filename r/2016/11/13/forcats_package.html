@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/11/13/forcats_package.html" property="og:url">
+          <meta content="http://localhost:4000/r/2016/11/13/forcats_package.html" property="og:url">
         
         
           <meta content="2016-11-13T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 factor 형 자료 처리를 위한 forcats package 에 대해">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/11/13/forcats_package.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2016/11/13/forcats_package.html">
         
         
           <meta name="twitter:description" content="">
@@ -143,145 +143,165 @@
 <p><br></p>
 <h2 id="개요">개요</h2>
 <p>R에서 범주형 변수를 다룰 때 factor 형을 이용한다.<br />
-범주형 자료는 연속형 자료와는 다르게 그 자체의 고유한 의미를 가진다는 특성때문에 정성적인 관리가 필요한 편이다.<br />
+범주형 자료는 연속형 자료와는 다르게 그 자체의 고유한 의미를 가진다는
+특성때문에 정성적인 관리가 필요한 편이다.<br />
 애초에 많은 관심을 필요로 하고 있다고 볼 수 있다.<br />
-이러한 이유로 범주형 자료를 접근하고 핸들링하는 많은 함수들이 R에 존재한다.</p>
-<p>최근에는 factors 의 알파벳 순서를 교묘히(?) 바꾸어 네이밍한 <a href="https://cran.r-project.org/web/packages/forcats/forcats.pdf">forcats package</a> 가 CRAN 에 등록되었는데, <del>고양이를 위한 패키지가 아니라</del> factor형 핸들링을 위한 함수들이 제공되는 패키지이다.</p>
+이러한 이유로 범주형 자료를 접근하고 핸들링하는 많은 함수들이 R에
+존재한다.</p>
+<p>최근에는 factors 의 알파벳 순서를 교묘히(?) 바꾸어 네이밍한 <a
+href="https://cran.r-project.org/web/packages/forcats/forcats.pdf">forcats
+package</a> 가 CRAN 에 등록되었는데, <del>고양이를 위한 패키지가
+아니라</del> factor형 핸들링을 위한 함수들이 제공되는 패키지이다.</p>
 <blockquote>
-<p>The goal of the <strong>forcats</strong> package is to provide a suite of useful tools that solve common problems with factors.<br />
-- <a href="https://github.com/tidyverse/forcats">forcats package 의 README.md 중</a>에서</p>
+<p>The goal of the <strong>forcats</strong> package is to provide a
+suite of useful tools that solve common problems with factors.<br />
+- <a href="https://github.com/tidyverse/forcats">forcats package 의
+README.md 중</a>에서</p>
 </blockquote>
 <h2 id="패키지-설치">패키지 설치</h2>
 <p>CRAN 에 등록되어 있으므로</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;forcats&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;forcats&quot;</span>)</span></code></pre></div>
 <p>로 설치할 수 있다.</p>
-<p>major 버전은 아직 0 이므로<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> 지속적으로 개선될 가능성이 높다.<br />
+<p>major 버전은 아직 0 이므로<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a> 지속적으로 개선될
+가능성이 높다.<br />
 개발버전을 사용하고 싶다면 Github 를 통해 패키지를 설치해도 되겠다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Or the the development version from GitHub:</span>
-devtools::<span class="kw">install_github</span>(<span class="st">&quot;tidyverse/forcats&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Or the the development version from GitHub:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;tidyverse/forcats&quot;</span>)</span></code></pre></div>
 <p><br><br></p>
 <h2 id="getting-started">Getting started</h2>
-<p>forcats package 의 함수들은 &quot;fct_&quot; 로 시작한다.<br />
+<p>forcats package 의 함수들은 “fct_” 로 시작한다.<br />
 이후의 단어가 함수쓰임의 의미를 담고 있다.</p>
 <table>
 <colgroup>
-<col style="width: 11%" />
-<col style="width: 88%" />
+<col style="width: 10%" />
+<col style="width: 89%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">함수명칭</th>
-<th style="text-align: left;">내용</th>
+<th>함수명칭</th>
+<th>내용</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">fct_anon</td>
-<td style="text-align: left;">Anonymise factor levels</td>
+<td>fct_anon</td>
+<td>Anonymise factor levels</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">fct_c</td>
-<td style="text-align: left;">Concatenate factors, unioning levels.</td>
+<td>fct_c</td>
+<td>Concatenate factors, unioning levels.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">fct_collapse</td>
-<td style="text-align: left;">Collapse factors into groups.</td>
+<td>fct_collapse</td>
+<td>Collapse factors into groups.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">fct_count</td>
-<td style="text-align: left;">Count entries in a factor</td>
+<td>fct_count</td>
+<td>Count entries in a factor</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">fct_drop</td>
-<td style="text-align: left;">Drop unnused levels</td>
+<td>fct_drop</td>
+<td>Drop unnused levels</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">fct_expand</td>
-<td style="text-align: left;">Add additional levels to a factor</td>
+<td>fct_expand</td>
+<td>Add additional levels to a factor</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">fct_explicit_na</td>
-<td style="text-align: left;">Make missing values explicit</td>
+<td>fct_explicit_na</td>
+<td>Make missing values explicit</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">fct_infreq</td>
-<td style="text-align: left;">Reorders levels in order of first appearance or frequency.</td>
+<td>fct_infreq</td>
+<td>Reorders levels in order of first appearance or frequency.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">fct_inorder</td>
-<td style="text-align: left;">Reorders levels in order of first appearance or frequency.</td>
+<td>fct_inorder</td>
+<td>Reorders levels in order of first appearance or frequency.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">fct_lump</td>
-<td style="text-align: left;">Lump together least/most common levels into &quot;other&quot;.</td>
+<td>fct_lump</td>
+<td>Lump together least/most common levels into “other”.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">fct_recode</td>
-<td style="text-align: left;">Change the levels of a factor</td>
+<td>fct_recode</td>
+<td>Change the levels of a factor</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">fct_relevel</td>
-<td style="text-align: left;">Change the order of levels in a factor</td>
+<td>fct_relevel</td>
+<td>Change the order of levels in a factor</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">fct_reorder</td>
-<td style="text-align: left;">Reorder the levels of a function according to another variable</td>
+<td>fct_reorder</td>
+<td>Reorder the levels of a function according to another variable</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">fct_reorder2</td>
-<td style="text-align: left;">Reorder the levels of a function according to another variable</td>
+<td>fct_reorder2</td>
+<td>Reorder the levels of a function according to another variable</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">fct_rev</td>
-<td style="text-align: left;">Reverse the levels of a factor</td>
+<td>fct_rev</td>
+<td>Reverse the levels of a factor</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">fct_shift</td>
-<td style="text-align: left;">Shift the order of levels of a factor</td>
+<td>fct_shift</td>
+<td>Shift the order of levels of a factor</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">fct_shuffle</td>
-<td style="text-align: left;">Randomly permute the levels of a factor</td>
+<td>fct_shuffle</td>
+<td>Randomly permute the levels of a factor</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">fct_unify</td>
-<td style="text-align: left;">Unify the levels in a list of factors</td>
+<td>fct_unify</td>
+<td>Unify the levels in a list of factors</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">fct_unique</td>
-<td style="text-align: left;">Unique values of a factor</td>
+<td>fct_unique</td>
+<td>Unique values of a factor</td>
 </tr>
 </tbody>
 </table>
-<p>접두사 &quot;fct_&quot; 가 코딩할 때 불편할 수도 있겠다 싶지만, 오히려 &quot;fct_&quot; 가 있음으로 변수형자료를 핸들링하는 것임을 정확하게 인지할 수 있는 tag같은 역할을 하는 것 같기도 해서 나는 개인적으로 좋다. <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p>접두사 “fct_” 가 코딩할 때 불편할 수도 있겠다 싶지만, 오히려 “fct_”
+가 있음으로 변수형자료를 핸들링하는 것임을 정확하게 인지할 수 있는
+tag같은 역할을 하는 것 같기도 해서 나는 개인적으로 좋다. <a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>여하튼 이 함수들 중 자주 사용하는 것을 몇 개 언급해보고자 한다.</p>
 <p><br></p>
 <h3 id="fct_recode"><code>fct_recode()</code></h3>
-<p>factor 형 자료를 다룰 때 가장 번거로운 것 중 하나는 요인의 성격을 보존한 채 오직 명칭만 변경하는 과정이다.</p>
+<p>factor 형 자료를 다룰 때 가장 번거로운 것 중 하나는 요인의 성격을
+보존한 채 오직 명칭만 변경하는 과정이다.</p>
 <p>예를 들면</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ex &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;L&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;small&quot;</span>, <span class="st">&quot;small&quot;</span>, <span class="st">&quot;L&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;L&quot;</span>), 
-    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;small&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;L&quot;</span>))
-ex</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ex <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;L&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;small&quot;</span>, <span class="st">&quot;small&quot;</span>, <span class="st">&quot;L&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;L&quot;</span>), </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;small&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;L&quot;</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ex</span></code></pre></div>
 <pre><code>## [1] L     M     small small L     M     L    
 ## Levels: small M L</code></pre>
-<p>위와 같은 <code>ex</code> factor 형 자료의 요인들은 &quot;small&quot;, &quot;M&quot;, &quot;L&quot; 3개가 있다.<br />
+<p>위와 같은 <code>ex</code> factor 형 자료의 요인들은 “small”, “M”, “L”
+3개가 있다.<br />
 흠.. 그런데 요인의 명칭이 뭔가 맘에 들지 않는다(고 가정하자).<br />
-특히 &quot;small&quot; 을 &quot;S&quot; 로 바꾸기만 하면 좋을 것 같아</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(ex)[<span class="kw">levels</span>(ex) ==<span class="st"> &quot;small&quot;</span>] &lt;-<span class="st"> &quot;S&quot;</span></code></pre></div>
+특히 “small” 을 “S” 로 바꾸기만 하면 좋을 것 같아</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ex)[<span class="fu">levels</span>(ex) <span class="sc">==</span> <span class="st">&quot;small&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;S&quot;</span></span></code></pre></div>
 <p>와 같은 코딩을 필자 이전까지 해왔었다.<br />
 전통적인 방식이지만 어찌 보면 무식하고 조악한 코딩일 수도 있겠다.</p>
-<p>forcats package 에선 위의 예시처럼 요인명칭을 변경할 일이 있을 때<br />
-수준들의 위치를 인덱싱해 수동적으로 바꾸는 방법 대신 <code>fct_recode()</code> 라는 함수를 통해 바꿀 수 있는 방법을 제공한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fct_recode</span>(ex, <span class="dt">S =</span> <span class="st">&quot;small&quot;</span>)</code></pre></div>
+<p>forcats package 에선 위의 예시처럼 요인명칭을 변경할 일이 있을
+때<br />
+수준들의 위치를 인덱싱해 수동적으로 바꾸는 방법 대신
+<code>fct_recode()</code> 라는 함수를 통해 바꿀 수 있는 방법을
+제공한다.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fct_recode</span>(ex, <span class="at">S =</span> <span class="st">&quot;small&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] L M S S L M L
 ## Levels: S M L</code></pre>
 <p>잠깐 딴 길로 세보자.<br />
 함수로써 제공한다는 것은 의외로 큰 의미가 있는데<br />
 R을 제대로 사용하시는 분들이라면 이 의미는 가볍게 알 것이다.<br />
-<code>fct_recode()</code> 함수 이외의 forcats package 내에 함수들은 모두 혼자서 외롭게 활용될 일은 거의 없을 것이다.<br />
-아래 코드는 dplyr package 와 함께 <code>fct_recode()</code> 함수를 좀 더 실용적으로 사용해 본 예라고 할 수 있겠다. (참고로 <code>gss_cat</code> 는 forcats 패키지에 내장되어있는 데이터셋이다)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Origin</span>
-gss_cat %&gt;%<span class="st"> </span><span class="kw">count</span>(partyid)</code></pre></div>
+<code>fct_recode()</code> 함수 이외의 forcats package 내에 함수들은 모두
+혼자서 외롭게 활용될 일은 거의 없을 것이다.<br />
+아래 코드는 dplyr package 와 함께 <code>fct_recode()</code> 함수를 좀 더
+실용적으로 사용해 본 예라고 할 수 있겠다. (참고로 <code>gss_cat</code>
+는 forcats 패키지에 내장되어있는 데이터셋이다)</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Origin</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>gss_cat <span class="sc">%&gt;%</span> <span class="fu">count</span>(partyid)</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 2
 ##               partyid     n
 ##                &lt;fctr&gt; &lt;int&gt;
@@ -295,17 +315,17 @@ gss_cat %&gt;%<span class="st"> </span><span class="kw">count</span>(partyid)</c
 ##  8       Ind,near dem  2499
 ##  9   Not str democrat  3690
 ## 10    Strong democrat  3490</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Change level values</span>
-gss_cat %&gt;%
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">partyid =</span> <span class="kw">fct_recode</span>(partyid,
-    <span class="st">&quot;Republican, strong&quot;</span>    =<span class="st"> &quot;Strong republican&quot;</span>,
-    <span class="st">&quot;Republican, weak&quot;</span>      =<span class="st"> &quot;Not str republican&quot;</span>,
-    <span class="st">&quot;Independent, near rep&quot;</span> =<span class="st"> &quot;Ind,near rep&quot;</span>,
-    <span class="st">&quot;Independent, near dem&quot;</span> =<span class="st"> &quot;Ind,near dem&quot;</span>,
-    <span class="st">&quot;Democrat, weak&quot;</span>        =<span class="st"> &quot;Not str democrat&quot;</span>,
-    <span class="st">&quot;Democrat, strong&quot;</span>      =<span class="st"> &quot;Strong democrat&quot;</span>
-  )) %&gt;%
-<span class="st">  </span><span class="kw">count</span>(partyid)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Change level values</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>gss_cat <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">partyid =</span> <span class="fu">fct_recode</span>(partyid,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Republican, strong&quot;</span>    <span class="ot">=</span> <span class="st">&quot;Strong republican&quot;</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Republican, weak&quot;</span>      <span class="ot">=</span> <span class="st">&quot;Not str republican&quot;</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Independent, near rep&quot;</span> <span class="ot">=</span> <span class="st">&quot;Ind,near rep&quot;</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Independent, near dem&quot;</span> <span class="ot">=</span> <span class="st">&quot;Ind,near dem&quot;</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Democrat, weak&quot;</span>        <span class="ot">=</span> <span class="st">&quot;Not str democrat&quot;</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Democrat, strong&quot;</span>      <span class="ot">=</span> <span class="st">&quot;Strong democrat&quot;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(partyid)</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 2
 ##                  partyid     n
 ##                   &lt;fctr&gt; &lt;int&gt;
@@ -321,55 +341,73 @@ gss_cat %&gt;%
 ## 10      Democrat, strong  3490</code></pre>
 <p><br></p>
 <h3 id="fct_lump"><code>fct_lump()</code></h3>
-<p>lump 영단어의 뜻은 &quot;덩어리&quot;, &quot;한 무더기&quot; 정도이다.<br />
-파편들을 모아 한 덩어리로 만들어 주는 <code>fct_lump()</code>, 곰곰이 생각해 보면 &quot;파편들을 모아 한 덩어리로 만드는&quot; 일은 꽤 많다.<br />
+<p>lump 영단어의 뜻은 “덩어리”, “한 무더기” 정도이다.<br />
+파편들을 모아 한 덩어리로 만들어 주는 <code>fct_lump()</code>, 곰곰이
+생각해 보면 “파편들을 모아 한 덩어리로 만드는” 일은 꽤 많다.<br />
 이런 예제를 생각하면 바로 이해가 될 것 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d2 &lt;-<span class="st"> </span>gss_cat %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">count</span>(partyid) %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">arrange</span>(n)
-
-<span class="kw">pie</span>(d2$n, d2$partyid)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> gss_cat <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(partyid) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(n)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(d2<span class="sc">$</span>n, d2<span class="sc">$</span>partyid)</span></code></pre></div>
 <p><img src="/assets/forcats_2.png" style="display: block; margin: auto;" /></p>
-<p>응답 비율이 매우 낮은 요인들은 &quot;Don't know&quot;, &quot;No answer&quot;, &quot;Other party&quot; 등이 있다.<br />
+<p>응답 비율이 매우 낮은 요인들은 “Don’t know”, “No answer”, “Other
+party” 등이 있다.<br />
 응답 비율이 너무 낮아서 pie chart 에 잘 보이지 않고 겹쳐저 있다.<br />
-그리고 응답 비율이 너무 낮은것은 때로는 의미가 없어 &quot;etc&quot; 와 같은 기타항목으로 처리하곤 하는데<br />
-이때 &quot;Don't know&quot;, &quot;No answer&quot;, &quot;Other party&quot; 에 해당되는 요인들을 기타 항목으로 덩어리를 만들기 위해선 뜻밖에 많은 고민이 필요할 수 있다.</p>
-<p>우리가 알고 있는 <code>fct_recode()</code> 함수로 이를 해결할 수도 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d2 &lt;-<span class="st"> </span>gss_cat %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">partyid =</span> <span class="kw">fct_recode</span>(partyid, 
-        <span class="st">&quot;etc&quot;</span> =<span class="st"> &quot;Don&#39;t know&quot;</span>,
-        <span class="st">&quot;etc&quot;</span> =<span class="st"> &quot;No answer&quot;</span>,
-        <span class="st">&quot;etc&quot;</span> =<span class="st"> &quot;Other party&quot;</span>
-    )) %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">count</span>(partyid) %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">arrange</span>(n)
-
-<span class="kw">pie</span>(d2$n, d2$partyid)</code></pre></div>
+그리고 응답 비율이 너무 낮은것은 때로는 의미가 없어 “etc” 와 같은
+기타항목으로 처리하곤 하는데<br />
+이때 “Don’t know”, “No answer”, “Other party” 에 해당되는 요인들을 기타
+항목으로 덩어리를 만들기 위해선 뜻밖에 많은 고민이 필요할 수 있다.</p>
+<p>우리가 알고 있는 <code>fct_recode()</code> 함수로 이를 해결할 수도
+있다.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> gss_cat <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">partyid =</span> <span class="fu">fct_recode</span>(partyid, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;etc&quot;</span> <span class="ot">=</span> <span class="st">&quot;Don&#39;t know&quot;</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;etc&quot;</span> <span class="ot">=</span> <span class="st">&quot;No answer&quot;</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;etc&quot;</span> <span class="ot">=</span> <span class="st">&quot;Other party&quot;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(partyid) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(n)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(d2<span class="sc">$</span>n, d2<span class="sc">$</span>partyid)</span></code></pre></div>
 <p><img src="/assets/forcats_3.png" style="display: block; margin: auto;" /></p>
-<p>응답 비율이 낮은 요인들을 &quot;etc&quot; 라는 명칭으로 바꾸면 된다.</p>
-<p>음.. 그런데 좋은 해결책으로도 보일 수 있겠지만 이방법은 비효율적인 문제가 역시 있다.<br />
-일단 &quot;Don't know&quot;, &quot;No answer&quot;, &quot;Other party&quot; 3개의 요인이 응답 비율이 낮은 것임을 사후적으로 인지해야 하고,<br />
-이후 &quot;etc&quot; 라는 명칭으로 바꾸는 것은 뭔가 일을 2번하는 느낌을 받을 수 있다.</p>
-<p><code>fct_lump()</code> 함수는 이처럼 &quot;etc&quot; 라는 덩어리를 아주 간단하게 만들어 준다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d2 &lt;-<span class="st"> </span>gss_cat %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">partyid =</span> <span class="kw">fct_lump</span>(partyid, <span class="dt">n =</span> <span class="dv">7</span>, <span class="dt">other_level =</span> <span class="st">&quot;etc&quot;</span>)) %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">count</span>(partyid) %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">arrange</span>(n)
-
-<span class="kw">pie</span>(d2$n, d2$partyid)</code></pre></div>
+<p>응답 비율이 낮은 요인들을 “etc” 라는 명칭으로 바꾸면 된다.</p>
+<p>음.. 그런데 좋은 해결책으로도 보일 수 있겠지만 이방법은 비효율적인
+문제가 역시 있다.<br />
+일단 “Don’t know”, “No answer”, “Other party” 3개의 요인이 응답 비율이
+낮은 것임을 사후적으로 인지해야 하고,<br />
+이후 “etc” 라는 명칭으로 바꾸는 것은 뭔가 일을 2번하는 느낌을 받을 수
+있다.</p>
+<p><code>fct_lump()</code> 함수는 이처럼 “etc” 라는 덩어리를 아주
+간단하게 만들어 준다.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> gss_cat <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">partyid =</span> <span class="fu">fct_lump</span>(partyid, <span class="at">n =</span> <span class="dv">7</span>, <span class="at">other_level =</span> <span class="st">&quot;etc&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(partyid) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(n)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(d2<span class="sc">$</span>n, d2<span class="sc">$</span>partyid)</span></code></pre></div>
 <p><img src="/assets/forcats_4.png" style="display: block; margin: auto;" /></p>
-<p><code>fct_lump(partyid, n = 7, other_level = &quot;etc&quot;)</code> 를 살펴보면 <code>n</code> 인자를 7로 설정하여 7개의 주항목 요인 외에는 &quot;etc&quot; 라는 명칭으로 자동으로 바꿔준다.<br />
-따라서 pie chart를 보면 소수의견인 &quot;Don't know&quot;, &quot;No answer&quot;, &quot;Other party&quot; 요인들이 &quot;etc&quot; 로 통합된 것을 확인할 수 있다.</p>
+<p><code>fct_lump(partyid, n = 7, other_level = "etc")</code> 를
+살펴보면 <code>n</code> 인자를 7로 설정하여 7개의 주항목 요인 외에는
+“etc” 라는 명칭으로 자동으로 바꿔준다.<br />
+따라서 pie chart를 보면 소수의견인 “Don’t know”, “No answer”, “Other
+party” 요인들이 “etc” 로 통합된 것을 확인할 수 있다.</p>
 <p><br><br></p>
 <h2 id="reference">Reference</h2>
 <ul>
-<li><a href="https://www.r-bloggers.com/forcats-0-1-0-%F0%9F%90%88%F0%9F%90%88%F0%9F%90%88%F0%9F%90%88/">forcats 0.1.0 🐈🐈🐈🐈</a></li>
+<li><a
+href="https://www.r-bloggers.com/forcats-0-1-0-%F0%9F%90%88%F0%9F%90%88%F0%9F%90%88%F0%9F%90%88/">forcats
+0.1.0 🐈🐈🐈🐈</a></li>
 </ul>
-<section class="footnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>2017-12-11 기준<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>Rstudio IDE 를 사용하고 있다면 <kbd>tap</kbd>을 이용한 자동완성을 이용하면 되니 그렇게 불편하지도 않다<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p>2017-12-11 기준<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Rstudio IDE 를 사용하고 있다면 <kbd>tap</kbd>을 이용한
+자동완성을 이용하면 되니 그렇게 불편하지도 않다<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -385,7 +423,7 @@ gss_cat %&gt;%
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/11/13/forcats_package.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2016/11/13/forcats_package.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -409,7 +447,7 @@ gss_cat %&gt;%
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -426,7 +464,7 @@ gss_cat %&gt;%
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -443,7 +481,7 @@ gss_cat %&gt;%
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -460,7 +498,24 @@ gss_cat %&gt;%
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -484,7 +539,7 @@ gss_cat %&gt;%
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -502,16 +557,6 @@ gss_cat %&gt;%
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -993,7 +1038,7 @@ gss_cat %&gt;%
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 factor 형 자료 처리를 위한 forcats package 에 대해";
+        var disqus_identifier = "http://localhost:4000_R에서 factor 형 자료 처리를 위한 forcats package 에 대해";
         var disqus_title = "R에서 factor 형 자료 처리를 위한 forcats package 에 대해";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

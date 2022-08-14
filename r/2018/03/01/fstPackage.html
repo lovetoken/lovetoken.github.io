@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2018/03/01/fstPackage.html" property="og:url">
+          <meta content="http://localhost:4000/r/2018/03/01/fstPackage.html" property="og:url">
         
         
           <meta content="2018-03-01T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2018/03/01/fstPackage.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2018/03/01/fstPackage.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,33 +136,41 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>데이터 프레임 형을 파일단위로 저장할 때 R에서는 다양한 방법들이 있다.<br />
+<p>데이터 프레임 형을 파일단위로 저장할 때 R에서는 다양한 방법들이
+있다.<br />
 크게 유형 분류를 하면</p>
 <ol type="1">
 <li>csv 와 같은 텍스트형으로 저장하는 방법</li>
 <li>이진 형태, 즉 binary 파일로 저장하는 방법</li>
 </ol>
 <p>으로 나눌 수 있는데<br />
-호환성을 위해선 1번 방법이 좋지만, 저장 및 로드하는 속도, 파일의 볼륨을 줄이기 위한 압축 부분을 포기해야 하고,<br />
-속도를 위해선 2번 방법이 좋지만 텍스트에디터 등으로 파일을 간편하게 확인하는 것을 포기해야 하는 등<br />
+호환성을 위해선 1번 방법이 좋지만, 저장 및 로드하는 속도, 파일의 볼륨을
+줄이기 위한 압축 부분을 포기해야 하고,<br />
+속도를 위해선 2번 방법이 좋지만 텍스트에디터 등으로 파일을 간편하게
+확인하는 것을 포기해야 하는 등<br />
 유형별로 장단점이 있다.</p>
-<p>본 글은 2번 이진 형태의 방법으로 R에서 데이터 프레임의 정보를 파일로 저장하는 방법 중 읽고 쓰는 속도가 상대적으로 빠른 편인 <a href="http://www.fstpackage.org/">fst package</a> 를 이용한 방법을 소개하고자 한다.</p>
+<p>본 글은 2번 이진 형태의 방법으로 R에서 데이터 프레임의 정보를 파일로
+저장하는 방법 중 읽고 쓰는 속도가 상대적으로 빠른 편인 <a
+href="http://www.fstpackage.org/">fst package</a> 를 이용한 방법을
+소개하고자 한다.</p>
 <p><br><br></p>
 <h2 id="benchmark">Benchmark</h2>
-<p>소개에 앞서 처리속도가 다른 방법에 비교해 얼마나 빠른지 결과를 먼저 확인 해 보고 싶었다.<br />
+<p>소개에 앞서 처리속도가 다른 방법에 비교해 얼마나 빠른지 결과를 먼저
+확인 해 보고 싶었다.<br />
 아래 코드는 샘플 데이터프레임을 만든 다음<br />
-오늘 주제인 fst 형으로 저장하는 방법과 그 외의 방법들로 저장하는 코드별 코드수행 시간을 측정하여 plotting 해 보는 코드이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(microbenchmark)
-
-nr_of_rows &lt;-<span class="st"> </span><span class="dv">10</span>^<span class="dv">8</span>
-
-df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Logical =</span> <span class="kw">sample</span>(<span class="kw">c</span>(T, F, <span class="ot">NA</span>), <span class="dt">prob =</span> <span class="kw">c</span>(.<span class="dv">85</span>, .<span class="dv">1</span>, .<span class="dv">05</span>), nr_of_rows, <span class="dt">replace =</span> T), 
-                 <span class="dt">Integer =</span> <span class="kw">sample</span>(1L:100L, nr_of_rows, <span class="dt">replace =</span> T), 
-                 <span class="dt">Real =</span> <span class="kw">sample</span>(<span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">10000</span>, <span class="dv">20</span>) /<span class="st"> </span><span class="dv">100</span>, nr_of_rows, <span class="dt">replace =</span> T),
-                 <span class="dt">Factor =</span> <span class="kw">as.factor</span>(<span class="kw">sample</span>(<span class="kw">labels</span>(UScitiesD), nr_of_rows, <span class="dt">replace =</span> T))) %&gt;%<span class="st"> </span>tbl_df
-
-df</code></pre></div>
+오늘 주제인 fst 형으로 저장하는 방법과 그 외의 방법들로 저장하는 코드별
+코드수행 시간을 측정하여 plotting 해 보는 코드이다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(microbenchmark)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>nr_of_rows <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">8</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Logical =</span> <span class="fu">sample</span>(<span class="fu">c</span>(T, F, <span class="cn">NA</span>), <span class="at">prob =</span> <span class="fu">c</span>(.<span class="dv">85</span>, .<span class="dv">1</span>, .<span class="dv">05</span>), nr_of_rows, <span class="at">replace =</span> T), </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Integer =</span> <span class="fu">sample</span>(1L<span class="sc">:</span>100L, nr_of_rows, <span class="at">replace =</span> T), </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Real =</span> <span class="fu">sample</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>, <span class="dv">20</span>) <span class="sc">/</span> <span class="dv">100</span>, nr_of_rows, <span class="at">replace =</span> T),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Factor =</span> <span class="fu">as.factor</span>(<span class="fu">sample</span>(<span class="fu">labels</span>(UScitiesD), nr_of_rows, <span class="at">replace =</span> T))) <span class="sc">%&gt;%</span> tbl_df</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 100,000,000 x 4
 ##    Logical Integer  Real Factor       
 ##    &lt;lgl&gt;     &lt;int&gt; &lt;dbl&gt; &lt;fct&gt;        
@@ -177,7 +185,8 @@ df</code></pre></div>
 ##  9 T            21  48.2 Denver       
 ## 10 T            78  48.2 Denver       
 ## # ... with 99,999,990 more rows</code></pre>
-<p>저장대상으로 테스트에 쓸 데이터프레임 <code>df</code> 를 만들어 보았다.<br />
+<p>저장대상으로 테스트에 쓸 데이터프레임 <code>df</code> 를 만들어
+보았다.<br />
 1억건의 레코드를 가진 데이터프레임이다.<br />
 이 <code>df</code> 를</p>
 <ul>
@@ -187,30 +196,39 @@ df</code></pre></div>
 <li><code>feather::write_feather</code></li>
 <li><code>fst::write_fst</code></li>
 </ul>
-<p>의 5개 방법별로 저장하는 시간을 반복측정하는 것을 microbenchmark package 의 도움을 받아 실행해 본다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bench &lt;-<span class="st"> </span><span class="kw">microbenchmark</span>(<span class="dt">write.table =</span> <span class="kw">write.table</span>(df, <span class="dt">file =</span> <span class="st">&quot;output/df_writetable.csv&quot;</span>, <span class="dt">quote =</span> F, <span class="dt">row.names =</span> F, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>),
-                        <span class="dt">fwrite =</span> <span class="kw">fwrite</span>(df, <span class="dt">file =</span> <span class="st">&quot;output/df_fwrite.csv&quot;</span>),
-                        <span class="dt">saveRDS =</span> <span class="kw">saveRDS</span>(df, <span class="dt">file =</span> <span class="st">&quot;output/df_saveRDS.rds&quot;</span>),
-                        <span class="dt">write_feather =</span> <span class="kw">write_feather</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/df_feather.fea&quot;</span>),
-                        <span class="dt">write_fst =</span> <span class="kw">write_fst</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/df_fst.fst&quot;</span>), <span class="dt">times =</span> <span class="dv">10</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">autoplot</span>(bench)</code></pre></div>
+<p>의 5개 방법별로 저장하는 시간을 반복측정하는 것을 microbenchmark
+package 의 도움을 받아 실행해 본다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bench <span class="ot">&lt;-</span> <span class="fu">microbenchmark</span>(<span class="at">write.table =</span> <span class="fu">write.table</span>(df, <span class="at">file =</span> <span class="st">&quot;output/df_writetable.csv&quot;</span>, <span class="at">quote =</span> F, <span class="at">row.names =</span> F, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>),</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fwrite =</span> <span class="fu">fwrite</span>(df, <span class="at">file =</span> <span class="st">&quot;output/df_fwrite.csv&quot;</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">saveRDS =</span> <span class="fu">saveRDS</span>(df, <span class="at">file =</span> <span class="st">&quot;output/df_saveRDS.rds&quot;</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">write_feather =</span> <span class="fu">write_feather</span>(df, <span class="at">path =</span> <span class="st">&quot;output/df_feather.fea&quot;</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">write_fst =</span> <span class="fu">write_fst</span>(df, <span class="at">path =</span> <span class="st">&quot;output/df_fst.fst&quot;</span>), <span class="at">times =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(bench)</span></code></pre></div>
 <p><img src="/assets/fstPackage.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>fst 형으로 저장하는 방법이 약 2.52초로 다른 방법들에 비해 비약적으로 빠른 것을 볼 수 있다.</p>
+<p>fst 형으로 저장하는 방법이 약 2.52초로 다른 방법들에 비해 비약적으로
+빠른 것을 볼 수 있다.</p>
 <p>쓰기 속도 외에도 읽기 속도 역시 좋은 성능을 보인다.</p>
-<p>읽기 테스트는 생략하지만 <a href="http://www.fstpackage.org/">fst package 홈페이지</a>에 지금까지의 벤치마킹과 비슷한 실험 결과물이 소개되었으니 참고해 보면 좋겠다.</p>
+<p>읽기 테스트는 생략하지만 <a href="http://www.fstpackage.org/">fst
+package 홈페이지</a>에 지금까지의 벤치마킹과 비슷한 실험 결과물이
+소개되었으니 참고해 보면 좋겠다.</p>
 <p><br><br></p>
 <h2 id="사용법">사용법</h2>
-<p>벤치마킹 테스트 코드에 fst 형으로 저장하는 방법에 대한 코드가 있었다. 바로 이 부분인데</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write_fst</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/df_fst.fst&quot;</span>)</code></pre></div>
-<p>저장시킬 데이터프레임 객체명, 저장시킬 파일경로를 지정 이 두 가지가 필수이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">read_fst</span>(<span class="st">&quot;output/df_fst.fst&quot;</span>)</code></pre></div>
-<p>읽는 방법은 <code>read_fst()</code> 함수안에 이전에 저장시킨 파일경로를 지정하고 할당하는 방식이다.</p>
+<p>벤치마킹 테스트 코드에 fst 형으로 저장하는 방법에 대한 코드가 있었다.
+바로 이 부분인데</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_fst</span>(df, <span class="at">path =</span> <span class="st">&quot;output/df_fst.fst&quot;</span>)</span></code></pre></div>
+<p>저장시킬 데이터프레임 객체명, 저장시킬 파일경로를 지정 이 두 가지가
+필수이다.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_fst</span>(<span class="st">&quot;output/df_fst.fst&quot;</span>)</span></code></pre></div>
+<p>읽는 방법은 <code>read_fst()</code> 함수안에 이전에 저장시킨
+파일경로를 지정하고 할당하는 방식이다.</p>
 <p><br><br></p>
 <h2 id="특징">특징</h2>
 <p>fst package 는 여러 특징이 있는데 가장 눈에 띄는 특징은<br />
-자동적으로 병렬스레드를 이용하여 저장 및 읽는 처리속도의 효율을 높인다는 것이다.<br />
-볼륨이 큰 데이터프레임을 <code>write_fst()</code> 함수로 저장하곤 할 때 이러한 로그가 나타나는 것을 보면 알 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write_fst</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/df_fst.fst&quot;</span>)</code></pre></div>
+자동적으로 병렬스레드를 이용하여 저장 및 읽는 처리속도의 효율을 높인다는
+것이다.<br />
+볼륨이 큰 데이터프레임을 <code>write_fst()</code> 함수로 저장하곤 할 때
+이러한 로그가 나타나는 것을 보면 알 수 있다.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_fst</span>(df, <span class="at">path =</span> <span class="st">&quot;output/df_fst.fst&quot;</span>)</span></code></pre></div>
 <pre><code>Written 9.6% of 100000000 rows in 2 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 18 secs.      
 Written 15.8% of 100000000 rows in 3 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 15 secs.      
 Written 22.5% of 100000000 rows in 4 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 13 secs.      
@@ -228,19 +246,26 @@ Written 82.9% of 100000000 rows in 15 secs using 4 threads. anyBufferGrown=no; m
 Written 88.5% of 100000000 rows in 16 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 2 secs.      
 Written 93.5% of 100000000 rows in 17 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 1 secs.      
 Written 97.4% of 100000000 rows in 18 secs using 4 threads. anyBufferGrown=no; maxBuffUsed=37%. Finished in 0 secs.  </code></pre>
-<p>data.table package 의 <code>fwrite()</code>, <code>fread()</code> 에서도 가지고 있는 기능이지만 fst package가 조금 더 높은 성능을 <a href="http://www.fstpackage.org/README-multi-threading-1.png">보이기도 한다</a>.</p>
+<p>data.table package 의 <code>fwrite()</code>, <code>fread()</code>
+에서도 가지고 있는 기능이지만 fst package가 조금 더 높은 성능을 <a
+href="http://www.fstpackage.org/README-multi-threading-1.png">보이기도
+한다</a>.</p>
 <p>압축저장도 지원한다.<br />
-<code>write_fst()</code> 함수의 인자들을 살펴보면 <code>compress</code> 인자가 있고 기본적으로 50인데 이를 조정하여 압축률을 높이거나 낮출 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write_fst</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/compress_1.fst&quot;</span>,   <span class="dt">compress =</span> <span class="dv">1</span>)
-<span class="kw">write_fst</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/compress_50.fst&quot;</span>,  <span class="dt">compress =</span> <span class="dv">50</span>)
-<span class="kw">write_fst</span>(df, <span class="dt">path =</span> <span class="st">&quot;output/compress_100.fst&quot;</span>, <span class="dt">compress =</span> <span class="dv">100</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system</span>(<span class="st">&quot;ls -lh output/compress*&quot;</span>)</code></pre></div>
+<code>write_fst()</code> 함수의 인자들을 살펴보면 <code>compress</code>
+인자가 있고 기본적으로 50인데 이를 조정하여 압축률을 높이거나 낮출 수
+있다.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_fst</span>(df, <span class="at">path =</span> <span class="st">&quot;output/compress_1.fst&quot;</span>,   <span class="at">compress =</span> <span class="dv">1</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_fst</span>(df, <span class="at">path =</span> <span class="st">&quot;output/compress_50.fst&quot;</span>,  <span class="at">compress =</span> <span class="dv">50</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write_fst</span>(df, <span class="at">path =</span> <span class="st">&quot;output/compress_100.fst&quot;</span>, <span class="at">compress =</span> <span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">&quot;ls -lh output/compress*&quot;</span>)</span></code></pre></div>
 <pre><code>-rw-r--r--@ 1 lovetoken  staff   1.2G Mar  1 10:21 output/compress_1.fst
 -rw-r--r--@ 1 lovetoken  staff   247M Mar  1 10:22 output/compress_100.fst
 -rw-r--r--@ 1 lovetoken  staff   582M Mar  1 10:21 output/compress_50.fst</code></pre>
-<p>압축률을 1로 한 것과 100으로 한 것 간의 파일 용량이 각각 1.2Gb, 247Mb 으로 차이가 큰 것을 볼 수 있다.</p>
+<p>압축률을 1로 한 것과 100으로 한 것 간의 파일 용량이 각각 1.2Gb, 247Mb
+으로 차이가 큰 것을 볼 수 있다.</p>
 <p>마지막으로..<br />
-fst package 가 혹 <code>save()</code>, <code>saveRDS()</code> 처럼 R 객체를 저장할 수 있다고 생각하면 안 된다.<br />
+fst package 가 혹 <code>save()</code>, <code>saveRDS()</code> 처럼 R
+객체를 저장할 수 있다고 생각하면 안 된다.<br />
 서두에도 말했듯이 데이터프레임 형 객체만 저장할 수 있다.<br />
 데이터프레임 형을 저장하는데 특화된 것이 특징이라면 특징이겠다.</p>
 </div>
@@ -256,7 +281,7 @@ fst package 가 혹 <code>save()</code>, <code>saveRDS()</code> 처럼 R 객체�
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2018/03/01/fstPackage.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2018/03/01/fstPackage.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -280,7 +305,7 @@ fst package 가 혹 <code>save()</code>, <code>saveRDS()</code> 처럼 R 객체�
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -297,7 +322,7 @@ fst package 가 혹 <code>save()</code>, <code>saveRDS()</code> 처럼 R 객체�
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -314,7 +339,7 @@ fst package 가 혹 <code>save()</code>, <code>saveRDS()</code> 처럼 R 객체�
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -331,7 +356,24 @@ fst package 가 혹 <code>save()</code>, <code>saveRDS()</code> 처럼 R 객체�
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -355,7 +397,7 @@ fst package 가 혹 <code>save()</code>, <code>saveRDS()</code> 처럼 R 객체�
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -373,16 +415,6 @@ fst package 가 혹 <code>save()</code>, <code>saveRDS()</code> 처럼 R 객체�
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -864,7 +896,7 @@ fst package 가 혹 <code>save()</code>, <code>saveRDS()</code> 처럼 R 객체�
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package";
+        var disqus_identifier = "http://localhost:4000_R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package";
         var disqus_title = "R에서 테이블 형 객체를 파일단위로 저장할 때 특화된 fst package";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

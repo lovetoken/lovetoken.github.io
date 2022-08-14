@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/04/16/progressbar.html" property="og:url">
+          <meta content="http://localhost:4000/r/2016/04/16/progressbar.html" property="og:url">
         
         
           <meta content="2016-04-16T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 범용적으로 진행표시줄(progress bar)을 구현할 수 있는 progress package">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/04/16/progressbar.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2016/04/16/progressbar.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,44 +136,62 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>이전에 R에서 진행표시줄(progress bar) 을 만들기 위해 <a href="http://cafe.naver.com/lovetokens/1378">windows OS 에서 작동되는 <code>winProgressBar()</code> 함수에 대해서 설명한 적</a>이 있다.<br />
-아쉽게도 윈도우 이외 다른 운영체계에서는 이 함수가 지원되지 않는다.<br />
-결국 상호호환의 문제로 다른 방안을 찾아보아야 하는 상황이 일어났는데 어떠한 운영체계 (<i class="fa fa-windows" aria-hidden="true"></i>, <i class="fa fa-apple" aria-hidden="true"></i>, <i class="fa fa-linux" aria-hidden="true"></i>)라 하더라도 R에서 진행표시줄을 나타내기 위한 방법을 찾아 정리해보고자 한다.</p>
-<p>지금까지 찾아본 방법중 가장 좋은 것은 progress package 를 이용하는 것 이었다.</p>
+<p>이전에 R에서 진행표시줄(progress bar) 을 만들기 위해 <a
+href="http://cafe.naver.com/lovetokens/1378">windows OS 에서 작동되는
+<code>winProgressBar()</code> 함수에 대해서 설명한 적</a>이 있다.<br />
+아쉽게도 윈도우 이외 다른 운영체계에서는 이 함수가 지원되지
+않는다.<br />
+결국 상호호환의 문제로 다른 방안을 찾아보아야 하는 상황이 일어났는데
+어떠한 운영체계 (<i class="fa fa-windows" aria-hidden="true"></i>,
+<i class="fa fa-apple" aria-hidden="true"></i>,
+<i class="fa fa-linux" aria-hidden="true"></i>)라 하더라도 R에서
+진행표시줄을 나타내기 위한 방법을 찾아 정리해보고자 한다.</p>
+<p>지금까지 찾아본 방법중 가장 좋은 것은 progress package 를 이용하는 것
+이었다.</p>
 <p><br><br></p>
 <h2 id="example-code">example code</h2>
 <p>이전에 포스팅한 글을 빌려 똑같은 예제를 이용해 보겠다.</p>
-<p>임의의 코드를 1000번 반복하는 for문 이며, 반복의 대상이 되는 코드의 내용물 은 상당히 복잡할 것으로 가정한다.<br />
-예를 들어 반복의 대상이 되는 코드를 한번 수행하는데 걸리는 시간이 iteration 에 상관없이 공통으로 0.01초 라면 for 문이 모두 돌아가기 까지 소요되는 시간은 10초가 된다.<br />
+<p>임의의 코드를 1000번 반복하는 for문 이며, 반복의 대상이 되는 코드의
+내용물 은 상당히 복잡할 것으로 가정한다.<br />
+예를 들어 반복의 대상이 되는 코드를 한번 수행하는데 걸리는 시간이
+iteration 에 상관없이 공통으로 0.01초 라면 for 문이 모두 돌아가기 까지
+소요되는 시간은 10초가 된다.<br />
 이러한 가정을 정확하게 구현하는 코드가 바로 아래 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for(i in <span class="kw">seq</span>(<span class="dv">1000</span>)){
-  <span class="kw">Sys.sleep</span>(<span class="fl">0.01</span>)  
-} </code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1000</span>)){</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="fl">0.01</span>)  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>} </span></code></pre></div>
 <p><br><br></p>
-<h2 id="progress-package-를-이용해-진행표시줄-만들기">progress package 를 이용해 진행표시줄 만들기</h2>
+<h2 id="progress-package-를-이용해-진행표시줄-만들기">progress package
+를 이용해 진행표시줄 만들기</h2>
 <p>progress package 를 준비하고 로드한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;progress&quot;)</span>
-<span class="kw">library</span>(<span class="st">&quot;progress&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;progress&quot;)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;progress&quot;</span>)</span></code></pre></div>
 <p>그 다음 위의 예제코드에 몇 가지 코드를 덧붙인다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pb &lt;-<span class="st"> </span>progress_bar$<span class="kw">new</span>(<span class="dt">total =</span> <span class="dv">1000</span>)
-
-for(i in <span class="kw">seq</span>(<span class="dv">1000</span>)){
-    pb$<span class="kw">tick</span>()
-    <span class="kw">Sys.sleep</span>(<span class="fl">0.01</span>)
-}</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pb <span class="ot">&lt;-</span> progress_bar<span class="sc">$</span><span class="fu">new</span>(<span class="at">total =</span> <span class="dv">1000</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1000</span>)){</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    pb<span class="sc">$</span><span class="fu">tick</span>()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="fl">0.01</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>추가된 코드는 2줄이다.</p>
-<p>우선 첫번째 progress bar 에 대한 사전정보가 담긴 객체 <code>pb</code> 를 만든다.<br />
+<p>우선 첫번째 progress bar 에 대한 사전정보가 담긴 객체 <code>pb</code>
+를 만든다.<br />
 사전정보는 iteration 의 최대값을 넣어준다.<br />
-즉 우리예시의 반복문은 1000회를 반복하므로 total 인자에 1000을 부여한다.<br />
-그렇게 만든 객체 <code>pb</code> 를 반복문 안에 심어주고 이를 째깍째깍 거릴 수 있도록 <code>tick()</code> 모듈을 심어준다.<br />
+즉 우리예시의 반복문은 1000회를 반복하므로 total 인자에 1000을
+부여한다.<br />
+그렇게 만든 객체 <code>pb</code> 를 반복문 안에 심어주고 이를 째깍째깍
+거릴 수 있도록 <code>tick()</code> 모듈을 심어준다.<br />
 이것이 가장 기본적인 사용방법이다.</p>
-<p>실행해보면 R console 에 다음과 같이 진행표시줄이 나타나고, 점진적으로 진행되는 에니메이션을 볼 수 있다.</p>
+<p>실행해보면 R console 에 다음과 같이 진행표시줄이 나타나고, 점진적으로
+진행되는 에니메이션을 볼 수 있다.</p>
 <center>
 <script type="text/javascript" src="https://asciinema.org/a/123566.js" id="asciicast-123566" async></script>
 </center>
 <p>추가된 2줄 코드의 문법형태가 Python을 사용하는 것처럼 닮았다.<br />
-R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자유롭게 조절하여 사용 할 수 있는 듯 하다.<br />
-그 방법에 대해선 <code>?progress_bar</code> 를 통해 확인할 수 있으며, 예제코드들을 활용하면 상황에 맞게 커스터마이징도 가능할 듯 싶다.</p>
+R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자유롭게
+조절하여 사용 할 수 있는 듯 하다.<br />
+그 방법에 대해선 <code>?progress_bar</code> 를 통해 확인할 수 있으며,
+예제코드들을 활용하면 상황에 맞게 커스터마이징도 가능할 듯 싶다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -187,7 +205,7 @@ R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/04/16/progressbar.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2016/04/16/progressbar.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -211,7 +229,7 @@ R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -228,7 +246,7 @@ R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -245,7 +263,7 @@ R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -262,7 +280,24 @@ R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -286,7 +321,7 @@ R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -304,16 +339,6 @@ R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -795,7 +820,7 @@ R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 범용적으로 진행표시줄(progress bar)을 구현할 수 있는 progress package";
+        var disqus_identifier = "http://localhost:4000_R에서 범용적으로 진행표시줄(progress bar)을 구현할 수 있는 progress package";
         var disqus_title = "R에서 범용적으로 진행표시줄(progress bar)을 구현할 수 있는 progress package";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

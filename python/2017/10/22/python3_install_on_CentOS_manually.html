@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/python/2017/10/22/python3_install_on_CentOS_manually.html" property="og:url">
+          <meta content="http://localhost:4000/python/2017/10/22/python3_install_on_CentOS_manually.html" property="og:url">
         
         
           <meta content="2017-10-22T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="인터넷 접속이 안되는 CentOS 머신에서 Python3 및 패키지 설치하기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/python/2017/10/22/python3_install_on_CentOS_manually.html">
+          <meta name="twitter:url" content="http://localhost:4000/python/2017/10/22/python3_install_on_CentOS_manually.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,51 +136,71 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>본 글은 CentOS 최소설치버전으로 설치된 서버에서 (내부망 운용등의 이유로)인터넷 접속이 불가한 상황일 때 Python3 및 패키지를 설치하는 법에 대해 설명하기 위한 글이다.<br />
-패키지의 예시는 <a href="http://konlpy-ko.readthedocs.io/ko/v0.4.3/">konlpy</a> 이다.</p>
+<p>본 글은 CentOS 최소설치버전으로 설치된 서버에서 (내부망 운용등의
+이유로)인터넷 접속이 불가한 상황일 때 Python3 및 패키지를 설치하는 법에
+대해 설명하기 위한 글이다.<br />
+패키지의 예시는 <a
+href="http://konlpy-ko.readthedocs.io/ko/v0.4.3/">konlpy</a> 이다.</p>
 <p><br><br></p>
 <h2 id="가상환경-준비">가상환경 준비</h2>
 <p>설명을 위하여<br />
-설치의 대상이 되는 CentOS 최소설치 환경을 똑같이 재현할 필요가 있다.<br />
-CentOS 최소설치가 된 가상환경을 <a href="https://www.docker.com/">Docker</a> 을 통해 준비해 보았다.<br />
-(Docker를 모른다면 본 장은 설명을 위한 CentOS 환경을 그대로 재현하기 위함이구나 하고 넘어가면 되겠다)</p>
+설치의 대상이 되는 CentOS 최소설치 환경을 똑같이 재현할 필요가
+있다.<br />
+CentOS 최소설치가 된 가상환경을 <a
+href="https://www.docker.com/">Docker</a> 을 통해 준비해 보았다.<br />
+(Docker를 모른다면 본 장은 설명을 위한 CentOS 환경을 그대로 재현하기
+위함이구나 하고 넘어가면 되겠다)</p>
 <pre><code>$ docker run -it centos /bin/bash</code></pre>
-<p>CentOS 최소설치버전 이미지 다운로드한 후 컨테이너 실행하여 <code>/bin/bash</code> 를 실행해 CentOS 쉘로 접속하게 된다.<br />
-접속된 환경은 인터넷이 가능한 상황이지만, 인터넷이 안되는 상황을 전제하에 Python3 및 konlpy 패키지를 수동으로 설치해 볼 것이다.</p>
+<p>CentOS 최소설치버전 이미지 다운로드한 후 컨테이너 실행하여
+<code>/bin/bash</code> 를 실행해 CentOS 쉘로 접속하게 된다.<br />
+접속된 환경은 인터넷이 가능한 상황이지만, 인터넷이 안되는 상황을
+전제하에 Python3 및 konlpy 패키지를 수동으로 설치해 볼 것이다.</p>
 <p><br><br></p>
 <h2 id="python3-설치파일-준비">Python3 설치파일 준비</h2>
 <p>이제부턴 CentOS 쉘에서의 상황임을 염두해 둔다.</p>
 <pre><code>$ yum install -y https://centos7.iuscommunity.org/ius-release.rpm
 $ yum search python36</code></pre>
-<p>IUS Community Project의 리포지토리를 yum의 리포지토리에 추가한 후 python36 검색해 본다.<br />
-&quot;python36&quot; 으로 시작되는 다양한 리스트들이 출력될 것이다.<br />
-참고로 yum 의 <code>-y</code> 옵션 의미는 무조건 Yes로 입력하여 설치를 진행토록 하는 의미이다.</p>
+<p>IUS Community Project의 리포지토리를 yum의 리포지토리에 추가한 후
+python36 검색해 본다.<br />
+“python36” 으로 시작되는 다양한 리스트들이 출력될 것이다.<br />
+참고로 yum 의 <code>-y</code> 옵션 의미는 무조건 Yes로 입력하여 설치를
+진행토록 하는 의미이다.</p>
 <pre><code>$ mkdir ~/python3
 $ cd ~/python3</code></pre>
 <p>적당한 곳에 <code>python3</code> 디렉토리를 만들고 그곳으로 간다.</p>
 <pre><code>$ yum install -y --downloadonly --downloaddir=. python36u python36u-libs python36u-devel python36u-pip</code></pre>
-<p>Python3.6 버전대 패키지들을 설치하지 않고 다운로드만 하는 명령어이다. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a><br />
-위 명령어를 실행하면 관련된 패키지들의 rpm 을 워킹디렉토리(<code>~/python3</code>)에 저장하게 된다.</p>
+<p>Python3.6 버전대 패키지들을 설치하지 않고 다운로드만 하는 명령어이다.
+<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a><br />
+위 명령어를 실행하면 관련된 패키지들의 rpm 을
+워킹디렉토리(<code>~/python3</code>)에 저장하게 된다.</p>
 <pre><code>[root@e1e70169f547 python3]# ll
 -rw-r--r-- 1 root root   56192 Aug  3 04:20 python36u-3.6.2-1.ius.centos7.x86_64.rpm
 -rw-r--r-- 1 root root  204112 Aug  3 04:20 python36u-devel-3.6.2-1.ius.centos7.x86_64.rpm
 -rw-r--r-- 1 root root 9689852 Aug  3 04:20 python36u-libs-3.6.2-1.ius.centos7.x86_64.rpm
 -rw-r--r-- 1 root root 1841528 Feb  3  2017 python36u-pip-9.0.1-1.ius.centos7.noarch.rpm
 -rw-r--r-- 1 root root  663324 Mar 22  2017 python36u-setuptools-33.1.1-1.ius.centos7.noarch.rpm</code></pre>
-<p>실제로 확인해 볼 경우 5개의 rpm 파일들이 준비된 것을 확인할 수 있다.</p>
+<p>실제로 확인해 볼 경우 5개의 rpm 파일들이 준비된 것을 확인할 수
+있다.</p>
 <p><br><br></p>
 <h2 id="konlpy-패키지-리소스-준비">konlpy 패키지 리소스 준비</h2>
-<p>파이썬의 패키지를 준비하기 위해선 <code>pip</code> 를 이용하는것이 좋다.<br />
-<code>pip</code> 를 이용하기 위해서 방금 받은 rpm 을 이용해 파이썬을 설치한다.</p>
+<p>파이썬의 패키지를 준비하기 위해선 <code>pip</code> 를 이용하는것이
+좋다.<br />
+<code>pip</code> 를 이용하기 위해서 방금 받은 rpm 을 이용해 파이썬을
+설치한다.</p>
 <pre><code>$ yum install -y *</code></pre>
-<p>정상적으로 설치되면 이때부터 <code>python3.6</code>, <code>pip3.6</code> 명령어를 이용할 수 있게 된다.</p>
+<p>정상적으로 설치되면 이때부터 <code>python3.6</code>,
+<code>pip3.6</code> 명령어를 이용할 수 있게 된다.</p>
 <pre><code>$ mkdir packages
 $ cd packages</code></pre>
-<p>적당히 <code>~/python3/packages</code> 디렉토리를 만들고 그곳으로 가자.</p>
+<p>적당히 <code>~/python3/packages</code> 디렉토리를 만들고 그곳으로
+가자.</p>
 <pre><code>$ pip3.6 install --download=. tag
 $ pip3.6 install --download=. konlpy
 $ pip3.6 install --download=. JPype1</code></pre>
-<p>위 명령어 중 첫번째는 tag package 에 대한 리소스 압축파일 (<code>.tag.gz</code>) 을 포함한 의존성이 있는 리소스를 모두 현 워킹디렉토리에 저장만 한다.<br />
+<p>위 명령어 중 첫번째는 tag package 에 대한 리소스 압축파일
+(<code>.tag.gz</code>) 을 포함한 의존성이 있는 리소스를 모두 현
+워킹디렉토리에 저장만 한다.<br />
 즉 패키지들이 설치되지는 않는다.<br />
 konlpy 와 JPype1 패키지 역시 마찬가지로 리소스를 준비시킨다.</p>
 <pre><code>[root@e1e70169f547 package]# ll
@@ -191,35 +211,50 @@ konlpy 와 JPype1 패키지 역시 마찬가지로 리소스를 준비시킨다.
 -rw-r--r-- 1 root root    34414 Oct 20 00:52 tag-0.3.3.tar.gz</code></pre>
 <p>package 리소스 파일들이 준비되어 있는것을 확인할 수 있다.</p>
 <p><br><br></p>
-<h2 id="인터넷이-불가한-centos-에서의-python3.6-packages-설치">인터넷이 불가한 CentOS 에서의 python3.6, packages 설치</h2>
+<h2 id="인터넷이-불가한-centos-에서의-python3.6-packages-설치">인터넷이
+불가한 CentOS 에서의 python3.6, packages 설치</h2>
 <p>인터넷이 불가했던 머신으로 시점을 옮긴다.<br />
-인터넷 접속이 안되었던 CentOS 서버에서 위에서 준비한 rpm, package 리소스들을 물리적으로 복사하여 가져온다.</p>
+인터넷 접속이 안되었던 CentOS 서버에서 위에서 준비한 rpm, package
+리소스들을 물리적으로 복사하여 가져온다.</p>
 <p>본 예제의 경우 Docker 가상환경을 기준으로 설명했는데<br />
 컨테이너 안에서 빠져나온 후 (<code>exit</code> 로 빠져나올 수 있음)</p>
 <pre><code>$ docker cp &lt;컨테이너명&gt;:~/python3/ &lt;호스트 경로&gt;</code></pre>
 <p>의 방식으로 가상환경에 있던 rpm, package 리소스 들을<br />
-호스트로 떨어트린 후 USB 메모리등을 이용해 복사하여 인터넷이 불가한 CentOS 서버머신에 복사하면 되겠다.<br />
-참고로 컨테이너 명은 <code>docker ps -a</code> 를 통해 확인이 가능하다.<br />
-아래 docker cp 명령어는 나의 컴퓨터에 꽂혀 있는 USB 메모리로 리소스들을 복사하는 예이다.</p>
+호스트로 떨어트린 후 USB 메모리등을 이용해 복사하여 인터넷이 불가한
+CentOS 서버머신에 복사하면 되겠다.<br />
+참고로 컨테이너 명은 <code>docker ps -a</code> 를 통해 확인이
+가능하다.<br />
+아래 docker cp 명령어는 나의 컴퓨터에 꽂혀 있는 USB 메모리로 리소스들을
+복사하는 예이다.</p>
 <pre><code>$ docker cp e1e70169f547:~/python3/ /Volumes/lovetoken_usb/</code></pre>
-<p>(이외의 docker 를 이용하지 않은 상황에선 각자 상황에 따라 대처... 자세한 설명은 생략)</p>
+<p>(이외의 docker 를 이용하지 않은 상황에선 각자 상황에 따라 대처…
+자세한 설명은 생략)</p>
 <p>자 이제부터는 인터넷이 불가한 CentOS 서버상황이라고 가정한다.<br />
-편의상 <code>~/python3</code> 에 복사한 것을 붙어넣었다고 가정하겠다.</p>
+편의상 <code>~/python3</code> 에 복사한 것을 붙어넣었다고
+가정하겠다.</p>
 <pre><code>$ cd ~/python3</code></pre>
 <p>복사한 python3 폴더로 간다.</p>
 <pre><code>$ yum install -y python36u-3.6.2-1.ius.centos7.x86_64.rpm python36u-devel-3.6.2-1.ius.centos7.x86_64.rpm python36u-libs-3.6.2-1.ius.centos7.x86_64.rpm python36u-pip-9.0.1-1.ius.centos7.noarch.rpm python36u-setuptools-33.1.1-1.ius.centos7.noarch.rpm</code></pre>
 <p>이 명령어를 통해서<br />
-yum 은 원격레파지토리를 검색하지 않고 <code>~/python3</code> 에 있는 rpm 에 의존하여 파이썬을 설치하기 시작한다.<br />
+yum 은 원격레파지토리를 검색하지 않고 <code>~/python3</code> 에 있는 rpm
+에 의존하여 파이썬을 설치하기 시작한다.<br />
 즉 수동으로 설치가 되는것이다.<br />
-역시 정상적으로 설치되면 <code>python3.6</code>, <code>pip3.6</code> 을 실행할 수 있다.</p>
+역시 정상적으로 설치되면 <code>python3.6</code>, <code>pip3.6</code> 을
+실행할 수 있다.</p>
 <pre><code>$ cd packages</code></pre>
-<p><code>~/python3/packages</code> 폴더로 가서 이젠 konlpy 패캐지 설치를 시도할 것이다.</p>
+<p><code>~/python3/packages</code> 폴더로 가서 이젠 konlpy 패캐지 설치를
+시도할 것이다.</p>
 <pre><code>pip3.6 install *</code></pre>
-<p>이 명령어를 통해서 인터넷 연결없이 konlpy 관련 패키지들을 수동설치하게 된다.</p>
-<section class="footnotes">
+<p>이 명령어를 통해서 인터넷 연결없이 konlpy 관련 패키지들을
+수동설치하게 된다.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>덧붙임 : Ubuntu 에선 <code>apt-get -d install &lt;package name&gt;</code> 으로 설치하지 않고 <code>.deb</code> 파일들을 다운로드만 할 수 있다<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>덧붙임 : Ubuntu 에선
+<code>apt-get -d install &lt;package name&gt;</code> 으로 설치하지 않고
+<code>.deb</code> 파일들을 다운로드만 할 수 있다<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -235,7 +270,7 @@ yum 은 원격레파지토리를 검색하지 않고 <code>~/python3</code> 에 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/python/2017/10/22/python3_install_on_CentOS_manually.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/python/2017/10/22/python3_install_on_CentOS_manually.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -248,6 +283,13 @@ yum 은 원격레파지토리를 검색하지 않고 <code>~/python3</code> 에 
 </div>
 
 
+
+    
+    
+        
+            
+        
+    
 
     
     
@@ -776,7 +818,7 @@ yum 은 원격레파지토리를 검색하지 않고 <code>~/python3</code> 에 
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_인터넷 접속이 안되는 CentOS 머신에서 Python3 및 패키지 설치하기";
+        var disqus_identifier = "http://localhost:4000_인터넷 접속이 안되는 CentOS 머신에서 Python3 및 패키지 설치하기";
         var disqus_title = "인터넷 접속이 안되는 CentOS 머신에서 Python3 및 패키지 설치하기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

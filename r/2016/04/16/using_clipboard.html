@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/04/16/using_clipboard.html" property="og:url">
+          <meta content="http://localhost:4000/r/2016/04/16/using_clipboard.html" property="og:url">
         
         
           <meta content="2016-04-16T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 클립보드의 내용물을 끌어오기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/04/16/using_clipboard.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2016/04/16/using_clipboard.html">
         
         
           <meta name="twitter:description" content="">
@@ -137,31 +137,34 @@
 <div class="content">
     <div class="post"><p><br><br></p>
 <p>편하게 데이터를 R에서 불러들이기 위해 간편한 방법이 없을까?<br />
-보통 csv파일을 읽어들이기 위해서 csv파일이 있는 경로를 알고 그경로를 입력해 주어야 한다.<br />
+보통 csv파일을 읽어들이기 위해서 csv파일이 있는 경로를 알고 그경로를
+입력해 주어야 한다.<br />
 아래의 코드처럼 말이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./Data/Test.csv&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;./Data/Test.csv&quot;</span>)</span></code></pre></div>
 <p>워킹디렉토리에서 Data 폴더의 Test.csv 을 읽어들이는 코드이다.<br />
-하지만 간단히 눈앞에 있는 데이터를 R로 불러들이기 위해선 그 데이터 파일의 path 를 알아야 하는 것이 귀찮을 수 있다.<br />
-이러한 귀차니즘까지 발동한다면 Clipboard 를 이용하여 원하는 데이터를 로드하는 것이 현명한 것 같다.</p>
+하지만 간단히 눈앞에 있는 데이터를 R로 불러들이기 위해선 그 데이터
+파일의 path 를 알아야 하는 것이 귀찮을 수 있다.<br />
+이러한 귀차니즘까지 발동한다면 Clipboard 를 이용하여 원하는 데이터를
+로드하는 것이 현명한 것 같다.</p>
 <p><br><br></p>
 <h2 id="on-windows">on Windows</h2>
-<p>예를 들어 아래의 모습처럼 우리가 사용하고자 하는 Test.csv 파일이 MS office Excel 에서 열린 상황의 모습이고,<br />
+<p>예를 들어 아래의 모습처럼 우리가 사용하고자 하는 Test.csv 파일이 MS
+office Excel 에서 열린 상황의 모습이고,<br />
 이것을 R에서 빨리 불러오고 싶다 가정한다.</p>
-<figure>
-<img src="/assets/Clipboard_Windows.png" />
-</figure>
+<p><img src="/assets/Clipboard_Windows.png" /></p>
 <p>다음과 같은 스텝을 따른다.</p>
 <ol type="1">
-<li>Test.csv 파일의 데이터셋을 전체 선택하여 <kbd>Ctrl</kbd> + <kbd>C</kbd> 를 한다.</li>
-<li>R로 되돌어가 <code>read.table(&quot;clipboard&quot;)</code> 를 실행하여 복사했던 데이터가 제대로 불러와 졌는지 확인한다.<br />
+<li>Test.csv 파일의 데이터셋을 전체 선택하여 <kbd>Ctrl</kbd> +
+<kbd>C</kbd> 를 한다.</li>
+<li>R로 되돌어가 <code>read.table("clipboard")</code> 를 실행하여
+복사했던 데이터가 제대로 불러와 졌는지 확인한다.<br />
 </li>
-<li>필요에 따라 <code>read.table()</code> 함수의 <code>header</code>, <code>sep</code> 인자값을 바꾸어 불러온다.</li>
+<li>필요에 따라 <code>read.table()</code> 함수의 <code>header</code>,
+<code>sep</code> 인자값을 바꾸어 불러온다.</li>
 </ol>
 <p>직접 해본 결과의 스크린샷이다.</p>
-<figure>
-<img src="/assets/Clipboard_Windows2.png" />
-</figure>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="st">&quot;clipboard&quot;</span>)</code></pre></div>
+<p><img src="/assets/Clipboard_Windows2.png" /></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.table</span>(<span class="st">&quot;clipboard&quot;</span>)</span></code></pre></div>
 <pre><code>##     V1   V2
 ## 1  Var Test
 ## 2    a   14
@@ -173,7 +176,7 @@
 ## 8    h    3
 ## 9    s    6
 ## 10   x   72</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="st">&quot;clipboard&quot;</span>, <span class="dt">header =</span> T)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.table</span>(<span class="st">&quot;clipboard&quot;</span>, <span class="at">header =</span> T)</span></code></pre></div>
 <pre><code>##   Var Test
 ## 1   a   14
 ## 2   b   25
@@ -186,12 +189,12 @@
 ## 9   x   72</code></pre>
 <p><br><br></p>
 <h2 id="on-mac">on Mac</h2>
-<p>맥이용자라면 윈도우의 <code>&quot;clipboard&quot;</code> 와 같은 약속어로 클립보드 내용물을 불러들일 수 없는것을 확인했다.<br />
-<code>&quot;clipboard&quot;</code> 대신 <code>pipe(&quot;pbpaste&quot;)</code> 을 이용한다.</p>
-<figure>
-<img src="/assets/Clipboard_Mac.png" />
-</figure>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="kw">pipe</span>(<span class="st">&quot;pbpaste&quot;</span>))</code></pre></div>
+<p>맥이용자라면 윈도우의 <code>"clipboard"</code> 와 같은 약속어로
+클립보드 내용물을 불러들일 수 없는것을 확인했다.<br />
+<code>"clipboard"</code> 대신 <code>pipe("pbpaste")</code> 을
+이용한다.</p>
+<p><img src="/assets/Clipboard_Mac.png" /></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.table</span>(<span class="fu">pipe</span>(<span class="st">&quot;pbpaste&quot;</span>))</span></code></pre></div>
 <pre><code>##     V1   V2
 ## 1  Var Test
 ## 2    a   14
@@ -203,7 +206,7 @@
 ## 8    h    3
 ## 9    s    6
 ## 10   x   72</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="kw">pipe</span>(<span class="st">&quot;pbpaste&quot;</span>), <span class="dt">header =</span> T)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.table</span>(<span class="fu">pipe</span>(<span class="st">&quot;pbpaste&quot;</span>), <span class="at">header =</span> T)</span></code></pre></div>
 <pre><code>##   Var Test
 ## 1   a   14
 ## 2   b   25
@@ -214,11 +217,12 @@
 ## 7   h    3
 ## 8   s    6
 ## 9   x   72</code></pre>
-<p>물론 Clipboard 로 데이터를 불러오는 것 이므로 데이터 전체가 아닌 일부분만을 복사하는 것도 가능하다. 아래의 스크린샷은 데이터의 앞 3개의 필드를 복사하여 R로 불러들여본 결과이다.</p>
-<figure>
-<img src="/assets/Clipboard_Mac2.png" />
-</figure>
-<p>이처럼 Clipboard 를 이용하게 되면 사용하고 싶은 데이터를 선택하여 R로 마치 드레그 하는 방식과 같아진다.</p>
+<p>물론 Clipboard 로 데이터를 불러오는 것 이므로 데이터 전체가 아닌
+일부분만을 복사하는 것도 가능하다. 아래의 스크린샷은 데이터의 앞 3개의
+필드를 복사하여 R로 불러들여본 결과이다.</p>
+<p><img src="/assets/Clipboard_Mac2.png" /></p>
+<p>이처럼 Clipboard 를 이용하게 되면 사용하고 싶은 데이터를 선택하여 R로
+마치 드레그 하는 방식과 같아진다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -232,7 +236,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/04/16/using_clipboard.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2016/04/16/using_clipboard.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -256,7 +260,7 @@
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -273,7 +277,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -290,7 +294,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -307,7 +311,24 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -331,7 +352,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -349,16 +370,6 @@
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -840,7 +851,7 @@
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 클립보드의 내용물을 끌어오기";
+        var disqus_identifier = "http://localhost:4000_R에서 클립보드의 내용물을 끌어오기";
         var disqus_title = "R에서 클립보드의 내용물을 끌어오기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

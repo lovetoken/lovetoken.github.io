@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/data_visualization/2016/09/16/Anscombe_dataset.html" property="og:url">
+          <meta content="http://localhost:4000/r/data_visualization/2016/09/16/Anscombe_dataset.html" property="og:url">
         
         
           <meta content="2016-09-16T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/data_visualization/2016/09/16/Anscombe_dataset.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/data_visualization/2016/09/16/Anscombe_dataset.html">
         
         
           <meta name="twitter:description" content="">
@@ -137,20 +137,29 @@
 <div class="content">
     <div class="post"><p><br><br></p>
 <p>회귀분석을 공부하게 되면<br />
-책이나 인터넷의 포스팅된 글에서 모델적합성의 중요성을 부각시키는 아래의 데이터 시각화 예제를 많이 보았을 것이다.</p>
+책이나 인터넷의 포스팅된 글에서 모델적합성의 중요성을 부각시키는 아래의
+데이터 시각화 예제를 많이 보았을 것이다.</p>
 <p><br></p>
 <p><img src="/assets/anscombe1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p><br></p>
-<p>위 그림은 4개의 데이터의 패턴이 각기 다름에도 불구하고 단순회귀적합시 모두 동일한 모델을 만듦으로써 일어날 수 있는 오류를 우리에게 상기시킨다.<br />
-데이터시각화의 중요성을 부각시키는 예제로도 자주 활용되는데 그만큼 눈으로 직접 보는것이 힘이다.</p>
+<p>위 그림은 4개의 데이터의 패턴이 각기 다름에도 불구하고 단순회귀적합시
+모두 동일한 모델을 만듦으로써 일어날 수 있는 오류를 우리에게
+상기시킨다.<br />
+데이터시각화의 중요성을 부각시키는 예제로도 자주 활용되는데 그만큼
+눈으로 직접 보는것이 힘이다.</p>
 <p>나는 종종 이 예제를 활용하고 싶을때가 많았는데<br />
 이 데이터셋을 구하기 전 처음에는 데이터셋의 이름을 모르고 있어서<br />
-직접 눈대중으로 만들려는 멍청한 짓을 한적이 있었다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
-<p>하지만 위에 사용된 데이터셋 이름이 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's quartet</a> 임을 알고는 구글링을 통해 손쉽게 얻을 수 있었다.</p>
+직접 눈대중으로 만들려는 멍청한 짓을 한적이 있었다.<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>하지만 위에 사용된 데이터셋 이름이 <a
+href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s
+quartet</a> 임을 알고는 구글링을 통해 손쉽게 얻을 수 있었다.</p>
 <p>그런데 또 뒤늦게 알아 챈 것이 있는데<br />
-R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's quartet</a> 데이터셋이 빌트인 되어 있었다는 것이다.<br />
-데이터셋을 호출하기 위해선 <code>anscombe</code> 만 치면 되었구나...</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">anscombe</code></pre></div>
+R에서 <a
+href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s
+quartet</a> 데이터셋이 빌트인 되어 있었다는 것이다.<br />
+데이터셋을 호출하기 위해선 <code>anscombe</code> 만 치면 되었구나…</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>anscombe</span></code></pre></div>
 <pre><code>##    x1 x2 x3 x4    y1   y2    y3    y4
 ## 1  10 10 10  8  8.04 9.14  7.46  6.58
 ## 2   8  8  8  8  6.95 8.14  6.77  5.76
@@ -164,12 +173,15 @@ R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's 
 ## 10  7  7  7  8  4.82 7.26  6.42  7.91
 ## 11  5  5  5  8  5.68 4.74  5.73  6.89</code></pre>
 <p>으악. 많이 허무했다..<br />
-<code>?anscombe</code> 를 하고 나서 예제코드가 잘 준비된 것을 보니 지금까지 과정들이 헛수고임을 깨닫게 되었다.<br />
+<code>?anscombe</code> 를 하고 나서 예제코드가 잘 준비된 것을 보니
+지금까지 과정들이 헛수고임을 깨닫게 되었다.<br />
 그 충격에 이렇게 글로 포스팅을 하게 되었다.</p>
-<section class="footnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>이 멍청한 짓 마저 의외로 엄청 어려워 실패 😓<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>이 멍청한 짓 마저 의외로 엄청 어려워 실패 😓<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -185,7 +197,7 @@ R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/data_visualization/2016/09/16/Anscombe_dataset.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/data_visualization/2016/09/16/Anscombe_dataset.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -209,7 +221,7 @@ R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's 
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -228,7 +240,7 @@ R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -247,7 +259,7 @@ R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -266,7 +278,26 @@ R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -294,7 +325,7 @@ R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -316,16 +347,6 @@ R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's 
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
             
@@ -953,7 +974,7 @@ R에서 <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe's 
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset";
+        var disqus_identifier = "http://localhost:4000_회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset";
         var disqus_title = "회귀분석시 모델적합성에 관련된 예제로 자주 언급되는 anscombe dataset";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2017/02/22/Profiling.html" property="og:url">
+          <meta content="http://localhost:4000/r/2017/02/22/Profiling.html" property="og:url">
         
         
           <meta content="2017-02-22T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 의미가 있었던 프로파일링 모음">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2017/02/22/Profiling.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2017/02/22/Profiling.html">
         
         
           <meta name="twitter:description" content="">
@@ -138,50 +138,70 @@
     <div class="post"><p><br><br></p>
 <p>훌륭한진 못해도 좋은 개발을 하고 싶다는 생각이 많이 든다.<br />
 좋은 코드를 짜기 위해 노력중이다.<br />
-좋은 코드에 필요한 요소들은 여러가지가 있겠지만, 지금 가장 큰 흥미를 가지고 관심가지는 것은 효율성이다.<br />
-효율성에서도 여러 가지 측면이 있겠지만 코드수행시간에 특히 민감해 하고 있다.<br />
-<a href="https://en.wikipedia.org/wiki/Profiling_(computer_programming)">Profiling</a> 을 통해 이런저런 실험들을 해보고 있고, 그 중 나름 유의미했던 실험들을 정리해 보고자 한다.</p>
-<p>프로파일링에 사용한 도구는 rbenchmark package 의 <code>benchmark()</code> 함수로 통일 하였고, 대조군 코드를 통해 비교적 쉽게 받아들일 수 있도록 작성해 보았다.</p>
+좋은 코드에 필요한 요소들은 여러가지가 있겠지만, 지금 가장 큰 흥미를
+가지고 관심가지는 것은 효율성이다.<br />
+효율성에서도 여러 가지 측면이 있겠지만 코드수행시간에 특히 민감해 하고
+있다.<br />
+<a
+href="https://en.wikipedia.org/wiki/Profiling_(computer_programming)">Profiling</a>
+을 통해 이런저런 실험들을 해보고 있고, 그 중 나름 유의미했던 실험들을
+정리해 보고자 한다.</p>
+<p>프로파일링에 사용한 도구는 rbenchmark package 의
+<code>benchmark()</code> 함수로 통일 하였고, 대조군 코드를 통해 비교적
+쉽게 받아들일 수 있도록 작성해 보았다.</p>
 <p><br><br></p>
-<h2 id="lapply-vs-parallelmclapply"><code>lapply()</code> VS <code>parallel::mclapply()</code></h2>
-<p>&quot;parallel&quot; package 에 있는 <code>mclapply()</code> 함수는 <code>lapply()</code> 함수와 기능이 똑같다.<br />
-다만 <code>mc.cores</code> 인자를 가지고 있고 멀티코어 개수를 지정하여 병렬처리를 간편하게 수행할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(parallel)
-
-<span class="kw">benchmark</span>(
-  <span class="kw">lapply</span>(<span class="dv">1000</span>:<span class="dv">9999</span>, rnorm),
-  <span class="kw">mclapply</span>(<span class="dv">1000</span>:<span class="dv">9999</span>, rnorm, <span class="dt">mc.cores =</span> <span class="dv">4</span>)
-)</code></pre></div>
+<h2 id="lapply-vs-parallelmclapply"><code>lapply()</code> VS
+<code>parallel::mclapply()</code></h2>
+<p>“parallel” package 에 있는 <code>mclapply()</code> 함수는
+<code>lapply()</code> 함수와 기능이 똑같다.<br />
+다만 <code>mc.cores</code> 인자를 가지고 있고 멀티코어 개수를 지정하여
+병렬처리를 간편하게 수행할 수 있다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parallel)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(<span class="dv">1000</span><span class="sc">:</span><span class="dv">9999</span>, rnorm),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mclapply</span>(<span class="dv">1000</span><span class="sc">:</span><span class="dv">9999</span>, rnorm, <span class="at">mc.cores =</span> <span class="dv">4</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>                                 test replications elapsed relative 
 2 mclapply(1000:9999, rnorm, mc.c ...          100 289.162    1.000 
 1                 lapply(1000:999 ...          100 464.604    1.607 </code></pre>
-<p>위의 실험은 표준정규분포에서 난수발생을 1000번부터 9999번까지 수행하는 것을 100번<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> 반복시킨 후 수행시간을 평가하는 코드이다.<br />
-<code>mclapply()</code> 함수로 실행한 결과가 평균 289초, <code>lapply()</code> 함수로 실행한 결과가 평균 464초 걸렸고 상대적으로 <code>lapply()</code> 를 사용한 코드가 <code>mclapply()</code> 로 사용한 코드보다 1.607배 많은 시간이 소요됨을 알 수 있다.</p>
-<p>반면에 난수발생을 적게 시킬 경우 <code>mclapply()</code> 는 <code>lapply()</code> 보다 멍청해(?) 지는 것을 볼 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">benchmark</span>(
-  <span class="kw">lapply</span>(<span class="dv">10</span>:<span class="dv">99</span>, rnorm),
-  <span class="kw">mclapply</span>(<span class="dv">10</span>:<span class="dv">99</span>, rnorm, <span class="dt">mc.cores =</span> <span class="dv">4</span>)
-)</code></pre></div>
+<p>위의 실험은 표준정규분포에서 난수발생을 1000번부터 9999번까지
+수행하는 것을 100번<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> 반복시킨 후 수행시간을 평가하는
+코드이다.<br />
+<code>mclapply()</code> 함수로 실행한 결과가 평균 289초,
+<code>lapply()</code> 함수로 실행한 결과가 평균 464초 걸렸고 상대적으로
+<code>lapply()</code> 를 사용한 코드가 <code>mclapply()</code> 로 사용한
+코드보다 1.607배 많은 시간이 소요됨을 알 수 있다.</p>
+<p>반면에 난수발생을 적게 시킬 경우 <code>mclapply()</code> 는
+<code>lapply()</code> 보다 멍청해(?) 지는 것을 볼 수 있다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">99</span>, rnorm),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mclapply</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">99</span>, rnorm, <span class="at">mc.cores =</span> <span class="dv">4</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##                              test replications elapsed relative 
 ## 1                 lapply(10:9 ...          100   0.118    1.000 
 ## 2 mclapply(10:99, rnorm, mc.c ...          100   1.994   16.898 </code></pre>
 <p><br><br></p>
-<h2 id="filtering-data.table-data.frame-dplyrfilter">Filtering data.table, data.frame + <code>dplyr::filter()</code></h2>
-<p>이번에 수행한 프로파일링은 <a href="http://using.tistory.com/81">빵군님의 블로그 글</a>을 보다가 추가로 생긴 궁금증에 몇 개를 더 추가해 본 경우이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(data.table)
-<span class="kw">library</span>(dplyr)
-
-DF &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">runif</span>(<span class="fl">2.6e+07</span>), <span class="dt">y =</span> <span class="kw">rep</span>(LETTERS, <span class="dt">each =</span> <span class="dv">10000</span>))
-
-DT &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(DF)
-<span class="kw">setkey</span>(DT, y) 
-
-<span class="kw">benchmark</span>(
-  DF[DF$y ==<span class="st"> &quot;D&quot;</span>, ],
-  DT[<span class="kw">J</span>(<span class="st">&quot;D&quot;</span>), ],
-  DF %&gt;%<span class="st"> </span>dplyr::<span class="kw">filter</span>(y ==<span class="st"> &quot;D&quot;</span>),
-  DT %&gt;%<span class="st"> </span>dplyr::<span class="kw">filter</span>(y ==<span class="st"> &quot;D&quot;</span>)
-)</code></pre></div>
+<h2 id="filtering-data.table-data.frame-dplyrfilter">Filtering
+data.table, data.frame + <code>dplyr::filter()</code></h2>
+<p>이번에 수행한 프로파일링은 <a
+href="http://using.tistory.com/81">빵군님의 블로그 글</a>을 보다가
+추가로 생긴 궁금증에 몇 개를 더 추가해 본 경우이다.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>DF <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">runif</span>(<span class="fl">2.6e+07</span>), <span class="at">y =</span> <span class="fu">rep</span>(LETTERS, <span class="at">each =</span> <span class="dv">10000</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>DT <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(DF)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">setkey</span>(DT, y) </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  DF[DF<span class="sc">$</span>y <span class="sc">==</span> <span class="st">&quot;D&quot;</span>, ],</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  DT[<span class="fu">J</span>(<span class="st">&quot;D&quot;</span>), ],</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  DF <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(y <span class="sc">==</span> <span class="st">&quot;D&quot;</span>),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  DT <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(y <span class="sc">==</span> <span class="st">&quot;D&quot;</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##                             test replications elapsed relative
 ## 2                   DT[J(&quot;D&quot;), ]          100   2.500    1.000
 ## 4 DT %&gt;% dplyr::filter(y == &quot;D&quot;)          100  23.083    9.233
@@ -191,91 +211,128 @@ DT &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(DF)
 <ol type="1">
 <li><code>data.frame</code> 형에서 필터링</li>
 <li><code>data.table</code> 형에서 필터링</li>
-<li><code>data.frame</code> 형에서 <code>dplyr::filter()</code> 를 이용한 필터링</li>
-<li><code>data.table</code> 형에서 <code>dplyr::filter()</code> 를 이용한 필터링</li>
+<li><code>data.frame</code> 형에서 <code>dplyr::filter()</code> 를
+이용한 필터링</li>
+<li><code>data.table</code> 형에서 <code>dplyr::filter()</code> 를
+이용한 필터링</li>
 </ol>
-<p>결과는 J표현식을 사용한 data.table 이 가장 우월하다는 것을 볼 수 있다.</p>
+<p>결과는 J표현식을 사용한 data.table 이 가장 우월하다는 것을 볼 수
+있다.</p>
 <p><br><br></p>
-<h2 id="sqldf-package-를-통해-join-작업을-하다가-생긴-의문">sqldf package 를 통해 Join 작업을 하다가 생긴 의문</h2>
-<p>R에서 SQL 문을 통해 data.frame 형을 처리하기 위한 대표적인 패키지가 <a href="https://cran.r-project.org/web/packages/sqldf/index.html">sqldf</a> 이지 않을까?<br />
-필요에 따라서 R에서 SQL 을 통해 data.frame 을 핸들링 하는 확장성을 이용할 수 있다.</p>
+<h2 id="sqldf-package-를-통해-join-작업을-하다가-생긴-의문">sqldf
+package 를 통해 Join 작업을 하다가 생긴 의문</h2>
+<p>R에서 SQL 문을 통해 data.frame 형을 처리하기 위한 대표적인 패키지가
+<a
+href="https://cran.r-project.org/web/packages/sqldf/index.html">sqldf</a>
+이지 않을까?<br />
+필요에 따라서 R에서 SQL 을 통해 data.frame 을 핸들링 하는 확장성을
+이용할 수 있다.</p>
 <p>하지만 문득 이런 생각이 드는 것도 사실이다.<br />
 R에서 굳이 다른 문법(SQL)을 이용하는 것은<br />
-영국 가서 미국발음으로 영어하고, 미국 가서 영국발음으로 영어 하는 것으로 비유해 보고 싶다.</p>
-<p><code>merge()</code>, <code>dplyr::left_join()</code>, <code>sqldf()</code> 3가지 함수를 통해 left join 을 하는 예제로 프로파일링을 해보았는데<br />
+영국 가서 미국발음으로 영어하고, 미국 가서 영국발음으로 영어 하는 것으로
+비유해 보고 싶다.</p>
+<p><code>merge()</code>, <code>dplyr::left_join()</code>,
+<code>sqldf()</code> 3가지 함수를 통해 left join 을 하는 예제로
+프로파일링을 해보았는데<br />
 그 이후 SQL 문법을 불필요하게 남용하지 않아야 겠다는 생각을 가졌다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sqldf)
-<span class="kw">library</span>(dplyr)
-
-df1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Key =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>), 
-                  <span class="dt">Var1 =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="dt">stringsAsFactors =</span> F)
-df2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Key =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">8</span>), 
-                  <span class="dt">Var2 =</span> <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;z&quot;</span>, <span class="st">&quot;xx&quot;</span>, <span class="st">&quot;yy&quot;</span>, <span class="st">&quot;zz&quot;</span>), <span class="dt">stringsAsFactors =</span> F)
-
-<span class="kw">benchmark</span>(
-  df1 %&gt;%<span class="st"> </span><span class="kw">merge</span>(df2, <span class="dt">by =</span> <span class="st">&quot;Key&quot;</span>, <span class="dt">all.x =</span> T),
-  df1 %&gt;%<span class="st"> </span>dplyr::<span class="kw">left_join</span>(df2, <span class="dt">by =</span> <span class="st">&quot;Key&quot;</span>),
-  <span class="kw">sqldf</span>(<span class="st">&quot;SELECT df1.Key, Var1, Var2 FROM df1 LEFT JOIN df2 on df1.Key=df2.Key&quot;</span>)
-)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sqldf)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Key =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>), </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Var1 =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="at">stringsAsFactors =</span> F)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Key =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">8</span>), </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Var2 =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;z&quot;</span>, <span class="st">&quot;xx&quot;</span>, <span class="st">&quot;yy&quot;</span>, <span class="st">&quot;zz&quot;</span>), <span class="at">stringsAsFactors =</span> F)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  df1 <span class="sc">%&gt;%</span> <span class="fu">merge</span>(df2, <span class="at">by =</span> <span class="st">&quot;Key&quot;</span>, <span class="at">all.x =</span> T),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  df1 <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">left_join</span>(df2, <span class="at">by =</span> <span class="st">&quot;Key&quot;</span>),</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqldf</span>(<span class="st">&quot;SELECT df1.Key, Var1, Var2 FROM df1 LEFT JOIN df2 on df1.Key=df2.Key&quot;</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##                                                 test replications elapsed relative 
 ## 2                                     df1 %&gt;% dp ...          100   0.033    1.000 
 ## 1                                     df1 %&gt;% me ...          100   0.089    2.697 
 ## 3 sqldf(&quot;SELECT df1.Key, Var1, Var2 FROM df1 LEF ...          100   2.361   71.545 </code></pre>
-<p><code>sqldf()</code> 을 통한 join 이 다른방법보다 71배 더 오래걸려 비교적 느림을 알 수 있다.</p>
+<p><code>sqldf()</code> 을 통한 join 이 다른방법보다 71배 더 오래걸려
+비교적 느림을 알 수 있다.</p>
 <p><br><br></p>
 <h2 id="output">Output</h2>
 <p>위의 SQL 프로파일링과도 이어지는 컨셉이다.<br />
-냉면으로 유명한 집에서 국수를 먹고, 국수가 유명한 집에서 밥을 먹지 않는 것 처럼<br />
-각 언어의 특색에 맞는 장점들을 충분히 이용하는것이 합리적이라 생각한다.</p>
+냉면으로 유명한 집에서 국수를 먹고, 국수가 유명한 집에서 밥을 먹지 않는
+것 처럼<br />
+각 언어의 특색에 맞는 장점들을 충분히 이용하는것이 합리적이라
+생각한다.</p>
 <p>이번 프로파일링도 비슷하다.<br />
-R에서 처리된 결과물을 R object 이미지로(.rda)로 저장하는것과 .csv 포맷으로 저장하는 것을 비교해 보았다.<br />
-(R에서 처리된 결과물의 예제를 <code>mtcars</code> 내장데이터로 가정해보겠다)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">benchmark</span>(
-  <span class="kw">save</span>(mtcars, <span class="dt">file =</span> <span class="st">&quot;mtcars.rda&quot;</span>),
-  <span class="kw">write.csv</span>(mtcars, <span class="dt">file =</span> <span class="st">&quot;mtcars.csv&quot;</span>)
-)</code></pre></div>
+R에서 처리된 결과물을 R object 이미지로(.rda)로 저장하는것과 .csv
+포맷으로 저장하는 것을 비교해 보았다.<br />
+(R에서 처리된 결과물의 예제를 <code>mtcars</code> 내장데이터로
+가정해보겠다)</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">save</span>(mtcars, <span class="at">file =</span> <span class="st">&quot;mtcars.rda&quot;</span>),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(mtcars, <span class="at">file =</span> <span class="st">&quot;mtcars.csv&quot;</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##                                     test replications elapsed relative
 ## 1      save(mtcars, file = &quot;mtcars.rda&quot;)          100   0.054    1.000
 ## 2 write.csv(mtcars, file = &quot;mtcars.csv&quot;)          100   0.116    2.148</code></pre>
-<p>결과는 .rda 로 객체이미지를 저장시키는 것이 2배 빠른 것을 볼 수 있다.</p>
+<p>결과는 .rda 로 객체이미지를 저장시키는 것이 2배 빠른 것을 볼 수
+있다.</p>
 <p><br><br></p>
-<h2 id="역행렬-계산시-특이값-분해singular-value-decomposition-이용">역행렬 계산시 특이값 분해(Singular value decomposition) 이용</h2>
-<p>(정방)행렬의 차원이 크면 클수록 역행렬을 계산할 때 컴퓨터가 힘들어 한다.<br />
-조금이라도 빠르게 계산할 수 있는 방법이 없을까 고민하다가 특이값 분해(SVD) 를 알게된 이후로 조금 개선된 방법을 찾게 되었다.</p>
-<p>SVD 를 아주 간단하게 설명하면 행렬<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> <span class="math inline"><em>X</em></span> 를 대각행렬 <span class="math inline"><em>D</em></span> 를 중앙으로 하고 3개의 행렬곱으로 나누어 준다.</p>
-<p><br /><span class="math display"><em>X</em> = <em>U</em><em>D</em><em>V</em><sup><em>T</em></sup></span><br /></p>
+<h2
+id="역행렬-계산시-특이값-분해singular-value-decomposition-이용">역행렬
+계산시 특이값 분해(Singular value decomposition) 이용</h2>
+<p>(정방)행렬의 차원이 크면 클수록 역행렬을 계산할 때 컴퓨터가 힘들어
+한다.<br />
+조금이라도 빠르게 계산할 수 있는 방법이 없을까 고민하다가 특이값
+분해(SVD) 를 알게된 이후로 조금 개선된 방법을 찾게 되었다.</p>
+<p>SVD 를 아주 간단하게 설명하면 행렬<a href="#fn2" class="footnote-ref"
+id="fnref2" role="doc-noteref"><sup>2</sup></a> <span
+class="math inline"><em>X</em></span> 를 대각행렬 <span
+class="math inline"><em>D</em></span> 를 중앙으로 하고 3개의 행렬곱으로
+나누어 준다.</p>
+<p><span
+class="math display"><em>X</em> = <em>U</em><em>D</em><em>V</em><sup><em>T</em></sup></span></p>
 <p>그리고 이렇게 분해된 행렬곱을 변환하면</p>
-<p><br /><span class="math display"><em>X</em><sup>−1</sup> = <em>V</em><em>D</em><sup>−1</sup><em>U</em><sup><em>T</em></sup></span><br /></p>
+<p><span
+class="math display"><em>X</em><sup>−1</sup> = <em>V</em><em>D</em><sup>−1</sup><em>U</em><sup><em>T</em></sup></span></p>
 <p>이 되는 특성을 가지고 있다.<br />
-컴퓨터 입장에선 복잡한 <span class="math inline"><em>X</em></span>를 바로 역행렬 계산하는 것 보다, 부담이 적은 단위행렬 <span class="math inline"><em>D</em></span>를 역행렬 계산하는것을 쉬워할 것이다.<br />
+컴퓨터 입장에선 복잡한 <span class="math inline"><em>X</em></span>를
+바로 역행렬 계산하는 것 보다, 부담이 적은 단위행렬 <span
+class="math inline"><em>D</em></span>를 역행렬 계산하는것을 쉬워할
+것이다.<br />
 이러한 특성을 이용한 것이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">1000</span>^<span class="dv">2</span>), <span class="dv">1000</span>)
-svd &lt;-<span class="st"> </span><span class="kw">svd</span>(m)
-
-<span class="kw">benchmark</span>(
-  <span class="kw">solve</span>(m),
-  svd$v %*%<span class="st"> </span><span class="kw">solve</span>(<span class="kw">diag</span>(svd$d)) %*%<span class="st"> </span><span class="kw">t</span>(svd$u)
-)</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span><span class="sc">^</span><span class="dv">2</span>), <span class="dv">1000</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>svd <span class="ot">&lt;-</span> <span class="fu">svd</span>(m)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">solve</span>(m),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  svd<span class="sc">$</span>v <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">diag</span>(svd<span class="sc">$</span>d)) <span class="sc">%*%</span> <span class="fu">t</span>(svd<span class="sc">$</span>u)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##                                        test replications elapsed relative
 ## 1                                  solve(m)          100 238.183    1.194
 ## 2 svd$v %*% solve(diag(svd$d)) %*% t(svd$u)          100 199.452    1.000</code></pre>
-<p>SVD로 나눈 행렬을 이용해 역행렬 <span class="math inline"><em>X</em><sup>−1</sup></span> 을 구하는것이 조금 빠른것을 볼 수 있다.<br />
-상대적으로 볼 때 별차이가 없어 보일수도 있지만 행렬의 차원이 크면 클수록 절대소요시간차이는 엄청날 것이다.</p>
+<p>SVD로 나눈 행렬을 이용해 역행렬 <span
+class="math inline"><em>X</em><sup>−1</sup></span> 을 구하는것이 조금
+빠른것을 볼 수 있다.<br />
+상대적으로 볼 때 별차이가 없어 보일수도 있지만 행렬의 차원이 크면 클수록
+절대소요시간차이는 엄청날 것이다.</p>
 <p>그런데 여기서 반론을 제기할 수 있다.<br />
 바로 특이값 분해시 코드수행속도도 포함시켜야 하지 않느냐 이다.<br />
-즉 엄밀히 말하면 <code>svd &lt;- svd(m)</code> 코드 수행시간도 더해주어야 할 것이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system.time</span>(svd &lt;-<span class="st"> </span><span class="kw">svd</span>(m))</code></pre></div>
+즉 엄밀히 말하면 <code>svd &lt;- svd(m)</code> 코드 수행시간도
+더해주어야 할 것이다.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(svd <span class="ot">&lt;-</span> <span class="fu">svd</span>(m))</span></code></pre></div>
 <pre><code>##   user  system elapsed 
 ##  4.101   0.047   4.202 </code></pre>
 <p>하지만 4초내외로 특이값분해는 의외로 많은 시간이 걸리지 않는다.<br />
 이 4초 내외를 더해보았자 대세에 지장이 없는 수준이다.<br />
-게다가 <code>svd()</code> 말고도 이보다 더 빠르게 특이값 분해를 할 수 있는 방법<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>들도 있으니 참고해 볼만하다.</p>
+게다가 <code>svd()</code> 말고도 이보다 더 빠르게 특이값 분해를 할 수
+있는 방법<a href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a>들도 있으니 참고해 볼만하다.</p>
 <p><br><br></p>
 <h2 id="to-be-continued">To be continued</h2>
 <p>의미 있는 프로파일링이 다음에 또 생기면 이어서 덧붙여질 예정이다.</p>
 <p><br><br></p>
-<h2 id="프로파일링에-사용했던-동작환경">프로파일링에 사용했던 동작환경</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<h2 id="프로파일링에-사용했던-동작환경">프로파일링에 사용했던
+동작환경</h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 <pre><code>## R version 3.3.1 (2016-06-21)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
 ## Running under: OS X 10.12.3 (Sierra)
@@ -299,12 +356,18 @@ svd &lt;-<span class="st"> </span><span class="kw">svd</span>(m)
 ## [13] htmltools_0.3.5  yaml_2.1.14      lazyeval_0.2.0   assertthat_0.1  
 ## [17] digest_0.6.12    rprojroot_1.2    tibble_1.2       evaluate_0.10   
 ## [21] rmarkdown_1.3    stringi_1.1.2    scales_0.4.1     backports_1.0.5</code></pre>
-<section class="footnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p><code>benchmark()</code> 함수에서 <code>replications</code> 인자를 통해 조정이 가능하며, 디폴트 값이 100이다<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>이때 행렬은 정방행렬이 아니어도 특이값 분해가 가능하다<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p><code>corpcor::fast.svd()</code> 와 같은 것도 있다<a href="#fnref3">↩</a></p></li>
+<li id="fn1"><p><code>benchmark()</code> 함수에서
+<code>replications</code> 인자를 통해 조정이 가능하며, 디폴트 값이
+100이다<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>이때 행렬은 정방행렬이 아니어도 특이값 분해가 가능하다<a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><code>corpcor::fast.svd()</code> 와 같은 것도 있다<a
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -320,7 +383,7 @@ svd &lt;-<span class="st"> </span><span class="kw">svd</span>(m)
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2017/02/22/Profiling.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2017/02/22/Profiling.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -344,7 +407,7 @@ svd &lt;-<span class="st"> </span><span class="kw">svd</span>(m)
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -361,7 +424,7 @@ svd &lt;-<span class="st"> </span><span class="kw">svd</span>(m)
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -378,7 +441,7 @@ svd &lt;-<span class="st"> </span><span class="kw">svd</span>(m)
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -395,7 +458,24 @@ svd &lt;-<span class="st"> </span><span class="kw">svd</span>(m)
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -419,7 +499,7 @@ svd &lt;-<span class="st"> </span><span class="kw">svd</span>(m)
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -437,16 +517,6 @@ svd &lt;-<span class="st"> </span><span class="kw">svd</span>(m)
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -928,7 +998,7 @@ svd &lt;-<span class="st"> </span><span class="kw">svd</span>(m)
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 의미가 있었던 프로파일링 모음";
+        var disqus_identifier = "http://localhost:4000_R에서 의미가 있었던 프로파일링 모음";
         var disqus_title = "R에서 의미가 있었던 프로파일링 모음";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

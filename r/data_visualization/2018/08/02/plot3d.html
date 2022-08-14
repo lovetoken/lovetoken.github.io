@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html" property="og:url">
+          <meta content="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html" property="og:url">
         
         
           <meta content="2018-08-02T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 plot3d()함수를 이용한 3차원 산점도 만들기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,32 +136,44 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>다변량 데이터에 대해서 변수와 변수간 관계를 확인하고 설명하고 싶은 분들을 위해<br />
-그 관계성을 간편하고 직관적으로 도울 수 있는 도구들이 필요해 지고 있다.<br />
-특히 변수와 변수간 관계는 주관심 대상의 변수가 많아지면 많아질수록 확인해 보고 규명해야할 케이스도 많아지는데<br />
-이를 시각화 할때 2차원 산점도 에서는 그 많은 케이스를 확인하는데는 쉽게 피로해 질 수 있다.</p>
+<p>다변량 데이터에 대해서 변수와 변수간 관계를 확인하고 설명하고 싶은
+분들을 위해<br />
+그 관계성을 간편하고 직관적으로 도울 수 있는 도구들이 필요해 지고
+있다.<br />
+특히 변수와 변수간 관계는 주관심 대상의 변수가 많아지면 많아질수록
+확인해 보고 규명해야할 케이스도 많아지는데<br />
+이를 시각화 할때 2차원 산점도 에서는 그 많은 케이스를 확인하는데는 쉽게
+피로해 질 수 있다.</p>
 <blockquote>
-<p>너무많아...</p>
+<p>너무많아…</p>
 </blockquote>
 <center>
 <img src="/assets/plot3d_1.png">
 </center>
 <p><br></p>
-<p>2차원 산점도 보다 한차원 높은 3차원 산점도는 주관심 대상 변수간 관계를 확인하기 위한 선택폭이 하나가 많고<br />
+<p>2차원 산점도 보다 한차원 높은 3차원 산점도는 주관심 대상 변수간
+관계를 확인하기 위한 선택폭이 하나가 많고<br />
 조금 더 집중도있게 확인할 수 있는 장점이 있는 것 같다.<br />
-R에서는 rgl 패키지를 통해 3차원 산점도를 어려움 없이 구현할 수 있다.<br />
+R에서는 rgl 패키지를 통해 3차원 산점도를 어려움 없이 구현할 수
+있다.<br />
 rgl package 의 <code>plot3d()</code> 함수를 소개해 본다.</p>
-<p>2차원 산점도를 그릴 때 R에선 간편히 <code>plot()</code> 함수에서 <code>plot(x, y)</code> 의 형태로 확인이 가능하다.<br />
-<code>plot3d()</code> 함수에선 <code>plot3d(x, y, z)</code> 의 형태로 주관심대상 변수 하나를 더 추가해 사용하면 되므로 이런 측면에선 사용법이 비슷하다.</p>
-<p><code>plot3d()</code> 의 예시코드를 실행해 보기 위해 rgl 패키지를 로드한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rgl)</code></pre></div>
+<p>2차원 산점도를 그릴 때 R에선 간편히 <code>plot()</code> 함수에서
+<code>plot(x, y)</code> 의 형태로 확인이 가능하다.<br />
+<code>plot3d()</code> 함수에선 <code>plot3d(x, y, z)</code> 의 형태로
+주관심대상 변수 하나를 더 추가해 사용하면 되므로 이런 측면에선 사용법이
+비슷하다.</p>
+<p><code>plot3d()</code> 의 예시코드를 실행해 보기 위해 rgl 패키지를
+로드한다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgl)</span></code></pre></div>
 <p>아래 코드는 <code>plot3d()</code> 의 대표 예제 코드이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">rnorm</span>(<span class="dv">1000</span>))
-y &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>)
-z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>) +<span class="st"> </span><span class="kw">atan2</span>(x,y)
-<span class="kw">plot3d</span>(x, y, z, <span class="dt">col=</span><span class="kw">rainbow</span>(<span class="dv">1000</span>))</code></pre></div>
-<p>3차원 산점도를 출력시키는 <code>plot3d()</code> 함수는 특수한 엔진을 사용하기 때문에<br />
-시각화 결과물이 (가령 Rstudio 의 경우 Plots창에 뜨지 않고) 새로운 창에 별도로 출력된다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>) <span class="sc">+</span> <span class="fu">atan2</span>(x,y)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot3d</span>(x, y, z, <span class="at">col=</span><span class="fu">rainbow</span>(<span class="dv">1000</span>))</span></code></pre></div>
+<p>3차원 산점도를 출력시키는 <code>plot3d()</code> 함수는 특수한 엔진을
+사용하기 때문에<br />
+시각화 결과물이 (가령 Rstudio 의 경우 Plots창에 뜨지 않고) 새로운 창에
+별도로 출력된다.</p>
 <br>
 <center>
 <iframe width="95%" height="420" src="https://www.youtube.com/embed/oPszzgu00Uw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
@@ -184,7 +196,7 @@ z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -208,7 +220,7 @@ z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -227,7 +239,7 @@ z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -246,7 +258,7 @@ z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -265,7 +277,26 @@ z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -308,7 +339,7 @@ z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
+                    <a href="http://localhost:4000/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
                     
@@ -336,16 +367,6 @@ z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html">R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
-                    
-                </li>
-                
-                
             
         
             
@@ -952,7 +973,7 @@ z &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 plot3d()함수를 이용한 3차원 산점도 만들기";
+        var disqus_identifier = "http://localhost:4000_R에서 plot3d()함수를 이용한 3차원 산점도 만들기";
         var disqus_title = "R에서 plot3d()함수를 이용한 3차원 산점도 만들기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

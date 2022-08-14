@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/docker/mac/opensource_tool/2018/04/22/docker_CM.html" property="og:url">
+          <meta content="http://localhost:4000/docker/mac/opensource_tool/2018/04/22/docker_CM.html" property="og:url">
         
         
           <meta content="2018-04-22T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="Docker 를 통해 Cloudera Manager 띄워보기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/docker/mac/opensource_tool/2018/04/22/docker_CM.html">
+          <meta name="twitter:url" content="http://localhost:4000/docker/mac/opensource_tool/2018/04/22/docker_CM.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,15 +136,35 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p><a href="http://kr.cloudera.com/products/product-components/cloudera-manager.html">Cloudera Manager</a>(이하 CM) 실습환경을 구성하기 위해 <a href="https://www.virtualbox.org/">Virtual Box</a> 로 CentOS 설치 및 환경설정 구성을 수차례 반복하여 힘겹게 성공 후<br />
-이 성공을 쉽게 재활용하기 위해 스냅샷을 저장했던 어느 날 내 맥북의 물리적 용량이 바닥이 나버렸다..<br />
-물리적 용량도 용량이지만 가상머신 3대를 켜 놓고 소프트웨어를 배포하는 과정 중에서 내 맥북은 한계에 도달했는지 자주 멈추어 버렸다.<br />
+<p><a
+href="http://kr.cloudera.com/products/product-components/cloudera-manager.html">Cloudera
+Manager</a>(이하 CM) 실습환경을 구성하기 위해 <a
+href="https://www.virtualbox.org/">Virtual Box</a> 로 CentOS 설치 및
+환경설정 구성을 수차례 반복하여 힘겹게 성공 후<br />
+이 성공을 쉽게 재활용하기 위해 스냅샷을 저장했던 어느 날 내 맥북의
+물리적 용량이 바닥이 나버렸다..<br />
+물리적 용량도 용량이지만 가상머신 3대를 켜 놓고 소프트웨어를 배포하는
+과정 중에서 내 맥북은 한계에 도달했는지 자주 멈추어 버렸다.<br />
 결국은 Docker를 이용하겠어! 라는 결심과 동시에 행동으로 옮겼다.<br />
-약 30분<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>만에 Docker 를 통해 Cloudera Manager 을 실행시키는 데 성공했다.<br />
-Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 10시간 정도의 시행착오를 겪은 것 에 비하면 정말 순식간이었다. (물론 이런 삽질이 있었기에 Docker 에서 30분밖에 안 걸린 것일 수 있다 <i class="fa fa-meh-o" aria-hidden="true"></i>;)</p>
-<p>필자와 같이 실습을 진행하는 분께도 온전히 30 분만에 CM 환경구성을 할 수 있도록 본 글을 통해 정리하고자 한다.<br />
-또한 내용들의 대부분은 &quot;cloudera manager on docker&quot; 라는 검색어로 구글에 검색된 글들에 기반함을 밝힌다.</p>
-<p><em>(단 Datanode 를 늘리는 확장성을 고려한 실습은 이 글에서는 논외이다. 오직 CM 를 띄우고 이를 통해 할 수 있는 것들이 무엇이 있는지, 인터페이스는 어떠한지 입문자용으로써 공부를 위한 환경구성이 목적이기에 Datanode 의 선형확장까지를 고려한 실습이라면 내생각엔 Cloudera QuickStart 컨테이너를 이용한 본 글보단 VM 을 통해 실제로 Datanode 로 할당할 서버를 만들어 실습하는 것이 손에 더 잘 잡히고 직관적이며, 선형확장을 하기위한 원리와 과정 자체를 익힐 필요가 있다고 생각한다)</em></p>
+약 30분<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>만에 Docker 를 통해 Cloudera Manager
+을 실행시키는 데 성공했다.<br />
+Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 10시간
+정도의 시행착오를 겪은 것 에 비하면 정말 순식간이었다. (물론 이런 삽질이
+있었기에 Docker 에서 30분밖에 안 걸린 것일 수 있다
+<i class="fa fa-meh-o" aria-hidden="true"></i>;)</p>
+<p>필자와 같이 실습을 진행하는 분께도 온전히 30 분만에 CM 환경구성을 할
+수 있도록 본 글을 통해 정리하고자 한다.<br />
+또한 내용들의 대부분은 “cloudera manager on docker” 라는 검색어로 구글에
+검색된 글들에 기반함을 밝힌다.</p>
+<p><em>(단 Datanode 를 늘리는 확장성을 고려한 실습은 이 글에서는
+논외이다. 오직 CM 를 띄우고 이를 통해 할 수 있는 것들이 무엇이 있는지,
+인터페이스는 어떠한지 입문자용으로써 공부를 위한 환경구성이 목적이기에
+Datanode 의 선형확장까지를 고려한 실습이라면 내생각엔 Cloudera
+QuickStart 컨테이너를 이용한 본 글보단 VM 을 통해 실제로 Datanode 로
+할당할 서버를 만들어 실습하는 것이 손에 더 잘 잡히고 직관적이며,
+선형확장을 하기위한 원리와 과정 자체를 익힐 필요가 있다고
+생각한다)</em></p>
 <p><br><br></p>
 <h2 id="필요-요건">필요 요건</h2>
 <ol type="1">
@@ -153,25 +173,34 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
 </ol>
 <p><br><br></p>
 <h2 id="분의-과정">30분의 과정</h2>
-<p>Cloudera 에서는 docker container 를 통해 CM 을 띄우기 위한 <a href="https://www.cloudera.com/documentation/enterprise/5-6-x/topics/quickstart_docker_container.html">Cloudera QuickStart 문서</a>를 제공해 주고 있다.<br />
+<p>Cloudera 에서는 docker container 를 통해 CM 을 띄우기 위한 <a
+href="https://www.cloudera.com/documentation/enterprise/5-6-x/topics/quickstart_docker_container.html">Cloudera
+QuickStart 문서</a>를 제공해 주고 있다.<br />
 그대로 따라해 본 걸 한글화 시킨 것으로 이글을 봐도 무방하겠다.</p>
 <h3 id="첫-번째로-터미널을-킨-후">첫 번째로 터미널을 킨 후</h3>
 <pre><code>docker pull cloudera/quickstart:latest</code></pre>
-<p>를 통해 Cloudera QuickStart 도커이미지 최신버전을 다운로드 한다.<br />
+<p>를 통해 Cloudera QuickStart 도커이미지 최신버전을 다운로드
+한다.<br />
 필자의 환경에선 수십분의 시간이 걸렸으니 차분히 기다린다.<br />
 완료가 되었다면</p>
 <pre><code>docker images</code></pre>
-<p>를 실행해 Cloudera QuickStart docker image 가 준비되었는지 한번 확인해 본다.</p>
+<p>를 실행해 Cloudera QuickStart docker image 가 준비되었는지 한번
+확인해 본다.</p>
 <br>
 <center>
 <script src="https://asciinema.org/a/177648.js" id="asciicast-177648" async></script>
 </center>
 <p><br></p>
-<p>cloudera/quickstart 이미지의 ID 는 4239cd2958c6, 이미지 용량은 6.34Gb 임을 확인할 수 있다.</p>
-<h3 id="두-번째로-컨테이너를-실행한다">두 번째로 컨테이너를 실행한다</h3>
+<p>cloudera/quickstart 이미지의 ID 는 4239cd2958c6, 이미지 용량은 6.34Gb
+임을 확인할 수 있다.</p>
+<h3 id="두-번째로-컨테이너를-실행한다">두 번째로 컨테이너를
+실행한다</h3>
 <pre><code>docker run --hostname=quickstart.cloudera --privileged=true -t -i [OPTIONS] [IMAGE] /usr/bin/docker-quickstart</code></pre>
-<p>에서 <code>[OPTIONS]</code> 부분은 <code>-p 80:80 -p 7180:7180 -p 8888:8888</code> 로 입력해 호스트간의 포트번호 80, 7180, 8888 을 열어 놓는다.<br />
-<code>[IMAGE]</code> 부분은 이미지 ID 인 <code>4239cd2958c6</code> 를 입력한다. 즉</p>
+<p>에서 <code>[OPTIONS]</code> 부분은
+<code>-p 80:80 -p 7180:7180 -p 8888:8888</code> 로 입력해 호스트간의
+포트번호 80, 7180, 8888 을 열어 놓는다.<br />
+<code>[IMAGE]</code> 부분은 이미지 ID 인 <code>4239cd2958c6</code> 를
+입력한다. 즉</p>
 <pre><code>docker run --hostname=quickstart.cloudera --privileged=true -t -i -p 80:80 -p 7180:7180 -p 8888:8888 4239cd2958c6 /usr/bin/docker-quickstart</code></pre>
 <p>를 터미널에서 실행한다.</p>
 <br>
@@ -179,7 +208,10 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
 <script src="https://asciinema.org/a/177651.js" id="asciicast-177651" async></script>
 </center>
 <p><br></p>
-<p>이후 localhost 의 80번 포트로 접속<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>을 웹브라우저에서 해보면 &quot;Welcome to Your Cloudera QuickStart VM!&quot; page 가 반기게 되며, 8888번 포트로는 Hue가 뜨는것을 볼 수 있다.</p>
+<p>이후 localhost 의 80번 포트로 접속<a href="#fn2" class="footnote-ref"
+id="fnref2" role="doc-noteref"><sup>2</sup></a>을 웹브라우저에서 해보면
+“Welcome to Your Cloudera QuickStart VM!” page 가 반기게 되며, 8888번
+포트로는 Hue가 뜨는것을 볼 수 있다.</p>
 <br>
 <center>
 <img src="/assets/docker_cm05.png">
@@ -189,19 +221,30 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
 <img src="/assets/docker_cm06.png">
 </center>
 <p><br></p>
-<p>그런데 그것보단 내 관심사는 7180번 포트인데 CM 이 디폴트로 사용하는 포트번호이다.<br />
+<p>그런데 그것보단 내 관심사는 7180번 포트인데 CM 이 디폴트로 사용하는
+포트번호이다.<br />
 하지만 접속을 해보면 이렇게 뜬다.</p>
 <br>
 <center>
 <img src="/assets/docker_cm01.png">
 </center>
 <p><br></p>
-<p>clouder quickstart 컨테이너는 기본적으로 CM 을 같이 실행하지 않는다고 한다. 따라서</p>
-<h2 id="세-번째로-clouder-quickstart-컨테이너상에서-homeclouderacloudera-manager---express-명령을-입력하여-cm-을-실행시킨다">세 번째로 clouder quickstart 컨테이너상에서 <code>/home/cloudera/cloudera-manager --express</code> 명령을 입력하여 CM 을 실행시킨다</h2>
-<p>Cloudera QuickStart 컨테이너의 bash 에서 아직 빠져나오지 않았다면 <code>/home/cloudera/cloudera-manager --express</code> 를 그대로 실행시키면 되고</p>
-<p>컨테이너 밖으로 빠져나온 호스트 상의 상태라면 <code>docker ps</code> 를 통해 실행되고 있는 clouder quickstart 컨테이너 ID 를 알아낸 후 docker 의 exec 명령을 이처럼 이용해도 된다.</p>
+<p>clouder quickstart 컨테이너는 기본적으로 CM 을 같이 실행하지 않는다고
+한다. 따라서</p>
+<h2
+id="세-번째로-clouder-quickstart-컨테이너상에서-homeclouderacloudera-manager---express-명령을-입력하여-cm-을-실행시킨다">세
+번째로 clouder quickstart 컨테이너상에서
+<code>/home/cloudera/cloudera-manager --express</code> 명령을 입력하여
+CM 을 실행시킨다</h2>
+<p>Cloudera QuickStart 컨테이너의 bash 에서 아직 빠져나오지 않았다면
+<code>/home/cloudera/cloudera-manager --express</code> 를 그대로
+실행시키면 되고</p>
+<p>컨테이너 밖으로 빠져나온 호스트 상의 상태라면 <code>docker ps</code>
+를 통해 실행되고 있는 clouder quickstart 컨테이너 ID 를 알아낸 후 docker
+의 exec 명령을 이처럼 이용해도 된다.</p>
 <pre><code>docker exec [CONTAINER_ID] /home/cloudera/cloudera-manager --express</code></pre>
-<p><code>[CONTAINER_ID]</code> 이 부분을 clouder quickstart 컨테이너 ID 를 입력하면 된다.<br />
+<p><code>[CONTAINER_ID]</code> 이 부분을 clouder quickstart 컨테이너 ID
+를 입력하면 된다.<br />
 여하튼 그 결과는 아래와 같이 진행된다.</p>
 <br>
 <center>
@@ -209,7 +252,8 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
 </center>
 <p><br></p>
 <p>약간의 시간이 걸린다.<br />
-접속 계정과 비밀번호는 cloudera 이다라는 문구가 뜨면 로컬호스트의 7180 포트로 접속시 CM 로그인 화면을 볼 수 있게 된다.</p>
+접속 계정과 비밀번호는 cloudera 이다라는 문구가 뜨면 로컬호스트의 7180
+포트로 접속시 CM 로그인 화면을 볼 수 있게 된다.</p>
 <br>
 <center>
 <img src="/assets/docker_cm02.png">
@@ -226,14 +270,21 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
 <p><br><br></p>
 <h2 id="reference">Reference</h2>
 <ul>
-<li><a href="https://youtu.be/elXTmZbNNmE">Cloudera QuickStart - Installation Using Docker Container on Ubuntu - Part 1</a></li>
-<li><a href="https://youtu.be/mqFizIPJl1c">Cloudera QuickStart - Starting Cloudera Manager on already running Docker Container - Part 2</a></li>
+<li><a href="https://youtu.be/elXTmZbNNmE">Cloudera QuickStart -
+Installation Using Docker Container on Ubuntu - Part 1</a></li>
+<li><a href="https://youtu.be/mqFizIPJl1c">Cloudera QuickStart -
+Starting Cloudera Manager on already running Docker Container - Part
+2</a></li>
 </ul>
-<section class="footnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>이 30분 중에서도 docker image 를 pull(다운로드) 하는 데에 20분 정도가 걸렸으므로 10분의 고민만 필요했다고 볼 수 있다<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p><code>http://127.0.0.1:80/</code> 주소로 접속<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p>이 30분 중에서도 docker image 를 pull(다운로드) 하는
+데에 20분 정도가 걸렸으므로 10분의 고민만 필요했다고 볼 수 있다<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><code>http://127.0.0.1:80/</code> 주소로 접속<a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -249,7 +300,7 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/docker/mac/opensource_tool/2018/04/22/docker_CM.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/docker/mac/opensource_tool/2018/04/22/docker_CM.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -262,6 +313,17 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
 </div>
 
 
+
+    
+    
+        
+            
+        
+            
+        
+            
+        
+    
 
     
     
@@ -422,7 +484,7 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/mac/2018/04/18/mac_hosts.html">Mac OS X 에서 hosts 를 추가하려면?</a>
+                    <a href="http://localhost:4000/mac/2018/04/18/mac_hosts.html">Mac OS X 에서 hosts 를 추가하려면?</a>
                     
                         (Categories: <a href="/category/Mac">Mac</a>)
                     
@@ -679,7 +741,7 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/docker/2017/03/21/RImpala_package.html">R에서 RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)</a>
+                    <a href="http://localhost:4000/r/docker/2017/03/21/RImpala_package.html">R에서 RImpala 패키지를 이용해 Impala 커넥션 맺기 (with Docker)</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Docker">Docker</a>)
                     
@@ -730,7 +792,7 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/docker/2017/01/28/Docker_Rstudio_server.html">Docker 를 이용해 Rstudio server 띄워보기 (on Mac OSX)</a>
+                    <a href="http://localhost:4000/r/docker/2017/01/28/Docker_Rstudio_server.html">Docker 를 이용해 Rstudio server 띄워보기 (on Mac OSX)</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Docker">Docker</a>)
                     
@@ -819,7 +881,7 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/mac/2016/10/23/Alfred_SearchQuery.html">Mac 에서 Alfred(알프레드) 검색쿼리 등록을 통한 간편검색</a>
+                    <a href="http://localhost:4000/mac/2016/10/23/Alfred_SearchQuery.html">Mac 에서 Alfred(알프레드) 검색쿼리 등록을 통한 간편검색</a>
                     
                         (Categories: <a href="/category/Mac">Mac</a>)
                     
@@ -910,7 +972,7 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/opensource_tool/2016/08/15/Itinerary_Japan.html">Timeline JS 소개 (with 나의 일본 여행계획)</a>
+                    <a href="http://localhost:4000/opensource_tool/2016/08/15/Itinerary_Japan.html">Timeline JS 소개 (with 나의 일본 여행계획)</a>
                     
                         (Categories: <a href="/category/OpenSource_Tool">OpenSource_Tool</a>)
                     
@@ -939,7 +1001,7 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/diary/opensource_tool/2016/07/23/Welcome_to_Jekyll.html">Blog 의 이전 (Wordpress 에서 Jekyll 로)</a>
+                    <a href="http://localhost:4000/diary/opensource_tool/2016/07/23/Welcome_to_Jekyll.html">Blog 의 이전 (Wordpress 에서 Jekyll 로)</a>
                     
                         (Categories: <a href="/category/Diary">Diary</a>, <a href="/category/OpenSource_Tool">OpenSource_Tool</a>)
                     
@@ -1177,7 +1239,7 @@ Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_Docker 를 통해 Cloudera Manager 띄워보기";
+        var disqus_identifier = "http://localhost:4000_Docker 를 통해 Cloudera Manager 띄워보기";
         var disqus_title = "Docker 를 통해 Cloudera Manager 띄워보기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

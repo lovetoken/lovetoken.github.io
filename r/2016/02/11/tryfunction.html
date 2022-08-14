@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/02/11/tryfunction.html" property="og:url">
+          <meta content="http://localhost:4000/r/2016/02/11/tryfunction.html" property="og:url">
         
         
           <meta content="2016-02-11T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 try(), tryCatch() 함수 소개">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/02/11/tryfunction.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2016/02/11/tryfunction.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,79 +136,112 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>이전에 나는 특정 코드들이 있을 때, 이 코드를 수행하면 에러가 나는지, 나지 않는지 여부를 boolean 값으로 반환하는 그러한 함수를 찾고 있었다. (그보단 이러한 함수를 만들 수 있도록 리소스를 찾아보고 있었다)<br />
-그러던 중 우연히 알게 된 <code>try()</code> 함수에 대해 알아보고자 한다.</p>
-<p>R이 처음으로 실행된 상황에서 (깔끔한 상태에서) 아래 코드는 <code>bsid</code> 라는 객체가 어떠한 환경에서도 없기 때문에 에러를 발생한다.<br />
-만약 .rmd 포맷으로 코딩을 하고 있는 상황이라면 오류나는 코드청크가 하나라도 있는 경우 랜더링이 막히게 될 것이다.<br />
-우선 랜더링마저 막히는 상황을 피하기 위해 코드청크의 옵션을 <code>eval=F</code> 로 설정했다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bsid</code></pre></div>
+<p>이전에 나는 특정 코드들이 있을 때, 이 코드를 수행하면 에러가 나는지,
+나지 않는지 여부를 boolean 값으로 반환하는 그러한 함수를 찾고 있었다.
+(그보단 이러한 함수를 만들 수 있도록 리소스를 찾아보고 있었다)<br />
+그러던 중 우연히 알게 된 <code>try()</code> 함수에 대해 알아보고자
+한다.</p>
+<p>R이 처음으로 실행된 상황에서 (깔끔한 상태에서) 아래 코드는
+<code>bsid</code> 라는 객체가 어떠한 환경에서도 없기 때문에 에러를
+발생한다.<br />
+만약 .rmd 포맷으로 코딩을 하고 있는 상황이라면 오류나는 코드청크가
+하나라도 있는 경우 랜더링이 막히게 될 것이다.<br />
+우선 랜더링마저 막히는 상황을 피하기 위해 코드청크의 옵션을
+<code>eval=F</code> 로 설정했다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bsid</span></code></pre></div>
 <p>실제로 위 코드를 실행시키면</p>
 <pre><code>&gt; bsid
 Error: object &#39;bsid&#39; not found</code></pre>
 <p>의 에러메세지가 출력된다.</p>
 <p><br><br></p>
 <h2 id="try-함수"><code>try()</code> 함수</h2>
-<p>에러를 뿜는 위의 코드를 <code>try()</code> 함수로 감싸주어 보자.<br />
-감싼 이 코드는 단순히 &quot;try&quot; 라는 단어 대로 시도를 해보고 안되면 마는 식으로 동작하게 된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="dt">expr=</span>bsid)</code></pre></div>
-<p><code>try()</code> 함수 안에는 표현식(<code>expr</code>)이 들어가는데 여기에 <code>bsid</code> 를 입력하였다.<br />
+<p>에러를 뿜는 위의 코드를 <code>try()</code> 함수로 감싸주어
+보자.<br />
+감싼 이 코드는 단순히 “try” 라는 단어 대로 시도를 해보고 안되면 마는
+식으로 동작하게 된다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">try</span>(<span class="at">expr=</span>bsid)</span></code></pre></div>
+<p><code>try()</code> 함수 안에는 표현식(<code>expr</code>)이 들어가는데
+여기에 <code>bsid</code> 를 입력하였다.<br />
 이 코드는 역시 에러가 반환된다. 하지만</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bsid</code></pre></div>
-<p>이것과의 차이점은 에러를 반환하고도 <strong>이후 코드를 계속적으로 수행</strong>한다는 차이점을 가지고 있다.<br />
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bsid</span></code></pre></div>
+<p>이것과의 차이점은 에러를 반환하고도 <strong>이후 코드를 계속적으로
+수행</strong>한다는 차이점을 가지고 있다.<br />
 무슨소리인지 잘 모르겠다면 아래코드를 보면 된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="dt">expr=</span>bsid)
-
-<span class="kw">print</span>(<span class="st">&quot;Hello R&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">try</span>(<span class="at">expr=</span>bsid)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Hello R&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Hello R&quot;</code></pre>
-<p><code>try()</code> 함수를 쓴 코드 이후의 코드인 <code>print(&quot;Hello R&quot;)</code> 은 정상적으로 실행되 수행된 것을 볼 수 있다.<br />
-유의할 것은 실제로 위 코드청크에 <code>eval=F</code> 설정을 주지 않고도 렌더링이 막히지 않았는다는 것이다.<br />
-따라서 에러를 뿜는 코드이더라 하더라도, 그것이 <code>try()</code> 함수로 감싸지면 계속적으로 수행된다는 것이다.</p>
+<p><code>try()</code> 함수를 쓴 코드 이후의 코드인
+<code>print("Hello R")</code> 은 정상적으로 실행되 수행된 것을 볼 수
+있다.<br />
+유의할 것은 실제로 위 코드청크에 <code>eval=F</code> 설정을 주지 않고도
+렌더링이 막히지 않았는다는 것이다.<br />
+따라서 에러를 뿜는 코드이더라 하더라도, 그것이 <code>try()</code> 함수로
+감싸지면 계속적으로 수행된다는 것이다.</p>
 <p><br></p>
 <h3 id="silent-인자"><code>silent</code> 인자</h3>
-<p><code>try()</code> 함수의 <code>silent</code> 인자로 command 에 에러가 반환되는 메세지 조차 침묵시킬 수 있다.<br />
+<p><code>try()</code> 함수의 <code>silent</code> 인자로 command 에
+에러가 반환되는 메세지 조차 침묵시킬 수 있다.<br />
 이 인자의 값을 <code>TRUE</code> 로 설정하면 에러는 silent 시킨다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(bsid, <span class="dt">silent =</span> T)</code></pre></div>
-<p>차이점을 체감하기 위해선 직접 R 을 켜 코드를 동작시켜 볼 필요가 있다.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">try</span>(bsid, <span class="at">silent =</span> T)</span></code></pre></div>
+<p>차이점을 체감하기 위해선 직접 R 을 켜 코드를 동작시켜 볼 필요가
+있다.</p>
 <p><br></p>
-<h3 id="두-줄-의-코드를-try-하되-한줄은-정상-한줄은-에러를-내는-코드로-수정하면">두 줄 의 코드를 try 하되 한줄은 정상, 한줄은 에러를 내는 코드로 수정하면?</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>({
-  <span class="kw">print</span>(<span class="st">&quot;Hello R&quot;</span>)  <span class="co"># normal code</span>
-  bsid  <span class="co"># error code</span>
-}, <span class="dt">silent =</span> T)</code></pre></div>
+<h3
+id="두-줄-의-코드를-try-하되-한줄은-정상-한줄은-에러를-내는-코드로-수정하면">두
+줄 의 코드를 try 하되 한줄은 정상, 한줄은 에러를 내는 코드로
+수정하면?</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">try</span>({</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Hello R&quot;</span>)  <span class="co"># normal code</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  bsid  <span class="co"># error code</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>}, <span class="at">silent =</span> T)</span></code></pre></div>
 <pre><code>## [1] &quot;Hello R&quot;</code></pre>
-<p>첫번째 코드는 정상적으로 문자열 &quot;Hello R&quot; 을 출력시킨다.<br />
+<p>첫번째 코드는 정상적으로 문자열 “Hello R” 을 출력시킨다.<br />
 그리고 에러를 반환하는 2번째 코드는 반응이 없다.</p>
 <p>순서를 바꾸어 보면?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>({
-  bsid  <span class="co"># error code</span>
-  <span class="kw">print</span>(<span class="st">&quot;Hello R&quot;</span>)  <span class="co"># normal code</span>
-}, <span class="dt">silent =</span> T)</code></pre></div>
-<p>흠 첫번째 코드가 에러를 뿜기 때문에 그 이후 코드인 <code>print(&quot;Hello R&quot;)</code>는 수행되지 않는것을 볼 수 있다. <code>try()</code> 함수에 감싸져있는 코드덩어리는 평소대로 에러코드 이후인 정상적 코드를 실행하지 못한다.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">try</span>({</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  bsid  <span class="co"># error code</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Hello R&quot;</span>)  <span class="co"># normal code</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>}, <span class="at">silent =</span> T)</span></code></pre></div>
+<p>흠 첫번째 코드가 에러를 뿜기 때문에 그 이후 코드인
+<code>print("Hello R")</code>는 수행되지 않는것을 볼 수 있다.
+<code>try()</code> 함수에 감싸져있는 코드덩어리는 평소대로 에러코드
+이후인 정상적 코드를 실행하지 못한다.</p>
 <p><br><br></p>
-<h2 id="에러가-날-경우의-예외처리를-위한-trycatch-함수">에러가 날 경우의 예외처리를 위한 <code>tryCatch()</code> 함수</h2>
-<p>이처럼 <code>try()</code> 함수를 알아 보았는데 잘 이용하면 에러가 나는 코드를 건너뛰고 다음 프로세스를 진행할 수 있다.<br />
-에러가 나는 상황에 대한 조건부 프로세스가 따로 필요하다면 <code>try()</code> 함수만으론 부족할 수 있다.<br />
-이럴때는 lowerCamelCase 로 네이밍된 <code>tryCatch()</code> 함수를 이용하면 간편하게 해결할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tryCatch</span>(bsid,
-  <span class="dt">error =</span> function(e) <span class="kw">print</span>(<span class="st">&quot;I am error&quot;</span>),
-  <span class="dt">warning =</span> function(w) <span class="kw">print</span>(<span class="st">&quot;I am warning&quot;</span>),
-  <span class="dt">finally =</span> <span class="ot">NULL</span>)</code></pre></div>
+<h2 id="에러가-날-경우의-예외처리를-위한-trycatch-함수">에러가 날 경우의
+예외처리를 위한 <code>tryCatch()</code> 함수</h2>
+<p>이처럼 <code>try()</code> 함수를 알아 보았는데 잘 이용하면 에러가
+나는 코드를 건너뛰고 다음 프로세스를 진행할 수 있다.<br />
+에러가 나는 상황에 대한 조건부 프로세스가 따로 필요하다면
+<code>try()</code> 함수만으론 부족할 수 있다.<br />
+이럴때는 lowerCamelCase 로 네이밍된 <code>tryCatch()</code> 함수를
+이용하면 간편하게 해결할 수 있다.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(bsid,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(e) <span class="fu">print</span>(<span class="st">&quot;I am error&quot;</span>),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">warning =</span> <span class="cf">function</span>(w) <span class="fu">print</span>(<span class="st">&quot;I am warning&quot;</span>),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">finally =</span> <span class="cn">NULL</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;I am error&quot;</code></pre>
-<p><code>tryCatch()</code> 에는 본코드가 에러를 뿜을 때 실행될 함수를 설정하는 <code>error</code>,<br />
-에러가 아니라 warning 가 일어날 때 실행될 함수를 설정하는 <code>warning</code>,<br />
-조건 상관없이 공통으로 실행되는 <code>finally</code> 인자들을 이용할 수 있어 좀 더 섬세한 예외처리가 가능하다.</p>
-<p>위의 예제는 <code>bsid</code> 객체가 존재하지 않아 <code>error</code> 에 해당되는 <code>print(&quot;I am error&quot;)</code> 가 실행된 경우이다. 만약</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bsid &lt;-<span class="st"> &quot;I exist!&quot;</span></code></pre></div>
+<p><code>tryCatch()</code> 에는 본코드가 에러를 뿜을 때 실행될 함수를
+설정하는 <code>error</code>,<br />
+에러가 아니라 warning 가 일어날 때 실행될 함수를 설정하는
+<code>warning</code>,<br />
+조건 상관없이 공통으로 실행되는 <code>finally</code> 인자들을 이용할 수
+있어 좀 더 섬세한 예외처리가 가능하다.</p>
+<p>위의 예제는 <code>bsid</code> 객체가 존재하지 않아 <code>error</code>
+에 해당되는 <code>print("I am error")</code> 가 실행된 경우이다.
+만약</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bsid <span class="ot">&lt;-</span> <span class="st">&quot;I exist!&quot;</span></span></code></pre></div>
 <p>를 실행한 다음 위의 코드를 실행한다면?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tryCatch</span>(bsid,
-  <span class="dt">error =</span> function(e) <span class="kw">print</span>(<span class="st">&quot;I am error&quot;</span>),
-  <span class="dt">warning =</span> function(w) <span class="kw">print</span>(<span class="st">&quot;I am warning&quot;</span>),
-  <span class="dt">finally =</span> <span class="ot">NULL</span>)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(bsid,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(e) <span class="fu">print</span>(<span class="st">&quot;I am error&quot;</span>),</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">warning =</span> <span class="cf">function</span>(w) <span class="fu">print</span>(<span class="st">&quot;I am warning&quot;</span>),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">finally =</span> <span class="cn">NULL</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;I exist!&quot;</code></pre>
 <del>
-&quot;그래 넌 존재해&quot; 라는 결론을 낼 수 있다.
+“그래 넌 존재해” 라는 결론을 낼 수 있다.
 </del>
-<p>error, warning 둘다 해당되지 않으므로 본 코드 <code>bsid</code> 가 정상 실행되어 &quot;I exist!&quot; 를 외치는 걸 볼 수 있다.</p>
+<p>error, warning 둘다 해당되지 않으므로 본 코드 <code>bsid</code> 가
+정상 실행되어 “I exist!” 를 외치는 걸 볼 수 있다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -222,7 +255,7 @@ Error: object &#39;bsid&#39; not found</code></pre>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/02/11/tryfunction.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2016/02/11/tryfunction.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -246,7 +279,7 @@ Error: object &#39;bsid&#39; not found</code></pre>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -263,7 +296,7 @@ Error: object &#39;bsid&#39; not found</code></pre>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -280,7 +313,7 @@ Error: object &#39;bsid&#39; not found</code></pre>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -297,7 +330,24 @@ Error: object &#39;bsid&#39; not found</code></pre>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -321,7 +371,7 @@ Error: object &#39;bsid&#39; not found</code></pre>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -339,16 +389,6 @@ Error: object &#39;bsid&#39; not found</code></pre>
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -830,7 +870,7 @@ Error: object &#39;bsid&#39; not found</code></pre>
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 try(), tryCatch() 함수 소개";
+        var disqus_identifier = "http://localhost:4000_R에서 try(), tryCatch() 함수 소개";
         var disqus_title = "R에서 try(), tryCatch() 함수 소개";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

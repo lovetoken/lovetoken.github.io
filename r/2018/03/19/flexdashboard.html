@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2018/03/19/flexdashboard.html" property="og:url">
+          <meta content="http://localhost:4000/r/2018/03/19/flexdashboard.html" property="og:url">
         
         
           <meta content="2018-03-19T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="Rmarkdown + Shiny + flexdashboard package 의 조합을 통한 대쉬보드 만들기 (네이버 연관검색어를 예제로)">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2018/03/19/flexdashboard.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2018/03/19/flexdashboard.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,28 +136,44 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>최근 <a href="https://lovetoken.gitbooks.io/r-dev-team-open-seminar/content/">R dev team</a> 과 세미나를 통해 자발적인 분석 도전과제를 만들고 코워킹을 하고 있다.<br />
-도전과제 중 첫 번째로 나온 결과물이 <a href="https://lovetoken.gitbooks.io/r-dev-team-open-seminar/content/b3c4-c804-acfc-c81c/b124-c774-bc84-c5f0-ad00-ac80-c0c9-c5b4-cd94-cd9c-c800-c7a5-d504-b85c-adf8-b7a8-b9cc-b4e4-ae30.html">네이버 연관검색어 추출 프로그램</a>이다.<br />
-패키지화 하여 한 개의 함수만으로 연관검색어의 결과를 저장하고 표출하며 시각화하였다.<br />
-이어서 R을 모르는 타인에게도 우리가 쉽게 사용토록 해 보고자 shiny application을 만들어 보기로 하였다.</p>
-<p>필자는 정석적인 Shiny app 개발 방법보단 Rmarkdown 과 <a href="https://rmarkdown.rstudio.com/flexdashboard/">flexdashboard package</a>를 조합하여 사용하면<br />
+<p>최근 <a
+href="https://lovetoken.gitbooks.io/r-dev-team-open-seminar/content/">R
+dev team</a> 과 세미나를 통해 자발적인 분석 도전과제를 만들고 코워킹을
+하고 있다.<br />
+도전과제 중 첫 번째로 나온 결과물이 <a
+href="https://lovetoken.gitbooks.io/r-dev-team-open-seminar/content/b3c4-c804-acfc-c81c/b124-c774-bc84-c5f0-ad00-ac80-c0c9-c5b4-cd94-cd9c-c800-c7a5-d504-b85c-adf8-b7a8-b9cc-b4e4-ae30.html">네이버
+연관검색어 추출 프로그램</a>이다.<br />
+패키지화 하여 한 개의 함수만으로 연관검색어의 결과를 저장하고 표출하며
+시각화하였다.<br />
+이어서 R을 모르는 타인에게도 우리가 쉽게 사용토록 해 보고자 shiny
+application을 만들어 보기로 하였다.</p>
+<p>필자는 정석적인 Shiny app 개발 방법보단 Rmarkdown 과 <a
+href="https://rmarkdown.rstudio.com/flexdashboard/">flexdashboard
+package</a>를 조합하여 사용하면<br />
 대쉬보드를 손쉽게 만들 수 있고<br />
-대쉬보드의 특성상 결과물을 최대한 심플하게 만들려 노력할 것이기 때문에<br />
+대쉬보드의 특성상 결과물을 최대한 심플하게 만들려 노력할 것이기
+때문에<br />
 자연스럽게 개발량도 줄어들 것으로 생각했다.</p>
-<p>개발량이 줄어들면 협업이 쉬워지고 진입장벽도 낮아지기 때문에 초심자와 제 3자에게 흥미를 유도할 수 있을 거라 기대하며<br />
+<p>개발량이 줄어들면 협업이 쉬워지고 진입장벽도 낮아지기 때문에 초심자와
+제 3자에게 흥미를 유도할 수 있을 거라 기대하며<br />
 아래와 같은 영상을 만들어 보았다.</p>
 <p><br><br></p>
 <center>
 <iframe width="90%" height="400" src="https://www.youtube.com/embed/UKw1YxQRPes" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
 </center>
-<p><br><br> 참고로 R dev team 은 성과물들을 R code 로 남기려 하고 있고 이를 <a href="https://github.com/lovetoken/rdevteam">rdevteam 패키지</a>로 관리하려 하고 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
-<span class="kw">install_github</span>(<span class="st">&quot;lovetoken/rdevteam&quot;</span>)</code></pre></div>
+<p><br><br> 참고로 R dev team 은 성과물들을 R code 로 남기려 하고 있고
+이를 <a href="https://github.com/lovetoken/rdevteam">rdevteam
+패키지</a>로 관리하려 하고 있다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install_github</span>(<span class="st">&quot;lovetoken/rdevteam&quot;</span>)</span></code></pre></div>
 <p>를 통해서 설치가 가능하며<br />
-현재 이를 설치하면 영상에 있는 <code>naverRelation()</code> 함수를 이용할 수 있고<br />
+현재 이를 설치하면 영상에 있는 <code>naverRelation()</code> 함수를
+이용할 수 있고<br />
 그대로 재현할 수 있을 것이다.</p>
-<p>영상에서 시연되는 코드의 원본은 <a href="https://raw.githubusercontent.com/lovetoken/flexdashboard_example/master/example.rmd">이 링크</a>인 Github 저장소를 통해 확인하거나 다운로드 할 수 있다.</p>
+<p>영상에서 시연되는 코드의 원본은 <a
+href="https://raw.githubusercontent.com/lovetoken/flexdashboard_example/master/example.rmd">이
+링크</a>인 Github 저장소를 통해 확인하거나 다운로드 할 수 있다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -171,7 +187,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2018/03/19/flexdashboard.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2018/03/19/flexdashboard.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -195,7 +211,7 @@
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -212,7 +228,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -229,7 +245,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -246,7 +262,24 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -270,7 +303,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -288,16 +321,6 @@
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -779,7 +802,7 @@
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_Rmarkdown + Shiny + flexdashboard package 의 조합을 통한 대쉬보드 만들기 (네이버 연관검색어를 예제로)";
+        var disqus_identifier = "http://localhost:4000_Rmarkdown + Shiny + flexdashboard package 의 조합을 통한 대쉬보드 만들기 (네이버 연관검색어를 예제로)";
         var disqus_title = "Rmarkdown + Shiny + flexdashboard package 의 조합을 통한 대쉬보드 만들기 (네이버 연관검색어를 예제로)";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2017/03/05/Rpackage_install_manually.html" property="og:url">
+          <meta content="http://localhost:4000/r/2017/03/05/Rpackage_install_manually.html" property="og:url">
         
         
           <meta content="2017-03-05T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="인터넷 접속이 불가능 한 내부망에서의 R package 설치방법에 대해">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2017/03/05/Rpackage_install_manually.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2017/03/05/Rpackage_install_manually.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,57 +136,88 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>(지금은 그렇지 않은데) 이전에 일하던 환경이 망분리(내부망)의 도입으로 인하여<br />
-인터넷이 불가능한 상황에서 R을 이용해 분석을 해야 했던 적이 있었다.<br />
-특히 보안으로 인한 법 개정인지 몰라도 망분리 도입이 공기업을 시작으로 활발하게 진행하는 듯 싶은데,<br />
-이로인한 많은 이슈를 대응해야 하는 사람들 입장에선 많이 피곤할 것으로 생각한다.</p>
-<p>오픈소스 소프트웨어 특성상 대부분이 그렇겠지만 인터넷의 의존도는 높을 것이다. (버전의 업데이트 주기가 빠르고 변화에 빠르게 대응한다) 그중 R 언어 역시 마찬가지다.<br />
-R 패키지의 설치는 기본적으론 <a href="https://cran.r-project.org/">CRAN</a> 을 통해 패키지 리소스들을 요청하고 다운로드 하는데 이것이 불가해진다.<br />
+<p>(지금은 그렇지 않은데) 이전에 일하던 환경이 망분리(내부망)의 도입으로
+인하여<br />
+인터넷이 불가능한 상황에서 R을 이용해 분석을 해야 했던 적이
+있었다.<br />
+특히 보안으로 인한 법 개정인지 몰라도 망분리 도입이 공기업을 시작으로
+활발하게 진행하는 듯 싶은데,<br />
+이로인한 많은 이슈를 대응해야 하는 사람들 입장에선 많이 피곤할 것으로
+생각한다.</p>
+<p>오픈소스 소프트웨어 특성상 대부분이 그렇겠지만 인터넷의 의존도는 높을
+것이다. (버전의 업데이트 주기가 빠르고 변화에 빠르게 대응한다) 그중 R
+언어 역시 마찬가지다.<br />
+R 패키지의 설치는 기본적으론 <a
+href="https://cran.r-project.org/">CRAN</a> 을 통해 패키지 리소스들을
+요청하고 다운로드 하는데 이것이 불가해진다.<br />
 그렇다고 패키지 설치가 아예 불가능한 것은 아니다.<br />
-아래의 <a href="%22https://lovetoken.github.io/assets/assets/player/KeynoteDHTMLPlayer.html#0%22">PPT 슬라이드</a>는 패키지 수동설치에 대한 일반적인 방법 한가지를 설명한다.</p>
+아래의 <a
+href="%22https://lovetoken.github.io/assets/assets/player/KeynoteDHTMLPlayer.html#0%22">PPT
+슬라이드</a>는 패키지 수동설치에 대한 일반적인 방법 한가지를
+설명한다.</p>
 <iframe src="https://lovetoken.github.io/assets/assets/player/KeynoteDHTMLPlayer.html#0" width="100%" height="500px">
 </iframe>
 <p>위 설명은 가장 쉬운방법이지만<br />
-다량의 패키지를 설치하기위해, 그리고 의존성이 걸리는 패키지들까지 설치하기 위한 방법으론 적당하지 않을 수 있다.<br />
+다량의 패키지를 설치하기위해, 그리고 의존성이 걸리는 패키지들까지
+설치하기 위한 방법으론 적당하지 않을 수 있다.<br />
 다량의 패키지를 수동설치 하고자 한다면 아래 방법도 고려해볼만 하다.</p>
 <p><br><br></p>
 <h2 id="명령어로-설치하기">명령어로 설치하기</h2>
 <p>방법을 소개하기 전에 한가지 집고 넘어가는것이 좋다.<br />
 인터넷이 접속안되는 컴퓨터의 환경을 미리 알고 대비하는게 좋다.<br />
-윈도우라면 윈도우의 가상머신을.. 리눅스면 리눅스 가상머신을 준비할 수 있다면 준비하자. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> 필자는 편의상 MacOS 인 환경을 기준으로만 설명하겠다.</p>
+윈도우라면 윈도우의 가상머신을.. 리눅스면 리눅스 가상머신을 준비할 수
+있다면 준비하자. <a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> 필자는 편의상 MacOS 인 환경을
+기준으로만 설명하겠다.</p>
 <p>우선 인터넷이 가능한 말끔한 상태의 가상머신에서<br />
 R 설치 및 실행 후<br />
-수동설치를 하고자 하는 패키지를 마음껏 <code>install.packages()</code> 함수를 통해 설치한다.<br />
-그럼 패키지 리소스인 tgz 압축 파일들이 temp 폴더에 임시로 저장되게 된다.</p>
-<p>예를 들어 &quot;car&quot; 패키지를 설치하고 싶은 경우 <code>install.packages(&quot;car&quot;)</code> 로 가상머신에 설치를 진행하면</p>
+수동설치를 하고자 하는 패키지를 마음껏 <code>install.packages()</code>
+함수를 통해 설치한다.<br />
+그럼 패키지 리소스인 tgz 압축 파일들이 temp 폴더에 임시로 저장되게
+된다.</p>
+<p>예를 들어 “car” 패키지를 설치하고 싶은 경우
+<code>install.packages("car")</code> 로 가상머신에 설치를 진행하면</p>
 <center>
 <script src="https://asciinema.org/a/153436.js" id="asciicast-153436" async></script>
 </center>
-<p><code>/var/folders/tw/crr70_s16xs6frt419xh9b740000gn/T//RtmpkL6bWJ/downloaded_packages</code> 라는 복잡한 경로에 car 패키지 리소스인 <code>car_2.1-6.tgz</code> 파일이 임시로 저장된다.<br />
-만약 &quot;car&quot; 패키지의 의존성 패키지가 설치되어있지 않다면 이를 포함하여 다운로드하게 된다.</p>
+<p><code>/var/folders/tw/crr70_s16xs6frt419xh9b740000gn/T//RtmpkL6bWJ/downloaded_packages</code>
+라는 복잡한 경로에 car 패키지 리소스인 <code>car_2.1-6.tgz</code> 파일이
+임시로 저장된다.<br />
+만약 “car” 패키지의 의존성 패키지가 설치되어있지 않다면 이를 포함하여
+다운로드하게 된다.</p>
 <p>자신이 임시로 저장하고 싶은 경로를 지정할 수도 있다.<br />
-<code>destdir</code> 인자를 이용해 저 복잡한 경로가 아닌 임의의 경로로 지정해 패키지 리소스 파일을 임시로 저장한다.</p>
-<p>아래의 예제는 <code>~/r_package</code> 폴더를 만들고 그곳에 &quot;ape&quot;, &quot;Amelia&quot;, &quot;car&quot; 3개의 패키지 리소스를 저장해 보는 예제이다.</p>
+<code>destdir</code> 인자를 이용해 저 복잡한 경로가 아닌 임의의 경로로
+지정해 패키지 리소스 파일을 임시로 저장한다.</p>
+<p>아래의 예제는 <code>~/r_package</code> 폴더를 만들고 그곳에 “ape”,
+“Amelia”, “car” 3개의 패키지 리소스를 저장해 보는 예제이다.</p>
 <center>
 <script src="https://asciinema.org/a/153439.js" id="asciicast-153439" async></script>
 </center>
-<p>이처럼 준비된 패키지 리소스들을 인터넷이 안되는 머신으로 물리적으로 복사한다.<br />
+<p>이처럼 준비된 패키지 리소스들을 인터넷이 안되는 머신으로 물리적으로
+복사한다.<br />
 이후 인터넷이 안되는 머신의 시점으로 돌아간다.<br />
-편의상 인터넷 불가한 머신의 <code>~/r_package</code> 폴더에 <code>Amelia_1.7.4.tgz</code>, <code>ape_5.0.tgz</code>, <code>car_2.1-6.tgz</code> 3개 파일을 복사하였다고 가정하고</p>
+편의상 인터넷 불가한 머신의 <code>~/r_package</code> 폴더에
+<code>Amelia_1.7.4.tgz</code>, <code>ape_5.0.tgz</code>,
+<code>car_2.1-6.tgz</code> 3개 파일을 복사하였다고 가정하고</p>
 <center>
 <script src="https://asciinema.org/a/153441.js" id="asciicast-153441" async></script>
 </center>
-<p>위 처럼 <code>install.package()</code> 함수의 <code>repos = NULL</code> 옵션으로<br />
+<p>위 처럼 <code>install.package()</code> 함수의
+<code>repos = NULL</code> 옵션으로<br />
 CRAN의 인터넷 접속에 의존하지 않은 채 수동설치가 가능하다.</p>
 <p><br><br></p>
 <h2 id="맺음말">맺음말</h2>
 <p>망분리란 고립된 환경, 그외 여러한 제약들 때문에<br />
 인터넷을 이용한 패키지 설치가 어려우실 경우<br />
-이러한 방법들을 이용해 어느정도 해갈이 되었으면 하는 바램이다. <i class="fa fa-smile-o fa-spin" aria-hidden="true"></i></p>
-<section class="footnotes">
+이러한 방법들을 이용해 어느정도 해갈이 되었으면 하는 바램이다.
+<i class="fa fa-smile-o fa-spin" aria-hidden="true"></i></p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p><a href="https://www.virtualbox.org/">Virture box</a>, <a href="https://www.docker.com/">Docker</a> 등 방법은 다양하다<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p><a href="https://www.virtualbox.org/">Virture box</a>,
+<a href="https://www.docker.com/">Docker</a> 등 방법은 다양하다<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -202,7 +233,7 @@ CRAN의 인터넷 접속에 의존하지 않은 채 수동설치가 가능하다
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2017/03/05/Rpackage_install_manually.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2017/03/05/Rpackage_install_manually.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -226,7 +257,7 @@ CRAN의 인터넷 접속에 의존하지 않은 채 수동설치가 가능하다
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -243,7 +274,7 @@ CRAN의 인터넷 접속에 의존하지 않은 채 수동설치가 가능하다
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -260,7 +291,7 @@ CRAN의 인터넷 접속에 의존하지 않은 채 수동설치가 가능하다
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -277,7 +308,24 @@ CRAN의 인터넷 접속에 의존하지 않은 채 수동설치가 가능하다
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -301,7 +349,7 @@ CRAN의 인터넷 접속에 의존하지 않은 채 수동설치가 가능하다
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -319,16 +367,6 @@ CRAN의 인터넷 접속에 의존하지 않은 채 수동설치가 가능하다
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -810,7 +848,7 @@ CRAN의 인터넷 접속에 의존하지 않은 채 수동설치가 가능하다
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_인터넷 접속이 불가능 한 내부망에서의 R package 설치방법에 대해";
+        var disqus_identifier = "http://localhost:4000_인터넷 접속이 불가능 한 내부망에서의 R package 설치방법에 대해";
         var disqus_title = "인터넷 접속이 불가능 한 내부망에서의 R package 설치방법에 대해";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

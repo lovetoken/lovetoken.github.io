@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2019/01/03/RSQLite.html" property="og:url">
+          <meta content="http://localhost:4000/r/2019/01/03/RSQLite.html" property="og:url">
         
         
           <meta content="2019-01-03T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2019/01/03/RSQLite.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,54 +136,89 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>학창시절부터 실질적인 데이터를 접근하기 위해 SQL을 익히는 것은 중요하다는 이야기를 실무를 하시는 분들에게 공통적으로 들어왔었다.<br />
-데이터를 분석하기 위해서는 분석가가 분석범위로 설정한 데이터를 손에 쥐고 있어야 가능하고, 내 입맛에 맞게 손에 집기 위한 스킬이라는 것이기에 이 말을 매우매우 공감하였었다.<br />
-하지만 그 당시에 통계적인 학문 자체에 대해 집중적으로 공부하던 '전공'이라는 틀 안에서 노력을 했던 터라 데이터를 굳이 Database 에서 가저와야 할 정도의 필요성을 느낄만한 동기를 가질 수 없었던게 아니었나 회고해 본다.<br />
-DBMS(DataBases Management System) 안에 있는 데이터를 만나볼 기회는 큰 규모의 프로젝트나, 데이터를 소유하고 있는 회사에서 일을 해 보지 않는 이상 접하기 조차 어려웠던것 아닐까 싶다. (Excel과 같은 스프레드시트로 관리하는게 가장 대중적이고 효율적일테니까)<br />
-실제로 필자도 위의 생각을 가지고 노력을 했다고 생각했지만, 지금 돌이켜 보면 그 노력은 맹목적이었고<br />
-저 첫기회를 찾아 접하고 경험하기 까지 걸린 시간이 대학생 막학기 시절 때 이었으니 말이다.</p>
-<p>모순적이게도 직장을 얻고 관련분야 일을 하면서 SQL을 이용해야하는 참된 이유를 알게 되었고,<br />
-그 전까지 익히던 SQL이 목적없이 진도빼기 식으로 공부한 것 아닌가 느껴졌다.</p>
-<p>지금이라도 뒤늦었다 생각하고 목적성 있게 주체적으로 공부해 보기 위해 이런저런 시도들을 해 보고 있다.<br />
-그 시도중 학창시절당시 DB 를 경험해 보지 못했던 나의 사각지대 환경에 대해서 조금 더 생각들이 많아졌고<br />
-서버같은 것 없이 로컬상에서도 손쉽게 DB 환경을 구축하여 SQL 을 직접 이용해 볼 수 있는 가벼운 환경을 만들 수 있다면 좋지 않을까 했고, 이 생각을 후배 등에게 전파하기도 용이하겠다는 생각을 덤으로 하면서<br />
+<p>학창시절부터 실질적인 데이터를 접근하기 위해 SQL을 익히는 것은
+중요하다는 이야기를 실무를 하시는 분들에게 공통적으로 들어왔었다.<br />
+데이터를 분석하기 위해서는 분석가가 분석범위로 설정한 데이터를 손에 쥐고
+있어야 가능하고, 내 입맛에 맞게 손에 집기 위한 스킬이라는 것이기에 이
+말을 매우매우 공감하였었다.<br />
+하지만 그 당시에 통계적인 학문 자체에 대해 집중적으로 공부하던
+’전공’이라는 틀 안에서 노력을 했던 터라 데이터를 굳이 Database 에서
+가저와야 할 정도의 필요성을 느낄만한 동기를 가질 수 없었던게 아니었나
+회고해 본다.<br />
+DBMS(DataBases Management System) 안에 있는 데이터를 만나볼 기회는 큰
+규모의 프로젝트나, 데이터를 소유하고 있는 회사에서 일을 해 보지 않는
+이상 접하기 조차 어려웠던것 아닐까 싶다. (Excel과 같은 스프레드시트로
+관리하는게 가장 대중적이고 효율적일테니까)<br />
+실제로 필자도 위의 생각을 가지고 노력을 했다고 생각했지만, 지금 돌이켜
+보면 그 노력은 맹목적이었고<br />
+저 첫기회를 찾아 접하고 경험하기 까지 걸린 시간이 대학생 막학기 시절 때
+이었으니 말이다.</p>
+<p>모순적이게도 직장을 얻고 관련분야 일을 하면서 SQL을 이용해야하는 참된
+이유를 알게 되었고,<br />
+그 전까지 익히던 SQL이 목적없이 진도빼기 식으로 공부한 것 아닌가
+느껴졌다.</p>
+<p>지금이라도 뒤늦었다 생각하고 목적성 있게 주체적으로 공부해 보기 위해
+이런저런 시도들을 해 보고 있다.<br />
+그 시도중 학창시절당시 DB 를 경험해 보지 못했던 나의 사각지대 환경에
+대해서 조금 더 생각들이 많아졌고<br />
+서버같은 것 없이 로컬상에서도 손쉽게 DB 환경을 구축하여 SQL 을 직접
+이용해 볼 수 있는 가벼운 환경을 만들 수 있다면 좋지 않을까 했고, 이
+생각을 후배 등에게 전파하기도 용이하겠다는 생각을 덤으로 하면서<br />
 위의 제목을 주제로한 글을 작성하게 되었다.</p>
 <p><br><br></p>
-<h2 id="sqlite"><a href="https://www.sqlite.org/about.html">SQLite</a></h2>
+<h2 id="sqlite"><a
+href="https://www.sqlite.org/about.html">SQLite</a></h2>
 <p>다양한 종류의 데이터베이스들이 있는데<br />
-관리하여야 할 데이터의 스케일과 특성에 따라 특화되고 강점들이 각기 다른 DB 들이 생기며 현존하는 것 같다.<br />
-그 중 본 글의 특성(시작하기 쉽고 가벼운)에 맞는 SQLite 이란 DB를 소개하고자 한다.</p>
-<p>사람들이 컴퓨터를 사용할 때 가장 많이 보고 접하는 것 중 하나가 파일(File)인데<br />
-이 파일은 컴퓨터에서 정보를 담는 그릇의 가장 대중적인 단위라고 생각한다.<br />
+관리하여야 할 데이터의 스케일과 특성에 따라 특화되고 강점들이 각기 다른
+DB 들이 생기며 현존하는 것 같다.<br />
+그 중 본 글의 특성(시작하기 쉽고 가벼운)에 맞는 SQLite 이란 DB를
+소개하고자 한다.</p>
+<p>사람들이 컴퓨터를 사용할 때 가장 많이 보고 접하는 것 중 하나가
+파일(File)인데<br />
+이 파일은 컴퓨터에서 정보를 담는 그릇의 가장 대중적인 단위라고
+생각한다.<br />
 때문에 가장 직관적이고 이해하기 쉬운 단위라고 본다.<br />
-SQLite 라는 DB 는 눈에 보이는 <strong>파일형태</strong>로 관리가 되기 때문에 거부감이 덜할 것이다.<br />
-필자는 약 1년전 <a href="https://lovetoken.gitbooks.io/r-dev-team-open-seminar/content/">rdevteam</a> 활동을 하면서 SQLite 를 공유받게 되었고 그때 처음 알게되었다.</p>
+SQLite 라는 DB 는 눈에 보이는 <strong>파일형태</strong>로 관리가 되기
+때문에 거부감이 덜할 것이다.<br />
+필자는 약 1년전 <a
+href="https://lovetoken.gitbooks.io/r-dev-team-open-seminar/content/">rdevteam</a>
+활동을 하면서 SQLite 를 공유받게 되었고 그때 처음 알게되었다.</p>
 <p>그리하여<br />
-본 글에서는 SQLite 라는 파일DB 를 <code>RSQLite</code> 패키지를 이용해 만들어 보는 것을 주제로 한다.</p>
+본 글에서는 SQLite 라는 파일DB 를 <code>RSQLite</code> 패키지를 이용해
+만들어 보는 것을 주제로 한다.</p>
 <p><br><br></p>
-<h2 id="rsqlite-package-install"><code>RSQLite</code> package install</h2>
-<p><code>RSQLite</code> 패키지는 R 에서 SQLite 인터페이스를 제공해주는 패키지이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;RSQLite&quot;</span>)
-<span class="kw">library</span>(RSQLite)</code></pre></div>
+<h2 id="rsqlite-package-install"><code>RSQLite</code> package
+install</h2>
+<p><code>RSQLite</code> 패키지는 R 에서 SQLite 인터페이스를 제공해주는
+패키지이다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;RSQLite&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RSQLite)</span></code></pre></div>
 <p>위의 코드를 통해 패키지를 설치하고 로드한다.<br />
 또한 R에서 DB 와의 인터페이스 함수를 제공하는 DBI 패키지도 로드한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(DBI)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span></code></pre></div>
 <p><br><br></p>
 <h2 id="sqlite-가지고-놀아보기">SQLite 가지고 놀아보기</h2>
-<p>DB 를 만들기위한 놀이터를 만들것이다. 현 워킹디렉토리에 <code>data</code> 디렉토리를 만든다.<br />
-R에서 폴더를 만들수도 있는데 아래 코드를 실행하면 워킹디렉토리를 기준으로 <code>data</code> 폴더를 생성시킨다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dir.create</span>(<span class="st">&quot;data&quot;</span>)</code></pre></div>
-<p>그다음 아래 코드를 실행하게 되면 방금만든 <code>data</code> 폴더 안에 <code>SQLiteDB.sqlite</code> 라는 파일이 생성될 것이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">con &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(<span class="kw">SQLite</span>(), <span class="st">&quot;data/SQLiteDB.sqlite&quot;</span>)</code></pre></div>
-<p>이 파일이 파일 DB 이고 이 파일에 연결정보는 <code>con</code> 으로 관리된다.<br />
-<code>con</code> 을 명시하여 데이터테이블을 생성시키고, 삭제하는 실습을 곧 하게 될 것인데<br />
-그렇게 되면 모두 커넥션이 맺어진 <code>data/SQLiteDB.sqlite</code> 파일에 적용된다는점을 미리 말해 둔다.</p>
+<p>DB 를 만들기위한 놀이터를 만들것이다. 현 워킹디렉토리에
+<code>data</code> 디렉토리를 만든다.<br />
+R에서 폴더를 만들수도 있는데 아래 코드를 실행하면 워킹디렉토리를
+기준으로 <code>data</code> 폴더를 생성시킨다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;data&quot;</span>)</span></code></pre></div>
+<p>그다음 아래 코드를 실행하게 되면 방금만든 <code>data</code> 폴더 안에
+<code>SQLiteDB.sqlite</code> 라는 파일이 생성될 것이다.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">SQLite</span>(), <span class="st">&quot;data/SQLiteDB.sqlite&quot;</span>)</span></code></pre></div>
+<p>이 파일이 파일 DB 이고 이 파일에 연결정보는 <code>con</code> 으로
+관리된다.<br />
+<code>con</code> 을 명시하여 데이터테이블을 생성시키고, 삭제하는 실습을
+곧 하게 될 것인데<br />
+그렇게 되면 모두 커넥션이 맺어진 <code>data/SQLiteDB.sqlite</code>
+파일에 적용된다는점을 미리 말해 둔다.</p>
 <h3 id="테이블-생성하기">테이블 생성하기</h3>
-<p>가지고 놀아볼 데이터를 R에서 생성시켜보자 정말 별거 아닌 데이터지만 쓸데없이 크게 (<code>n = 100000</code>) 만들어보는 코드이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stringi)
-n =<span class="st"> </span><span class="dv">100000</span>
-data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">id =</span> <span class="kw">stri_rand_strings</span>(n, <span class="dv">12</span>), <span class="dt">col1 =</span> <span class="kw">rnorm</span>(n), <span class="dt">col2 =</span> <span class="kw">runif</span>(n)) %&gt;%<span class="st"> </span>tbl_df
-data</code></pre></div>
+<p>가지고 놀아볼 데이터를 R에서 생성시켜보자 정말 별거 아닌 데이터지만
+쓸데없이 크게 (<code>n = 100000</code>) 만들어보는 코드이다.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringi)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100000</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="fu">stri_rand_strings</span>(n, <span class="dv">12</span>), <span class="at">col1 =</span> <span class="fu">rnorm</span>(n), <span class="at">col2 =</span> <span class="fu">runif</span>(n)) <span class="sc">%&gt;%</span> tbl_df</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>data</span></code></pre></div>
 <pre><code>## # A tibble: 100,000 x 3
 ##    id             col1  col2
 ##    &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt;
@@ -200,33 +235,43 @@ data</code></pre></div>
 ## # ... with 99,990 more rows</code></pre>
 <p>위의 데이터는 지금 R session 에 있는 장난감 데이터이다.<br />
 이 장난감이 R 이라는 놀이터 공간에만 있을 뿐이다.<br />
-우리는 이 장난감을 그대로 SQLite 데이터베이스 라는 놀이터에도 복사해 장난감을 납두고 싶다고 하자.<br />
-데이터베이스 라는 놀이터는 보통 Database 혹은 Schema 를 상위 단위로 하고, 그 하위 개념을 Table 로 둔다.<br />
-우리가 R 에서 만든 장난감은 data.frame 형식인데 이것이 Table 과 매우 유사한 형태로 호환이 가능하므로 결국 데이터베이스 하위개념인 Table 안에 얼마든지 복사가 가능하다.<br />
+우리는 이 장난감을 그대로 SQLite 데이터베이스 라는 놀이터에도 복사해
+장난감을 납두고 싶다고 하자.<br />
+데이터베이스 라는 놀이터는 보통 Database 혹은 Schema 를 상위 단위로
+하고, 그 하위 개념을 Table 로 둔다.<br />
+우리가 R 에서 만든 장난감은 data.frame 형식인데 이것이 Table 과 매우
+유사한 형태로 호환이 가능하므로 결국 데이터베이스 하위개념인 Table 안에
+얼마든지 복사가 가능하다.<br />
 SQLite DB안에 테이블 단위로 이 데이터를 저장하고 싶은 경우<br />
-DBI 패키지에서 제공하는 <code>dbWriteTable()</code> 함수를 이용해 연결정보가 담긴 <code>con</code> 을 안에 명시해주고<br />
+DBI 패키지에서 제공하는 <code>dbWriteTable()</code> 함수를 이용해
+연결정보가 담긴 <code>con</code> 을 안에 명시해주고<br />
 저장하고 싶은 대상과 명칭을 입력하면 된다.</p>
 <p>즉 아래 코드를 실행하면 된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbWriteTable</span>(con, <span class="st">&quot;data&quot;</span>, data)</code></pre></div>
-<p>이것이 실행되면 현 상황은 SQLite DB 안에 <code>data</code> 라는 테이블이 생성된 상태이다.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(con, <span class="st">&quot;data&quot;</span>, data)</span></code></pre></div>
+<p>이것이 실행되면 현 상황은 SQLite DB 안에 <code>data</code> 라는
+테이블이 생성된 상태이다.</p>
 <p>Database 에는 다수의 테이블을 입력할 수 있다.<br />
-R의 빌트인 데이터 <code>cars</code> 와 <code>iris</code> 를 더 저장해보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbWriteTable</span>(con, <span class="st">&quot;cars&quot;</span>, cars)
-<span class="kw">dbWriteTable</span>(con, <span class="st">&quot;iris&quot;</span>, iris)</code></pre></div>
+R의 빌트인 데이터 <code>cars</code> 와 <code>iris</code> 를 더
+저장해보자.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(con, <span class="st">&quot;cars&quot;</span>, cars)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(con, <span class="st">&quot;iris&quot;</span>, iris)</span></code></pre></div>
 <p>저장이 정말 잘 되었는지 확인해 보고싶은데<br />
 그전에 테이블 하나 삭제만 더 해보고 그다음에 확인해 보겠다.</p>
 <h3 id="테이블-삭제하기">테이블 삭제하기</h3>
 <p>마지막에 실행하여 추가한 <code>iris</code> 데이터를 삭제해보자<br />
 <code>dbRemoveTable()</code> 함수가 테이블 삭제를 해 준다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbRemoveTable</span>(con, <span class="st">&quot;iris&quot;</span>)</code></pre></div>
-<h3 id="sql-구문-실행하여-데이터-읽어들이기">SQL 구문 실행하여 데이터 읽어들이기</h3>
-<p>위의 실습으로 <code>data</code>, <code>cars</code>, <code>iris</code> 3개의 테이블이 저장되었다가 <code>iris</code> 테이블은 삭제되었을 것이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbListTables</span>(con)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbRemoveTable</span>(con, <span class="st">&quot;iris&quot;</span>)</span></code></pre></div>
+<h3 id="sql-구문-실행하여-데이터-읽어들이기">SQL 구문 실행하여 데이터
+읽어들이기</h3>
+<p>위의 실습으로 <code>data</code>, <code>cars</code>, <code>iris</code>
+3개의 테이블이 저장되었다가 <code>iris</code> 테이블은 삭제되었을
+것이다.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(con)</span></code></pre></div>
 <pre><code>## [1] &quot;cars&quot; &quot;data&quot;</code></pre>
 <p>그렇다 이처럼 두개테이블만이 확인된다.</p>
 <p>각 테이블의 헤더 샘플을 각각 SQL 구문을 통해 읽어들여 보겠다.<br />
 SQL 의 <code>LIMIT</code> 을 통해 10개만 확인해 보았다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbGetQuery</span>(con, <span class="st">&quot;SELECT * FROM data LIMIT 10;&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbGetQuery</span>(con, <span class="st">&quot;SELECT * FROM data LIMIT 10;&quot;</span>)</span></code></pre></div>
 <pre><code>##              id        col1      col2
 ## 1  1jnj6MuXod5e  0.66293612 0.7739772
 ## 2  Vlm62uuOkaSw -0.59463920 0.4615983
@@ -238,7 +283,7 @@ SQL 의 <code>LIMIT</code> 을 통해 10개만 확인해 보았다.</p>
 ## 8  ltAX54IAsIq9  1.69635626 0.9901561
 ## 9  3N1AUeZb4JNa  0.37225877 0.9484985
 ## 10 RBnWtY5PKoHG  0.40751041 0.8362601</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbGetQuery</span>(con, <span class="st">&quot;SELECT * FROM cars LIMIT 10;&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbGetQuery</span>(con, <span class="st">&quot;SELECT * FROM cars LIMIT 10;&quot;</span>)</span></code></pre></div>
 <pre><code>##    speed dist
 ## 1      4    2
 ## 2      4   10
@@ -251,34 +296,52 @@ SQL 의 <code>LIMIT</code> 을 통해 10개만 확인해 보았다.</p>
 ## 9     10   34
 ## 10    11   17</code></pre>
 <p>iris 테이블을 확인해 볼 경우</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbGetQuery</span>(con, <span class="st">&quot;SELECT * FROM iris LIMIT 10;&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbGetQuery</span>(con, <span class="st">&quot;SELECT * FROM iris LIMIT 10;&quot;</span>)</span></code></pre></div>
 <pre><code>Error in result_create(conn@ptr, statement) : no such table: iris</code></pre>
 <p>삭제가 되었기 때문에 테이블을 찾을 수 없다는 에러가 확인된다.</p>
 <p>실감을 위해 지금까지 실습한 R 환경에서 잠깐 벗어나<br />
-데이터베이스 관리도구등으로 <code>data/SQLiteDB.sqlite</code> 에 연결하여 확인하면 이런모습이다. (<a href="https://dbeaver.io/">DBeaver</a> 이라는 SQL 클라이언트를 예제로 한 사진이다)</p>
+데이터베이스 관리도구등으로 <code>data/SQLiteDB.sqlite</code> 에
+연결하여 확인하면 이런모습이다. (<a
+href="https://dbeaver.io/">DBeaver</a> 이라는 SQL 클라이언트를 예제로 한
+사진이다)</p>
 <center>
 <img src="/assets/RSQLite1.png">
 </center>
 <p>이처럼 R상에서 SQL 구문을 실행해 볼 수 도 있고<br />
-위 사진처럼 SQL 클라이언트에서도 (당연히)얼마든지 SQL '질의'를 통해 원하는 데이터를 '답변' 받을 수 있다.</p>
+위 사진처럼 SQL 클라이언트에서도 (당연히)얼마든지 SQL ‘질의’를 통해
+원하는 데이터를 ’답변’ 받을 수 있다.</p>
 <p><br><br></p>
 <h2 id="덧붙여">덧붙여</h2>
-<p>DBI package 는 R상에서 DB 간 연결을 돕는 표준화된 함수를 제공한다.<br />
-그리고 이 틀 안에서 DB의 종류별로 connection 방법이 각기 조금씩 다른부분만 커스터마이징 하는 방식이다.<br />
+<p>DBI package 는 R상에서 DB 간 연결을 돕는 표준화된 함수를
+제공한다.<br />
+그리고 이 틀 안에서 DB의 종류별로 connection 방법이 각기 조금씩
+다른부분만 커스터마이징 하는 방식이다.<br />
 본 글의 예제 DB 는 SQLite 이었다.<br />
-SQLite 간 연결은 &quot;RSQLite&quot; package 의 도움을 받고 연결 후 연결객체<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>를 사용한 DB 간 통신은 모두 DBI 표준함수를 이용하는 방식이다.<br />
-위의 실습에서 사용했던 <code>dbWriteTable()</code>, <code>dbRemoveTable()</code>, <code>dbListTables()</code>, <code>dbGetQuery()</code> 함수들 모두 DBI 패키지 함수들이다.</p>
-<p>만약 SQLite 가 아닌 다른 DB 이면 그 DB 에 맞는 패키지가 보통 존재한다.<br />
+SQLite 간 연결은 “RSQLite” package 의 도움을 받고 연결 후 연결객체<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>를 사용한 DB 간 통신은 모두 DBI
+표준함수를 이용하는 방식이다.<br />
+위의 실습에서 사용했던 <code>dbWriteTable()</code>,
+<code>dbRemoveTable()</code>, <code>dbListTables()</code>,
+<code>dbGetQuery()</code> 함수들 모두 DBI 패키지 함수들이다.</p>
+<p>만약 SQLite 가 아닌 다른 DB 이면 그 DB 에 맞는 패키지가 보통
+존재한다.<br />
 예를 들면<br />
-Impala 로 연결해야할 땐 &quot;RImpala&quot; 라는 패키지를,<br />
-Presto DB 에 연결해야 할 땐 &quot;RPresto&quot; 패키지를,<br />
-MySQL 과 연결해야할 땐 &quot;RMySQL&quot; 패키지를 이용했었다.<br />
-odbc 혹은 jdbc 규격으로 연결해야할 경우 각각 &quot;RODBC&quot;, &quot;RJDBC&quot; 의 패키지를 이용해 각기 다른 방식으로 커넥션을 맺고, 그 커넥션 정보가 담긴 연결객체를 DBI 패키지와 조합하여 사용하는 방식 또한 마찬가지이다.</p>
-<p>이를 볼 때 DBI package 는 여러가지 데이터베이스 메니지먼트 시스템(DBMS)들에 대해서 표준화 되고 동일기능을 가진 함수로 실행되기 위한 방향성이 아주 오래전 부터 있던 패키지인 것 같다.</p>
-<section class="footnotes">
+Impala 로 연결해야할 땐 “RImpala” 라는 패키지를,<br />
+Presto DB 에 연결해야 할 땐 “RPresto” 패키지를,<br />
+MySQL 과 연결해야할 땐 “RMySQL” 패키지를 이용했었다.<br />
+odbc 혹은 jdbc 규격으로 연결해야할 경우 각각 “RODBC”, “RJDBC” 의
+패키지를 이용해 각기 다른 방식으로 커넥션을 맺고, 그 커넥션 정보가 담긴
+연결객체를 DBI 패키지와 조합하여 사용하는 방식 또한 마찬가지이다.</p>
+<p>이를 볼 때 DBI package 는 여러가지 데이터베이스 메니지먼트
+시스템(DBMS)들에 대해서 표준화 되고 동일기능을 가진 함수로 실행되기 위한
+방향성이 아주 오래전 부터 있던 패키지인 것 같다.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>지금 실습의 경우 <code>con</code> 을 일컫는다<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>지금 실습의 경우 <code>con</code> 을 일컫는다<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -294,7 +357,7 @@ odbc 혹은 jdbc 규격으로 연결해야할 경우 각각 &quot;RODBC&quot;, &
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2019/01/03/RSQLite.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -318,7 +381,7 @@ odbc 혹은 jdbc 규격으로 연결해야할 경우 각각 &quot;RODBC&quot;, &
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -335,7 +398,7 @@ odbc 혹은 jdbc 규격으로 연결해야할 경우 각각 &quot;RODBC&quot;, &
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -350,16 +413,9 @@ odbc 혹은 jdbc 규격으로 연결해야할 경우 각각 &quot;RODBC&quot;, &
     
         
             
-        
-    
-
-    
-    
-        
-            
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -383,7 +439,31 @@ odbc 혹은 jdbc 규격으로 연결해야할 경우 각각 &quot;RODBC&quot;, &
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -404,7 +484,7 @@ odbc 혹은 jdbc 규격으로 연결해야할 경우 각각 &quot;RODBC&quot;, &
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
+                    <a href="http://localhost:4000/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
                     
@@ -426,16 +506,6 @@ odbc 혹은 jdbc 규격으로 연결해야할 경우 각각 &quot;RODBC&quot;, &
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html">R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -902,7 +972,7 @@ odbc 혹은 jdbc 규격으로 연결해야할 경우 각각 &quot;RODBC&quot;, &
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기";
+        var disqus_identifier = "http://localhost:4000_로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기";
         var disqus_title = "로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

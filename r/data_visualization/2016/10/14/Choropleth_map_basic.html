@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/data_visualization/2016/10/14/Choropleth_map_basic.html" property="og:url">
+          <meta content="http://localhost:4000/r/data_visualization/2016/10/14/Choropleth_map_basic.html" property="og:url">
         
         
           <meta content="2016-10-14T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/data_visualization/2016/10/14/Choropleth_map_basic.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/data_visualization/2016/10/14/Choropleth_map_basic.html">
         
         
           <meta name="twitter:description" content="">
@@ -137,8 +137,12 @@
 <div class="content">
     <div class="post"><p><br><br></p>
 <h2 id="단계-구분도---choropleth-map">단계 구분도 - Choropleth Map</h2>
-<p>데이터 시각화를 주제로 모습을 자주 보이는 단계 구분도 (Choropleth Map)에 대해서 알아보고자 한다.<br />
-<a href="https://en.wikipedia.org/wiki/Choropleth_map">Choropleth map</a>은 지역당 특정주제의 통계치를 활용해 시각적인 요소를 가미하여 나타낸 지도로서, 예시를 하나 들자면 국가별 인구의 밀도를 수치에 따라 색깔의 농도를 달리하여 나타내는 지도로 들 수 있다.</p>
+<p>데이터 시각화를 주제로 모습을 자주 보이는 단계 구분도 (Choropleth
+Map)에 대해서 알아보고자 한다.<br />
+<a href="https://en.wikipedia.org/wiki/Choropleth_map">Choropleth
+map</a>은 지역당 특정주제의 통계치를 활용해 시각적인 요소를 가미하여
+나타낸 지도로서, 예시를 하나 들자면 국가별 인구의 밀도를 수치에 따라
+색깔의 농도를 달리하여 나타내는 지도로 들 수 있다.</p>
 <p>그림으로 표현하면 다음과 같다.</p>
 <br>
 <center>
@@ -146,7 +150,8 @@
 </center>
 <p><br></p>
 <blockquote>
-<p><a href="http://gisutd.tistory.com/7">꽤 괜찮은 데이터 지도(data map)를 그려주는 Natural Breaks란?</a></p>
+<p><a href="http://gisutd.tistory.com/7">꽤 괜찮은 데이터 지도(data
+map)를 그려주는 Natural Breaks란?</a></p>
 </blockquote>
 <p>이런 단계구분도를 R을 이용해 구현해 본 예제는 아래와 같다.</p>
 <center>
@@ -159,24 +164,34 @@
 <h2 id="r을-이용한-간단한-예제-실습">R을 이용한 간단한 예제 실습</h2>
 <p>위 예제로 든 것을 실제로 만들어 보며 실습을 해보았다.<br />
 R의 여러 패키지의 도움을 빌렸다.<br />
-&quot;maps&quot;, &quot;dplyr&quot;, &quot;&quot;ggplot2&quot; 3개의 패키지 도움을 빌리기 위해 로드한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;maps&quot;)</span>
-<span class="co"># install.packages(&quot;dplyr&quot;)</span>
-<span class="co"># install.packages(&quot;ggplot2&quot;)</span>
-<span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;maps&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;dplyr&quot;</span>)</code></pre></div>
-<p>&quot;maps&quot; 패키지에는 지도를 그리기 위한 위도, 경도 및 이에 매칭되는 나라에 대한 정보를 데이터프레임셋으로 만들 수 있도록 해주는데,<br />
-모든 나라의 지도정보가 담겨있으므로 Choropleth map 으로 그리고 싶은 나라를 서브세팅하여 전처리하는 것이 가능하다.<br />
-그래픽 엔진으로는 &quot;ggplot2&quot; 패키지를 선택해 Choropleth map을 구현해 볼 것이며,<br />
-&quot;dplyr&quot; 패키지는 데이터 전처리의 간편함수들을 이용하기 위함이다.</p>
+“maps”, “dplyr”, ““ggplot2” 3개의 패키지 도움을 빌리기 위해
+로드한다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;maps&quot;)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;dplyr&quot;)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;ggplot2&quot;)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;maps&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
+<p>“maps” 패키지에는 지도를 그리기 위한 위도, 경도 및 이에 매칭되는
+나라에 대한 정보를 데이터프레임셋으로 만들 수 있도록 해주는데,<br />
+모든 나라의 지도정보가 담겨있으므로 Choropleth map 으로 그리고 싶은
+나라를 서브세팅하여 전처리하는 것이 가능하다.<br />
+그래픽 엔진으로는 “ggplot2” 패키지를 선택해 Choropleth map을 구현해 볼
+것이며,<br />
+“dplyr” 패키지는 데이터 전처리의 간편함수들을 이용하기 위함이다.</p>
 <p>바로 위에 예시로 그린 나라는 미국이다.<br />
 미국만을 서브세팅 하여 그리는 예제만 해보고자 한다.</p>
-<p><code>map_data()</code> 는 해당지도의 경도, 위도, 지역, 지역명, 지도의 다각형을 그릴 수 있게 해 주는 서브정보들이 담겨있는 데이터프레임을 반환시켜주는데 ggplot2 패키지의 함수임을 유의하며 사용했다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">states_map &lt;-<span class="st"> </span><span class="kw">map_data</span>(<span class="st">&quot;state&quot;</span>)</code></pre></div>
-<p>map_data 의 첫 번째 인자를 <code>&quot;state&quot;</code> 로 하여 미국의 주 시에 대한 정보의 데이터프레임을 <code>states_map</code> 명칭의 객체로 저장했다.<br />
-참고로 <code>&quot;state&quot;</code> 는 미국의 주, <code>&quot;world&quot;</code> 는 전세계, <code>&quot;france&quot;</code> 는 프랑스 지도 정보가 반환된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(states_map, <span class="dt">n =</span> <span class="dv">20</span>)</code></pre></div>
+<p><code>map_data()</code> 는 해당지도의 경도, 위도, 지역, 지역명,
+지도의 다각형을 그릴 수 있게 해 주는 서브정보들이 담겨있는
+데이터프레임을 반환시켜주는데 ggplot2 패키지의 함수임을 유의하며
+사용했다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>states_map <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">&quot;state&quot;</span>)</span></code></pre></div>
+<p>map_data 의 첫 번째 인자를 <code>"state"</code> 로 하여 미국의 주
+시에 대한 정보의 데이터프레임을 <code>states_map</code> 명칭의 객체로
+저장했다.<br />
+참고로 <code>"state"</code> 는 미국의 주, <code>"world"</code> 는
+전세계, <code>"france"</code> 는 프랑스 지도 정보가 반환된다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(states_map, <span class="at">n =</span> <span class="dv">20</span>)</span></code></pre></div>
 <pre><code>##         long      lat group order  region subregion
 ## 1  -87.46201 30.38968     1     1 alabama      &lt;NA&gt;
 ## 2  -87.48493 30.37249     1     2 alabama      &lt;NA&gt;
@@ -199,22 +214,30 @@ R의 여러 패키지의 도움을 빌렸다.<br />
 ## 19 -87.90318 30.28082     1    19 alabama      &lt;NA&gt;
 ## 20 -87.82870 30.28655     1    20 alabama      &lt;NA&gt;</code></pre>
 <p>데이터의 앞부분 일부를 보니,<br />
-&quot;alabama&quot; 지역의 다각형을 그리기 위한 경도(long), 위도(lat) 정보가 있는 것을 볼 수 있다.<br />
-물론 alabama 만 있는 것이 아니라 수많은 미국의 주 region 이 존재하는 데이터이다.<br />
-이를 ggplot2 패키지를 이용해 구체화 시키는 코드를 아래와 같이 작성해 보았다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(states_map, <span class="kw">aes</span>(long, lat, <span class="dt">group =</span> group)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_polygon</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;gray&quot;</span>) +
-<span class="st">  </span><span class="kw">coord_map</span>(<span class="st">&quot;polyconic&quot;</span>)</code></pre></div>
+“alabama” 지역의 다각형을 그리기 위한 경도(long), 위도(lat) 정보가 있는
+것을 볼 수 있다.<br />
+물론 alabama 만 있는 것이 아니라 수많은 미국의 주 region 이 존재하는
+데이터이다.<br />
+이를 ggplot2 패키지를 이용해 구체화 시키는 코드를 아래와 같이 작성해
+보았다.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(states_map, <span class="fu">aes</span>(long, lat, <span class="at">group =</span> group)) <span class="sc">+</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;gray&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_map</span>(<span class="st">&quot;polyconic&quot;</span>)</span></code></pre></div>
 <center>
 <img src="/assets/choro3.png" />
 </center>
-<p><code>ggplot()</code> 의 첫번째 인자에는 본체 데이터를 입력하고, 두번째 인자에 <code>aes(x = long, y = lat)</code> 을 지정하여 위도, 경도를 각각 x축과 y축에 매칭시킨다.<br />
-다음으로 <code>geom_polygon()</code> 와 <code>coord_map()</code> 함수를 통해 다각형을 그리는 명령을 넣어 구체화 시키면 ggplot2 packages를 이용한 결과물이 위와 같이 나오게 된다.</p>
+<p><code>ggplot()</code> 의 첫번째 인자에는 본체 데이터를 입력하고,
+두번째 인자에 <code>aes(x = long, y = lat)</code> 을 지정하여 위도,
+경도를 각각 x축과 y축에 매칭시킨다.<br />
+다음으로 <code>geom_polygon()</code> 와 <code>coord_map()</code> 함수를
+통해 다각형을 그리는 명령을 넣어 구체화 시키면 ggplot2 packages를 이용한
+결과물이 위와 같이 나오게 된다.</p>
 <p>그런데 위의 결과물은 단지 지도의 형태만을 볼 수 있고,<br />
 주시내별 어떠한 정보도 담겨있지 않은 공통된 회색이기 때문에<br />
 choropleth map 이라고 할 수 없는 상태이다.<br />
-주시내별 어떠한 정보를 담기 위하여 R의 내장데이터인 <code>USArrests</code> 를 활용해 보았다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(USArrests)</code></pre></div>
+주시내별 어떠한 정보를 담기 위하여 R의 내장데이터인
+<code>USArrests</code> 를 활용해 보았다.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(USArrests)</span></code></pre></div>
 <pre><code>##            Murder Assault UrbanPop Rape
 ## Alabama      13.2     236       58 21.2
 ## Alaska       10.0     263       48 44.5
@@ -222,14 +245,19 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
 ## Arkansas      8.8     190       50 19.5
 ## California    9.0     276       91 40.6
 ## Colorado      7.9     204       78 38.7</code></pre>
-<p><code>USArrests</code> 객체는 미국의 주시내별 폭력∙범죄율 정보를 담고 있는 data.frame 빌트인 객체이다.<br />
-이를 이용하여 미국의 어떠한 마을에 범죄율이 강하고 적은지를 쉽게 확인할 수 있는 choropleth map 을 만들어 보면 의미 있는 결과물이 나올 것이라 예상된다.<br />
-앞에서 사용했던 미국 주시내별 지도위치정보를 담은 데이터프레임셋 <code>states_map</code> 를 다시 가지고 와서</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">states_map &lt;-<span class="st"> </span><span class="kw">map_data</span>(<span class="st">&quot;state&quot;</span>)</code></pre></div>
-<p>region 변수와 내장데이터셋 <code>USArrests</code> 의 region 변수를 <code>merge()</code> 함수를 이용해 병합해 보았다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">crime_map &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">region =</span> <span class="kw">tolower</span>(<span class="kw">rownames</span>(USArrests)), USArrests) %&gt;%
-<span class="st">    </span><span class="kw">merge</span>(states_map, <span class="dt">by =</span> <span class="st">&quot;region&quot;</span>)
-<span class="kw">head</span>(crime_map)</code></pre></div>
+<p><code>USArrests</code> 객체는 미국의 주시내별 폭력∙범죄율 정보를 담고
+있는 data.frame 빌트인 객체이다.<br />
+이를 이용하여 미국의 어떠한 마을에 범죄율이 강하고 적은지를 쉽게 확인할
+수 있는 choropleth map 을 만들어 보면 의미 있는 결과물이 나올 것이라
+예상된다.<br />
+앞에서 사용했던 미국 주시내별 지도위치정보를 담은 데이터프레임셋
+<code>states_map</code> 를 다시 가지고 와서</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>states_map <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">&quot;state&quot;</span>)</span></code></pre></div>
+<p>region 변수와 내장데이터셋 <code>USArrests</code> 의 region 변수를
+<code>merge()</code> 함수를 이용해 병합해 보았다.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>crime_map <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">region =</span> <span class="fu">tolower</span>(<span class="fu">rownames</span>(USArrests)), USArrests) <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">merge</span>(states_map, <span class="at">by =</span> <span class="st">&quot;region&quot;</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(crime_map)</span></code></pre></div>
 <pre><code>##    region Murder Assault UrbanPop Rape      long      lat group order
 ## 1 alabama   13.2     236       58 21.2 -87.46201 30.38968     1     1
 ## 2 alabama   13.2     236       58 21.2 -87.48493 30.37249     1     2
@@ -244,21 +272,29 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
 ## 4      &lt;NA&gt;
 ## 5      &lt;NA&gt;
 ## 6      &lt;NA&gt;</code></pre>
-<p>이렇게 만들어진 <code>crime_map</code> 객체의 헤더부분을 살펴보면<br />
-<code>region</code> 변수에 따른 <code>Murder</code>, <code>Assault</code>, <code>UrbanPop</code>, <code>Rape</code> 변수정보들이 붙여진 것을 확인할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">arrange</span>(crime_map, order) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(long, lat, <span class="dt">group =</span> group, <span class="dt">fill =</span> Murder)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_polygon</span>() +
-<span class="st">  </span><span class="kw">coord_map</span>(<span class="st">&quot;polyconic&quot;</span>) +
-<span class="st">  </span><span class="kw">scale_fill_continuous</span>(<span class="dt">low =</span> <span class="st">&quot;pink&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;black&quot;</span>)</code></pre></div>
+<p>이렇게 만들어진 <code>crime_map</code> 객체의 헤더부분을
+살펴보면<br />
+<code>region</code> 변수에 따른 <code>Murder</code>,
+<code>Assault</code>, <code>UrbanPop</code>, <code>Rape</code>
+변수정보들이 붙여진 것을 확인할 수 있다.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(crime_map, order) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(long, lat, <span class="at">group =</span> group, <span class="at">fill =</span> Murder)) <span class="sc">+</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_polygon</span>() <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_map</span>(<span class="st">&quot;polyconic&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous</span>(<span class="at">low =</span> <span class="st">&quot;pink&quot;</span>, <span class="at">high =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
 <center>
 <img src="/assets/choro4.png" />
 </center>
-<p><code>arrange()</code> 를 이용하여 order 변수 순으로 정렬을 해주었는데,<br />
+<p><code>arrange()</code> 를 이용하여 order 변수 순으로 정렬을
+해주었는데,<br />
 정렬을 시키는 이유는 올바른 다각형을 그리기 위함이다.<br />
-병합작업 시 원래 순서대로 정렬되어있던 것이 헝클어졌기 때문에 필요한 전처리 작업이다.<br />
-(정렬작업을 하지 않는다면 도저히 무슨 그림인지 알 수 없는 결과물이 나온다)</p>
-<p>이후 <code>ggplot()</code> 에 <code>fill</code> 인자를 <code>Murder</code> 변수로 지정하여 미국의 주시내별 살인범죄수에 따라 색깔의 농도가 진해지는 결과물을 출력하면 되겠다.<br />
+병합작업 시 원래 순서대로 정렬되어있던 것이 헝클어졌기 때문에 필요한
+전처리 작업이다.<br />
+(정렬작업을 하지 않는다면 도저히 무슨 그림인지 알 수 없는 결과물이
+나온다)</p>
+<p>이후 <code>ggplot()</code> 에 <code>fill</code> 인자를
+<code>Murder</code> 변수로 지정하여 미국의 주시내별 살인범죄수에 따라
+색깔의 농도가 진해지는 결과물을 출력하면 되겠다.<br />
 위의 결과물과 맨 첫 번째 소개했던 결과물이 같은 것을 확인할 수 있다.</p>
 </div>
     <div class="share-page">
@@ -273,7 +309,7 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/data_visualization/2016/10/14/Choropleth_map_basic.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/data_visualization/2016/10/14/Choropleth_map_basic.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -297,7 +333,7 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -316,7 +352,7 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -335,7 +371,7 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -354,7 +390,26 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -382,7 +437,7 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -404,16 +459,6 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
             
@@ -1041,7 +1086,7 @@ choropleth map 이라고 할 수 없는 상태이다.<br />
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기";
+        var disqus_identifier = "http://localhost:4000_R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기";
         var disqus_title = "R에서 ggplot2 패키지를 이용한 간단한 Choropleth Map 구현하기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

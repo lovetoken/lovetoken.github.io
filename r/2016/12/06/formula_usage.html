@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/12/06/formula_usage.html" property="og:url">
+          <meta content="http://localhost:4000/r/2016/12/06/formula_usage.html" property="og:url">
         
         
           <meta content="2016-12-06T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/12/06/formula_usage.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2016/12/06/formula_usage.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,12 +136,16 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>R을 이용한 모델링을 할 때 <code>formula</code> 인자값을 어떤 식으로 입력해야 하는지 정리해 볼 필요가 있다.<br />
-대표적으로 <code>lm()</code> 함수의 첫 번째 인자에 대한 입력값을 예로 들 수 있을 것이다.<br />
-이 인자값에는 약속에 의해 정해진 기호(operator)를 이용하여 모델의 뼈대를 설정할 수 있다.<br />
-몇가지의 기호만 알고 이를 조합한다면 일반적인 뼈대를 구성하는데 문제가 생기진 않을 것이다.</p>
+<p>R을 이용한 모델링을 할 때 <code>formula</code> 인자값을 어떤 식으로
+입력해야 하는지 정리해 볼 필요가 있다.<br />
+대표적으로 <code>lm()</code> 함수의 첫 번째 인자에 대한 입력값을 예로 들
+수 있을 것이다.<br />
+이 인자값에는 약속에 의해 정해진 기호(operator)를 이용하여 모델의 뼈대를
+설정할 수 있다.<br />
+몇가지의 기호만 알고 이를 조합한다면 일반적인 뼈대를 구성하는데 문제가
+생기진 않을 것이다.</p>
 <p>(본 글에서 사용될 기초데이터는 <code>mtcars</code> 이다.)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mtcars)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)</span></code></pre></div>
 <pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
 ## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
 ## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
@@ -150,10 +154,11 @@
 ## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 ## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
 <p><br><br></p>
-<h2 id="기호">&quot;~&quot; 기호</h2>
-<p>기본적으로 <code>formula</code> 인자값의 입력은 종속변수를 앞에 쓰고 독립변수를 뒤에 쓰게 되는데<br />
-종속변수와 독립변수를 구분 짓는 기호는 &quot;~&quot; 이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</code></pre></div>
+<h2 id="기호">“~” 기호</h2>
+<p>기본적으로 <code>formula</code> 인자값의 입력은 종속변수를 앞에 쓰고
+독립변수를 뒤에 쓰게 되는데<br />
+종속변수와 독립변수를 구분 짓는 기호는 “~” 이다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ wt, data = mtcars)
@@ -162,12 +167,16 @@
 ## (Intercept)           wt  
 ##      37.285       -5.344</code></pre>
 <p>위의 단순선형회귀적합 코드를 살펴보자.<br />
-<code>lm()</code> 함수의 첫 번째 인자입력값을 보면 <code>mpg ~ wt</code> 로 되어있다.<br />
-왼쪽 맨 앞의 <code>mpg</code> 는 종속변수로 지정하고, 오른쪽 뒤에 있는 <code>wt</code> 는 독립변수로 지정하겠다는 의미가 된다.</p>
+<code>lm()</code> 함수의 첫 번째 인자입력값을 보면 <code>mpg ~ wt</code>
+로 되어있다.<br />
+왼쪽 맨 앞의 <code>mpg</code> 는 종속변수로 지정하고, 오른쪽 뒤에 있는
+<code>wt</code> 는 독립변수로 지정하겠다는 의미가 된다.</p>
 <p><br><br></p>
-<h2 id="기호-1">&quot;+&quot; 기호</h2>
-<p>독립변수를 <code>wt</code> 뿐만 아니라 <code>cyl</code> 변수까지 고려하는 다중회귀분석을 하고 싶다면 &quot;+&quot; 기호를 이용해 고려대상이 되는 변수를 추가시킬 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>wt +<span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</code></pre></div>
+<h2 id="기호-1">“+” 기호</h2>
+<p>독립변수를 <code>wt</code> 뿐만 아니라 <code>cyl</code> 변수까지
+고려하는 다중회귀분석을 하고 싶다면 “+” 기호를 이용해 고려대상이 되는
+변수를 추가시킬 수 있다.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> cyl, <span class="at">data =</span> mtcars)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ wt + cyl, data = mtcars)
@@ -175,8 +184,10 @@
 ## Coefficients:
 ## (Intercept)           wt          cyl  
 ##      39.686       -3.191       -1.508</code></pre>
-<p>그런데 만약 자신이 가지고 있는 데이터셋에 종속변수를 설명시킬 독립변수들이 이미 모두 포진되어있는 상태라면, 그리고 그 독립변수들을 모두 고려한 다중회귀적합을 시키고 싶다면 어떻게 해야 할까?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>cyl +<span class="st"> </span>disp +<span class="st"> </span>hp +<span class="st"> </span>drat +<span class="st"> </span>wt +<span class="st"> </span>qsec +<span class="st"> </span>vs +<span class="st"> </span>am +<span class="st"> </span>gear +<span class="st"> </span>carb, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<p>그런데 만약 자신이 가지고 있는 데이터셋에 종속변수를 설명시킬
+독립변수들이 이미 모두 포진되어있는 상태라면, 그리고 그 독립변수들을
+모두 고려한 다중회귀적합을 시키고 싶다면 어떻게 해야 할까?</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> cyl <span class="sc">+</span> disp <span class="sc">+</span> hp <span class="sc">+</span> drat <span class="sc">+</span> wt <span class="sc">+</span> qsec <span class="sc">+</span> vs <span class="sc">+</span> am <span class="sc">+</span> gear <span class="sc">+</span> carb, <span class="at">data =</span> mtcars)  </span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ cyl + disp + hp + drat + wt + qsec + vs + 
@@ -190,12 +201,12 @@
 ##        carb  
 ##    -0.19942</code></pre>
 <p>이런 식으로 고려대상이 되는 독립변수의 명칭을 모두 적은 다음<br />
-사이사이에 &quot;+&quot; 기호를 무식하게 넣어주어야 하는 상황이다.<br />
+사이사이에 “+” 기호를 무식하게 넣어주어야 하는 상황이다.<br />
 하지만 위의 코딩은 매우 비효율적 🙄 손이 아파질 수 있다.</p>
 <p><br><br></p>
-<h2 id="기호-2">&quot;.&quot; 기호</h2>
-<p>이를 대비해 특수하게 약속된 &quot;.&quot; 기호를 이용하면 좋다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>., <span class="dt">data =</span> mtcars)  </code></pre></div>
+<h2 id="기호-2">“.” 기호</h2>
+<p>이를 대비해 특수하게 약속된 “.” 기호를 이용하면 좋다.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> ., <span class="at">data =</span> mtcars)  </span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ ., data = mtcars)
@@ -207,14 +218,17 @@
 ##    -3.71530      0.82104      0.31776      2.52023      0.65541  
 ##        carb  
 ##    -0.19942</code></pre>
-<p>&quot;.&quot; 기호는 &quot;전부&quot; 의 의미를 가진다.<br />
-위의 코드는 종속변수로 이미 배정된 mpg 이외의 모든 변수를 독립변수로 고려하라 라는 의미가 된다.</p>
+<p>“.” 기호는 “전부” 의 의미를 가진다.<br />
+위의 코드는 종속변수로 이미 배정된 mpg 이외의 모든 변수를 독립변수로
+고려하라 라는 의미가 된다.</p>
 <p><br><br></p>
-<h2 id="기호-3">&quot;-&quot; 기호</h2>
-<p>&quot;+&quot; 기호의 반대는 &quot;-&quot; 이다. 의미 역시 반대이다.<br />
-고려대상에서 추가하는 &quot;+&quot; 와 다르게 &quot;-&quot; 는 고려대상에서 제외시킨다.<br />
-&quot;.&quot; 기호를 통해 모든 독립변수를 배정했는데, 여기서 <code>cyl</code> 변수만은 독립변수에서 제외하고 싶을 경우</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>. -<span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<h2 id="기호-3">“-” 기호</h2>
+<p>“+” 기호의 반대는 “-” 이다. 의미 역시 반대이다.<br />
+고려대상에서 추가하는 “+” 와 다르게 “-” 는 고려대상에서
+제외시킨다.<br />
+“.” 기호를 통해 모든 독립변수를 배정했는데, 여기서 <code>cyl</code>
+변수만은 독립변수에서 제외하고 싶을 경우</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> . <span class="sc">-</span> cyl, <span class="at">data =</span> mtcars)  </span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ . - cyl, data = mtcars)
@@ -224,10 +238,12 @@
 ##    10.96007      0.01283     -0.02191      0.83520     -3.69251  
 ##        qsec           vs           am         gear         carb  
 ##     0.84244      0.38975      2.57743      0.71155     -0.21958</code></pre>
-<p>이렇게 &quot;-&quot; 기호를 활용하면 된다.</p>
-<p>한 가지 덧붙이자면 회귀적합시 기본적으로 절편(intercept)을 고려하는 회귀적합을 하게 되는데, 절편이 0인 모델로 적합하고 싶은 경우 절편항을 제외시켜야 할 것이다.<br />
-&quot;-&quot; 기호를 아래와 같이 이용하면 된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>. -<span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<p>이렇게 “-” 기호를 활용하면 된다.</p>
+<p>한 가지 덧붙이자면 회귀적합시 기본적으로 절편(intercept)을 고려하는
+회귀적합을 하게 되는데, 절편이 0인 모델로 적합하고 싶은 경우 절편항을
+제외시켜야 할 것이다.<br />
+“-” 기호를 아래와 같이 이용하면 된다.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> . <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> mtcars)  </span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ . - 1, data = mtcars)
@@ -237,9 +253,10 @@
 ##  0.35083   0.01354  -0.02055   1.24158  -3.82613   1.19140   0.18972  
 ##       am      gear      carb  
 ##  2.83222   1.05426  -0.26321</code></pre>
-<p>결과를 확인해 보면 항시 언급되었던 절편항 &quot;(Intercept)&quot; 이 없어진 것을 확인할 수 있다.<br />
+<p>결과를 확인해 보면 항시 언급되었던 절편항 “(Intercept)” 이 없어진
+것을 확인할 수 있다.<br />
 참고로 아래와 같이 해도 절편항을 제외한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>. +<span class="st"> </span><span class="dv">0</span>, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> . <span class="sc">+</span> <span class="dv">0</span>, <span class="at">data =</span> mtcars)  </span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ . + 0, data = mtcars)
@@ -250,11 +267,13 @@
 ##       am      gear      carb  
 ##  2.83222   1.05426  -0.26321</code></pre>
 <p><br><br></p>
-<h2 id="기호-4">&quot;:&quot; 기호</h2>
-<p>회귀적합에서 상호작용에 대해 고려한다면 &quot;:&quot; 기호를 이용하여 상호작용항을 부여할 수 있다.<br />
-만약 종속변수 <code>mpg</code> 에 대해 설명하는 독립변수를 <code>wt</code>, <code>cyl</code> 2개 설정하고,<br />
+<h2 id="기호-4">“:” 기호</h2>
+<p>회귀적합에서 상호작용에 대해 고려한다면 “:” 기호를 이용하여
+상호작용항을 부여할 수 있다.<br />
+만약 종속변수 <code>mpg</code> 에 대해 설명하는 독립변수를
+<code>wt</code>, <code>cyl</code> 2개 설정하고,<br />
 이 두 변수의 상호작용까지 고려하고자 한다면 이렇게 하면 된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>wt +<span class="st"> </span>cyl +<span class="st"> </span>wt:cyl, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> cyl <span class="sc">+</span> wt<span class="sc">:</span>cyl, <span class="at">data =</span> mtcars)  </span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ wt + cyl + wt:cyl, data = mtcars)
@@ -262,9 +281,13 @@
 ## Coefficients:
 ## (Intercept)           wt          cyl       wt:cyl  
 ##     54.3068      -8.6556      -3.8032       0.8084</code></pre>
-<p>그런데 고려대상인 독립변수가 3개 이상, 그리고 독립변수의 조합별 상호작용을 고려하게 된다면 골치가 아플 수 있다.<br />
-예를 들어 <code>mpg</code> 에 대해 설명하는 독립변수를 <code>wt</code>, <code>cyl</code>, <code>gear</code> 3개이고, 3개의 모든 조합에 대해 상호작용을 고려한다면 <code>formula</code> 인자값이 아래처럼 매우 길게 된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>wt +<span class="st"> </span>cyl +<span class="st"> </span>gear +<span class="st"> </span>wt:cyl +<span class="st"> </span>wt:gear +<span class="st"> </span>cyl:gear +<span class="st"> </span>wt:cyl:gear, <span class="dt">data =</span> mtcars)</code></pre></div>
+<p>그런데 고려대상인 독립변수가 3개 이상, 그리고 독립변수의 조합별
+상호작용을 고려하게 된다면 골치가 아플 수 있다.<br />
+예를 들어 <code>mpg</code> 에 대해 설명하는 독립변수를 <code>wt</code>,
+<code>cyl</code>, <code>gear</code> 3개이고, 3개의 모든 조합에 대해
+상호작용을 고려한다면 <code>formula</code> 인자값이 아래처럼 매우 길게
+된다.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> cyl <span class="sc">+</span> gear <span class="sc">+</span> wt<span class="sc">:</span>cyl <span class="sc">+</span> wt<span class="sc">:</span>gear <span class="sc">+</span> cyl<span class="sc">:</span>gear <span class="sc">+</span> wt<span class="sc">:</span>cyl<span class="sc">:</span>gear, <span class="at">data =</span> mtcars)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ wt + cyl + gear + wt:cyl + wt:gear + cyl:gear + 
@@ -276,10 +299,11 @@
 ##     wt:gear     cyl:gear  wt:cyl:gear  
 ##      0.3527      -0.8794       0.1001</code></pre>
 <p><br><br></p>
-<h2 id="기호-5">&quot;*&quot; 기호</h2>
-<p>상호작용항을 고려하되 각 개별항과 상호작용항이 될 수 있는 모든 조합을 알아서 배정시키는<br />
-약속된 기호가 바로 &quot;*&quot; 이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>wt *<span class="st"> </span>cyl *<span class="st"> </span>gear, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<h2 id="기호-5">“*” 기호</h2>
+<p>상호작용항을 고려하되 각 개별항과 상호작용항이 될 수 있는 모든 조합을
+알아서 배정시키는<br />
+약속된 기호가 바로 “*” 이다.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">*</span> cyl <span class="sc">*</span> gear, <span class="at">data =</span> mtcars)  </span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ wt * cyl * gear, data = mtcars)
@@ -294,16 +318,24 @@
 는<br />
 <code>mpg ~ wt + cyl + gear + wt:cyl + wt:gear + cyl:gear + wt:cyl:gear</code><br />
 와 동일한 것이다.<br />
-따라서 실행된 코드의 출력결과도 비교해 보면 같은 것을 확인할 수 있다.</p>
+따라서 실행된 코드의 출력결과도 비교해 보면 같은 것을 확인할 수
+있다.</p>
 <p><br><br></p>
 <h2 id="i-함수"><code>I()</code> 함수</h2>
-<p>만약 분석자 나름대로 다변수들의 정보를 하나로 압축시킨 파생변수로 회귀적합을 하고 싶다면 어떻게 해야 할까?<br />
-예를 들어 <code>hp</code> 변수값과 루트를 씌운 <code>wt</code>변수값을 더하고 <code>carb</code> 변수의 값을 뺀 값을 독립변수로 설정하여 단순회귀적합을 하고 싶다고 가정해보자. (일부러 의미 없이 복잡하게 설정해 봄)</p>
-<p>일단 떠오르는 방법은 <code>mtcars</code> 에 새로운 변수열을 만들어 위의 상황대로</p>
+<p>만약 분석자 나름대로 다변수들의 정보를 하나로 압축시킨 파생변수로
+회귀적합을 하고 싶다면 어떻게 해야 할까?<br />
+예를 들어 <code>hp</code> 변수값과 루트를 씌운 <code>wt</code>변수값을
+더하고 <code>carb</code> 변수의 값을 뺀 값을 독립변수로 설정하여
+단순회귀적합을 하고 싶다고 가정해보자. (일부러 의미 없이 복잡하게 설정해
+봄)</p>
+<p>일단 떠오르는 방법은 <code>mtcars</code> 에 새로운 변수열을 만들어
+위의 상황대로</p>
 <p>hp + sqrt(wt) - carb</p>
-<p>를 계산한 새로운 변수를 만들어 이 변수열과 회귀적합을 하면 될 것이다.<br />
-하지만 <code>I()</code> 함수를 알게 된다면 새로운 변수를 직접 만들 필요가 없다. 이렇게 하면 된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span><span class="kw">I</span>(hp +<span class="st"> </span><span class="kw">sqrt</span>(wt) -<span class="st"> </span>carb), <span class="dt">data =</span> mtcars)  </code></pre></div>
+<p>를 계산한 새로운 변수를 만들어 이 변수열과 회귀적합을 하면 될
+것이다.<br />
+하지만 <code>I()</code> 함수를 알게 된다면 새로운 변수를 직접 만들
+필요가 없다. 이렇게 하면 된다.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="fu">I</span>(hp <span class="sc">+</span> <span class="fu">sqrt</span>(wt) <span class="sc">-</span> carb), <span class="at">data =</span> mtcars)  </span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ I(hp + sqrt(wt) - carb), data = mtcars)
@@ -312,9 +344,11 @@
 ##             (Intercept)  I(hp + sqrt(wt) - carb)  
 ##                30.20584                 -0.06945</code></pre>
 <p>그런데 한 가지 의문이 생길 수 있다.<br />
-만약 <code>I()</code> 함수를 이용하지 않고 <code>formula</code> 에 <code>hp + sqrt(wt) - carb</code> 의 날것의 형태로 입력하면 되지 않을까? 라는 의문이다.<br />
+만약 <code>I()</code> 함수를 이용하지 않고 <code>formula</code> 에
+<code>hp + sqrt(wt) - carb</code> 의 날것의 형태로 입력하면 되지 않을까?
+라는 의문이다.<br />
 실행해보면 다음과 같다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>hp +<span class="st"> </span><span class="kw">sqrt</span>(wt) -<span class="st"> </span>carb, <span class="dt">data =</span> mtcars)  </code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> <span class="fu">sqrt</span>(wt) <span class="sc">-</span> carb, <span class="at">data =</span> mtcars)  </span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ hp + sqrt(wt) - carb, data = mtcars)
@@ -322,13 +356,21 @@
 ## Coefficients:
 ## (Intercept)           hp     sqrt(wt)  
 ##    50.42823     -0.02908    -14.70273</code></pre>
-<p>우리가 줄곧 배운 <code>formula</code> 의 입력값은 특정한 기호에 의해 약속된 문법을 따른다.<br />
-따라서 <code>hp + sqrt(wt) - carb</code> 의 형태는 우리가 원하는 파생변수를 만들어 적합시키지 않는다.</p>
-<p><code>hp</code> 값에 <code>sqrt(wt)</code> 값이 더해진 후 <code>carb</code> 변수값이 차감된 것을 원하지만,<br />
-독립변수에 <code>hp</code>, <code>sqrt(wt)</code> 가 따로따로 고려되고 <code>carb</code> 변수가 독립변수로 제외됨을 명시할 뿐이다.</p>
-<p>다시 <code>I()</code> 함수를 이용한 결과로 돌아가 보면 <code>I()</code> 의 쓰임은 결국 <code>formula</code> 인자의 약속된 문법을 escape 하는 역할로 볼 수도 있겠다.</p>
-<p><code>formula</code> 인자에 입력할 값의 사용방법과 기호의 의미를 정리해 보았다.<br />
-위의 내용 외에도 더 많은 팁과 기호들의 조합을 생각해 볼 수 있을 것이다.</p>
+<p>우리가 줄곧 배운 <code>formula</code> 의 입력값은 특정한 기호에 의해
+약속된 문법을 따른다.<br />
+따라서 <code>hp + sqrt(wt) - carb</code> 의 형태는 우리가 원하는
+파생변수를 만들어 적합시키지 않는다.</p>
+<p><code>hp</code> 값에 <code>sqrt(wt)</code> 값이 더해진 후
+<code>carb</code> 변수값이 차감된 것을 원하지만,<br />
+독립변수에 <code>hp</code>, <code>sqrt(wt)</code> 가 따로따로 고려되고
+<code>carb</code> 변수가 독립변수로 제외됨을 명시할 뿐이다.</p>
+<p>다시 <code>I()</code> 함수를 이용한 결과로 돌아가 보면
+<code>I()</code> 의 쓰임은 결국 <code>formula</code> 인자의 약속된
+문법을 escape 하는 역할로 볼 수도 있겠다.</p>
+<p><code>formula</code> 인자에 입력할 값의 사용방법과 기호의 의미를
+정리해 보았다.<br />
+위의 내용 외에도 더 많은 팁과 기호들의 조합을 생각해 볼 수 있을
+것이다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -342,7 +384,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/12/06/formula_usage.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2016/12/06/formula_usage.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -366,7 +408,7 @@
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -383,7 +425,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -400,7 +442,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -417,7 +459,24 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -441,7 +500,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -459,16 +518,6 @@
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -950,7 +999,7 @@
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰";
+        var disqus_identifier = "http://localhost:4000_R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰";
         var disqus_title = "R에서 모델적합에 사용되는 formula 인자식 사용부분에 대한 고찰";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

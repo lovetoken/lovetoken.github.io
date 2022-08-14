@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html" property="og:url">
+          <meta content="http://localhost:4000/r/2016/05/18/lag_diff_function.html" property="og:url">
         
         
           <meta content="2016-05-18T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 수익률 구해보며 lag(), diff() 함수 알아보기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2016/05/18/lag_diff_function.html">
         
         
           <meta name="twitter:description" content="">
@@ -137,19 +137,26 @@
 <div class="content">
     <div class="post"><p><br><br></p>
 <p>시계열 데이터의 수익률을 계산하는 일들이 많아지면서<br />
-복잡한 모듈들을 만들 때 아래의 함수들과 패키지가 얼마나 유용한지 몰랐었다.</p>
-<p>오늘 정리해보고자 하는 함수는 3가지이며, 부가적으로 시계열 데이터셋에 날짜의 전처리 부담을 줄여주는 xts package 를 조금씩 이용해보려 한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(xts)</code></pre></div>
+복잡한 모듈들을 만들 때 아래의 함수들과 패키지가 얼마나 유용한지
+몰랐었다.</p>
+<p>오늘 정리해보고자 하는 함수는 3가지이며, 부가적으로 시계열 데이터셋에
+날짜의 전처리 부담을 줄여주는 xts package 를 조금씩 이용해보려 한다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xts)</span></code></pre></div>
 <p><br><br></p>
 <h2 id="예제-데이터-만들기">예제 데이터 만들기</h2>
-<p>오늘 날짜를 기준으로 약 한 달 전 까지의 코스닥 지수를 예제 데이터로 이용해 보고자 한다. (본 포스팅 글의 오늘 날짜는 스크립트를 작성한 기준 날짜를 기준으로 한다)<br />
-R에서는 특정 주가지수를 자동으로 불러올 수 있는 유용한 패키지가 있는데 바로 quantmod package이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(quantmod)</code></pre></div>
-<p>quantmod package는 앞서 말한 xts package와 종속관계 이므로 quantmod package를 로드하면 같이 함께 로드된다. (zoo package 도 마찬가지)<br />
-여하튼 KOSPI 지수를 받기 위한 코드는 아래와 같다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">today &lt;-<span class="st"> </span><span class="kw">Sys.Date</span>()
-kq &lt;-<span class="st"> </span><span class="kw">getSymbols</span>(<span class="st">&quot;^kq11&quot;</span>, <span class="dt">from =</span> today -<span class="st"> </span><span class="dv">30</span>, <span class="dt">to =</span> today, <span class="dt">auto.assign =</span> F)
-kq</code></pre></div>
+<p>오늘 날짜를 기준으로 약 한 달 전 까지의 코스닥 지수를 예제 데이터로
+이용해 보고자 한다. (본 포스팅 글의 오늘 날짜는 스크립트를 작성한 기준
+날짜를 기준으로 한다)<br />
+R에서는 특정 주가지수를 자동으로 불러올 수 있는 유용한 패키지가 있는데
+바로 quantmod package이다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quantmod)</span></code></pre></div>
+<p>quantmod package는 앞서 말한 xts package와 종속관계 이므로 quantmod
+package를 로드하면 같이 함께 로드된다. (zoo package 도 마찬가지)<br />
+여하튼 KOSPI 지수를 받기 위한 코드는 아래와 같다.<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>today <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>kq <span class="ot">&lt;-</span> <span class="fu">getSymbols</span>(<span class="st">&quot;^kq11&quot;</span>, <span class="at">from =</span> today <span class="sc">-</span> <span class="dv">30</span>, <span class="at">to =</span> today, <span class="at">auto.assign =</span> F)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>kq</span></code></pre></div>
 <pre><code>##            KQ11.Open KQ11.High KQ11.Low KQ11.Close KQ11.Volume
 ## 2018-04-30    886.29    886.60   870.54     875.95     1351100
 ## 2018-05-02    869.52    877.54   863.59     871.03     1357600
@@ -192,23 +199,34 @@ kq</code></pre></div>
 ## 2018-05-28        879.69
 ## 2018-05-29        870.08
 ## 2018-05-30        874.22</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(kq)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(kq)</span></code></pre></div>
 <pre><code>## [1] &quot;xts&quot; &quot;zoo&quot;</code></pre>
-<p>다양한 메시지와 함께 우리가 보고 싶은 결과물을 xts class 객체로 반환한다.<br />
-<code>getSymbols()</code> 함수의 쓰임 법에 대해서 간략히 설명하자면<br />
-조회하고자 하는 주가 심볼 문자열을 첫 번째 인자값으로 넣고 <code>from</code>, <code>to</code> 인자에 조회 날짜에 대한 기간 정보를 넣어줌으로써 활용이 가능하다.<br />
-예제데이터로 사용될 우리가 선택한 코스닥 심볼은 '^kq11' 이다.<br />
-만약 다른 것을 조회하고 싶다면 해당되는 심볼을 찾은 후 기입하면 된다. (ex. 코스피200지수의 경우 '^ks11')</p>
-<p>반환된 결과물을 보면 open, high, low, close, volume, adjusted 6개의 상황별 지수가 있는데 종가지수인 close 만 관심의 대상이라 가정하고 subset 을 추출한 데이터 <code>data</code> 를 최종 예제데이터로 삼겠다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>kq[,<span class="dv">4</span>]</code></pre></div>
+<p>다양한 메시지와 함께 우리가 보고 싶은 결과물을 xts class 객체로
+반환한다.<br />
+<code>getSymbols()</code> 함수의 쓰임 법에 대해서 간략히
+설명하자면<br />
+조회하고자 하는 주가 심볼 문자열을 첫 번째 인자값으로 넣고
+<code>from</code>, <code>to</code> 인자에 조회 날짜에 대한 기간 정보를
+넣어줌으로써 활용이 가능하다.<br />
+예제데이터로 사용될 우리가 선택한 코스닥 심볼은 ‘^kq11’ 이다.<br />
+만약 다른 것을 조회하고 싶다면 해당되는 심볼을 찾은 후 기입하면 된다.
+(ex. 코스피200지수의 경우 ‘^ks11’)</p>
+<p>반환된 결과물을 보면 open, high, low, close, volume, adjusted 6개의
+상황별 지수가 있는데 종가지수인 close 만 관심의 대상이라 가정하고 subset
+을 추출한 데이터 <code>data</code> 를 최종 예제데이터로 삼겠다.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> kq[,<span class="dv">4</span>]</span></code></pre></div>
 <p><br><br></p>
 <h2 id="일일-수익률-계산하기">일일 수익률 계산하기</h2>
 <p>예제데이터를 이용하여 일일 수익률을 계산해 보겠다.<br />
-현재의 수익률은 현재 시차 지수를 직전날 시차 지수로 나눠 준 후 1을 빼면 된다.<br />
-현재가 아닌 i번째 시차의 수익률은 i번째 시차지수를 i-1 시차 지수로 나눠준 후 1을 빼면 된다.<br />
-모든 i번째 시차에 대해 수익률을 보고싶다면 이를 일괄적으로 수행할 필요가 있다.<br />
-이를 간편하게 계산하기 위해 <code>lag()</code> 함수가 유용할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data</code></pre></div>
+현재의 수익률은 현재 시차 지수를 직전날 시차 지수로 나눠 준 후 1을 빼면
+된다.<br />
+현재가 아닌 i번째 시차의 수익률은 i번째 시차지수를 i-1 시차 지수로
+나눠준 후 1을 빼면 된다.<br />
+모든 i번째 시차에 대해 수익률을 보고싶다면 이를 일괄적으로 수행할 필요가
+있다.<br />
+이를 간편하게 계산하기 위해 <code>lag()</code> 함수가 유용할 수
+있다.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data</span></code></pre></div>
 <pre><code>##            KQ11.Close
 ## 2018-04-30     875.95
 ## 2018-05-02     871.03
@@ -230,7 +248,7 @@ kq</code></pre></div>
 ## 2018-05-28     879.69
 ## 2018-05-29     870.08
 ## 2018-05-30     874.22</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lag</span>(data)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lag</span>(data)</span></code></pre></div>
 <pre><code>##            KQ11.Close
 ## 2018-04-30         NA
 ## 2018-05-02     875.95
@@ -253,9 +271,11 @@ kq</code></pre></div>
 ## 2018-05-29     879.69
 ## 2018-05-30     870.08</code></pre>
 <p>날짜에 대한 처리 없이 알아서 주가 데이터가 하루 미루어진다.<br />
-<code>lag()</code> 함수의 두번째 인자는 <code>k = 1</code> 로 디폴트값이 잡혀있는데, 이를 조정하는것도 가능하다.<br />
-<code>data</code> 와 <code>lag(data)</code> 를 나누고 상수 1을 뺌으로써 간단히 일일수익률을 계산할 수 있게 된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data/<span class="kw">lag</span>(data) -<span class="st"> </span><span class="dv">1</span></code></pre></div>
+<code>lag()</code> 함수의 두번째 인자는 <code>k = 1</code> 로 디폴트값이
+잡혀있는데, 이를 조정하는것도 가능하다.<br />
+<code>data</code> 와 <code>lag(data)</code> 를 나누고 상수 1을 뺌으로써
+간단히 일일수익률을 계산할 수 있게 된다.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">/</span><span class="fu">lag</span>(data) <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
 <pre><code>##              KQ11.Close
 ## 2018-04-30           NA
 ## 2018-05-02 -0.005616739
@@ -277,19 +297,22 @@ kq</code></pre></div>
 ## 2018-05-28  0.013059281
 ## 2018-05-29 -0.010924286
 ## 2018-05-30  0.004758130</code></pre>
-<p>일일수익률이므로 직전시차 데이터가 존재하지 않는 날은 NA로 계산되고 이후 시차는 수익률을 잘 산출해 주는것을 볼 수 있다.<br />
-만약 <code>lag()</code> 함수를 알지 못한다면 아래와 같은 해괴망측한 수동적인 코드로써 구현해야 했을 것이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span>data
-res[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
-
-for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
-    res[i] &lt;-<span class="st"> </span>data[[i]]/data[[i -<span class="st"> </span><span class="dv">1</span>]] -<span class="st"> </span><span class="dv">1</span>
-} <span class="co"># T_T.....</span></code></pre></div>
+<p>일일수익률이므로 직전시차 데이터가 존재하지 않는 날은 NA로 계산되고
+이후 시차는 수익률을 잘 산출해 주는것을 볼 수 있다.<br />
+만약 <code>lag()</code> 함수를 알지 못한다면 아래와 같은 해괴망측한
+수동적인 코드로써 구현해야 했을 것이다.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> data</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>res[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">nrow</span>(data)){</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    res[i] <span class="ot">&lt;-</span> data[[i]]<span class="sc">/</span>data[[i <span class="sc">-</span> <span class="dv">1</span>]] <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>} <span class="co"># T_T.....</span></span></code></pre></div>
 <p><br><br></p>
 <h2 id="로그수익률-계산하기">로그수익률 계산하기</h2>
-<p>만약 일일 로그수익률을 계산하고 싶다면 현시차 주가를 직전시차주가로 나눠준 후 로그함수를 씌워주면 되는데<br />
+<p>만약 일일 로그수익률을 계산하고 싶다면 현시차 주가를 직전시차주가로
+나눠준 후 로그함수를 씌워주면 되는데<br />
 방금 알게된 <code>lag()</code> 함수를 이용하면</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(data) -<span class="st"> </span><span class="kw">log</span>(<span class="kw">lag</span>(data))</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(data) <span class="sc">-</span> <span class="fu">log</span>(<span class="fu">lag</span>(data))</span></code></pre></div>
 <pre><code>##              KQ11.Close
 ## 2018-04-30           NA
 ## 2018-05-02 -0.005632573
@@ -312,11 +335,13 @@ for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
 ## 2018-05-29 -0.010984394
 ## 2018-05-30  0.004746846</code></pre>
 <p>의 코드로 일일 로그수익률을 계산할 수 있다.<br />
-그런데 <code>log()</code>, <code>lag()</code> 비슷비슷한 함수들이 있어 눈에 확 띄지 않고 복잡해 보인다.<br />
+그런데 <code>log()</code>, <code>lag()</code> 비슷비슷한 함수들이 있어
+눈에 확 띄지 않고 복잡해 보인다.<br />
 현재는 현시차와 직전시차의 차이값을 구하는 과정이 필요하다.<br />
 이 차이를 자동으로 계산해주는 함수가 <code>diff()</code> 이다.<br />
-<code>diff()</code> 함수를 이용하여 코드를 더 간결하게 해본 결과이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">diff</span>(<span class="kw">log</span>(data))</code></pre></div>
+<code>diff()</code> 함수를 이용하여 코드를 더 간결하게 해본
+결과이다.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">log</span>(data))</span></code></pre></div>
 <pre><code>##              KQ11.Close
 ## 2018-04-30           NA
 ## 2018-05-02 -0.005632573
@@ -338,12 +363,19 @@ for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
 ## 2018-05-28  0.012974743
 ## 2018-05-29 -0.010984394
 ## 2018-05-30  0.004746846</code></pre>
-<p>주가종목에 로그를 취한 후 현시차와 직전시차의 차이값을 <code>diff()</code> 를 통해 계산한다.<br />
-따라서 <code>log(data) - log(lag(data))</code> 과 동일한 값이 반환되는 것을 확인할 수 있다.</p>
-<section class="footnotes">
+<p>주가종목에 로그를 취한 후 현시차와 직전시차의 차이값을
+<code>diff()</code> 를 통해 계산한다.<br />
+따라서 <code>log(data) - log(lag(data))</code> 과 동일한 값이 반환되는
+것을 확인할 수 있다.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>필자는 quantmod package와, 주가지수데이터셋을 끌어올 수 있는 함수 및 코드를 <a href="http://cafe.naver.com/lovetokens/1569">카페회원분의 질문글</a>을 통해 처음으로 알게 되었다.<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>필자는 quantmod package와, 주가지수데이터셋을 끌어올 수
+있는 함수 및 코드를 <a
+href="http://cafe.naver.com/lovetokens/1569">카페회원분의 질문글</a>을
+통해 처음으로 알게 되었다.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -359,7 +391,7 @@ for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2016/05/18/lag_diff_function.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -383,7 +415,7 @@ for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -400,7 +432,7 @@ for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -417,7 +449,7 @@ for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -434,7 +466,24 @@ for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -458,7 +507,7 @@ for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -476,16 +525,6 @@ for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -967,7 +1006,7 @@ for(i in <span class="dv">2</span>:<span class="kw">nrow</span>(data)){
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 수익률 구해보며 lag(), diff() 함수 알아보기";
+        var disqus_identifier = "http://localhost:4000_R에서 수익률 구해보며 lag(), diff() 함수 알아보기";
         var disqus_title = "R에서 수익률 구해보며 lag(), diff() 함수 알아보기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

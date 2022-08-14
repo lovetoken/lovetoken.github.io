@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2017/01/12/multiple_load_packages.html" property="og:url">
+          <meta content="http://localhost:4000/r/2017/01/12/multiple_load_packages.html" property="og:url">
         
         
           <meta content="2017-01-12T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 다수의 패키지 편하게 불러오기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2017/01/12/multiple_load_packages.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2017/01/12/multiple_load_packages.html">
         
         
           <meta name="twitter:description" content="">
@@ -137,45 +137,69 @@
 <div class="content">
     <div class="post"><p><br><br></p>
 <h2 id="상황">상황</h2>
-<p>R 에서 여러 개의 패키지를 사용해야 하는 프로그램을 작성해야 한다면 <code>library()</code> 함수로 사용하는 패키지를 불러오는 코드를 서두에 작성하는 전략을 사용할 것이다. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;package1&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;package2&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;package3&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;package4&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;package5&quot;</span>)</code></pre></div>
-<p>위의 코드는 5개의 패키지를 로드하는 코드로 볼 수 있는데, 만약 필요로 하는 패키지의 수가 5개가 아닌 수십 개가 된다면 수십개의 <code>library()</code> 함수를 작성하게 될 것이다.<br />
-아쉽게도 <code>library()</code> 함수는 불러올 대상이 되는 패키지를 복수개로 입력할 수 없어</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="kw">c</span>(<span class="st">&quot;package1&quot;</span>, <span class="st">&quot;package2&quot;</span>, <span class="st">&quot;package3&quot;</span>, <span class="st">&quot;package4&quot;</span>, <span class="st">&quot;package5&quot;</span>))</code></pre></div>
+<p>R 에서 여러 개의 패키지를 사용해야 하는 프로그램을 작성해야 한다면
+<code>library()</code> 함수로 사용하는 패키지를 불러오는 코드를 서두에
+작성하는 전략을 사용할 것이다. <a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;package1&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;package2&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;package3&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;package4&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;package5&quot;</span>)</span></code></pre></div>
+<p>위의 코드는 5개의 패키지를 로드하는 코드로 볼 수 있는데, 만약 필요로
+하는 패키지의 수가 5개가 아닌 수십 개가 된다면 수십개의
+<code>library()</code> 함수를 작성하게 될 것이다.<br />
+아쉽게도 <code>library()</code> 함수는 불러올 대상이 되는 패키지를
+복수개로 입력할 수 없어</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="fu">c</span>(<span class="st">&quot;package1&quot;</span>, <span class="st">&quot;package2&quot;</span>, <span class="st">&quot;package3&quot;</span>, <span class="st">&quot;package4&quot;</span>, <span class="st">&quot;package5&quot;</span>))</span></code></pre></div>
 <pre><code>Error : 
   &#39;package&#39;는 반드시 길이가 1이어야 합니다</code></pre>
-<p>와 같은 꼴로는 사용할 수 없기 때문에 코드가 불필요하게 길어진다.<br />
-반복문을 이용해 굳이 해결책을 찾자면 벡터형 문자열을 이용할 수 있을 것인데</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for(i in <span class="kw">c</span>(<span class="st">&quot;package1&quot;</span>, <span class="st">&quot;package2&quot;</span>, <span class="st">&quot;package3&quot;</span>, <span class="st">&quot;package4&quot;</span>, <span class="st">&quot;package5&quot;</span>)){
-  <span class="kw">library</span>(i, <span class="dt">character.only =</span> T)
-} </code></pre></div>
-<p>중간에 패키지 로드가 실패했을 경우 (예를 들어 &quot;package3&quot; 호출이 실패)<br />
-이후의 패키지들 (&quot;package4&quot;, &quot;package5&quot;) 이 로드되지 않는 등 실제로 사용하기엔 불편한 점들이 있을 것이다.</p>
+<p>와 같은 꼴로는 사용할 수 없기 때문에 코드가 불필요하게
+길어진다.<br />
+반복문을 이용해 굳이 해결책을 찾자면 벡터형 문자열을 이용할 수 있을
+것인데</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">c</span>(<span class="st">&quot;package1&quot;</span>, <span class="st">&quot;package2&quot;</span>, <span class="st">&quot;package3&quot;</span>, <span class="st">&quot;package4&quot;</span>, <span class="st">&quot;package5&quot;</span>)){</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(i, <span class="at">character.only =</span> T)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>} </span></code></pre></div>
+<p>중간에 패키지 로드가 실패했을 경우 (예를 들어 “package3” 호출이
+실패)<br />
+이후의 패키지들 (“package4”, “package5”) 이 로드되지 않는 등 실제로
+사용하기엔 불편한 점들이 있을 것이다.</p>
 <p>또한, 위에 제시한 어떠한 방법이든<br />
-자신이 만든 프로그램이 다수의 패키지에 의존되면 의존될수록 타인이 자신의 프로그램을 이용할 때 오류가 일어날 가능성도 커진다.<br />
+자신이 만든 프로그램이 다수의 패키지에 의존되면 의존될수록 타인이 자신의
+프로그램을 이용할 때 오류가 일어날 가능성도 커진다.<br />
 타인은 프로그램에 의존된 패키지가 모두 설치되어 있을 리 없다.</p>
 <p><br><br></p>
-<h2 id="pacman-패키지의-p_load-함수">pacman 패키지의 <code>p_load()</code> 함수</h2>
-<p>이처럼 재현 가능한 연구를 방해하는 요소들을 없애기 위해 고민하다가 pacman package 를 알게 되었고<br />
-pacman 패키지에서 제공되는 여러 함수 중 <code>p_load()</code> 함수의 도움을 가장 많이 받고 있다.<br />
-일반적인 상황에서 <code>p_load()</code> 함수는 위에 제시한 불편한 문제들을 잘 해결해 준다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pacman::<span class="kw">p_load</span>(<span class="st">&quot;package1&quot;</span>, <span class="st">&quot;package2&quot;</span>, <span class="st">&quot;package3&quot;</span>, <span class="st">&quot;package4&quot;</span>, <span class="st">&quot;package5&quot;</span>)</code></pre></div>
+<h2 id="pacman-패키지의-p_load-함수">pacman 패키지의
+<code>p_load()</code> 함수</h2>
+<p>이처럼 재현 가능한 연구를 방해하는 요소들을 없애기 위해 고민하다가
+pacman package 를 알게 되었고<br />
+pacman 패키지에서 제공되는 여러 함수 중 <code>p_load()</code> 함수의
+도움을 가장 많이 받고 있다.<br />
+일반적인 상황에서 <code>p_load()</code> 함수는 위에 제시한 불편한
+문제들을 잘 해결해 준다.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(<span class="st">&quot;package1&quot;</span>, <span class="st">&quot;package2&quot;</span>, <span class="st">&quot;package3&quot;</span>, <span class="st">&quot;package4&quot;</span>, <span class="st">&quot;package5&quot;</span>)</span></code></pre></div>
 <ol type="1">
-<li><p>다수의 패키지를 불러올 때 복수의 문자열 벡터를 입력받을 수 있어 코드 길이를 줄일 수 있다.</p></li>
+<li><p>다수의 패키지를 불러올 때 복수의 문자열 벡터를 입력받을 수 있어
+코드 길이를 줄일 수 있다.</p></li>
 <li><p>불러오길 희망하는 다수의 패키지 중에<br />
-설치가 되지 않은 패키지가 있어도 알아서 설치를 진행한 후 설치가 잘 완료되면 불러오는 기능이 한 번에 수행된다.<br />
-예를 들어 &quot;package3&quot; 이란 패키지가 설치되어있지 않은 상황이라 하더라도<br />
-오류와 함께 코드실행이 멈추는 것이 아니라 CRAN 에 &quot;package3&quot; 을 찾은 후 패키지 설치완료 후 불러온다.<br />
-CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()</code> 함수로 패키지를 로드할 때 오류가 날 일은 거의 없을 것이다.</p></li>
+설치가 되지 않은 패키지가 있어도 알아서 설치를 진행한 후 설치가 잘
+완료되면 불러오는 기능이 한 번에 수행된다.<br />
+예를 들어 “package3” 이란 패키지가 설치되어있지 않은 상황이라
+하더라도<br />
+오류와 함께 코드실행이 멈추는 것이 아니라 CRAN 에 “package3” 을 찾은 후
+패키지 설치완료 후 불러온다.<br />
+CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()</code>
+함수로 패키지를 로드할 때 오류가 날 일은 거의 없을 것이다.</p></li>
 </ol>
-<section class="footnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>코드 중간중간 필요한 시점에서 <code>library()</code> 호출을 할 수 도 있겠으나, 프로젝트를 시작하기 앞서 필요한 모든 패키지를 보여주기 위해 보통 서두에 몰아 패키지를 호출하는 경우가 많은것 같다<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>코드 중간중간 필요한 시점에서 <code>library()</code>
+호출을 할 수 도 있겠으나, 프로젝트를 시작하기 앞서 필요한 모든 패키지를
+보여주기 위해 보통 서두에 몰아 패키지를 호출하는 경우가 많은것 같다<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -191,7 +215,7 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2017/01/12/multiple_load_packages.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2017/01/12/multiple_load_packages.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -215,7 +239,7 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -232,7 +256,7 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -249,7 +273,7 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -266,7 +290,24 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -290,7 +331,7 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -308,16 +349,6 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -799,7 +830,7 @@ CRAN 에 존재하지 않는 패키지명칭을 적지 않는 한 <code>p_load()
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 다수의 패키지 편하게 불러오기";
+        var disqus_identifier = "http://localhost:4000_R에서 다수의 패키지 편하게 불러오기";
         var disqus_title = "R에서 다수의 패키지 편하게 불러오기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

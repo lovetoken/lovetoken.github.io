@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/data_visualization/2016/10/18/ggmap.html" property="og:url">
+          <meta content="http://localhost:4000/r/data_visualization/2016/10/18/ggmap.html" property="og:url">
         
         
           <meta content="2016-10-18T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/data_visualization/2016/10/18/ggmap.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/data_visualization/2016/10/18/ggmap.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,14 +136,21 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>&quot;map&quot; 이란 단어에 &quot;Google&quot; 의 &quot;g&quot; 알파벳 2개를 덧붙인 것으로 추정이 바로 되는<br />
-<a href="https://cran.r-project.org/web/packages/ggmap/ggmap.pdf">ggmap package</a> 는 <a href="https://enterprise.google.com/intl/ko/maps/products/mapsapi.html">Google map API</a> 를 이용하여 지도자료를 불러와주는 역할을 하는 패키지이다.</p>
-<p>간략한 예제를 통해 &quot;ggmap&quot; 패키지의 주요 함수 <code>get_googlemap()</code>, <code>ggmap()</code> 2개의 사용방법을 알아본 후<br />
+<p>“map” 이란 단어에 “Google” 의 “g” 알파벳 2개를 덧붙인 것으로 추정이
+바로 되는<br />
+<a href="https://cran.r-project.org/web/packages/ggmap/ggmap.pdf">ggmap
+package</a> 는 <a
+href="https://enterprise.google.com/intl/ko/maps/products/mapsapi.html">Google
+map API</a> 를 이용하여 지도자료를 불러와주는 역할을 하는
+패키지이다.</p>
+<p>간략한 예제를 통해 “ggmap” 패키지의 주요 함수
+<code>get_googlemap()</code>, <code>ggmap()</code> 2개의 사용방법을
+알아본 후<br />
 지도위에 간단한 경로를 결합하는 간단한 예제를 실습해 보고자 한다.</p>
 <p><br><br></p>
 <h2 id="우리나라-지도-호출">우리나라 지도 호출</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">getmap &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="st">&quot;seoul&quot;</span>)
-<span class="kw">ggmap</span>(getmap)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>getmap <span class="ot">&lt;-</span> <span class="fu">get_googlemap</span>(<span class="st">&quot;seoul&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggmap</span>(getmap)</span></code></pre></div>
 <center>
 <img src="/assets/ggmap-1-1.png" />
 </center>
@@ -151,25 +158,36 @@
 R에 plotting 하는 코드이다.</p>
 <p>정말 간단한 로직으로 동작하는 편이다.</p>
 <ol type="1">
-<li><code>get_googlemap()</code> 함수를 통해 불러오고 싶은 곳의 장소를 문자열 값으로 첫 번째 인자에 넣어 실행해 이를 객체화 함</li>
-<li><code>ggmap()</code> 함수 안에 방금 만든 객체를 입력시킨 후 실행하면 원하는 장소를 중심으로 구글 지도가 plotting 됨</li>
+<li><code>get_googlemap()</code> 함수를 통해 불러오고 싶은 곳의 장소를
+문자열 값으로 첫 번째 인자에 넣어 실행해 이를 객체화 함</li>
+<li><code>ggmap()</code> 함수 안에 방금 만든 객체를 입력시킨 후 실행하면
+원하는 장소를 중심으로 구글 지도가 plotting 됨</li>
 </ol>
-<p>로직이 이처럼 간단하므로 앞으로 체인연산자(chain operation)를 사용해 간단히 한 줄로 실행하겠다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_googlemap</span>(<span class="st">&quot;seoul&quot;</span>) %&gt;%<span class="st"> </span>ggmap</code></pre></div>
+<p>로직이 이처럼 간단하므로 앞으로 체인연산자(chain operation)를 사용해
+간단히 한 줄로 실행하겠다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_googlemap</span>(<span class="st">&quot;seoul&quot;</span>) <span class="sc">%&gt;%</span> ggmap</span></code></pre></div>
 <p><br><br></p>
 <h2 id="ggplot2-의-함수들과-조합">ggplot2 의 함수들과 조합</h2>
-<p><code>ggmap()</code> 으로 반환되는 결과물은 기본적으로 ggplot 기반의 결과물인데 이점을 이용하여 ggplot2 패키지의 함수와 조합해 지도 위에 새로운 정보들을 더할 수 있다.<br />
-&quot;ggmap&quot;, &quot;ggplot2&quot; 이 두 패키지의 조합은 다양한 Geo Visualization(지리적 시각화) 을 구사할 수 있는 잠재력이 있을거라 생각된다.<br />
-지금은 복잡한 실습보단 간단한 예제를 통해 맛보기를 아래처럼 해보았다.</p>
+<p><code>ggmap()</code> 으로 반환되는 결과물은 기본적으로 ggplot 기반의
+결과물인데 이점을 이용하여 ggplot2 패키지의 함수와 조합해 지도 위에
+새로운 정보들을 더할 수 있다.<br />
+“ggmap”, “ggplot2” 이 두 패키지의 조합은 다양한 Geo Visualization(지리적
+시각화) 을 구사할 수 있는 잠재력이 있을거라 생각된다.<br />
+지금은 복잡한 실습보단 간단한 예제를 통해 맛보기를 아래처럼
+해보았다.</p>
 <center>
 <img src="/assets/ggmap-3-1.png" />
 </center>
-<p>그림을 다시 자세히 보면 x축이 &quot;lon&quot; 이라고 적혀있고, y축은 &quot;lat&quot; 라고 적혀 있다.<br />
-&quot;lon&quot; 은 경도(longitude), &quot;lat&quot; 은 위도(latitude) 를 각각 뜻한다고 볼 수 있다.</p>
-<p>즉 위도와 경도의 데이터가 있다면 이 지도 위에 ggplot2 를 이용하여 무언가를 덧그릴 수 있을 것이다.</p>
+<p>그림을 다시 자세히 보면 x축이 “lon” 이라고 적혀있고, y축은 “lat” 라고
+적혀 있다.<br />
+“lon” 은 경도(longitude), “lat” 은 위도(latitude) 를 각각 뜻한다고 볼 수
+있다.</p>
+<p>즉 위도와 경도의 데이터가 있다면 이 지도 위에 ggplot2 를 이용하여
+무언가를 덧그릴 수 있을 것이다.</p>
 <p><br></p>
 <h3 id="포인팅">포인팅</h3>
-<p>의미는 크게 없지만, 서초역과 강남역 부근에 무언가 장난을 쳐보려 한다.</p>
+<p>의미는 크게 없지만, 서초역과 강남역 부근에 무언가 장난을 쳐보려
+한다.</p>
 <ul>
 <li>서초역 : 경도 127.007675, 위도 37.491843<br />
 </li>
@@ -177,51 +195,57 @@ R에 plotting 하는 코드이다.</p>
 </ul>
 <p>즉<br />
 (127.007675, 37.491843), (127.027544, 37.497968)<br />
-좌표에 점을 찍게 되면 서초역과 강남역의 위치에 다음과 같은 모습이 된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="st">&quot;seoul&quot;</span>) %&gt;%<span class="st"> </span>ggmap
-
-locationInfo &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
-  <span class="dt">Name =</span> <span class="kw">c</span>(<span class="st">&quot;서초역&quot;</span>, <span class="st">&quot;강남역&quot;</span>), 
-  <span class="dt">lon =</span> <span class="kw">c</span>(<span class="fl">127.007675</span>, <span class="fl">127.027544</span>),
-    <span class="dt">lat =</span> <span class="kw">c</span>(<span class="fl">37.491843</span>, <span class="fl">37.497968</span>)
-)
-
-p1 +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat))</code></pre></div>
+좌표에 점을 찍게 되면 서초역과 강남역의 위치에 다음과 같은 모습이
+된다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">get_googlemap</span>(<span class="st">&quot;seoul&quot;</span>) <span class="sc">%&gt;%</span> ggmap</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>locationInfo <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Name =</span> <span class="fu">c</span>(<span class="st">&quot;서초역&quot;</span>, <span class="st">&quot;강남역&quot;</span>), </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">lon =</span> <span class="fu">c</span>(<span class="fl">127.007675</span>, <span class="fl">127.027544</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">lat =</span> <span class="fu">c</span>(<span class="fl">37.491843</span>, <span class="fl">37.497968</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> locationInfo, <span class="fu">aes</span>(<span class="at">x =</span> lon, <span class="at">y =</span> lat))</span></code></pre></div>
 <center>
 <img src="/assets/ggmap-4-1.png" />
 </center>
-<p>잘 안 보일 수도 있지만 전 사진과 다르게 2개의 점이 추가된 것을 볼 수 있다.<br />
+<p>잘 안 보일 수도 있지만 전 사진과 다르게 2개의 점이 추가된 것을 볼 수
+있다.<br />
 2개의 검은 점은 각각 서초역과 강남역에 찍혔다.</p>
 <p>지도를 조금 더 확대해 볼 수도 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p2 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="st">&quot;gangnamgu&quot;</span>, <span class="dt">zoom =</span> <span class="dv">12</span>) %&gt;%<span class="st"> </span>ggmap
-p2</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">get_googlemap</span>(<span class="st">&quot;gangnamgu&quot;</span>, <span class="at">zoom =</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span> ggmap</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>p2</span></code></pre></div>
 <center>
 <img src="/assets/ggmap-5-1.png" />
 </center>
-<p>지도의 중앙을 &quot;gangnamgu&quot; 즉 강남구로 설정하고 <code>zoom</code> 인자를 12값으로 설정한 경우이다.<br />
-<code>zoom</code> 인자의 디폴트 값 10 보다 큰 값을 주었으므로 조금은 확대되어 보이게 된다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p2 +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat))</code></pre></div>
+<p>지도의 중앙을 “gangnamgu” 즉 강남구로 설정하고 <code>zoom</code>
+인자를 12값으로 설정한 경우이다.<br />
+<code>zoom</code> 인자의 디폴트 값 10 보다 큰 값을 주었으므로 조금은
+확대되어 보이게 된다.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p2 <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> locationInfo, <span class="fu">aes</span>(<span class="at">x =</span> lon, <span class="at">y =</span> lat))</span></code></pre></div>
 <center>
 <img src="/assets/ggmap-6-1.png" />
 </center>
-<p>지도를 확대하든 지도의 중심점을 옮기든 간에 서초역과 강남역에 포인팅하는 코드는 문제없이 작동한다.<br />
-포인팅 말고도 포인팅된 곳에 무엇이 위치해 있는지 라벨링이 되어있다면 더 보기 좋을 것이다.<br />
+<p>지도를 확대하든 지도의 중심점을 옮기든 간에 서초역과 강남역에
+포인팅하는 코드는 문제없이 작동한다.<br />
+포인팅 말고도 포인팅된 곳에 무엇이 위치해 있는지 라벨링이 되어있다면 더
+보기 좋을 것이다.<br />
 라벨링도 ggplot2 기능 그대로 쓰던대로 쓰면 된다.<br />
 아래는 <code>geom_text()</code> 를 이용해본 예이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p2 +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat)) +
-<span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">label =</span> Name), <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">vjust =</span> -<span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>p2 <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> locationInfo, <span class="fu">aes</span>(<span class="at">x =</span> lon, <span class="at">y =</span> lat)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> locationInfo, <span class="fu">aes</span>(<span class="at">label =</span> Name), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
 <center>
 <img src="/assets/ggmap-7-1.png" />
 </center>
 <p><br></p>
 <h3 id="경로-그리기">경로 그리기</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">locationInfo &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
-    <span class="dt">Name =</span> <span class="kw">c</span>(<span class="st">&quot;강남&quot;</span>, <span class="st">&quot;양재&quot;</span>, <span class="st">&quot;양재시민의숲&quot;</span>, <span class="st">&quot;청계산입구&quot;</span>, <span class="st">&quot;판교&quot;</span>, <span class="st">&quot;정자&quot;</span>), 
-    <span class="dt">lon =</span> <span class="kw">c</span>(<span class="fl">127.028046</span>, <span class="fl">127.035140</span>, <span class="fl">127.038451</span>, <span class="fl">127.054769</span>, <span class="fl">127.111172</span>, <span class="fl">127.108367</span>), 
-    <span class="dt">lat =</span> <span class="kw">c</span>(<span class="fl">37.497001</span>, <span class="fl">37.483368</span>, <span class="fl">37.469655</span>, <span class="fl">37.448196</span>, <span class="fl">37.394786</span>, <span class="fl">37.366777</span>)
-)
-
-locationInfo</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>locationInfo <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">Name =</span> <span class="fu">c</span>(<span class="st">&quot;강남&quot;</span>, <span class="st">&quot;양재&quot;</span>, <span class="st">&quot;양재시민의숲&quot;</span>, <span class="st">&quot;청계산입구&quot;</span>, <span class="st">&quot;판교&quot;</span>, <span class="st">&quot;정자&quot;</span>), </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">lon =</span> <span class="fu">c</span>(<span class="fl">127.028046</span>, <span class="fl">127.035140</span>, <span class="fl">127.038451</span>, <span class="fl">127.054769</span>, <span class="fl">127.111172</span>, <span class="fl">127.108367</span>), </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">lat =</span> <span class="fu">c</span>(<span class="fl">37.497001</span>, <span class="fl">37.483368</span>, <span class="fl">37.469655</span>, <span class="fl">37.448196</span>, <span class="fl">37.394786</span>, <span class="fl">37.366777</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>locationInfo</span></code></pre></div>
 <pre><code>##           Name      lon      lat
 ## 1         강남 127.0280 37.49700
 ## 2         양재 127.0351 37.48337
@@ -229,25 +253,32 @@ locationInfo</code></pre></div>
 ## 4   청계산입구 127.0548 37.44820
 ## 5         판교 127.1112 37.39479
 ## 6         정자 127.1084 37.36678</code></pre>
-<p>신분당선을 기준으로 정자역에서 강남역까지 경로를 표현해 보고자 <code>locationInfo</code> 내용을 바꾸었다.<br />
-이를 이용하여 신분당선의 대략적인 경로를 표현해 보도록 하겠다. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p3 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="st">&quot;gwacheon&quot;</span>, <span class="dt">zoom =</span> <span class="dv">11</span>) %&gt;%<span class="st"> </span>ggmap
-p3 &lt;-<span class="st"> </span>p3 +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat)) +
-<span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">label =</span> Name), <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">hjust =</span> <span class="fl">1.2</span>, <span class="dt">fontface =</span> <span class="st">&quot;bold&quot;</span>)
-p3</code></pre></div>
+<p>신분당선을 기준으로 정자역에서 강남역까지 경로를 표현해 보고자
+<code>locationInfo</code> 내용을 바꾸었다.<br />
+이를 이용하여 신분당선의 대략적인 경로를 표현해 보도록 하겠다. <a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">get_googlemap</span>(<span class="st">&quot;gwacheon&quot;</span>, <span class="at">zoom =</span> <span class="dv">11</span>) <span class="sc">%&gt;%</span> ggmap</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> p3 <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> locationInfo, <span class="fu">aes</span>(<span class="at">x =</span> lon, <span class="at">y =</span> lat)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> locationInfo, <span class="fu">aes</span>(<span class="at">label =</span> Name), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">hjust =</span> <span class="fl">1.2</span>, <span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>p3</span></code></pre></div>
 <center>
 <img src="/assets/ggmap-9-1.png" />
 </center>
-<p>우선 과천시를 중심으로 두고 <code>zoom = 11</code> 로 설정하여 지도를 뿌린 후<br />
+<p>우선 과천시를 중심으로 두고 <code>zoom = 11</code> 로 설정하여 지도를
+뿌린 후<br />
 신분당선에 해당되는 역에 점을 찍고 라벨링을 더해보았다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p3 +<span class="st"> </span><span class="kw">geom_path</span>(<span class="dt">data =</span> locationInfo, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>, <span class="dt">lwd =</span> <span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span> <span class="fu">geom_path</span>(<span class="at">data =</span> locationInfo, <span class="fu">aes</span>(<span class="at">x =</span> lon, <span class="at">y =</span> lat), <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">alpha =</span> .<span class="dv">5</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span></code></pre></div>
 <center>
 <img src="/assets/ggmap-10-1.png" />
 </center>
-<p>그다음 경로를 표현하기 위해 각 점에 적당한 직선을 <code>geom_path()</code> 를 통해 그리면 신분당선의 경로가 어떤지를 볼 수 있겠다.</p>
+<p>그다음 경로를 표현하기 위해 각 점에 적당한 직선을
+<code>geom_path()</code> 를 통해 그리면 신분당선의 경로가 어떤지를 볼 수
+있겠다.</p>
 <p><br><br></p>
 <h2 id="기타">기타</h2>
-<p>소개한 <code>get_googlemap()</code>, <code>ggmap()</code> 함수의 옵션들은 정말 방대한 편이다.<br />
+<p>소개한 <code>get_googlemap()</code>, <code>ggmap()</code> 함수의
+옵션들은 정말 방대한 편이다.<br />
 모든 것을 건드려 보진 못했지만 유용할 것으로 생각하는 기능 중</p>
 <ol type="1">
 <li>지도를 꽉 채워 출력하는 기능</li>
@@ -255,44 +286,50 @@ p3</code></pre></div>
 </ol>
 <p>이 눈에 띄었다.</p>
 <p><br></p>
-<h3 id="extent-device-로-지도-꽉-채워-보기"><code>extent = &quot;device&quot;</code> 로 지도 꽉 채워 보기</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_googlemap</span>() %&gt;%<span class="st"> </span>ggmap</code></pre></div>
+<h3
+id="extent-device-로-지도-꽉-채워-보기"><code>extent = "device"</code>
+로 지도 꽉 채워 보기</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_googlemap</span>() <span class="sc">%&gt;%</span> ggmap</span></code></pre></div>
 <center>
 <img src="/assets/ggmap-11-1.png" />
 </center>
 <p><code>ggmap()</code> 함수를 디폴트로 사용한 결과이다.<br />
-지도 그림만을 출력하지 못하고 x축, y축이 함께 그려지는데 상황에 따라 불필요할 수 있다.<br />
+지도 그림만을 출력하지 못하고 x축, y축이 함께 그려지는데 상황에 따라
+불필요할 수 있다.<br />
 온전히 지도 그림만을 출력하고 싶다면</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_googlemap</span>() %&gt;%<span class="st"> </span><span class="kw">ggmap</span>(<span class="dt">extent =</span> <span class="st">&quot;device&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_googlemap</span>() <span class="sc">%&gt;%</span> <span class="fu">ggmap</span>(<span class="at">extent =</span> <span class="st">&quot;device&quot;</span>)</span></code></pre></div>
 <center>
 <img src="/assets/ggmap-12-1.png" />
 </center>
-<p><code>extent = &quot;device&quot;</code> 를 이용하면 되겠다.</p>
+<p><code>extent = "device"</code> 를 이용하면 되겠다.</p>
 <p><br></p>
-<h3 id="get_googlemap-함수의-maptype-인자를-조정해-지도스타일-바꾸기"><code>get_googlemap()</code> 함수의 <code>maptype</code> 인자를 조정해 지도스타일 바꾸기</h3>
-<p><code>get_googlemap()</code> 함수의 <code>maptype</code> 인자 값을<br />
-&quot;terrain&quot;, &quot;satellite&quot;, &quot;roadmap&quot;, &quot;hybrid&quot; 등으로 조절해보면</p>
+<h3
+id="get_googlemap-함수의-maptype-인자를-조정해-지도스타일-바꾸기"><code>get_googlemap()</code>
+함수의 <code>maptype</code> 인자를 조정해 지도스타일 바꾸기</h3>
+<p><code>get_googlemap()</code> 함수의 <code>maptype</code> 인자
+값을<br />
+“terrain”, “satellite”, “roadmap”, “hybrid” 등으로 조절해보면</p>
 <p><em>satellite 로 설정한 결과</em></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p4 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="dt">maptype =</span> <span class="st">&quot;satellite&quot;</span>) %&gt;%<span class="st"> </span>ggmap
-p4 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;maptype : satellite&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">get_googlemap</span>(<span class="at">maptype =</span> <span class="st">&quot;satellite&quot;</span>) <span class="sc">%&gt;%</span> ggmap</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>p4 <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;maptype : satellite&quot;</span>)</span></code></pre></div>
 <center>
 <img src="/assets/ggmap-13-1.png" />
 </center>
 <p><em>terrain 로 설정한 결과</em></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p5 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="dt">maptype =</span> <span class="st">&quot;terrain&quot;</span>) %&gt;%<span class="st"> </span>ggmap
-p5 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;maptype : terrain&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> <span class="fu">get_googlemap</span>(<span class="at">maptype =</span> <span class="st">&quot;terrain&quot;</span>) <span class="sc">%&gt;%</span> ggmap</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>p5 <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;maptype : terrain&quot;</span>)</span></code></pre></div>
 <center>
 <img src="/assets/ggmap-14-1.png" />
 </center>
 <p><em>roadmap 로 설정한 결과</em></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p6 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="dt">maptype =</span> <span class="st">&quot;roadmap&quot;</span>) %&gt;%<span class="st"> </span>ggmap
-p6 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;maptype : roadmap&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> <span class="fu">get_googlemap</span>(<span class="at">maptype =</span> <span class="st">&quot;roadmap&quot;</span>) <span class="sc">%&gt;%</span> ggmap</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>p6 <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;maptype : roadmap&quot;</span>)</span></code></pre></div>
 <center>
 <img src="/assets/ggmap-15-1.png" />
 </center>
 <p><em>hybrid 로 설정한 결과</em></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p7 &lt;-<span class="st"> </span><span class="kw">get_googlemap</span>(<span class="dt">maptype =</span> <span class="st">&quot;hybrid&quot;</span>) %&gt;%<span class="st"> </span>ggmap
-p7 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;maptype : hybrid&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>p7 <span class="ot">&lt;-</span> <span class="fu">get_googlemap</span>(<span class="at">maptype =</span> <span class="st">&quot;hybrid&quot;</span>) <span class="sc">%&gt;%</span> ggmap</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>p7 <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;maptype : hybrid&quot;</span>)</span></code></pre></div>
 <center>
 <img src="/assets/ggmap-16-1.png" />
 </center>
@@ -300,12 +337,17 @@ p7 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&q
 <p><br><br></p>
 <h2 id="reference">Reference</h2>
 <ul>
-<li><a href="http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf">ggmap: Spatial Visualization with ggplot2 by David Kahle and Hadley Wickham</a></li>
+<li><a
+href="http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf">ggmap:
+Spatial Visualization with ggplot2 by David Kahle and Hadley
+Wickham</a></li>
 </ul>
-<section class="footnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>참고로 지금의 신분당선은 이보다 노선이 더 많아졌다.<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>참고로 지금의 신분당선은 이보다 노선이 더 많아졌다.<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -321,7 +363,7 @@ p7 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&q
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/data_visualization/2016/10/18/ggmap.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/data_visualization/2016/10/18/ggmap.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -345,7 +387,7 @@ p7 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&q
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -364,7 +406,7 @@ p7 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&q
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -383,7 +425,7 @@ p7 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&q
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -402,7 +444,26 @@ p7 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&q
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -430,7 +491,7 @@ p7 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&q
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -452,16 +513,6 @@ p7 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&q
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
             
@@ -1089,7 +1140,7 @@ p7 +<span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&q
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제";
+        var disqus_identifier = "http://localhost:4000_R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제";
         var disqus_title = "R에서 ggmap, ggplot2 패키지를 이용한 지도 출력 및 경로 표현하기 간단예제";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

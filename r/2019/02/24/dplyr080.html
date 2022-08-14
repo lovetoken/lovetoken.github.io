@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2019/02/24/dplyr080.html" property="og:url">
+          <meta content="http://localhost:4000/r/2019/02/24/dplyr080.html" property="og:url">
         
         
           <meta content="2019-02-24T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 ">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2019/02/24/dplyr080.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,8 +136,12 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>발렌타인 데이 무렵 즈음 dplyr 패키지가 0.8.0 version 으로 업데이트 되면서 요인 별 집계(group by)의 편의성이 더 증대 되었다.</p>
-<p><a href="https://www.tidyverse.org/articles/2018/12/dplyr-0-8-0-release-candidate/">Tidyverse 에서 올라온 dplyr 0.8.0 버전 릴리즈에 대한 소개글</a>에 신규 함수들에 대한 튜토리얼도 간략히 제시가 되어 있었는데<br />
+<p>발렌타인 데이 무렵 즈음 dplyr 패키지가 0.8.0 version 으로 업데이트
+되면서 요인 별 집계(group by)의 편의성이 더 증대 되었다.</p>
+<p><a
+href="https://www.tidyverse.org/articles/2018/12/dplyr-0-8-0-release-candidate/">Tidyverse
+에서 올라온 dplyr 0.8.0 버전 릴리즈에 대한 소개글</a>에 신규 함수들에
+대한 튜토리얼도 간략히 제시가 되어 있었는데<br />
 따라하다 보니 더더욱 편해진 느낌을 받았다.</p>
 <p>Grouping 의 메이저한 변화는 아래의 신규함수 이었으며<br />
 실험적으로 도입 및 관리해보는 함수라고 라벨링되어 있었다.</p>
@@ -149,24 +153,29 @@
 <li><code>group_map()</code></li>
 <li><code>group_walk()</code></li>
 </ul>
-<p>이 중 다살펴보진 못했고 <code>group_map()</code> 의 활용예제를 생각해 보는 시간으로 글을 적어보았다.</p>
+<p>이 중 다살펴보진 못했고 <code>group_map()</code> 의 활용예제를 생각해
+보는 시간으로 글을 적어보았다.</p>
 <p><br><br></p>
-<h2 id="group_nest-group_split"><code>group_nest()</code>, <code>group_split()</code></h2>
-<p><code>group_map()</code> 활용예제를 적기 전에 이 두개 신규함수는 그래도 언급해보고 싶었다.</p>
+<h2 id="group_nest-group_split"><code>group_nest()</code>,
+<code>group_split()</code></h2>
+<p><code>group_map()</code> 활용예제를 적기 전에 이 두개 신규함수는
+그래도 언급해보고 싶었다.</p>
 <p>요인별 데이터를 묶어서 관리할 수 있는 <code>group_nest()</code><br />
-요인별로 데이터를 나누어서 볼 수 있는 <code>group_split()</code> 의 새로운 함수가 요인별 현황을 간단히 보여주는데 쓰임이 좋을 거라 기대되었다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># group_nest() 를 통해 요인별로 묶기</span>
-mtcars %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">group_nest</span>(cyl)</code></pre></div>
+요인별로 데이터를 나누어서 볼 수 있는 <code>group_split()</code> 의
+새로운 함수가 요인별 현황을 간단히 보여주는데 쓰임이 좋을 거라
+기대되었다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group_nest() 를 통해 요인별로 묶기</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_nest</span>(cyl)</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##     cyl data              
 ##   &lt;dbl&gt; &lt;list&gt;            
 ## 1     4 &lt;tibble [11 x 10]&gt;
 ## 2     6 &lt;tibble [7 x 10]&gt; 
 ## 3     8 &lt;tibble [14 x 10]&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># group_split() 를 통해 요인별 나누어서 데이터 보기</span>
-mtcars %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">group_split</span>(cyl)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group_split() 를 통해 요인별 나누어서 데이터 보기</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_split</span>(cyl)</span></code></pre></div>
 <pre><code>## [[1]]
 ## # A tibble: 11 x 11
 ##      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
@@ -213,22 +222,33 @@ mtcars %&gt;%<span class="st"> </span>
 ## 12  19.2     8  400    175  3.08  3.84  17.0     0     0     3     2
 ## 13  15.8     8  351    264  4.22  3.17  14.5     0     1     5     4
 ## 14  15       8  301    335  3.54  3.57  14.6     0     1     5     8</code></pre>
-<p>반환되는 결과가 list 이어서 <code>lapply()</code> 와의 호환이 부드러워 질 수 있을 것 같아 개인적으로는 환영했다.</p>
+<p>반환되는 결과가 list 이어서 <code>lapply()</code> 와의 호환이
+부드러워 질 수 있을 것 같아 개인적으로는 환영했다.</p>
 <p><br><br></p>
 <h2 id="group_map"><code>group_map()</code></h2>
 <p>dplyr 0.8.0 업데이트 변화의 가장 큰 내용이지 않을까 싶다.<br />
-요인별 세부적인 연산을 적용시킬 수 있는 <code>group_map()</code> 함수<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>가 특히 가장 눈에 띄었다.<br />
-purrr 패키지의 함수형 프로그래밍을 녹인 느낌이 강했는데, 개인적으로 이 함수를 잘 활용해 보고자 마음먹었다.</p>
+요인별 세부적인 연산을 적용시킬 수 있는 <code>group_map()</code> 함수<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>가 특히 가장 눈에 띄었다.<br />
+purrr 패키지의 함수형 프로그래밍을 녹인 느낌이 강했는데, 개인적으로 이
+함수를 잘 활용해 보고자 마음먹었다.</p>
 <p>이전에는 요인별 복잡한 알고리즘 연산을 수행하려 할 때는<br />
-tidyr package 의 <code>nest()</code> 함수<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>를 통해 요인 별 데이터들을 묶은 후 list object 로 만든 다음 <code>lapply()</code> 함수단에서 복잡한 연산을 넘기는 방식의 그룹별 연산을 애용했었다.</p>
-<p>예를 들면 이렇다. 아래 예제는 <code>caret::train()</code> 함수를 이용해 요인별로 <code>mpg</code> 필드값을 설명하는 Random Forest 알고리즘의 머신러닝 모델 학습을 독립적으로 수행 후 요인별 각기 다른 모델객체를 반환한 예제 코드이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">models1 &lt;-<span class="st"> </span>mtcars %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">group_by</span>(am) %&gt;%<span class="st"> </span>
-<span class="st">    </span>tidyr::<span class="kw">nest</span>() %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">pull</span>(data) %&gt;%<span class="st"> </span><span class="co"># 사실 여기까지가 group_split(mtcars, am) 과 동일함</span>
-<span class="st">    </span><span class="kw">lapply</span>(function(x) caret::<span class="kw">train</span>(mpg ~<span class="st"> </span>., <span class="dt">data =</span> x, <span class="dt">method =</span> <span class="st">&quot;rf&quot;</span>))
-
-models1</code></pre></div>
+tidyr package 의 <code>nest()</code> 함수<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>를
+통해 요인 별 데이터들을 묶은 후 list object 로 만든 다음
+<code>lapply()</code> 함수단에서 복잡한 연산을 넘기는 방식의 그룹별
+연산을 애용했었다.</p>
+<p>예를 들면 이렇다. 아래 예제는 <code>caret::train()</code> 함수를
+이용해 요인별로 <code>mpg</code> 필드값을 설명하는 Random Forest
+알고리즘의 머신러닝 모델 학습을 독립적으로 수행 후 요인별 각기 다른
+모델객체를 반환한 예제 코드이다.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>models1 <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(am) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">nest</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(data) <span class="sc">%&gt;%</span> <span class="co"># 사실 여기까지가 group_split(mtcars, am) 과 동일함</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lapply</span>(<span class="cf">function</span>(x) caret<span class="sc">::</span><span class="fu">train</span>(mpg <span class="sc">~</span> ., <span class="at">data =</span> x, <span class="at">method =</span> <span class="st">&quot;rf&quot;</span>))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>models1</span></code></pre></div>
 <pre><code>## [[1]]
 ## Random Forest 
 ## 
@@ -267,27 +287,32 @@ models1</code></pre></div>
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final value used for the model was mtry = 2.</code></pre>
 <p>lapply 를 쓴 만큼 결과 반환물도 list 형태인데<br />
-요인 <code>am</code> 이 2개 종류로써 2개 요인별 모델이 네이밍 되지 않은채로 나오는 단점이 있고<br />
-코드가 약간 번잡한 면이 있는 방법이다.(for 문도 생각해 보았지만 더 복잡해 질 것 같다)</p>
-<p><code>group_map()</code> 을 사용하면 이 과정을 조금 더 직관적이고 간단한 코딩으로 수행할 수 있었다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">models2 &lt;-<span class="st"> </span>mtcars %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">group_by</span>(am) %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">group_map</span>( ~<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">train_object =</span> <span class="kw">list</span>(caret::<span class="kw">train</span>(mpg ~<span class="st"> </span>., <span class="dt">data =</span> .x, <span class="dt">method =</span> <span class="st">&quot;rf&quot;</span>))))
-
-models2</code></pre></div>
+요인 <code>am</code> 이 2개 종류로써 2개 요인별 모델이 네이밍 되지
+않은채로 나오는 단점이 있고<br />
+코드가 약간 번잡한 면이 있는 방법이다.(for 문도 생각해 보았지만 더
+복잡해 질 것 같다)</p>
+<p><code>group_map()</code> 을 사용하면 이 과정을 조금 더 직관적이고
+간단한 코딩으로 수행할 수 있었다.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>models2 <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(am) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_map</span>( <span class="sc">~</span> <span class="fu">tibble</span>(<span class="at">train_object =</span> <span class="fu">list</span>(caret<span class="sc">::</span><span class="fu">train</span>(mpg <span class="sc">~</span> ., <span class="at">data =</span> .x, <span class="at">method =</span> <span class="st">&quot;rf&quot;</span>))))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>models2</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ## # Groups:   am [2]
 ##      am train_object
 ##   &lt;dbl&gt; &lt;list&gt;      
 ## 1     0 &lt;S3: train&gt; 
 ## 2     1 &lt;S3: train&gt;</code></pre>
-<p><code>group_map()</code> 함수 는 요인별로 바인딩을 위해서 dataframe 형태로 결과가 반환되어야 하는 전제조건이 있다.<br />
+<p><code>group_map()</code> 함수 는 요인별로 바인딩을 위해서 dataframe
+형태로 결과가 반환되어야 하는 전제조건이 있다.<br />
 이를 위해 list 결과를 <code>tibble()</code> 로 감싸주었다.<br />
 그리하여 2개의 모델을 요인별로 깔끔하게 보관된 모습을 보이고 있다.</p>
-<p><code>am</code> 요인이 <code>1</code> 일때의 학습모델을 사용하고자 할 경우 아래처럼 뽑아서 쓰면 되겠다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">models2 %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(am ==<span class="st"> </span><span class="dv">1</span>) %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">pull</span>(train_object)</code></pre></div>
+<p><code>am</code> 요인이 <code>1</code> 일때의 학습모델을 사용하고자 할
+경우 아래처럼 뽑아서 쓰면 되겠다.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>models2 <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(am <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(train_object)</span></code></pre></div>
 <pre><code>## [[1]]
 ## Random Forest 
 ## 
@@ -309,14 +334,22 @@ models2</code></pre></div>
 <p><br><br></p>
 <h2 id="reference">Reference</h2>
 <ul>
-<li><a href="https://www.tidyverse.org/articles/2019/02/dplyr-0-8-0/">dplyr 0.8.0</a></li>
-<li><a href="https://www.tidyverse.org/articles/2018/12/dplyr-0-8-0-release-candidate/">dplyr 0.8.0 release candidate</a></li>
+<li><a
+href="https://www.tidyverse.org/articles/2019/02/dplyr-0-8-0/">dplyr
+0.8.0</a></li>
+<li><a
+href="https://www.tidyverse.org/articles/2018/12/dplyr-0-8-0-release-candidate/">dplyr
+0.8.0 release candidate</a></li>
 </ul>
-<section class="footnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p><code>group_walk()</code> 도 비슷한 쓰임이다<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>지금의 dplyr 0.8.0 에선 <code>group_nest()</code> 가 이 역할을 대신한다<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p><code>group_walk()</code> 도 비슷한 쓰임이다<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>지금의 dplyr 0.8.0 에선 <code>group_nest()</code> 가 이
+역할을 대신한다<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -332,7 +365,7 @@ models2</code></pre></div>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2019/02/24/dplyr080.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -356,7 +389,24 @@ models2</code></pre></div>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -380,7 +430,7 @@ models2</code></pre></div>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -397,7 +447,7 @@ models2</code></pre></div>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -421,7 +471,7 @@ models2</code></pre></div>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -442,7 +492,7 @@ models2</code></pre></div>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
+                    <a href="http://localhost:4000/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
                     
@@ -464,16 +514,6 @@ models2</code></pre></div>
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html">R에서 Newton Raphson Method 에 대한 시뮬레이션 과제 (+ ggplot2, gganimate package)</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -940,7 +980,7 @@ models2</code></pre></div>
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 ";
+        var disqus_identifier = "http://localhost:4000_R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 ";
         var disqus_title = "R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 ";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

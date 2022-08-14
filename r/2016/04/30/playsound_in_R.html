@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html" property="og:url">
+          <meta content="http://localhost:4000/r/2016/04/30/playsound_in_R.html" property="og:url">
         
         
           <meta content="2016-04-30T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 소리, 음원 재생하기 - tuneR, beepr package">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2016/04/30/playsound_in_R.html">
         
         
           <meta name="twitter:description" content="">
@@ -137,26 +137,35 @@
 <div class="content">
     <div class="post"><p><br><br></p>
 <p>코드 수행시간이 비교적 길었던 R 스크립트가 있었다.<br />
-Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시간이 그렇게도 길지 않은 코드여서<br />
-코드 수행이 끝났다는 알람을 줄 수 있는 방법을 찾고 싶었는데, 알람의 방법은 크게 2가지 정도를 원했었다.</p>
+Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시간이 그렇게도
+길지 않은 코드여서<br />
+코드 수행이 끝났다는 알람을 줄 수 있는 방법을 찾고 싶었는데, 알람의
+방법은 크게 2가지 정도를 원했었다.</p>
 <ol type="1">
 <li>문자나 메일을 받는 방법</li>
 <li><strong>비프음 등의 소리를 재생</strong> 👈</li>
 </ol>
 <p>시켜 코드 수행이 끝났다는 걸 알려주는 것 이다.<br />
-첫 번째 &quot;문자나 메일을 받는 방법&quot; 은 구체적인 방법을 찾기 힘들었는데, 두 번째 &quot;비프음 등의 소리를 재생&quot; 방법을 알아본 결과 패키지를 이용한 아주 간단한 방법이 있었다.<br />
+첫 번째 “문자나 메일을 받는 방법” 은 구체적인 방법을 찾기 힘들었는데, 두
+번째 “비프음 등의 소리를 재생” 방법을 알아본 결과 패키지를 이용한 아주
+간단한 방법이 있었다.<br />
 지금까지 알게 된 방법들을 간단히 정리해본다.</p>
 <p><br><br></p>
-<h2 id="beepr-package-를-이용해-비프음-재생시키기">beepr package 를 이용해 비프음 재생시키기</h2>
-<p>비프음을 재생시키기 위한 단 한 개의 함수를 제공해 주는 패키지가 있다. (역시 심플하고 가벼운 것이 최고다 😄)<br />
-패키지 명칭도 &quot;beepr&quot; 이다.<br />
-제공되는 함수는 <code>beep()</code> 이다. 즉 <code>beepr::beep()</code> 로 내가 원하는 비프음을 재생시킬 수 있었다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;beepr&quot;</span>)
-<span class="kw">library</span>(beepr)</code></pre></div>
+<h2 id="beepr-package-를-이용해-비프음-재생시키기">beepr package 를
+이용해 비프음 재생시키기</h2>
+<p>비프음을 재생시키기 위한 단 한 개의 함수를 제공해 주는 패키지가 있다.
+(역시 심플하고 가벼운 것이 최고다 😄)<br />
+패키지 명칭도 “beepr” 이다.<br />
+제공되는 함수는 <code>beep()</code> 이다. 즉 <code>beepr::beep()</code>
+로 내가 원하는 비프음을 재생시킬 수 있었다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;beepr&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(beepr)</span></code></pre></div>
 <p>beepr package 설치 및 로드하고</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">beep</span>()</code></pre></div>
-<p>를 직접 실행시켜 보면 마치 전자레인지 가동이 종료될 때의 &quot;ping!&quot; 소리가 난다 🎵🎵</p>
-<p><code>beep()</code> 함수에서 제공되는 사운드는 아래처럼 11개가 있다.<br />
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">beep</span>()</span></code></pre></div>
+<p>를 직접 실행시켜 보면 마치 전자레인지 가동이 종료될 때의 “ping!”
+소리가 난다 🎵🎵</p>
+<p><code>beep()</code> 함수에서 제공되는 사운드는 아래처럼 11개가
+있다.<br />
 기호에 맞게 <code>sound</code> 인자를 조정해 사용하면 된다.</p>
 <ol type="1">
 <li>ping</li>
@@ -172,20 +181,32 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
 <li>sword</li>
 </ol>
 <p><br><br></p>
-<h2 id="만약-특정-음원-파일을-재생시키고-싶다면-tuner-package">만약 특정 음원 파일을 재생시키고 싶다면 tuneR package</h2>
-<p>소리재생에 관련된 포괄적인 패키지를 찾아본적도 있는데, 그 패키지 안에는 특정 음원 파일을 재생시키는 기능도 있을것이라 생각했다.<br />
-나는 tuneR 패키지가 눈에 띄었는데 이 패키지 에서 자신이 가지고 있는 음원 파일을 재생시키는 기능을 가진 <code>play()</code> 함수가 있다. (더 정확히 말하면 Wave class 의 객체만을 실행시키는 함수이다.)</p>
-<p>그 전에 특정 음원 파일을 읽어들여 정보를 보관할 객체를 준비해야 할 필요가 있다. 음원 포맷이 mp3 이라면 <code>readMP3()</code> 와 같은 함수가 이를 도와준다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;tuneR&quot;</span>)
-<span class="kw">library</span>(tuneR)</code></pre></div>
+<h2 id="만약-특정-음원-파일을-재생시키고-싶다면-tuner-package">만약 특정
+음원 파일을 재생시키고 싶다면 tuneR package</h2>
+<p>소리재생에 관련된 포괄적인 패키지를 찾아본적도 있는데, 그 패키지
+안에는 특정 음원 파일을 재생시키는 기능도 있을것이라 생각했다.<br />
+나는 tuneR 패키지가 눈에 띄었는데 이 패키지 에서 자신이 가지고 있는 음원
+파일을 재생시키는 기능을 가진 <code>play()</code> 함수가 있다. (더
+정확히 말하면 Wave class 의 객체만을 실행시키는 함수이다.)</p>
+<p>그 전에 특정 음원 파일을 읽어들여 정보를 보관할 객체를 준비해야 할
+필요가 있다. 음원 포맷이 mp3 이라면 <code>readMP3()</code> 와 같은
+함수가 이를 도와준다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tuneR&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tuneR)</span></code></pre></div>
 <p>역시 tuneR 패키지를 설치하고 사용할 준비를 한다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mp3 &lt;-<span class="st"> </span><span class="kw">readMP3</span>(<span class="st">&quot;test.wav&quot;</span>)
-<span class="kw">play</span>(mp3)</code></pre></div>
-<p>위의 코드는 워킹디렉토리에 있는 &quot;Test.mp3&quot; 파일을 불러온 후 R에서 재생시키는 코드이다.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mp3 <span class="ot">&lt;-</span> <span class="fu">readMP3</span>(<span class="st">&quot;test.wav&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">play</span>(mp3)</span></code></pre></div>
+<p>위의 코드는 워킹디렉토리에 있는 “Test.mp3” 파일을 불러온 후 R에서
+재생시키는 코드이다.</p>
 <p><br><br></p>
 <h2 id="두-패키지의-차이점">두 패키지의 차이점</h2>
-<p>위에 비프음을 재생시키는 beepr 패키지와 다르게 tuneR 패키지의 <code>play()</code> 함수는 기본적으로 외부 플레이어를 이용한다는 점에서 차이점이 있다.<br />
-따라서 <code>beep()</code> 는 R내에서 이용하는데 쉽지만 tuneR 패키지와 조합한 <code>play()</code> 함수는 활성화되는 프로그램이 R 에서 외부 플레이어 애플리케이션으로 넘어가 버린다. 그리고 beepr 과 달리 tuneR 은 운영체계별로 사용법이 상이하다.</p>
+<p>위에 비프음을 재생시키는 beepr 패키지와 다르게 tuneR 패키지의
+<code>play()</code> 함수는 기본적으로 외부 플레이어를 이용한다는 점에서
+차이점이 있다.<br />
+따라서 <code>beep()</code> 는 R내에서 이용하는데 쉽지만 tuneR 패키지와
+조합한 <code>play()</code> 함수는 활성화되는 프로그램이 R 에서 외부
+플레이어 애플리케이션으로 넘어가 버린다. 그리고 beepr 과 달리 tuneR 은
+운영체계별로 사용법이 상이하다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -199,7 +220,7 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2016/04/30/playsound_in_R.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -223,7 +244,7 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -240,7 +261,7 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -257,7 +278,7 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -274,7 +295,24 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -298,7 +336,7 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -316,16 +354,6 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -807,7 +835,7 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 소리, 음원 재생하기 - tuneR, beepr package";
+        var disqus_identifier = "http://localhost:4000_R에서 소리, 음원 재생하기 - tuneR, beepr package";
         var disqus_title = "R에서 소리, 음원 재생하기 - tuneR, beepr package";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

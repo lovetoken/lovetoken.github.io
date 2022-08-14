@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2018/04/07/Rpackage.html" property="og:url">
+          <meta content="http://localhost:4000/r/2018/04/07/Rpackage.html" property="og:url">
         
         
           <meta content="2018-04-07T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 Package란?">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2018/04/07/Rpackage.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2018/04/07/Rpackage.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,61 +136,103 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>R은 다양한 사용자들의 희망으로 생겨나는 많은 특수한 목적의 로직들과 코드들의 집합을 패키지(Package)라는 형태로 배포한다.<br />
-개발자 및 실무진뿐만 아니라 일반 사용자들도 특정 주제에 대하여 완성도가 높고 설계가 잘된 코드들을 제 3자가 이용하기 쉽도록 패키지란 형태로 배포할 수 있으며, 이 배포가 용이하도록 만든 시스템은 R의 아주 중요한 역할을 하고 있다고 본다.</p>
-<p>패키지 안에는 활용 가능한 함수(function)들과 재현가능연구를 위한 빌트인 예제 데이터셋 객체, 패키지 사용 방법에 대한 개요 및 설명서(Vignette), 함수 도움말(R document) 파일들로 보통 구성되는 편이다.</p>
-<p>패키지의 공유는 <a href="https://cran.r-project.org/">CRAN(The Comprehensive R Archive Network)</a> 을 통해 공유되고 있고,<br />
+<p>R은 다양한 사용자들의 희망으로 생겨나는 많은 특수한 목적의 로직들과
+코드들의 집합을 패키지(Package)라는 형태로 배포한다.<br />
+개발자 및 실무진뿐만 아니라 일반 사용자들도 특정 주제에 대하여 완성도가
+높고 설계가 잘된 코드들을 제 3자가 이용하기 쉽도록 패키지란 형태로
+배포할 수 있으며, 이 배포가 용이하도록 만든 시스템은 R의 아주 중요한
+역할을 하고 있다고 본다.</p>
+<p>패키지 안에는 활용 가능한 함수(function)들과 재현가능연구를 위한
+빌트인 예제 데이터셋 객체, 패키지 사용 방법에 대한 개요 및
+설명서(Vignette), 함수 도움말(R document) 파일들로 보통 구성되는
+편이다.</p>
+<p>패키지의 공유는 <a href="https://cran.r-project.org/">CRAN(The
+Comprehensive R Archive Network)</a> 을 통해 공유되고 있고,<br />
 현존하는 패키지만 (18년 4월 기준) 12,400개가 있다.<br />
-어떤 패키지들이 CRAN 에 등재되어 있는지 확인하고 싶다면 <code>available.packages()</code> 함수를 통해 확인이 가능하다.<br />
-이를 통해 확인한 패키지 중 설치를 희망하는 패키지를 발견하였다면, <code>install.packages()</code> 함수 안에 패키지명을 넣고 실행해 그 패키지를 설치할 수 있다.<br />
-기본적으론 CRAN 서버에서 해당하는 패키지를 찾은 후 다운로드 및 설치를 시작하게 되므로 인터넷 연결이 되어있어야 한다.</p>
+어떤 패키지들이 CRAN 에 등재되어 있는지 확인하고 싶다면
+<code>available.packages()</code> 함수를 통해 확인이 가능하다.<br />
+이를 통해 확인한 패키지 중 설치를 희망하는 패키지를 발견하였다면,
+<code>install.packages()</code> 함수 안에 패키지명을 넣고 실행해 그
+패키지를 설치할 수 있다.<br />
+기본적으론 CRAN 서버에서 해당하는 패키지를 찾은 후 다운로드 및 설치를
+시작하게 되므로 인터넷 연결이 되어있어야 한다.</p>
 <p><br><br></p>
 <h2 id="패키지-설치방법">패키지 설치방법</h2>
-<p><code>install.packages()</code> 함수를 사용하여 설치하는것이 가장 쉬운 기본 방법이다.<br />
-예를 들어 데이터 시각화에서 대중적으로 이용하는 <a href="http://ggplot2.tidyverse.org/">ggplot2</a> 라는 패키지가 있는데,<br />
+<p><code>install.packages()</code> 함수를 사용하여 설치하는것이 가장
+쉬운 기본 방법이다.<br />
+예를 들어 데이터 시각화에서 대중적으로 이용하는 <a
+href="http://ggplot2.tidyverse.org/">ggplot2</a> 라는 패키지가
+있는데,<br />
 이 패키지를 설치하고 싶다면</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span></code></pre></div>
 <p>를 실행하게 되면 아래의 로그와 같이 다운로드 및 설치가 진행된다.</p>
 <center>
 <script src="https://asciinema.org/a/174870.js" id="asciicast-174870" async></script>
 </center>
 <p>R studio 에선 설치아이콘을 이용해 설치하는것도 가능하지만<br />
-결국 <code>install.packages(&quot;ggplot2&quot;)</code> 명령을 실행하는 것과 똑같다.</p>
+결국 <code>install.packages("ggplot2")</code> 명령을 실행하는 것과
+똑같다.</p>
 <br>
 <center>
 <img src="/assets/r_package.png">
 </center>
 <p><br></p>
 <p>설치 도입 부분에 CRAN 미러를 선택해 달라는 것은<br />
-<a href="https://cran.r-project.org/mirrors.html">수많은 미러 아카이브</a> 중 어떤 서버를 이용해 다운로드 할 것인지 묻는 것인데, 정확한 버전관리를 필요로 하는 게 아닌 이상<br />
-취향에 맞게 대한민국에 해당되는 미러사이트를 이용하든지 맨 위에 있는 &quot;0-Cloud&quot; 를 선택하고 설치를 진행하자.</p>
+<a href="https://cran.r-project.org/mirrors.html">수많은 미러
+아카이브</a> 중 어떤 서버를 이용해 다운로드 할 것인지 묻는 것인데,
+정확한 버전관리를 필요로 하는 게 아닌 이상<br />
+취향에 맞게 대한민국에 해당되는 미러사이트를 이용하든지 맨 위에 있는
+“0-Cloud” 를 선택하고 설치를 진행하자.</p>
 <p>더해서<br />
-설치 과정의 로그 중 에러 및 경고메세지가 출력되면서 설치가 중단될 변수가 있다.<br />
-그때의 로그를 잘 살펴보면 필요로 하는 디펜던시 문제일 경우가 대부분일 것이다.<br />
-이땐 디펜던시에 걸린, 필요로 하는 소프트웨어를 설치 후 패키지 설치를 다시 진행해 보자.<br />
-그래도 문제가 해결이 안될 땐 에러 로그를 그대로 복사해 구글에서 검색되는 Stackoverflow 들의 질문과 답변을 보고 문제를 직접 해결해 보는것이 현명한 방법일 것이다.</p>
+설치 과정의 로그 중 에러 및 경고메세지가 출력되면서 설치가 중단될 변수가
+있다.<br />
+그때의 로그를 잘 살펴보면 필요로 하는 디펜던시 문제일 경우가 대부분일
+것이다.<br />
+이땐 디펜던시에 걸린, 필요로 하는 소프트웨어를 설치 후 패키지 설치를
+다시 진행해 보자.<br />
+그래도 문제가 해결이 안될 땐 에러 로그를 그대로 복사해 구글에서 검색되는
+Stackoverflow 들의 질문과 답변을 보고 문제를 직접 해결해 보는것이 현명한
+방법일 것이다.</p>
 <p><br><br></p>
-<h2 id="설치된-패키지를-사용하기-위한-방법">설치된 패키지를 사용하기 위한 방법</h2>
-<p>설치가 되어있는 패키지를 실제로 사용하기 위해선 R 세션으로 로드하는 과정이 필요하다.<br />
-마치 패키지란 상자에 담겨있는 내용물을 R에서 사용할 수 있도록 펼쳐놓는 과정으로 필자는 비유하는 편인데<br />
-펼쳐놓는(로드하는) 방법은 대표적으로 <code>library()</code>, <code>require()</code> 함수를 이용하는 방법이다.<br />
-관습적으론 <code>library()</code> 를 R User 는 더 많이 이용하는 편이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre></div>
-<p>위의 코드를 실행하게 되면 ggplot2 패키지에 있는 여러 가지 함수들을 사용할 수 있게 된다.</p>
+<h2 id="설치된-패키지를-사용하기-위한-방법">설치된 패키지를 사용하기
+위한 방법</h2>
+<p>설치가 되어있는 패키지를 실제로 사용하기 위해선 R 세션으로 로드하는
+과정이 필요하다.<br />
+마치 패키지란 상자에 담겨있는 내용물을 R에서 사용할 수 있도록 펼쳐놓는
+과정으로 필자는 비유하는 편인데<br />
+펼쳐놓는(로드하는) 방법은 대표적으로 <code>library()</code>,
+<code>require()</code> 함수를 이용하는 방법이다.<br />
+관습적으론 <code>library()</code> 를 R User 는 더 많이 이용하는
+편이다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<p>위의 코드를 실행하게 되면 ggplot2 패키지에 있는 여러 가지 함수들을
+사용할 수 있게 된다.</p>
 <p><br><br></p>
-<h2 id="특정-패키지를-공부하고-사용할-때">특정 패키지를 공부하고 사용할 때</h2>
-<p>패키지는 특정 주제나 도메인에 대해서 특별한 목적으로 만들어진다.<br />
-위에서 예로 들은 ggplot2 패키지의 경우 그래프를 그릴 수 있는 또다른 시스템이며 광범위한 세계이다.<br />
-&quot;ggplot2&quot; 패키지를 로드하는 순간 활성화되는 함수들이 정말 많이 있고(100개 이상) 이를 제대로 활용하기 위해선 이 패키지만의 미니언어를 구사해야 한다.<br />
-즉 패키지라는 상자를 까는 순간 정체를 알 수 없는, 사용법을 모르는 수많은 부품이 펼쳐진 상태로 비유할 수 있다.<br />
-이 도구 모두를 아는 것은 많은 시간이 걸리고, 무엇보다 우리가 현재 필요로 하지 않을 도구일 가능성이 높다.<br />
-따라서 특정 패키지 안에서도 핵심적인 함수와 대표적인 기능들을 추린 후 단계적으로 이해해야 할 필요가 있다.<br />
-이 대표적인 함수를 조금씩 조금씩 이용해 보면서 연계되는 부수적인 함수들의 기능들을 체감하는 방식이 패키지를 처음 만나게 될 때의 좋은 전략이라고 생각하며,<br />
-기능이 많고 부피가 큰 패키지일수록 패키지 개발자는 이러한 점을 고려하여 설계했을 가능성이 높다.</p>
+<h2 id="특정-패키지를-공부하고-사용할-때">특정 패키지를 공부하고 사용할
+때</h2>
+<p>패키지는 특정 주제나 도메인에 대해서 특별한 목적으로
+만들어진다.<br />
+위에서 예로 들은 ggplot2 패키지의 경우 그래프를 그릴 수 있는 또다른
+시스템이며 광범위한 세계이다.<br />
+“ggplot2” 패키지를 로드하는 순간 활성화되는 함수들이 정말 많이
+있고(100개 이상) 이를 제대로 활용하기 위해선 이 패키지만의 미니언어를
+구사해야 한다.<br />
+즉 패키지라는 상자를 까는 순간 정체를 알 수 없는, 사용법을 모르는 수많은
+부품이 펼쳐진 상태로 비유할 수 있다.<br />
+이 도구 모두를 아는 것은 많은 시간이 걸리고, 무엇보다 우리가 현재 필요로
+하지 않을 도구일 가능성이 높다.<br />
+따라서 특정 패키지 안에서도 핵심적인 함수와 대표적인 기능들을 추린 후
+단계적으로 이해해야 할 필요가 있다.<br />
+이 대표적인 함수를 조금씩 조금씩 이용해 보면서 연계되는 부수적인
+함수들의 기능들을 체감하는 방식이 패키지를 처음 만나게 될 때의 좋은
+전략이라고 생각하며,<br />
+기능이 많고 부피가 큰 패키지일수록 패키지 개발자는 이러한 점을 고려하여
+설계했을 가능성이 높다.</p>
 <p><br><br></p>
 <h2 id="reference">Reference</h2>
 <ul>
-<li><a href="http://r-pkgs.had.co.nz/intro.html">R packages by Hadley Wickham</a></li>
+<li><a href="http://r-pkgs.had.co.nz/intro.html">R packages by Hadley
+Wickham</a></li>
 </ul>
 </div>
     <div class="share-page">
@@ -205,7 +247,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2018/04/07/Rpackage.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2018/04/07/Rpackage.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -229,7 +271,7 @@
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -246,7 +288,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -263,7 +305,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -280,7 +322,24 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -304,7 +363,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -322,16 +381,6 @@
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -813,7 +862,7 @@
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 Package란?";
+        var disqus_identifier = "http://localhost:4000_R에서 Package란?";
         var disqus_title = "R에서 Package란?";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

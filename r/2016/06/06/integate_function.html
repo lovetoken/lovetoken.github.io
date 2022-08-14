@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/06/06/integate_function.html" property="og:url">
+          <meta content="http://localhost:4000/r/2016/06/06/integate_function.html" property="og:url">
         
         
           <meta content="2016-06-06T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 구분구적법 적분과정 시뮬레이션 및 integrate() 함수 알아보기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/06/06/integate_function.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2016/06/06/integate_function.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,26 +136,29 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>내가 고등학교 이과생으로서 지낸 2학년 기억을 돌이켜 보면 적분의 방법은 이렇게 배웠던 것 같다.<br />
-넓이 계산이 쉬운 사각형을 함수와 x축 사이에 강제로 끼워 맞춤으로써 넓이를 근사시키는 과정을 밟았고,<br />
-특히 x축 기준 사각형을 등간격으로 잘게 잘게 쪼개는 과정을 무한대로 취함으로써 적분 값을 완벽히 근사시키는 법으로 구한다고 말이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-
-fun &lt;-<span class="st"> </span>function(x) x^<span class="dv">3</span> -<span class="st"> </span><span class="dv">7</span>*x^<span class="dv">2</span> +<span class="st"> </span><span class="dv">13</span>*x +<span class="st"> </span><span class="dv">12</span>
-
-fun_forarea &lt;-<span class="st"> </span>function(x){
-    res &lt;-<span class="st"> </span><span class="kw">fun</span>(x)
-    res[ x&lt;<span class="dv">0</span> |<span class="st"> </span>x&gt;<span class="dv">5</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span>
-    <span class="kw">return</span>(res)
-}
-
-P &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(-<span class="dv">1</span>, <span class="dv">6</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> x)) +<span class="st"> </span>
-<span class="st">    </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> fun) +<span class="st"> </span>
-<span class="st">    </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> fun_forarea, <span class="dt">geom =</span> <span class="st">&quot;area&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;#3E5CFF&quot;</span>, <span class="dt">alpha =</span> .<span class="dv">2</span>) +<span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) +<span class="st"> </span>
-<span class="st">    </span><span class="kw">theme_bw</span>()
-
-P</code></pre></div>
+<p>내가 고등학교 이과생으로서 지낸 2학년 기억을 돌이켜 보면 적분의
+방법은 이렇게 배웠던 것 같다.<br />
+넓이 계산이 쉬운 사각형을 함수와 x축 사이에 강제로 끼워 맞춤으로써
+넓이를 근사시키는 과정을 밟았고,<br />
+특히 x축 기준 사각형을 등간격으로 잘게 잘게 쪼개는 과정을 무한대로
+취함으로써 적분 값을 완벽히 근사시키는 법으로 구한다고 말이다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) x<span class="sc">^</span><span class="dv">3</span> <span class="sc">-</span> <span class="dv">7</span><span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">13</span><span class="sc">*</span>x <span class="sc">+</span> <span class="dv">12</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>fun_forarea <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    res <span class="ot">&lt;-</span> <span class="fu">fun</span>(x)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    res[ x<span class="sc">&lt;</span><span class="dv">0</span> <span class="sc">|</span> x<span class="sc">&gt;</span><span class="dv">5</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(res)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">6</span>)), <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_function</span>(<span class="at">fun =</span> fun) <span class="sc">+</span> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_function</span>(<span class="at">fun =</span> fun_forarea, <span class="at">geom =</span> <span class="st">&quot;area&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;#3E5CFF&quot;</span>, <span class="at">alpha =</span> .<span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span> </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>P</span></code></pre></div>
 <center>
 <br><img src="/assets/integrate-1.png" /><br>
 </center>
@@ -168,22 +171,34 @@ video of chunk integrate_ani
 <br>
 </center>
 <p>이러한 형태로 넓이를 구하기 힘든 곡선모형의 넓이를 구하기 위해<br />
-충분히 작은 n개의 기본도형으로 나누어 끼워 맞춘 후 넓이를 구한 것을 <span class="math inline"><em>S</em><sub><em>n</em></sub></span> 이라 할 때<br />
-기본도형을 더 작은 단위로 하여 <span class="math inline"><em>n</em></span> 을 극한으로 보냄으로써 넓이를 근사시키는 것을 <strong>구분구적법</strong>이라 한다.<br />
-즉 구분구적법은 <span class="math inline">lim<sub><em>n</em> → ∞</sub><em>S</em><sub><em>n</em></sub></span> 을 계산하는 과정이다.</p>
-<p>컴퓨터는 미분이든 적분이든 사람이 손으로 풀듯이 드라마틱하게 계산할 수 있는 능력이 없을 것이다.<br />
-구분구적법에 기반한 프로그래밍적인 계산을 통해 적분 값을 계산하게 될 것인데<br />
-R에서는 <code>intergrate()</code> 함수를 이용하여 적분 값을 계산할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">integrate</span>(fun, <span class="dv">0</span>, <span class="dv">5</span>)</code></pre></div>
+충분히 작은 n개의 기본도형으로 나누어 끼워 맞춘 후 넓이를 구한 것을
+<span class="math inline"><em>S</em><sub><em>n</em></sub></span> 이라 할
+때<br />
+기본도형을 더 작은 단위로 하여 <span
+class="math inline"><em>n</em></span> 을 극한으로 보냄으로써 넓이를
+근사시키는 것을 <strong>구분구적법</strong>이라 한다.<br />
+즉 구분구적법은 <span
+class="math inline">lim<sub><em>n</em> → ∞</sub><em>S</em><sub><em>n</em></sub></span>
+을 계산하는 과정이다.</p>
+<p>컴퓨터는 미분이든 적분이든 사람이 손으로 풀듯이 드라마틱하게 계산할
+수 있는 능력이 없을 것이다.<br />
+구분구적법에 기반한 프로그래밍적인 계산을 통해 적분 값을 계산하게 될
+것인데<br />
+R에서는 <code>intergrate()</code> 함수를 이용하여 적분 값을 계산할 수
+있다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate</span>(fun, <span class="dv">0</span>, <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## 87.08333 with absolute error &lt; 9.7e-13</code></pre>
 <p>구분구적법은 기본도형을 최대한 잘게 쪼개는 과정이 필요한데<br />
 이를 무한히 반복하는 것을 컴퓨터에게 시킨다면<br />
 stop 조건이 없을 경우 멈추지 않을것이다.<br />
-그렇다고 n을 무한으로 보내지 못하고 중간에 stop 하게 되면 적분값의 오차는 반드시 생길수 밖에 없을것이다.<br />
-추정하건대 <code>integrate()</code> 함수를 실행시키고 출력되는 &quot;absolute error&quot; 문구가 출력된 이유가 이것 때문일 것이라 생각한다.</p>
+그렇다고 n을 무한으로 보내지 못하고 중간에 stop 하게 되면 적분값의
+오차는 반드시 생길수 밖에 없을것이다.<br />
+추정하건대 <code>integrate()</code> 함수를 실행시키고 출력되는 “absolute
+error” 문구가 출력된 이유가 이것 때문일 것이라 생각한다.</p>
 <p><code>integrate()</code> 함수 사용방법은 간편하다.<br />
 계산을 하고 싶은 함수를 첫 번째 인자에 넘겨주고,<br />
-폐구간에 대한 정보를 <code>lower</code>, <code>upper</code> 인자에 넘겨주기만 하면 적분 값을 계산해 준다.</p>
+폐구간에 대한 정보를 <code>lower</code>, <code>upper</code> 인자에
+넘겨주기만 하면 적분 값을 계산해 준다.</p>
 </div>
     <div class="share-page">
     <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
@@ -197,7 +212,7 @@ stop 조건이 없을 경우 멈추지 않을것이다.<br />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/06/06/integate_function.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2016/06/06/integate_function.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -221,7 +236,7 @@ stop 조건이 없을 경우 멈추지 않을것이다.<br />
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -238,7 +253,7 @@ stop 조건이 없을 경우 멈추지 않을것이다.<br />
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -255,7 +270,7 @@ stop 조건이 없을 경우 멈추지 않을것이다.<br />
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -272,7 +287,24 @@ stop 조건이 없을 경우 멈추지 않을것이다.<br />
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -296,7 +328,7 @@ stop 조건이 없을 경우 멈추지 않을것이다.<br />
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -314,16 +346,6 @@ stop 조건이 없을 경우 멈추지 않을것이다.<br />
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -805,7 +827,7 @@ stop 조건이 없을 경우 멈추지 않을것이다.<br />
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 구분구적법 적분과정 시뮬레이션 및 integrate() 함수 알아보기";
+        var disqus_identifier = "http://localhost:4000_R에서 구분구적법 적분과정 시뮬레이션 및 integrate() 함수 알아보기";
         var disqus_title = "R에서 구분구적법 적분과정 시뮬레이션 및 integrate() 함수 알아보기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

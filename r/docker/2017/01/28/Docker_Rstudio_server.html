@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/docker/2017/01/28/Docker_Rstudio_server.html" property="og:url">
+          <meta content="http://localhost:4000/r/docker/2017/01/28/Docker_Rstudio_server.html" property="og:url">
         
         
           <meta content="2017-01-28T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="Docker 를 이용해 Rstudio server 띄워보기 (on Mac OSX)">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/docker/2017/01/28/Docker_Rstudio_server.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/docker/2017/01/28/Docker_Rstudio_server.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,24 +136,39 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>가상머신보다 경량화된 <a href="https://www.docker.com/">Docker</a> 기술을 이것저것 만져보며 차차 공부중에 있다.<br />
-Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 설명하지 못한다.<br />
-가상머신상에서 실험했을 당시 불편한 점들과 만족스럽지 못한 성능을 대체할만한 기술 중 Docker 라는 것이 있다는 소문을 듣고 추천을 받았으며 인기가 매우 높다는 정도만 알고 있다.</p>
-<p><strong>우선 본 글은 Docker를 이용해 Rstudio server를 띄움으로써 &quot;Hello Docker!&quot; 를 외치는 것이 목표라 하겠다.</strong></p>
+<p>가상머신보다 경량화된 <a href="https://www.docker.com/">Docker</a>
+기술을 이것저것 만져보며 차차 공부중에 있다.<br />
+Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 설명하지
+못한다.<br />
+가상머신상에서 실험했을 당시 불편한 점들과 만족스럽지 못한 성능을
+대체할만한 기술 중 Docker 라는 것이 있다는 소문을 듣고 추천을 받았으며
+인기가 매우 높다는 정도만 알고 있다.</p>
+<p><strong>우선 본 글은 Docker를 이용해 Rstudio server를 띄움으로써
+“Hello Docker!” 를 외치는 것이 목표라 하겠다.</strong></p>
 <p><br><br></p>
 <h2 id="docker-준비">Docker 준비</h2>
 <p>Docker 을 OSX 에서 설치하는 방법은 다양하다.<br />
-<a href="https://www.docker.com/">Docker 공식홈페이지</a>의 튜토리얼 대로 설치하는 것이 가장 정석의 방법이고,<br />
-<a href="https://penandpants.com/2014/03/09/docker-via-homebrew/">Homebrew 를 통해서도 설치</a>할 수 있으며,<br />
-<a href="https://www.docker.com/products/docker-toolbox">Docker Toolbox</a> 를 이용해 큰 고민 없이 설치할 수도 있다.</p>
-<p>필자는 정석방법대로 하다가 진도가 중간에 막히게 되어 Docker Toolbox 를 overwrite 한 시행착오가 있었는데, 현재로썬 Docker Toolbox 로 설치하는 것이 가장 간단한 방법이라 추측된다.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a><br />
-아래 사진은 <a href="https://www.docker.com/products/docker-toolbox">Docker Toolbox</a> 로 접속했을 때 모습이다.</p>
+<a href="https://www.docker.com/">Docker 공식홈페이지</a>의 튜토리얼
+대로 설치하는 것이 가장 정석의 방법이고,<br />
+<a
+href="https://penandpants.com/2014/03/09/docker-via-homebrew/">Homebrew
+를 통해서도 설치</a>할 수 있으며,<br />
+<a href="https://www.docker.com/products/docker-toolbox">Docker
+Toolbox</a> 를 이용해 큰 고민 없이 설치할 수도 있다.</p>
+<p>필자는 정석방법대로 하다가 진도가 중간에 막히게 되어 Docker Toolbox
+를 overwrite 한 시행착오가 있었는데, 현재로썬 Docker Toolbox 로 설치하는
+것이 가장 간단한 방법이라 추측된다.<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a><br />
+아래 사진은 <a
+href="https://www.docker.com/products/docker-toolbox">Docker Toolbox</a>
+로 접속했을 때 모습이다.</p>
 <br>
 <center>
 <img src="/assets/docker_toolbox.png" width=90%>
 </center>
 <p><br></p>
-<p>왼쪽 맥용 다운로드 링크를 누르면 <code>.pkg</code> 파일이 다운로드 된다.<br />
+<p>왼쪽 맥용 다운로드 링크를 누르면 <code>.pkg</code> 파일이 다운로드
+된다.<br />
 실행하여 설치를 진행하면 된다.</p>
 <br>
 <center>
@@ -176,8 +191,10 @@ Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 �
 <img src="/assets/dtInstall_5.png" width=70%>
 </center>
 <p><br></p>
-<p>다른 곳은 특이사항 없이 설치를 진행하면 되는데 이곳에서 무언가를 선택하라고 나온다.<br />
-오른쪽의 Kitematic (Beta) 는 Docker 를 GUI 방식으로 이용할 수 있는 것이고,<br />
+<p>다른 곳은 특이사항 없이 설치를 진행하면 되는데 이곳에서 무언가를
+선택하라고 나온다.<br />
+오른쪽의 Kitematic (Beta) 는 Docker 를 GUI 방식으로 이용할 수 있는
+것이고,<br />
 왼쪽은 터미널을 이용해서 빠르게 사용하겠다는 것이다.<br />
 나는 왼쪽을 눌러 사용하는 터미널을 선택 후 계속 버튼을 눌렀다.</p>
 <br>
@@ -185,31 +202,39 @@ Docker가 왜 가상머신보다 가볍고 빠른지 지금은 논리적으로 �
 <img src="/assets/dtInstall_6.png" width=70%>
 </center>
 <p><br></p>
-<p>설치가 성공되면 터미널에서 <code>docker</code>, <code>boot2docker</code> 가 실행 가능하다.<br />
-설치가 잘 되었는지 실험삼아 각각의 버전을 확인해보는 커맨드를 입력 해 보았다.</p>
-<pre class="sh"><code>docker --version
-boot2docker version</code></pre>
+<p>설치가 성공되면 터미널에서 <code>docker</code>,
+<code>boot2docker</code> 가 실행 가능하다.<br />
+설치가 잘 되었는지 실험삼아 각각의 버전을 확인해보는 커맨드를 입력 해
+보았다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> <span class="at">--version</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">boot2docker</span> version</span></code></pre></div>
 <center>
 <script type="text/javascript" src="https://asciinema.org/a/123557.js" id="asciicast-123557" async></script>
 </center>
 <p><br><br></p>
-<h2 id="boot2docker-로-docker-vm-준비하기">boot2docker 로 docker VM 준비하기</h2>
-<p>&quot;boot2docker&quot; 이름대로 docker 를 이용하기 전에 수행되어야 한다.</p>
-<pre class="sh"><code>boot2docker</code></pre>
+<h2 id="boot2docker-로-docker-vm-준비하기">boot2docker 로 docker VM
+준비하기</h2>
+<p>“boot2docker” 이름대로 docker 를 이용하기 전에 수행되어야 한다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">boot2docker</span></span></code></pre></div>
 <center>
 <script type="text/javascript" src="https://asciinema.org/a/123558.js" id="asciicast-123558" async></script>
 </center>
-<p>boot2docker 의 사용법을 살펴보면 많은 기능이 있는 것을 볼 수 있는데, 이 중에서 지금은 <code>init</code>, <code>up</code>, <code>ssh</code> 만 알고 넘어가도 되겠다.<br />
+<p>boot2docker 의 사용법을 살펴보면 많은 기능이 있는 것을 볼 수 있는데,
+이 중에서 지금은 <code>init</code>, <code>up</code>, <code>ssh</code> 만
+알고 넘어가도 되겠다.<br />
 아래와 같이 입력해 실행한다.</p>
-<pre class="sh"><code>boot2docker init
-boot2docker up</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">boot2docker</span> init</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">boot2docker</span> up</span></code></pre></div>
 <center>
 <script type="text/javascript" src="https://asciinema.org/a/123559.js" id="asciicast-123559" async></script>
 </center>
-<p><code>boot2docker init</code> 로 docker daemon 에 대한 VM 을 처음으로 준비한다.<br />
-그다음 <code>boot2docker up</code> 로 docker daemon VM 을 실행시키는데 수십초 정도가 걸린다.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a><br />
+<p><code>boot2docker init</code> 로 docker daemon 에 대한 VM 을 처음으로
+준비한다.<br />
+그다음 <code>boot2docker up</code> 로 docker daemon VM 을 실행시키는데
+수십초 정도가 걸린다.<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a><br />
 그 이후에</p>
-<pre class="sh"><code>$ boot2docker ssh</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> boot2docker ssh</span></code></pre></div>
 <center>
 <script type="text/javascript" src="https://asciinema.org/a/123561.js" id="asciicast-123561" async></script>
 </center>
@@ -232,19 +257,27 @@ boot2docker up</code></pre>
 Boot2Docker version 1.8.0, build master : 7f12e95 - Tue Aug 11 17:55:16 UTC 2015
 Docker version 1.8.0, build 0d03096
 docker@boot2docker:~$</code></pre>
-<p>docker VM 에 접속되며 호스트 OS 가 아닌 bash 인것을 확인할 수 있다.<br />
-저 고래의 모습이 터미널에 출력되면 docker를 본격적으로 이용할 수 있는 모든 준비가 되었다는 것으로 이해해도 좋다. 🐳🐳🐳</p>
+<p>docker VM 에 접속되며 호스트 OS 가 아닌 bash 인것을 확인할 수
+있다.<br />
+저 고래의 모습이 터미널에 출력되면 docker를 본격적으로 이용할 수 있는
+모든 준비가 되었다는 것으로 이해해도 좋다. 🐳🐳🐳</p>
 <p><br><br></p>
-<h2 id="hello-docker-를-위한-rstudio-server-띄우기">Hello Docker! 를 위한 Rstudio server 띄우기</h2>
-<p>Docker 의 장점은 여러가지가 있다고 하는데 대표적으로 내세우는 장점이 배포성이라고 한다.<br />
-<a href="https://hub.docker.com/">Docker Hub</a> 는 개발환경 세팅이 끝난 이미지들을 공유하는 곳인데,<br />
-지금 예로 들을 Rstudio server 의 경우도 환경세팅이 끝난 이미지를 찾아 바로 이용할 수 있다.<br />
-이 말은 Rstudio server 구축에 필요한 과정들을 쓸데없이 재발명하지 않고 사용할 수 있다는 것이다.<br />
+<h2 id="hello-docker-를-위한-rstudio-server-띄우기">Hello Docker! 를
+위한 Rstudio server 띄우기</h2>
+<p>Docker 의 장점은 여러가지가 있다고 하는데 대표적으로 내세우는 장점이
+배포성이라고 한다.<br />
+<a href="https://hub.docker.com/">Docker Hub</a> 는 개발환경 세팅이 끝난
+이미지들을 공유하는 곳인데,<br />
+지금 예로 들을 Rstudio server 의 경우도 환경세팅이 끝난 이미지를 찾아
+바로 이용할 수 있다.<br />
+이 말은 Rstudio server 구축에 필요한 과정들을 쓸데없이 재발명하지 않고
+사용할 수 있다는 것이다.<br />
 실제로 Rstudio server 구축은 어려우면 어렵지 쉬운 과제가 아니다.</p>
 <p>docker VM 에 접속된 상황에서</p>
 <pre><code>docker@boot2docker:~$ docker search rstudio-server</code></pre>
 <p>를 입력해 보자.<br />
-위의 명령어는 Docker Hub 에서 &quot;rstudio-server&quot; 란 검색어로 이미지를 검색하는 것이다.</p>
+위의 명령어는 Docker Hub 에서 “rstudio-server” 란 검색어로 이미지를
+검색하는 것이다.</p>
 <pre><code>docker@boot2docker:~$ docker search rstudio-server
 
 NAME                                     DESCRIPTION                   STARS  OFFICIAL  AUTOMATED
@@ -258,15 +291,20 @@ mjmg/fedora-rstudio-opencpu-server       Latest FEDORA with rstudi...  0        
 davislaboratory/docker-rstudio-serve...  rstudio server for Docker...  0                [OK]
 mjmg/fedora-rstudio-server               Latest Fedora with rstudi...  0                [OK]
 mjmg/centos-rstudio-opencpu-shiny-se...  Latest CENTOS with rstudi...  0                [OK]</code></pre>
-<p>잘 보면 3번째 열에 &quot;STARS&quot; 라는 것이 있는데 Docker 사용자가 추천한 횟수를 의미한다.<br />
+<p>잘 보면 3번째 열에 “STARS” 라는 것이 있는데 Docker 사용자가 추천한
+횟수를 의미한다.<br />
 가장 높은 별을 받은 첫번째 이미지를 우리 예제로 이용해 볼 것이다.</p>
-<p>첫번째 이미지의 명칭은 &quot;rocker/rstudio&quot; 이다.<br />
-이 이미지를 받고 컨테이너를 생성하여(<em>docker VM 에 Rstudio server 를 설치한다고 이해해도 좋다</em>) Rstudio server 를 실행해 보겠다.<br />
+<p>첫번째 이미지의 명칭은 “rocker/rstudio” 이다.<br />
+이 이미지를 받고 컨테이너를 생성하여(<em>docker VM 에 Rstudio server 를
+설치한다고 이해해도 좋다</em>) Rstudio server 를 실행해 보겠다.<br />
 <code>docker run</code> 명령이면 이 모든 것이 한번에 된다.<br />
 아래 커맨드를 입력해 실행해 보자.</p>
 <pre><code>docker@boot2docker:~$ docker run --rm -p 8787:8787 rocker/rstudio</code></pre>
-<p>조금 복잡해 보일지 몰라도 핵심은 <code>docker run &lt;이미지 이름&gt;</code> 이다.<br />
-<code>--rm</code> , <code>-p</code> 인자들은 부가적인 옵션으로 생각하면 되는데 <code>--rm</code> 은 컨테이너 종료시 리소스들을 자동으로 반환해주고, <code>-p</code> 는 포트번호를 직접 입력할 수 있게 한다.</p>
+<p>조금 복잡해 보일지 몰라도 핵심은
+<code>docker run &lt;이미지 이름&gt;</code> 이다.<br />
+<code>--rm</code> , <code>-p</code> 인자들은 부가적인 옵션으로 생각하면
+되는데 <code>--rm</code> 은 컨테이너 종료시 리소스들을 자동으로
+반환해주고, <code>-p</code> 는 포트번호를 직접 입력할 수 있게 한다.</p>
 <pre><code>docker@boot2docker:~$ docker run --rm -p 8787:8787 rocker/rstudio
 
 [fix-attrs.d] applying owners &amp; permissions fixes...
@@ -280,13 +318,18 @@ mjmg/centos-rstudio-opencpu-shiny-se...  Latest CENTOS with rstudi...  0        
 [services.d] starting services
 [services.d] done.</code></pre>
 <p>무엇인가 촤라락 실행된다.<br />
-그리고 실행이 유지되는데, 바로 Rstudio server 를 가동중인 상태인 것이다. 포트번호를 8787로 부여했기 때문에 docker VM 의 IP에서 8787 번 포트로 접속하면 가동중인 Rstudio server 를 띄울 수 있게 된다.</p>
-<p>그런데 잠깐 docker VM 의 IP 를 모르는 상태에서 설명을 쭉쭉 해버리고 있었다.<br />
-IP는 <code>ifconfig</code> 등으로 확인해 볼 수 있는데 잠깐 가동중인 Rstudio server 를 종료하고 bash 로 빠져 나와야 할 상황이다.<br />
-이럴땐 <kbd>ctrl</kbd> + <kbd>C</kbd> 를 눌러 bash 로 빠져나올 수 있다.<br />
+그리고 실행이 유지되는데, 바로 Rstudio server 를 가동중인 상태인 것이다.
+포트번호를 8787로 부여했기 때문에 docker VM 의 IP에서 8787 번 포트로
+접속하면 가동중인 Rstudio server 를 띄울 수 있게 된다.</p>
+<p>그런데 잠깐 docker VM 의 IP 를 모르는 상태에서 설명을 쭉쭉 해버리고
+있었다.<br />
+IP는 <code>ifconfig</code> 등으로 확인해 볼 수 있는데 잠깐 가동중인
+Rstudio server 를 종료하고 bash 로 빠져 나와야 할 상황이다.<br />
+이럴땐 <kbd>ctrl</kbd> + <kbd>C</kbd> 를 눌러 bash 로 빠져나올 수
+있다.<br />
 그리고 IP 확인을 위해</p>
 <pre><code>docker@boot2docker:~$ ifconfig</code></pre>
-<p>를 실행하여 &quot;eth1&quot; 의 IP 를 확인한다.</p>
+<p>를 실행하여 “eth1” 의 IP 를 확인한다.</p>
 <pre><code>docker@boot2docker:~$ ifconfig
 
 docker0   Link encap:Ethernet  HWaddr 02:42:22:E3:A5:EA
@@ -324,7 +367,8 @@ lo        Link encap:Local Loopback
           TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:0
           RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</code></pre>
-<p>필자의 경우 <code>http://192.168.59.103:8787</code> 가 Rstudio server 를 띄울 수 있는 주소가 된다.<br />
+<p>필자의 경우 <code>http://192.168.59.103:8787</code> 가 Rstudio server
+를 띄울 수 있는 주소가 된다.<br />
 다시 Rstudio server 컨테이너를 실행하기 위해</p>
 <pre><code>docker@boot2docker:~$ docker run --rm -p 8787:8787 rocker/rstudio</code></pre>
 <p>이 후 <code>http://192.168.59.103:8787</code> 로 접속해 본다.</p>
@@ -344,19 +388,31 @@ lo        Link encap:Local Loopback
 <img src="/assets/rss.png">
 </center>
 <p><br></p>
-<p>Rstudio server 를 띄울 수 있고 웹상에서 Rstudio 를 이용할 수 있게 된다.<br />
-이렇게 해서 Docker 를 이용한 Rstudio server 이미지를 이용해 손쉽게 &quot;Hello Docker!&quot; 해보았다.<br />
-Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 어려운 구축과정 없이 이용할 수 있지 않을까?</p>
+<p>Rstudio server 를 띄울 수 있고 웹상에서 Rstudio 를 이용할 수 있게
+된다.<br />
+이렇게 해서 Docker 를 이용한 Rstudio server 이미지를 이용해 손쉽게
+“Hello Docker!” 해보았다.<br />
+Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 어려운
+구축과정 없이 이용할 수 있지 않을까?</p>
 <p><br><br></p>
 <h2 id="reference">Reference</h2>
 <ul>
-<li><a href="https://subicura.com/2017/01/19/docker-guide-for-beginners-2.html">초보를 위한 도커 안내서 - 설치하고 컨테이너 실행하기</a></li>
+<li><a
+href="https://subicura.com/2017/01/19/docker-guide-for-beginners-2.html">초보를
+위한 도커 안내서 - 설치하고 컨테이너 실행하기</a></li>
 </ul>
-<section class="footnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Docker command 를 사용하던 도중에도 Docker Toolbox 를 설치하는것을 추천하는 경고메세지가 나오기도 한다 (Docker Toolbox (https://docker.com/toolbox) is the recommended install method)<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p><code>boot2docker up</code> 대신 <code>boot2docker boot</code>, <code>boot2docker start</code> 도 똑같다<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p>Docker command 를 사용하던 도중에도 Docker Toolbox 를
+설치하는것을 추천하는 경고메세지가 나오기도 한다 (Docker Toolbox
+(https://docker.com/toolbox) is the recommended install method)<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><code>boot2docker up</code> 대신
+<code>boot2docker boot</code>, <code>boot2docker start</code> 도
+똑같다<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -372,7 +428,7 @@ Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/docker/2017/01/28/Docker_Rstudio_server.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/docker/2017/01/28/Docker_Rstudio_server.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -396,7 +452,7 @@ Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -415,7 +471,7 @@ Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -434,7 +490,7 @@ Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -453,7 +509,26 @@ Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -481,7 +556,7 @@ Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -503,16 +578,6 @@ Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
             
@@ -1140,7 +1205,7 @@ Docker 를 조금 공부한다면 다른 서비스들도 이러한 방법으로 
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_Docker 를 이용해 Rstudio server 띄워보기 (on Mac OSX)";
+        var disqus_identifier = "http://localhost:4000_Docker 를 이용해 Rstudio server 띄워보기 (on Mac OSX)";
         var disqus_title = "Docker 를 이용해 Rstudio server 띄워보기 (on Mac OSX)";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

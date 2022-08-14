@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>lovetoken</title>
+        <meta name="author" content="Lovetoken" />
+        <meta name="description" content="installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드" />
+        <meta name="keywords" content="installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드, , R" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="" property="fb:app_id">
+        <meta content="" property="og:site_name">
+        
+          <meta content="installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="" property="og:description">
+        
+        
+          <meta content="http://localhost:4000/r/2022/08/14/installr_on_win.html" property="og:url">
+        
+        
+          <meta content="2022-08-14T00:00:00+09:00" property="article:published_time">
+          <meta content="http://localhost:4000/about/" property="article:author">
+        
+        
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="R" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@">
+        <meta name="twitter:creator" content="@">
+        
+          <meta name="twitter:title" content="installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드">
+        
+        
+          <meta name="twitter:url" content="http://localhost:4000/r/2022/08/14/installr_on_win.html">
+        
+        
+          <meta name="twitter:description" content="">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', 'UA-89656101-1', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">Lovetoken</h1>
+                
+                <div id="about">
+                    저는 개발 취향을 가진 데이터 분석가 Jr. 입니다.
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://twitter.com/LT_Lovetoken" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/lovetoken/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>Navigation</strong><br />
+                    &nbsp;&raquo; <a href="/">Home</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">About Me</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/lovetoken">Github</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</h1>
+<span class="time">14 Aug 2022</span>
+
+<span class="categories">
+    &raquo; <a href="/category/R">R</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><p><br><br></p>
+<p>오픈소스들의 특징은 개발 주기가 빨라 업데이트 및 배포가 잦은 편이다.
+R과 R에서 동작하는 패키지들 역시 마찬가지이다. 이렇게 자주
+업그레이드되는 R, R package 들은 우리에게 많은 유용함을 제공해주고 있다.
+빠르게 변화하는 환경은 우리에게 유용함을 제공해 줄수도 있지만 반대로
+빈번한 업데이트로 생기는 예상치 못한 외적 이슈들이 생겨 피곤할 수도 있는
+부분이다. 사람마다 다른 부분이겠지만 일반적인 사용자라면 항상 최신버전을
+사용해 유용함을 소비하고 싶을 경우도 있고, 중요한 프로젝트에 실사용을
+검토하는 신중한 사용자인 경우 업데이트에 민감해 이전버전과 넘나들며
+최신버전을 검증한 후 적합한 버전을 현업에 사용할 수도 있겠다.</p>
+<p>가장 기본적으로 겪었던 이슈는 어떻게 최신버전을 인지하고 이후
+업데이트를해야 할지 이다.</p>
+<p><br><br></p>
+<h2 id="r-package-의-경우">R package 의 경우</h2>
+<p>R Package 의 업데이트는 간편한 편이다. 여기서 필자가 말하는 R Package
+업데이트란, 이미 설치된 패키지 라이브러리에 대해서 CRAN 에 등록된 가장
+최신 버전의 패키지를 찾아내어 업그레이드하는 것을 말한다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>()</span></code></pre></div>
+<p>이 코드를 실행시키면 어떤 미러사이트를 통해 다운로드 할 것인지
+묻는다. 적당한 것을 선택한 이후엔 업그레이드가 될 패키지의 구버전 및
+설치될 신버전에 대한 정보를 확인시켜주는 로그와 함께 정말로 각각의
+패키지들에 대해 업데이트를 진행할 것인지 Yes or No 를 되묻는다.</p>
+<br>
+<center>
+<img src="/assets/installr_on_win_update.png" />
+</center>
+<p><br></p>
+<p>위의 그림은 <code>update.packages()</code> 를 실행시키고 패키지
+설치의 여부를 묻는 질의에 일일이 <code>y</code> 답하여 설치를 진행한
+경우이다.</p>
+<p>만약 각각의 업그레이드할 패키지에 대해 y, y, y, y, … 를 입력하고 싶지
+않은 경우는</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>(<span class="at">ask =</span> F)</span></code></pre></div>
+<p>를 실행하면 되묻지 않고 일괄 업그레이드한다.</p>
+<p>R studio 를 사용한다면 노란색 음영으로 표시한 Update 버튼을 누르는
+것으로 해결된다.</p>
+<br>
+<center>
+<figure>
+<img src="/assets/installr_on_win_Rstudio.png"
+alt="우측 하단 패널에 Update 버튼 클릭" />
+<figcaption aria-hidden="true">우측 하단 패널에 Update 버튼
+클릭</figcaption>
+</figure>
+</center>
+<p><br></p>
+<p><br><br></p>
+<h2 id="r-본체의-경우">R 본체의 경우</h2>
+<p>R package 가 아닌 R 자체를 업그레이드하고 싶은 경우이다. 이는
+운영체계별로 상이한데 본 포스팅 글은 Windows 기준으로 설명한다.</p>
+<p>R의 업그레이드는 어떻게 되는가? 사실 업그레이드라기 보단 새로 출시된
+버전을 추가로 설치하게 된다. 3.2.3 Version 으로 업그레이드를 원하고
+이보다 낮은 버전의 3.2.2 Version 이 설치되어 있는 상황을 가정해
+보겠다.</p>
+<br>
+<center>
+<img src="/assets/installr_on_win_1.png" />
+</center>
+<p><br></p>
+<p>R 홈페이지를 통해 3.2.3 Version 설치파일을 다운로드하고 실행해
+설치하면 (윈도우에선 특히) 기존 버전을 의식하지 않은 채 3.2.3 Version 을
+추가로 설치하게 된다. 따라서 기존 3.2.2 Version 은 지워지지 않는다.
+이렇게 기존 버전에서 패치되는 개념이 아닌 독립적 설치이다. 만약에
+최신버전 사용에 문제가 발생하여 이전버전의 R 환경이 필요하다면 지워지지
+않았기 때문에 이전버전의 R을 그대로 사용하면 된다.</p>
+<br>
+<center>
+<figure>
+<img src="/assets/installr_on_win_2.png"
+alt="R 3.2.3 Version 설치 후 ~Program Files/R 디렉토리의 모습 : R-3.2.2 가 남아있다." />
+<figcaption aria-hidden="true">R 3.2.3 Version 설치 후 ~Program Files/R
+디렉토리의 모습 : <strong>R-3.2.2 가 남아있다.</strong></figcaption>
+</figure>
+</center>
+<p><br></p>
+<p>새로운 버전이 출시된다면 그 새로운 버전을 추가로 깔고 사용하심으로써
+업그레이드 과정은 사실상 끝났다고 볼 수 있다.<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p><br></p>
+<h3 id="새-버전이-출시-될-때마다-홈페이지를-들락날락해야-될까">새 버전이
+출시 될 때마다 홈페이지를 들락날락해야 될까?</h3>
+<p>비교적 자주 새로운 버전을 출시하는데 그럴 때 마다 R 홈페이지로 들어가
+새로운 버전을 다운로드하는 과정은 솔직히 번거로울것이다😶<br />
+이 번거로움을 피하고 싶다면 installr 패키지의 <code>updateR()</code>
+함수가 괜찮은 방법이다. 해당 함수를 이용하면 커멘드 창에서 비교적 쉽게
+새 버전을 다운로드할 수 있다.</p>
+<br>
+<center>
+<figure>
+<img src="/assets/installr_on_win_3.png" alt="R 홈페이지 접속" />
+<figcaption aria-hidden="true">R 홈페이지 접속</figcaption>
+</figure>
+</center>
+<br> <br>
+<center>
+<figure>
+<img src="/assets/installr_on_win_4.png"
+alt="다운로드 창으로 들어가 미러사이트를 선택하고" />
+<figcaption aria-hidden="true">다운로드 창으로 들어가 미러사이트를
+선택하고</figcaption>
+</figure>
+</center>
+<br> <br>
+<center>
+<figure>
+<img src="/assets/installr_on_win_5.png" alt="자신의 운영체계를 골라" />
+<figcaption aria-hidden="true">자신의 운영체계를 골라</figcaption>
+</figure>
+</center>
+<br> <br>
+<center>
+<figure>
+<img src="/assets/installr_on_win_6.png" alt="“base” 를 클릭하고" />
+<figcaption aria-hidden="true">“base” 를 클릭하고</figcaption>
+</figure>
+</center>
+<br> <br>
+<center>
+<figure>
+<img src="/assets/installr_on_win_7.png"
+alt="설치파일을 다운받는 링크클릭" />
+<figcaption aria-hidden="true">설치파일을 다운받는 링크클릭</figcaption>
+</figure>
+</center>
+<p><br></p>
+<p>그림의 번거로운 과정을 아래 코드의 실행으로 대체 할 수 있다는
+것이다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">updateR</span>()</span></code></pre></div>
+<p>실행시 자신의 R 구버전 및 최신버전이 무엇인지 팝업창이 뜨고, 다운로드
+및 설치 진행 여부를 묻는 팝업창이 뜬다. 일반적으로 모두 <kbd>Yes</kbd>
+를 눌러 진행하게 되면 간편히 최신버전을 이용할 수 있다. 다음 주제로도
+언급 드리겠지만 이전버전에 사용되던 패키지를 그대로 copy 하겠느냐는
+팝업창도 뜨는데, 필요하다면 역시 <kbd>Yes</kbd> 버튼을 눌러 진행하는
+것을 추천한다.</p>
+<p><br></p>
+<h3
+id="r-새-버전을-설치하면-항상-잘-사용-하던-패키지들이-사라져-불편해">R
+새 버전을 설치하면 항상 잘 사용 하던 패키지들이 사라져 불편해!</h3>
+<p>사실 installr 패키지는 R의 업데이트 및 설치의 편리 보다도 더 중요한
+이점이 하나 더 있다.<br />
+<code>updateR()</code> 함수를 사용하지 않고 수동적으로 설치하게 되면
+이전에 설치한 패키지들이 연동되지 않는 불편을 겪게 될 것인데<br />
+installr 패키지는 이러한 불편함도 염두 해 신버전을 설치할 때 기존
+사용하던 패키지의 복사 여부를 묻고 사용자가 Yes 로 승인하면 기존 사용
+패키지를 복사하여 신버전 디렉토리에 저장시킨다. <strong>“R 새 버전을
+설치하면 항상 잘 사용 하던 패키지들이 사라져서(?) 불편해요!”</strong> 의
+문제를 해결할 수 있게 된다.</p>
+<p>참고로 패키지 리소스의 디렉토리가
+<code>Program Files/R-X.X.X/library</code> 가 아닌 다른 디렉토리에
+별도로 운영하고 있다면, 굳이 위에처럼 패키지를 중복해서 복사할 필요는 또
+없다. R 최신버전을 설치한 후 package library 디렉토리의 path 를 별도로
+운영하는 위치로 지정하면 되며, 이를 통해 패키지로 인한 중복설치를 예방해
+볼 수도 있다. 허나 기본적인 패키지 설치 규칙에 벗어나는 방법인 만큼 추후
+관리포인트가 생기기 마련이며 일반사용자분들께는 추천하고 싶지 않다.
+자세한 것은 <code>.libPaths()</code> 함수와 해당함수의 도움말 문서를
+참고 바란다.</p>
+<p><br></p>
+<h3 id="installr-package-의-다른-기능들">installr package 의 다른
+기능들</h3>
+<p>installr 패키지의 전체 기능은 <a
+href="https://github.com/talgalili/installr/"
+class="uri">https://github.com/talgalili/installr/</a> 에 자세하게
+나와있지만 <code>updateR()</code> 함수보단 <code>installr()</code> 이
+포괄적이고 더 일반화된 함수다. R 뿐만 아니라 Rstudio, Pandoc, Rtools
+등등 R을 사용하다 필요하면 설치가 필요한 플러그인들이 종종 생길 것인데,
+이들을 손쉽게 설치할 수 있도록 아래와 같은 팝업창이 뜨게 됩니다.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">installr</span>()</span></code></pre></div>
+<br>
+<center>
+<img src="/assets/installr_on_win_installr.png" />
+</center>
+<p><br></p>
+<p>저기서 “R(updateR)” 을 누르게 된다면 <code>updateR()</code> 함수를
+실행시킨 것과 동일하다. Rstudio 가 눈에 띄어 실행해 보았는데, 역시 기존
+구버전이 무엇이고 설치될 신버전이 무엇인지에 대한 팝업창이 뜨며
+진행여부를 Yes 를 누르게 되면 최신설치파일을 다운로드하고 실행하여
+설치를 도와준다.</p>
+<p>이 글은 R-bloggers 의 <a
+href="http://www.r-bloggers.com/updating-r-on-windows-through-a-menu-bar-installr-0-9-released-on-cran/">Updating
+R (on Windows) through a menu-bar: installr 0.9 released on CRAN</a>의
+글을 보고 작성하게 되었다.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>이전버전의 삭제는 해도 되고 안 해도 되고 원하는 대로
+하면 된다. R 자체의 용량은 매우 적기 때문에(패키지 파일을 제외하면 100Mb
+정도) 굳이 삭제할 필요성을 느끼지 못하기도 하고, 본문에서도 이야기했듯이
+이전버전이 때에 따라 필요한 경우가 있다. 따라서 그대로 놔두는 편이다<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</div>
+    <div class="share-page">
+    <span style="float: left;">Share this on &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2022/08/14/installr_on_win.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>Related Posts</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/r/2019/05/11/tidyverse_before_after.html">&laquo; Tidyverse before & after (Comming Soon)</a>
+  
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+
+        var disqus_shortname = "lovetoken";
+        var disqus_identifier = "http://localhost:4000_installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드";
+        var disqus_title = "installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    /* ]]> */
+    </script>
+</div>
+
+                <footer>
+                    Copyleft by Lovetoken
+                     
+                    - <a href="https://github.com/lovetoken">https://github.com/lovetoken</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>                    
+                        <iframe src="https://ghbtns.com/github-btn.html?user=agusmakmun&repo=agusmakmun.github.io&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>

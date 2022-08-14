@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2018/01/22/DEA.html" property="og:url">
+          <meta content="http://localhost:4000/r/2018/01/22/DEA.html" property="og:url">
         
         
           <meta content="2018-01-22T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2018/01/22/DEA.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2018/01/22/DEA.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,28 +136,41 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>약 5년전 컨설팅 인턴 일을 하면서 자료포락분석<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>(Data envelopment analysis 이하 DEA)이 필요했던 시점이 있다.<br />
-그때 당시 실제로 분석을 하기 위하여 컴퓨터 프로그램을 이용할 필요가 있었고<br />
-<a href="http://expertchoice.co.kr/expert_choice.html">Export choice</a> 프로그램을 이용해 DEA 분석을 한 논문들을 상당수 찾을 수 있었다.<br />
-하지만 Export choice 는 상용 프로그램이었고 새로 알아야 된다는 점들 때문에 빠르게 시도해 볼 수 없었다.<br />
-이때는 깊은 분석보단 만만하게 시도해 볼 수 있었던 환경이 필요했었는데<br />
-마침 DEA 를 해볼 수 있는 R package 가 있었고 그 패키지 이름은 Benchmarking 이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;Benchmarking&quot;</span>)
-<span class="kw">library</span>(Benchmarking)</code></pre></div>
-<p>Benchmarking 패키지의 <code>dea()</code> 함수를 이용하여 얼마든지 벤치마킹의 대상이 되는 의사결정단위(자료포괄분석에서 이를 Decision Making Unit. DMU로 줄여 표현한다) 별 efficiencies 값들을 구해낼 수 있었다.<br />
-우선 투입요소와 산출요소가 정해지고 그에 따른 정량적인 데이터가 존재하면<br />
+<p>약 5년전 컨설팅 인턴 일을 하면서 자료포락분석<a href="#fn1"
+class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>(Data envelopment analysis 이하
+DEA)이 필요했던 시점이 있다.<br />
+그때 당시 실제로 분석을 하기 위하여 컴퓨터 프로그램을 이용할 필요가
+있었고<br />
+<a href="http://expertchoice.co.kr/expert_choice.html">Export choice</a>
+프로그램을 이용해 DEA 분석을 한 논문들을 상당수 찾을 수 있었다.<br />
+하지만 Export choice 는 상용 프로그램이었고 새로 알아야 된다는 점들
+때문에 빠르게 시도해 볼 수 없었다.<br />
+이때는 깊은 분석보단 만만하게 시도해 볼 수 있었던 환경이
+필요했었는데<br />
+마침 DEA 를 해볼 수 있는 R package 가 있었고 그 패키지 이름은
+Benchmarking 이다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;Benchmarking&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Benchmarking)</span></code></pre></div>
+<p>Benchmarking 패키지의 <code>dea()</code> 함수를 이용하여 얼마든지
+벤치마킹의 대상이 되는 의사결정단위(자료포괄분석에서 이를 Decision
+Making Unit. DMU로 줄여 표현한다) 별 efficiencies 값들을 구해낼 수
+있었다.<br />
+우선 투입요소와 산출요소가 정해지고 그에 따른 정량적인 데이터가
+존재하면<br />
 각 DMU 에 대한 효율성 평가를 수행할 수 있다.</p>
 <p><br><br></p>
 <h2 id="예제-데이터에-대한-설명">예제 데이터에 대한 설명</h2>
-<p>Benchmarking package 안에 있는 데이터 셋 중 하나인 <code>charnes1981</code> 을 예제로 DEA를 간단히 수행해 보겠다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1004</span>)
-<span class="kw">library</span>(dplyr)
-
-<span class="kw">data</span>(charnes1981)
-charnes1981 &lt;-<span class="st"> </span>charnes1981 %&gt;%<span class="st"> </span>
-<span class="st">    </span>tbl_df %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">sample_n</span>(<span class="dv">20</span>)
-charnes1981</code></pre></div>
+<p>Benchmarking package 안에 있는 데이터 셋 중 하나인
+<code>charnes1981</code> 을 예제로 DEA를 간단히 수행해 보겠다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1004</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(charnes1981)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>charnes1981 <span class="ot">&lt;-</span> charnes1981 <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    tbl_df <span class="sc">%&gt;%</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample_n</span>(<span class="dv">20</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>charnes1981</span></code></pre></div>
 <pre><code>## # A tibble: 20 x 11
 ##     firm    x1    x2    x3    x4    x5    y1    y2    y3   pft
 ##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
@@ -183,53 +196,61 @@ charnes1981</code></pre></div>
 ## 20    54 82.45 15.52 45.00 44.23    13 59.63 64.41 35.89     0
 ## # ... with 1 more variables: name &lt;fctr&gt;</code></pre>
 <p>data 를 불러온 후<br />
-설명의 편의상 tibble type 으로 <code>charnes1981</code> 형을 변환 및 20개의 샘플링을 하였다. <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a><br />
+설명의 편의상 tibble type 으로 <code>charnes1981</code> 형을 변환 및
+20개의 샘플링을 하였다. <a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a><br />
 각 변수들에 대한 설명은 다음과 같다.</p>
 <ul>
-<li><code>firm</code> : 학교별 ID</li>
+<li><p><code>firm</code> : 학교별 ID</p></li>
 <li><p><code>name</code> : 주소</p></li>
-<li><code>x1</code> : education level of the mother<br />
-</li>
-<li><code>x2</code> : highest occupation of a family member<br />
-</li>
-<li><code>x3</code> : parental visits to school<br />
-</li>
-<li><code>x4</code> : time spent with children in school-related topics<br />
-</li>
+<li><p><code>x1</code> : education level of the mother<br />
+</p></li>
+<li><p><code>x2</code> : highest occupation of a family member<br />
+</p></li>
+<li><p><code>x3</code> : parental visits to school<br />
+</p></li>
+<li><p><code>x4</code> : time spent with children in school-related
+topics<br />
+</p></li>
 <li><p><code>x5</code> : the number of teachers at the site</p></li>
-<li><code>y1</code> : reading score<br />
-</li>
-<li><code>y2</code> : math score<br />
-</li>
+<li><p><code>y1</code> : reading score<br />
+</p></li>
+<li><p><code>y2</code> : math score<br />
+</p></li>
 <li><p><code>y3</code> : self–esteem score</p></li>
 </ul>
-<p>x로 시작하는 변수들은 각 학교들에 대한 독립변수(투입요소) 로 볼 수 있고<br />
-y로 시작하는 변수들은 그 학교에 대한 평가이므로 종속변수(산출요소) 로 볼 수 있다.</p>
+<p>x로 시작하는 변수들은 각 학교들에 대한 독립변수(투입요소) 로 볼 수
+있고<br />
+y로 시작하는 변수들은 그 학교에 대한 평가이므로 종속변수(산출요소) 로 볼
+수 있다.</p>
 <p><br><br></p>
 <h2 id="dea-분석">DEA 분석</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span>charnes1981 %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;x&quot;</span>)) %&gt;%<span class="st"> </span>
-<span class="st">    </span>as.matrix
-
-Y &lt;-<span class="st"> </span>charnes1981 %&gt;%<span class="st"> </span>
-<span class="st">    </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;y&quot;</span>)) %&gt;%<span class="st"> </span>
-<span class="st">    </span>as.matrix   
-
-dea_res &lt;-<span class="st"> </span><span class="kw">dea</span>(X, Y)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> charnes1981 <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;x&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    as.matrix</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> charnes1981 <span class="sc">%&gt;%</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;y&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    as.matrix   </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>dea_res <span class="ot">&lt;-</span> <span class="fu">dea</span>(X, Y)</span></code></pre></div>
 <p><code>dea()</code> 함수의<br />
 첫번째 인자에는 투입변수에 대한 데이터를 matrix 형으로 입력한다.<br />
-위의 예제 경우 5개의 투입변수가 존재하므로 <code>X</code> 처럼 적절하게 묶어주었다.</p>
-<p>두번째 인자에는 산출변수에 대한 데이터를 역시 matrix 형으로 입력한다.<br />
+위의 예제 경우 5개의 투입변수가 존재하므로 <code>X</code> 처럼 적절하게
+묶어주었다.</p>
+<p>두번째 인자에는 산출변수에 대한 데이터를 역시 matrix 형으로
+입력한다.<br />
 마찬가지로 3개의 산출변수를 적절히 묶은 <code>Y</code> 를 입력했다.</p>
 <p><code>dea()</code> 함수로 반환되는 결과물들은 다양하다.<br />
-관심대상이 효율성 점수만이라면 아래처럼 <code>eff</code> 속성값만을 호출해 본다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dea_res$eff</code></pre></div>
+관심대상이 효율성 점수만이라면 아래처럼 <code>eff</code> 속성값만을
+호출해 본다.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dea_res<span class="sc">$</span>eff</span></code></pre></div>
 <pre><code>##  [1] 1.0000000 1.0000000 0.8844074 0.9541975 0.9326048 0.9964845 1.0000000
 ##  [8] 1.0000000 0.9804835 1.0000000 1.0000000 1.0000000 1.0000000 0.9850544
 ## [15] 1.0000000 1.0000000 1.0000000 1.0000000 0.9713179 1.0000000</code></pre>
 <p>의사결정단위 70개 별 Efficiencies 값이 출력된다.<br />
 학교주소별 Efficiencies 값을 매치시켜 표현해보거나</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data.frame</span>(<span class="dt">School_site_name =</span> charnes1981$name, <span class="dt">Efficiencies =</span> dea_res$eff)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">School_site_name =</span> charnes1981<span class="sc">$</span>name, <span class="at">Efficiencies =</span> dea_res<span class="sc">$</span>eff)</span></code></pre></div>
 <pre><code>##    School_site_name Efficiencies
 ## 1            Racine    1.0000000
 ## 2          New York    1.0000000
@@ -252,32 +273,46 @@ dea_res &lt;-<span class="st"> </span><span class="kw">dea</span>(X, Y)</code></
 ## 19          Buffalo    0.9713179
 ## 20          Lebanon    1.0000000</code></pre>
 <p>아래 plotting 결과물 처럼<br />
-제공되는 <code>dea.plot.frontier()</code> 함수 결과물인 효율최적선을 통해<br />
+제공되는 <code>dea.plot.frontier()</code> 함수 결과물인 효율최적선을
+통해<br />
 상대적인 효율성 평가를 하는데 용이할 것이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dea.plot.frontier</span>(X, Y, <span class="dt">txt =</span> T)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dea.plot.frontier</span>(X, Y, <span class="at">txt =</span> T)</span></code></pre></div>
 <p><img src="/assets/DEA_1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p><code>dea()</code> 함수는 DEA분석 주제에 대한 대부분의 기능을 총괄하고 있기 때문에 복잡하고, 제공되는 인자들도 많다.<br />
+<p><code>dea()</code> 함수는 DEA분석 주제에 대한 대부분의 기능을
+총괄하고 있기 때문에 복잡하고, 제공되는 인자들도 많다.<br />
 투입 혹은 산출 관점에 따라 분석방법이 달라지기도 하고,<br />
 가정이 달라지기도 한다.<br />
-위의 예제처럼 인자의 조종 없이 <code>dea()</code> 함수를 이용하면 기본값 설정을 따르는데<br />
-투입기준의 Variable returns to scale 가정을 기반하에 효율성 평가를 한다. (자세한건 <code>RTS</code>, <code>ORIENTATION</code> 인자의 도움말을 살펴본다)</p>
+위의 예제처럼 인자의 조종 없이 <code>dea()</code> 함수를 이용하면 기본값
+설정을 따르는데<br />
+투입기준의 Variable returns to scale 가정을 기반하에 효율성 평가를 한다.
+(자세한건 <code>RTS</code>, <code>ORIENTATION</code> 인자의 도움말을
+살펴본다)</p>
 <p><br><br></p>
 <h2 id="분석-결과-해석">분석 결과 해석</h2>
-<p>Efficiency 값이 1인 학교는 투입대비 산출 즉 효율성이 20개의 DMU 와 상대적으로 비교했을 때 가장 높다고 할 수 있다.<br />
-하지만 이는 절대적인 효율성 평가가 아닌 상대적 효율성 평가라는 것을 항상 염두해야 한다.</p>
+<p>Efficiency 값이 1인 학교는 투입대비 산출 즉 효율성이 20개의 DMU 와
+상대적으로 비교했을 때 가장 높다고 할 수 있다.<br />
+하지만 이는 절대적인 효율성 평가가 아닌 상대적 효율성 평가라는 것을 항상
+염두해야 한다.</p>
 <p>Efficiency 값이 1 미만인 학교는<br />
 1의 값을 가진 학교보다 비효율이 발생하고 있다는것을 의미하며<br />
 그 값이 작으면 작을수록 비효율이 크다고 해석은 가능하다.</p>
 <p><br><br></p>
 <h2 id="reference">Reference</h2>
 <ul>
-<li><a href="http://book.naver.com/bookdb/book_detail.nhn?bid=6874299">책 : 효율성분석이론 DEA 자료포락분석법 - 이정동, 오동현 (지필미디어) 2012.03.30</a></li>
+<li><a
+href="http://book.naver.com/bookdb/book_detail.nhn?bid=6874299">책 :
+효율성분석이론 DEA 자료포락분석법 - 이정동, 오동현 (지필미디어)
+2012.03.30</a></li>
 </ul>
-<section class="footnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>자료포괄분석 으로도 불리는데 무엇이 맞는지는 모르겠다<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>원 데이터의 개수는 70개이며 이중 20개의 랜덤샘플링을 의미함<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p>자료포괄분석 으로도 불리는데 무엇이 맞는지는 모르겠다<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>원 데이터의 개수는 70개이며 이중 20개의 랜덤샘플링을
+의미함<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -293,7 +328,7 @@ dea_res &lt;-<span class="st"> </span><span class="kw">dea</span>(X, Y)</code></
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2018/01/22/DEA.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2018/01/22/DEA.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -317,7 +352,7 @@ dea_res &lt;-<span class="st"> </span><span class="kw">dea</span>(X, Y)</code></
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -334,7 +369,7 @@ dea_res &lt;-<span class="st"> </span><span class="kw">dea</span>(X, Y)</code></
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -351,7 +386,7 @@ dea_res &lt;-<span class="st"> </span><span class="kw">dea</span>(X, Y)</code></
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -368,7 +403,24 @@ dea_res &lt;-<span class="st"> </span><span class="kw">dea</span>(X, Y)</code></
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -392,7 +444,7 @@ dea_res &lt;-<span class="st"> </span><span class="kw">dea</span>(X, Y)</code></
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -410,16 +462,6 @@ dea_res &lt;-<span class="st"> </span><span class="kw">dea</span>(X, Y)</code></
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -901,7 +943,7 @@ dea_res &lt;-<span class="st"> </span><span class="kw">dea</span>(X, Y)</code></
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기";
+        var disqus_identifier = "http://localhost:4000_R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기";
         var disqus_title = "R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

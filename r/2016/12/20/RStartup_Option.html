@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2016/12/20/RStartup_Option.html" property="og:url">
+          <meta content="http://localhost:4000/r/2016/12/20/RStartup_Option.html" property="og:url">
         
         
           <meta content="2016-12-20T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 Startup option 설정하기 (on Mac OSX)">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2016/12/20/RStartup_Option.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2016/12/20/RStartup_Option.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,56 +136,85 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>만약 R에서 꾸준히 + 자주자주 + 빈번하게 활용하는 패키지가 있다면 매번 <code>library()</code> 로 호출하는 것이 귀찮을 수 있다.<br />
-나의 경우 dplyr package 를 항시 사용하는 편이어서 R이 켜질 때 자동으로 <code>library(dplyr)</code> 이 실행됐으면 했는데 찾아보니 R은 이런 경우를 생각해 Startup option 들을 제공하고 있다는 것을 알았다.</p>
+<p>만약 R에서 꾸준히 + 자주자주 + 빈번하게 활용하는 패키지가 있다면 매번
+<code>library()</code> 로 호출하는 것이 귀찮을 수 있다.<br />
+나의 경우 dplyr package 를 항시 사용하는 편이어서 R이 켜질 때 자동으로
+<code>library(dplyr)</code> 이 실행됐으면 했는데 찾아보니 R은 이런
+경우를 생각해 Startup option 들을 제공하고 있다는 것을 알았다.</p>
 <p>여러 방법이 있지만 내가 볼 때 가장 간편한 방법은<br />
-자신의 홈 디렉토리에 &quot;.Rprofile&quot; 이란 숨김파일을 만든 후<br />
-이안에 자주 활용하는 패키지를 호출하는 명령어를 미리 적어 놓는 것이다.</p>
+자신의 홈 디렉토리에 “.Rprofile” 이란 숨김파일을 만든 후<br />
+이안에 자주 활용하는 패키지를 호출하는 명령어를 미리 적어 놓는
+것이다.</p>
 <p>자세히 정리하면 아래와 같다.</p>
 <p><br><br></p>
-<h2 id="홈-디렉토리로-들어가-.rprofile-숨김파일-만들기">홈 디렉토리로 들어가 &quot;.Rprofile&quot; 숨김파일 만들기</h2>
-<p>쉘에서 틸드(~)문자는 사용자의 홈 디렉토리를 의미하는 특별한 기호이다.<br />
+<h2 id="홈-디렉토리로-들어가-.rprofile-숨김파일-만들기">홈 디렉토리로
+들어가 “.Rprofile” 숨김파일 만들기</h2>
+<p>쉘에서 틸드(~)문자는 사용자의 홈 디렉토리를 의미하는 특별한
+기호이다.<br />
 터미널을 실행한 후 틸드문자를 이용해 사용자 홈디렉토리로 이동한다.</p>
 <pre><code>$ cd ~</code></pre>
-<p>아마도 &quot;.Rprofile&quot; 파일이 존재할 수도 있다. 없을 수도 있고. 상황에 따라 다르겠지만 Startup 설정을 따로 한적이 없다면 텅 비어있는 숨김파일일 것이다.<br />
-어떠한 텍스트에디터이든 상관없이 &quot;.Rprofile&quot; 을 실행하여 수정하거나 새로 만들면 되겠다.<br />
+<p>아마도 “.Rprofile” 파일이 존재할 수도 있다. 없을 수도 있고. 상황에
+따라 다르겠지만 Startup 설정을 따로 한적이 없다면 텅 비어있는 숨김파일일
+것이다.<br />
+어떠한 텍스트에디터이든 상관없이 “.Rprofile” 을 실행하여 수정하거나 새로
+만들면 되겠다.<br />
 vi 를 이용한다고 치면</p>
 <pre><code>$ vi .Rprofile</code></pre>
-<p>를 통해 &quot;.Rprofile&quot; 를 열거나 새로 만든다고 가정해 보겠다.</p>
+<p>를 통해 “.Rprofile” 를 열거나 새로 만든다고 가정해 보겠다.</p>
 <p><br><br></p>
-<h2 id="startup-커멘드-및-옵션들-작성하기">Startup 커멘드 및 옵션들 작성하기</h2>
-<p>이제 <code>~/.Rprofile</code> 에 무언가를 작성할 것인데 (vi 상에서 <kbd>i</kbd> 를 눌러 편집모드를 취한다)<br />
-바로 이곳에 <code>library(dplyr)</code> 과 같은 것을 적고 저장시키면 (<kbd>Esc</kbd> 을 눌러 명령모드 후 <kbd>:wq</kbd> 입력 후 <kbd>Enter</kbd>)<br />
-앞으로 R을 실행하면 실행하자마자 <code>library(dplyr)</code> 명령어가 자동으로 실행된다.<br />
-이러한 간단한 원리를 이용해 패키지 자동호출 외에도 <code>options()</code> set 을 미리 지정하여 원하는 환경으로 커스터마이징할 수 있겠다.</p>
-<p>예를 들면 필자는 &quot;.Rprofile&quot; 을 이렇게 저장하여 R을 이용중이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">help_type =</span> <span class="st">&quot;html&quot;</span>) ## 1
-
-<span class="kw">library</span>(knitr)
-<span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(ggplot2) ## 2
-
-opts_chunk$<span class="kw">set</span>(<span class="dt">fig.path =</span> <span class="st">&quot;output/figure/&quot;</span>, <span class="dt">fig.align =</span> <span class="st">&quot;center&quot;</span>, <span class="dt">out.width =</span> <span class="st">&quot;80%&quot;</span>, <span class="dt">warning =</span> F, <span class="dt">message =</span> F) ## 3
-
-<span class="kw">theme_set</span>(<span class="kw">theme_bw</span>()) ## 4</code></pre></div>
+<h2 id="startup-커멘드-및-옵션들-작성하기">Startup 커멘드 및 옵션들
+작성하기</h2>
+<p>이제 <code>~/.Rprofile</code> 에 무언가를 작성할 것인데 (vi 상에서
+<kbd>i</kbd> 를 눌러 편집모드를 취한다)<br />
+바로 이곳에 <code>library(dplyr)</code> 과 같은 것을 적고 저장시키면
+(<kbd>Esc</kbd> 을 눌러 명령모드 후 <kbd>:wq</kbd> 입력 후
+<kbd>Enter</kbd>)<br />
+앞으로 R을 실행하면 실행하자마자 <code>library(dplyr)</code> 명령어가
+자동으로 실행된다.<br />
+이러한 간단한 원리를 이용해 패키지 자동호출 외에도
+<code>options()</code> set 을 미리 지정하여 원하는 환경으로
+커스터마이징할 수 있겠다.</p>
+<p>예를 들면 필자는 “.Rprofile” 을 이렇게 저장하여 R을 이용중이다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">help_type =</span> <span class="st">&quot;html&quot;</span>) <span class="do">## 1</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="do">## 2</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">fig.path =</span> <span class="st">&quot;output/figure/&quot;</span>, <span class="at">fig.align =</span> <span class="st">&quot;center&quot;</span>, <span class="at">out.width =</span> <span class="st">&quot;80%&quot;</span>, <span class="at">warning =</span> F, <span class="at">message =</span> F) <span class="do">## 3</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>()) <span class="do">## 4</span></span></code></pre></div>
 <ol type="1">
-<li>함수 도움말을 볼 때 기본적으로 html 포맷의 형태에 문서가 열리는걸로 고정시켰다<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></li>
+<li>함수 도움말을 볼 때 기본적으로 html 포맷의 형태에 문서가 열리는걸로
+고정시켰다<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></li>
 <li>자주쓰는 3개의 패키지가 R session이 실행될 때 로드 되도록 했다</li>
-<li>Rmarkdown 을 쓰는 경우 knitr 패키지를 통해 코드청크 글로벌 옵션들을 지정시켰다</li>
+<li>Rmarkdown 을 쓰는 경우 knitr 패키지를 통해 코드청크 글로벌 옵션들을
+지정시켰다</li>
 <li>ggplot2 의 메인테마에 대한 설정이다</li>
 </ol>
-<p>여러분도 여러분 나름의 &quot;.Rprofile&quot; 를 작성해 보시길 🙂<br />
-그리고 본 글은 Mac OS X 를 기준으로 작성한 경우이지만, 리눅스이어도 홈 디렉토리의 경로만 약간 다를 뿐 틸드문자를 이용한 방법은 똑같다고 보면 되겠다.</p>
+<p>여러분도 여러분 나름의 “.Rprofile” 를 작성해 보시길 🙂<br />
+그리고 본 글은 Mac OS X 를 기준으로 작성한 경우이지만, 리눅스이어도 홈
+디렉토리의 경로만 약간 다를 뿐 틸드문자를 이용한 방법은 똑같다고 보면
+되겠다.</p>
 <p><br><br></p>
 <h2 id="reference">Reference</h2>
 <ul>
-<li><a href="http://www.onthelambda.com/2014/09/17/fun-with-rprofile-and-customizing-r-startup/">Fun with .Rprofile and customizing R startup</a></li>
-<li><a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html"><code>?Startup</code> in R</a></li>
+<li><a
+href="http://www.onthelambda.com/2014/09/17/fun-with-rprofile-and-customizing-r-startup/">Fun
+with .Rprofile and customizing R startup</a></li>
+<li><a
+href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html"><code>?Startup</code>
+in R</a></li>
 </ul>
-<section class="footnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>IDE 에 따라 R 도움말 문서가 html 에서 열리거나 콘솔에 실행되는 등 유동적으로 설정된다. 이걸 무조건 html type 으로만 열리게 고정시킨 경우이다<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>IDE 에 따라 R 도움말 문서가 html 에서 열리거나 콘솔에
+실행되는 등 유동적으로 설정된다. 이걸 무조건 html type 으로만 열리게
+고정시킨 경우이다<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -201,7 +230,7 @@ opts_chunk$<span class="kw">set</span>(<span class="dt">fig.path =</span> <span 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2016/12/20/RStartup_Option.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2016/12/20/RStartup_Option.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -225,7 +254,7 @@ opts_chunk$<span class="kw">set</span>(<span class="dt">fig.path =</span> <span 
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -242,7 +271,7 @@ opts_chunk$<span class="kw">set</span>(<span class="dt">fig.path =</span> <span 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -259,7 +288,7 @@ opts_chunk$<span class="kw">set</span>(<span class="dt">fig.path =</span> <span 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -276,7 +305,24 @@ opts_chunk$<span class="kw">set</span>(<span class="dt">fig.path =</span> <span 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -300,7 +346,7 @@ opts_chunk$<span class="kw">set</span>(<span class="dt">fig.path =</span> <span 
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -318,16 +364,6 @@ opts_chunk$<span class="kw">set</span>(<span class="dt">fig.path =</span> <span 
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -809,7 +845,7 @@ opts_chunk$<span class="kw">set</span>(<span class="dt">fig.path =</span> <span 
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 Startup option 설정하기 (on Mac OSX)";
+        var disqus_identifier = "http://localhost:4000_R에서 Startup option 설정하기 (on Mac OSX)";
         var disqus_title = "R에서 Startup option 설정하기 (on Mac OSX)";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

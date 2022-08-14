@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2018/01/02/allequal.html" property="og:url">
+          <meta content="http://localhost:4000/r/2018/01/02/allequal.html" property="og:url">
         
         
           <meta content="2018-01-02T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 all.equal() 함수를 이용한 객체의 동일성 확인하기">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2018/01/02/allequal.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2018/01/02/allequal.html">
         
         
           <meta name="twitter:description" content="">
@@ -137,120 +137,162 @@
 <div class="content">
     <div class="post"><p><br><br></p>
 <p>수학공부 중 종종 이런일이 많았다.</p>
-<p>원 공식에 의해 계산이 불가하거나 손으로 풀기 복잡할 경우 근사치에 대한 간편공식을 배우게 되는 경우가 있다.<br />
-그 간편공식으로써 풀은 결과물이 원 공식으로 풀은 결과물과 동일한지 비교해보는 작업을 R을 이용하여 자주 하곤 했다.<br />
+<p>원 공식에 의해 계산이 불가하거나 손으로 풀기 복잡할 경우 근사치에
+대한 간편공식을 배우게 되는 경우가 있다.<br />
+그 간편공식으로써 풀은 결과물이 원 공식으로 풀은 결과물과 동일한지
+비교해보는 작업을 R을 이용하여 자주 하곤 했다.<br />
 만약 그 결과물이 어떤 하나의 스칼라값으로 나온다면,<br />
 금방 비교하여 동일한지 여부를 파악할 수 있다.<br />
-R을 이용한다면 논리연산자를 이용해 빠르고 정확하게 비교가 가능할 것이다.<br />
-<code>==</code> 의 기호는 데이터셋의 원소별로 동일하면 TRUE, 틀리면 FALSE 를 반환하게 되므로 좌변과 우변이 같은지를 아래처럼 확인할 수 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span>/<span class="dv">3</span> ==<span class="st"> </span><span class="dv">804</span>/<span class="dv">1206</span></code></pre></div>
+R을 이용한다면 논리연산자를 이용해 빠르고 정확하게 비교가 가능할
+것이다.<br />
+<code>==</code> 의 기호는 데이터셋의 원소별로 동일하면 TRUE, 틀리면
+FALSE 를 반환하게 되므로 좌변과 우변이 같은지를 아래처럼 확인할 수
+있다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">/</span><span class="dv">3</span> <span class="sc">==</span> <span class="dv">804</span><span class="sc">/</span><span class="dv">1206</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<p>위의 예시처럼 쉽게 같은지 구분하기 힘든것을 논리연산자를 통해 동일한지 파악할 수 있다.</p>
+<p>위의 예시처럼 쉽게 같은지 구분하기 힘든것을 논리연산자를 통해
+동일한지 파악할 수 있다.</p>
 <p><br><br></p>
 <h2 id="all.equal-함수"><code>all.equal()</code> 함수</h2>
-<p>그런데 이러한 논리연산자 말고, R에서는 오늘 알아볼 <code>all.equal()</code> 이란 함수가 있다.<br />
-이 함수의 쓰임은 비교하고자 하는 2개의 R객체가 동일한지를 확인<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>해 준다.</p>
-<p>가끔, 아니 곧잘 대용량의 크기가 큰 데이터셋의 동일여부를 파악해야 할 때도 있을것이다.<br />
+<p>그런데 이러한 논리연산자 말고, R에서는 오늘 알아볼
+<code>all.equal()</code> 이란 함수가 있다.<br />
+이 함수의 쓰임은 비교하고자 하는 2개의 R객체가 동일한지를 확인<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>해 준다.</p>
+<p>가끔, 아니 곧잘 대용량의 크기가 큰 데이터셋의 동일여부를 파악해야 할
+때도 있을것이다.<br />
 아래와 같은 상황을 예로 들어 보겠다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## 일반 행렬곱셈
-A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">600</span> *<span class="st"> </span><span class="dv">400</span>)), <span class="dt">nrow =</span> <span class="dv">600</span>, <span class="dt">ncol =</span> <span class="dv">400</span>)
-B &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">400</span> *<span class="st"> </span><span class="dv">800</span>)), <span class="dt">nrow =</span> <span class="dv">400</span>, <span class="dt">ncol =</span> <span class="dv">800</span>)
-AB &lt;-<span class="st"> </span>A %*%<span class="st"> </span>B
-
-## 분할행렬 생성
-A11 &lt;-<span class="st"> </span>A[<span class="dv">1</span>:<span class="dv">200</span>, <span class="dv">1</span>:<span class="dv">200</span>]
-A12 &lt;-<span class="st"> </span>A[<span class="dv">1</span>:<span class="dv">200</span>, <span class="dv">201</span>:<span class="dv">400</span>]
-A21 &lt;-<span class="st"> </span>A[<span class="dv">201</span>:<span class="dv">600</span>, <span class="dv">1</span>:<span class="dv">200</span>]
-A22 &lt;-<span class="st"> </span>A[<span class="dv">201</span>:<span class="dv">600</span>, <span class="dv">201</span>:<span class="dv">400</span>]
-
-B11 &lt;-<span class="st"> </span>B[<span class="dv">1</span>:<span class="dv">200</span>, <span class="dv">1</span>:<span class="dv">200</span>]
-B12 &lt;-<span class="st"> </span>B[<span class="dv">1</span>:<span class="dv">200</span>, <span class="dv">201</span>:<span class="dv">800</span>]
-B21 &lt;-<span class="st"> </span>B[<span class="dv">201</span>:<span class="dv">400</span>, <span class="dv">1</span>:<span class="dv">200</span>]
-B22 &lt;-<span class="st"> </span>B[<span class="dv">201</span>:<span class="dv">400</span>, <span class="dv">201</span>:<span class="dv">800</span>]
-
-partition_AB &lt;-<span class="st"> </span><span class="kw">rbind</span>(
-  <span class="kw">cbind</span>(A11 %*%<span class="st"> </span>B11 +<span class="st"> </span>A12 %*%<span class="st"> </span>B21, A11 %*%<span class="st"> </span>B12 +<span class="st"> </span>A12 %*%<span class="st"> </span>B22),
-  <span class="kw">cbind</span>(A21 %*%<span class="st"> </span>B11 +<span class="st"> </span>A22 %*%<span class="st"> </span>B21, A21 %*%<span class="st"> </span>B12 +<span class="st"> </span>A22 %*%<span class="st"> </span>B22)
-  ) <span class="co"># 분할행렬 생성 후 행렬곱셈</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 일반 행렬곱셈</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">600</span> <span class="sc">*</span> <span class="dv">400</span>)), <span class="at">nrow =</span> <span class="dv">600</span>, <span class="at">ncol =</span> <span class="dv">400</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">400</span> <span class="sc">*</span> <span class="dv">800</span>)), <span class="at">nrow =</span> <span class="dv">400</span>, <span class="at">ncol =</span> <span class="dv">800</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>AB <span class="ot">&lt;-</span> A <span class="sc">%*%</span> B</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 분할행렬 생성</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>A11 <span class="ot">&lt;-</span> A[<span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>A12 <span class="ot">&lt;-</span> A[<span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, <span class="dv">201</span><span class="sc">:</span><span class="dv">400</span>]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>A21 <span class="ot">&lt;-</span> A[<span class="dv">201</span><span class="sc">:</span><span class="dv">600</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>A22 <span class="ot">&lt;-</span> A[<span class="dv">201</span><span class="sc">:</span><span class="dv">600</span>, <span class="dv">201</span><span class="sc">:</span><span class="dv">400</span>]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>B11 <span class="ot">&lt;-</span> B[<span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>]</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>B12 <span class="ot">&lt;-</span> B[<span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, <span class="dv">201</span><span class="sc">:</span><span class="dv">800</span>]</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>B21 <span class="ot">&lt;-</span> B[<span class="dv">201</span><span class="sc">:</span><span class="dv">400</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>]</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>B22 <span class="ot">&lt;-</span> B[<span class="dv">201</span><span class="sc">:</span><span class="dv">400</span>, <span class="dv">201</span><span class="sc">:</span><span class="dv">800</span>]</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>partition_AB <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>(A11 <span class="sc">%*%</span> B11 <span class="sc">+</span> A12 <span class="sc">%*%</span> B21, A11 <span class="sc">%*%</span> B12 <span class="sc">+</span> A12 <span class="sc">%*%</span> B22),</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>(A21 <span class="sc">%*%</span> B11 <span class="sc">+</span> A22 <span class="sc">%*%</span> B21, A21 <span class="sc">%*%</span> B12 <span class="sc">+</span> A22 <span class="sc">%*%</span> B22)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="co"># 분할행렬 생성 후 행렬곱셈</span></span></code></pre></div>
 <p>위의 코드가 무엇인지 간략하게 설명하면<br />
-첫번째는 임의의 행렬 <code>A</code>와 행렬 <code>B</code>를 생성시킨 후, 두 행렬의 곱셈을 <code>AB</code>로 할당한 것이며,<br />
-두번째는 행렬 <code>A</code>, <code>B</code> 를 이와 같이 알맞게 분할한 후</p>
+첫번째는 임의의 행렬 <code>A</code>와 행렬 <code>B</code>를 생성시킨 후,
+두 행렬의 곱셈을 <code>AB</code>로 할당한 것이며,<br />
+두번째는 행렬 <code>A</code>, <code>B</code> 를 이와 같이 알맞게 분할한
+후</p>
 <center>
 <br><img src="/assets/allequal_1.png"><br>
 </center>
-<p>단 <span class="math inline"><em>A</em><sub>11</sub></span>, <span class="math inline"><em>B</em><sub>11</sub></span> 은 200×200 행렬</p>
+<p>단 <span class="math inline"><em>A</em><sub>11</sub></span>, <span
+class="math inline"><em>B</em><sub>11</sub></span> 은 200×200 행렬</p>
 <p><br></p>
-<p>로 분할한 행렬을 이용하여 행렬 <code>A</code>, <code>B</code>를 곱한 것 이다.</p>
+<p>로 분할한 행렬을 이용하여 행렬 <code>A</code>, <code>B</code>를 곱한
+것 이다.</p>
 <center>
 <br><img src="/assets/allequal_2.png"><br>
 </center>
 <p>이처럼 곱한것을 객체 <code>partition_AB</code>로 할당하였다.</p>
-<p>이론적으로는 첫번째 일반적인 곱셈과, 두번째 분할행렬을 이용한 곱셈과 값이 동일하다.<br />
+<p>이론적으로는 첫번째 일반적인 곱셈과, 두번째 분할행렬을 이용한 곱셈과
+값이 동일하다.<br />
 단 그것이 믿겨지지 않을 경우 직접 확인해 보고싶을 수 있다.<br />
 그런데 이때 애로사항이 있다.<br />
-<code>AB</code> 와 <code>partition_AB</code> 가 서로 동일하느냐 를 확인하기 위해선<br />
+<code>AB</code> 와 <code>partition_AB</code> 가 서로 동일하느냐 를
+확인하기 위해선<br />
 두 행렬의 사이즈가 600×800 으로 매우 부담이 되는 크기이다.</p>
-<p>물론 논리연산자 == 를 써도 되겠지만, 문제는 이 논리연산자를 써서 아래 코드를 실행하게 될 경우</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AB ==<span class="st"> </span>partition_AB</code></pre></div>
-<p>행렬의 원소별 값이 동일한지에 대한 논리값을 600 × 800 = 480,000 개를 행렬 타입으로 거대하게 반환할 것이다. 거대하므로 눈으로 동일한지 확인이 어려울 것이다.<br />
+<p>물론 논리연산자 == 를 써도 되겠지만, 문제는 이 논리연산자를 써서 아래
+코드를 실행하게 될 경우</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>AB <span class="sc">==</span> partition_AB</span></code></pre></div>
+<p>행렬의 원소별 값이 동일한지에 대한 논리값을 600 × 800 = 480,000 개를
+행렬 타입으로 거대하게 반환할 것이다. 거대하므로 눈으로 동일한지 확인이
+어려울 것이다.<br />
 480,000개의 원소가 모두 <code>TRUE</code> 인지를 확인하기 위해</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(AB ==<span class="st"> </span>partition_AB)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(AB <span class="sc">==</span> partition_AB)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>처럼 <code>all()</code> 함수의 도움을 받을 수도 있겠지만<br />
 <code>all.equal()</code> 함수를 사용하는것이 더 유용할 때가 있다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(AB, partition_AB)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(AB, partition_AB)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>함수이름 그대로 all equal 하면 <code>TRUE</code><br />
 그렇지 않을 경우 어디가 어떻게 틀린지 구체적으로 설명한다.<br />
-본 예제의 경우 원래의 행렬곱과 분할행렬의 곱이 같은경우의 예제이므로 <code>TRUE</code> 를 반환한다.</p>
-<p><code>all.equal()</code> 함수는 객체가 동일한지의 판단하는 함수로써도 편리한 기능의 함수이지만,<br />
-기본적으로는 얼마나 가깝게 동일한지 정도를 확인할 수 있는 일종의 비교함수로 보고 사용하는것이 좋다.<br />
-함수 도움말의 제목에서도 'Test if Two Objects are (Nearly) Equal' 로 나와있고 괄호의 &quot;Nearly&quot; 가 눈에 띈다.</p>
+본 예제의 경우 원래의 행렬곱과 분할행렬의 곱이 같은경우의 예제이므로
+<code>TRUE</code> 를 반환한다.</p>
+<p><code>all.equal()</code> 함수는 객체가 동일한지의 판단하는 함수로써도
+편리한 기능의 함수이지만,<br />
+기본적으로는 얼마나 가깝게 동일한지 정도를 확인할 수 있는 일종의
+비교함수로 보고 사용하는것이 좋다.<br />
+함수 도움말의 제목에서도 ‘Test if Two Objects are (Nearly) Equal’ 로
+나와있고 괄호의 “Nearly” 가 눈에 띈다.</p>
 <p><br><br></p>
 <p>조금 더 체감하기 좋은 행렬의 연산예시를 들어보겠다.<br />
-R에서는 순환소수, 무한소수를 계산할 때, 즉 유리수가 아닌 무리수를 연산할 때 아주 미세한 값의 차이가 존재할 수 있다.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a><br />
-하지만 이는 무리수를 굳이 소수점으로 표현하여 어떤 소수점자리 이후는 절단되어 버려지는 시스템 적인 문제일 뿐이다.</p>
-<p>아래 예시는 임의행렬 X와 그의 역행렬을 곱한것을 단위행렬과 비교해본 시뮬레이션이다.<br />
+R에서는 순환소수, 무한소수를 계산할 때, 즉 유리수가 아닌 무리수를 연산할
+때 아주 미세한 값의 차이가 존재할 수 있다.<a href="#fn2"
+class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a><br />
+하지만 이는 무리수를 굳이 소수점으로 표현하여 어떤 소수점자리 이후는
+절단되어 버려지는 시스템 적인 문제일 뿐이다.</p>
+<p>아래 예시는 임의행렬 X와 그의 역행렬을 곱한것을 단위행렬과 비교해본
+시뮬레이션이다.<br />
 행렬 X는 5×5 행렬이며 이론상으로는</p>
 <center>
 <br><img src="/assets/allequal_3.png"><br>
 </center>
 <p>이 성립한다. 하지만</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>), <span class="dv">5</span>, <span class="dv">5</span>)
-XtX &lt;-<span class="st"> </span><span class="kw">solve</span>(X) %*%<span class="st"> </span>X
-
-I_5 &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dv">1</span>, <span class="dv">5</span>)
-
-XtX ==<span class="st"> </span>I_5</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">25</span>), <span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>XtX <span class="ot">&lt;-</span> <span class="fu">solve</span>(X) <span class="sc">%*%</span> X</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>I_5 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="dv">5</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>XtX <span class="sc">==</span> I_5</span></code></pre></div>
 <pre><code>##       [,1]  [,2]  [,3]  [,4]  [,5]
 ## [1,] FALSE FALSE FALSE FALSE FALSE
 ## [2,] FALSE FALSE FALSE FALSE FALSE
 ## [3,] FALSE FALSE FALSE  TRUE FALSE
 ## [4,] FALSE FALSE FALSE  TRUE  TRUE
 ## [5,] FALSE FALSE FALSE FALSE FALSE</code></pre>
-<p>결과는 여기저기서 <code>FALSE</code> 가 있고 실제로 값이 다르다. 전부 TRUE 이어야 하지만</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(XtX ==<span class="st"> </span>I_5)</code></pre></div>
+<p>결과는 여기저기서 <code>FALSE</code> 가 있고 실제로 값이 다르다. 전부
+TRUE 이어야 하지만</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(XtX <span class="sc">==</span> I_5)</span></code></pre></div>
 <pre><code>## 
 ## FALSE  TRUE 
 ##    22     3</code></pre>
 <p>이처럼 3개만 <code>TRUE</code> 로 인식한다.<br />
-이처럼 무리수를 컴퓨터가 정확하게 표현할 수 없기 때문에 일어나는 일로 <code>XtX</code> 나, <code>I_5</code> 를 같지 않다고 판단하는것은 상황에 따라서 용인해야할 때가 있다.<br />
+이처럼 무리수를 컴퓨터가 정확하게 표현할 수 없기 때문에 일어나는 일로
+<code>XtX</code> 나, <code>I_5</code> 를 같지 않다고 판단하는것은 상황에
+따라서 용인해야할 때가 있다.<br />
 이때 방금 언급한 <code>all.equal()</code> 함수를 사용해 보면 어떨까?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(XtX, I_5)</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(XtX, I_5)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<p><code>all.equal()</code> 함수 내에는 <code>tolerance</code> 인자가 존재하여 어느 정도의 차이는 단어 뜻대로 관용, 아량을 베풀어주는 로직이 있다.<br />
-따라서 <code>XtX</code> 와, <code>I_5</code> 는 그정도 차이는 무시하고 서로 동일하다고 판단하여 <code>TRUE</code> 를 반환한다.<br />
+<p><code>all.equal()</code> 함수 내에는 <code>tolerance</code> 인자가
+존재하여 어느 정도의 차이는 단어 뜻대로 관용, 아량을 베풀어주는 로직이
+있다.<br />
+따라서 <code>XtX</code> 와, <code>I_5</code> 는 그정도 차이는 무시하고
+서로 동일하다고 판단하여 <code>TRUE</code> 를 반환한다.<br />
 만약 관용, 아량을 전혀 베풀지 않는(<code>tolerance = 0</code>)다면</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(XtX, I_5, <span class="dt">tolerance =</span> <span class="dv">0</span>)</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(XtX, I_5, <span class="at">tolerance =</span> <span class="dv">0</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Mean relative difference: 2.806783e-15&quot;</code></pre>
 <p>두 객체간 차이의 아주 정확한 값을 반환한다.<br />
-분석을 하다보면 위의 예제 말고도 동등성을 확인하여야 할 때가 사뭇 많다.<br />
-이럴 때 <code>all.equal()</code> 함수는 유용하게 사용될 수 있을것이다.</p>
-<section class="footnotes">
+분석을 하다보면 위의 예제 말고도 동등성을 확인하여야 할 때가 사뭇
+많다.<br />
+이럴 때 <code>all.equal()</code> 함수는 유용하게 사용될 수
+있을것이다.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>객체간 똑같은지 확인하는 함수로는 <code>identical()</code> 도 있다<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>이는 <a href="https://ko.wikipedia.org/wiki/%EB%B6%80%EB%8F%99%EC%86%8C%EC%88%98%EC%A0%90">부동소수점</a>으로 인한 문제이다<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p>객체간 똑같은지 확인하는 함수로는
+<code>identical()</code> 도 있다<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>이는 <a
+href="https://ko.wikipedia.org/wiki/%EB%B6%80%EB%8F%99%EC%86%8C%EC%88%98%EC%A0%90">부동소수점</a>으로
+인한 문제이다<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </div>
@@ -266,7 +308,7 @@ XtX ==<span class="st"> </span>I_5</code></pre></div>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2018/01/02/allequal.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2018/01/02/allequal.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -290,7 +332,7 @@ XtX ==<span class="st"> </span>I_5</code></pre></div>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -307,7 +349,7 @@ XtX ==<span class="st"> </span>I_5</code></pre></div>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -324,7 +366,7 @@ XtX ==<span class="st"> </span>I_5</code></pre></div>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -341,7 +383,24 @@ XtX ==<span class="st"> </span>I_5</code></pre></div>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -365,7 +424,7 @@ XtX ==<span class="st"> </span>I_5</code></pre></div>
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -383,16 +442,6 @@ XtX ==<span class="st"> </span>I_5</code></pre></div>
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -874,7 +923,7 @@ XtX ==<span class="st"> </span>I_5</code></pre></div>
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 all.equal() 함수를 이용한 객체의 동일성 확인하기";
+        var disqus_identifier = "http://localhost:4000_R에서 all.equal() 함수를 이용한 객체의 동일성 확인하기";
         var disqus_title = "R에서 all.equal() 함수를 이용한 객체의 동일성 확인하기";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */

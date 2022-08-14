@@ -24,14 +24,14 @@
           <meta content="" property="og:description">
         
         
-          <meta content="https://lovetoken.github.io/r/2017/10/07/guessEncoding.html" property="og:url">
+          <meta content="http://localhost:4000/r/2017/10/07/guessEncoding.html" property="og:url">
         
         
           <meta content="2017-10-07T00:00:00+09:00" property="article:published_time">
-          <meta content="https://lovetoken.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://lovetoken.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="R에서 readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론">
         
         
-          <meta name="twitter:url" content="https://lovetoken.github.io/r/2017/10/07/guessEncoding.html">
+          <meta name="twitter:url" content="http://localhost:4000/r/2017/10/07/guessEncoding.html">
         
         
           <meta name="twitter:description" content="">
@@ -136,105 +136,149 @@
 
 <div class="content">
     <div class="post"><p><br><br></p>
-<p>파일을 읽어 들일 때 인코딩 타입에 대한 이슈는 상당히 짜증 나는 유형의 이슈 중 하나라고 생각된다.<br />
-분석환경이 단독 운영체계만을 이용하여 분석한다면 큰 문제는 없겠지만<br />
-Linux 머신이나 Mac, Windows 등으로 넘나들게 되는 순간 데이터의 인코딩 타입을 고려해야 할 것이다.<br />
+<p>파일을 읽어 들일 때 인코딩 타입에 대한 이슈는 상당히 짜증 나는 유형의
+이슈 중 하나라고 생각된다.<br />
+분석환경이 단독 운영체계만을 이용하여 분석한다면 큰 문제는
+없겠지만<br />
+Linux 머신이나 Mac, Windows 등으로 넘나들게 되는 순간 데이터의 인코딩
+타입을 고려해야 할 것이다.<br />
 통상적으로 이럴 때는 UTF-8 인코딩으로 통일하여 관리하지만<br />
-이것이 어려울 때 2개 이상의 인코딩 타입으로 데이터가 존재하게 될 것이다.</p>
-<p>그런데 인코딩 타입이 2개 이상 혼용되기 시작하면, 데이터를 읽어 들이고 내보내는 단계에서 인코딩타입까지 추가적으로 신경써야 한다는 점이 여러모로 피곤하게 느껴질 것이다.<br />
-데이터 I/O 단계에서 인코딩까지 신경써서 읽어들이는 것은 번거로운 일 일 수 있다.<br />
-애초에 이를 신경쓰는거 자체가 분석 본연에 있어 불필요한 요소일 수 있다.</p>
-<p>이번 글에서는 R에서 readr package 에 있는 <code>guess_encoding()</code> 의 함수를 설명하고 소개할 것인데, R에서 데이터를 읽어 들이고 내보낼 시 인코딩 타입으로 인한 이슈들과 불편함을 겪는 사람들께 조금이나마 편의와 팁, 힌트를 주고자 작성한 글이다.</p>
+이것이 어려울 때 2개 이상의 인코딩 타입으로 데이터가 존재하게 될
+것이다.</p>
+<p>그런데 인코딩 타입이 2개 이상 혼용되기 시작하면, 데이터를 읽어 들이고
+내보내는 단계에서 인코딩타입까지 추가적으로 신경써야 한다는 점이
+여러모로 피곤하게 느껴질 것이다.<br />
+데이터 I/O 단계에서 인코딩까지 신경써서 읽어들이는 것은 번거로운 일 일
+수 있다.<br />
+애초에 이를 신경쓰는거 자체가 분석 본연에 있어 불필요한 요소일 수
+있다.</p>
+<p>이번 글에서는 R에서 readr package 에 있는
+<code>guess_encoding()</code> 의 함수를 설명하고 소개할 것인데, R에서
+데이터를 읽어 들이고 내보낼 시 인코딩 타입으로 인한 이슈들과 불편함을
+겪는 사람들께 조금이나마 편의와 팁, 힌트를 주고자 작성한 글이다.</p>
 <p><br><br></p>
 <h2 id="상황재현">상황재현</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">text =</span> 
-  <span class="st">&quot;이름, 점수</span>
-<span class="st">  홍길동, 80</span>
-<span class="st">  철수, 91</span>
-<span class="st">  영희, 99</span>
-<span class="st">  Steve, 85&quot;</span>
-)
-
-<span class="kw">dir.create</span>(<span class="st">&quot;data&quot;</span>)
-<span class="kw">write.csv</span>(d, <span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>, <span class="dt">fileEncoding =</span> <span class="st">&quot;EUC-KR&quot;</span>)
-<span class="kw">write.csv</span>(d, <span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>,  <span class="dt">fileEncoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</code></pre></div>
-<p>위 코드는 &quot;EUC-KR&quot; 형과 &quot;UTF-8&quot; 형으로 작성된 간단한 데이터 테이블을 data 폴더안 <code>csv</code> 포맷으로 저장시키는 코드이다.<br />
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">text =</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;이름, 점수</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">  홍길동, 80</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">  철수, 91</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">  영희, 99</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">  Steve, 85&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;data&quot;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(d, <span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>, <span class="at">fileEncoding =</span> <span class="st">&quot;EUC-KR&quot;</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(d, <span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>,  <span class="at">fileEncoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span></code></pre></div>
+<p>위 코드는 “EUC-KR” 형과 “UTF-8” 형으로 작성된 간단한 데이터 테이블을
+data 폴더안 <code>csv</code> 포맷으로 저장시키는 코드이다.<br />
 두개의 다른 인코딩 형의 똑같은 내용의 데이터가 2개 준비된 것이다.<br />
-이 데이터의 인코딩형의 정보를 모른다고 가정하고 R로 읽어 들일 때 어떠한 문제들이 있는지 보겠다.</p>
+이 데이터의 인코딩형의 정보를 모른다고 가정하고 R로 읽어 들일 때 어떠한
+문제들이 있는지 보겠다.</p>
 <p>csv 포맷의 데이터를 읽어들이는 방법은 여러가지가 있다.<br />
 가장 기본적인 <code>read.csv()</code>함수의 경우이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>) <span class="co"># on Mac</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>) <span class="co"># on Mac</span></span></code></pre></div>
 <pre><code>##   X     이름 점수
 ## 1 1   홍길동   80
 ## 2 2     철수   91
 ## 3 3     영희   99
 ## 4 4    Steve   85</code></pre>
-<p>&quot;UTF-8&quot; 형인 데이터를 먼저 불러와 보았는데 필자는 Mac 으로 동작시켰기 때문에 정상적으로 읽어들여진다.<br />
+<p>“UTF-8” 형인 데이터를 먼저 불러와 보았는데 필자는 Mac 으로 동작시켰기
+때문에 정상적으로 읽어들여진다.<br />
 하지만 Windows 환경에서는 저렇게 읽어들여지지 않을 것이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>) <span class="co"># on Windows</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>) <span class="co"># on Windows</span></span></code></pre></div>
 <pre><code>Error in make.names(col.names, unique = TRUE) : invalid multibyte string at &#39;&lt;ec&gt;&lt;9d&gt;&lt;b4&gt;由&lt;84&gt;&#39;</code></pre>
-<p>Windows 환경에선 이와 같은 에러가 나면서 정말 간단한 예제의 데이터 테이블임에도 불구하고 읽어들이지 못한다.<br />
-이는 <code>read.csv()</code> 함수가 동작할 때 내부적으로 <code>fileEncoding</code> 인자값이 <code>Sys.getlocale(&quot;LC_CTYPE&quot;)</code> 로 반환되는 환경변수값에 의존되어 실행된다.<br />
-Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 &quot;CP949&quot; 라는 인코딩형으로 읽어들이게 되고,<br />
-이 인코딩 형이 원본파일의 인코딩 형(&quot;UTF-8&quot;)과 불일치 하기 때문에,<br />
-한글인 변수명이 유효하지 않은 문자열로 일그러져 인식할 수 없기 때문이다.</p>
-<p>이러한 원리 때문에 반대로 &quot;EUC-KR&quot; 형 데이터를 Mac 환경에서 읽어 들일 경우 마찬가지이다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>) <span class="co"># on Mac</span></code></pre></div>
+<p>Windows 환경에선 이와 같은 에러가 나면서 정말 간단한 예제의 데이터
+테이블임에도 불구하고 읽어들이지 못한다.<br />
+이는 <code>read.csv()</code> 함수가 동작할 때 내부적으로
+<code>fileEncoding</code> 인자값이
+<code>Sys.getlocale("LC_CTYPE")</code> 로 반환되는 환경변수값에 의존되어
+실행된다.<br />
+Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 “CP949” 라는
+인코딩형으로 읽어들이게 되고,<br />
+이 인코딩 형이 원본파일의 인코딩 형(“UTF-8”)과 불일치 하기 때문에,<br />
+한글인 변수명이 유효하지 않은 문자열로 일그러져 인식할 수 없기
+때문이다.</p>
+<p>이러한 원리 때문에 반대로 “EUC-KR” 형 데이터를 Mac 환경에서 읽어 들일
+경우 마찬가지이다.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>) <span class="co"># on Mac</span></span></code></pre></div>
 <pre><code>Error in make.names(col.names, unique = TRUE) : invalid multibyte string at &#39;&lt;c0≯&lt;a7&gt;&#39;</code></pre>
 <p>우선 에러없이 데이터를 R로 읽어들이는 해결방법은 이렇다.</p>
 <ol type="1">
 <li>일어들일 데이터의 텍스트 인코딩형을 알아낸다.<br />
 </li>
-<li><code>read.csv()</code> 함수의 <code>fileEncoding</code> 인자값을 알아낸 인코딩형으로 직접 입력한다.</li>
-<li>예를 들면 <code>read.csv(&quot;data/Testdata_UTF-8.csv&quot;, fileEncoding = &quot;UTF-8&quot;)</code> 이런 코드가 되겠다. 이 코드를 실행하여 정상적으로 일어졌는지 확인한다.</li>
+<li><code>read.csv()</code> 함수의 <code>fileEncoding</code> 인자값을
+알아낸 인코딩형으로 직접 입력한다.</li>
+<li>예를 들면
+<code>read.csv("data/Testdata_UTF-8.csv", fileEncoding = "UTF-8")</code>
+이런 코드가 되겠다. 이 코드를 실행하여 정상적으로 일어졌는지
+확인한다.</li>
 </ol>
 <p>3단계 스텝을 통해 데이터를 읽어들이는데 성공한다.<br />
-굳이 세번째 스텝을 설명한 이유는 에러없이 데이터를 일어들였다 하더라도,<br />
-첫번째 스텝에 인코딩형을 제대로 알지 못하여 막장으로 일어들여질 가능성이 있기 때문에<br />
+굳이 세번째 스텝을 설명한 이유는 에러없이 데이터를 일어들였다
+하더라도,<br />
+첫번째 스텝에 인코딩형을 제대로 알지 못하여 막장으로 일어들여질 가능성이
+있기 때문에<br />
 확인하는 과정이 필요하므로 생겨난 부수적인 스텝이라 할 수 있겠다.</p>
-<p>여하튼 (분석을 하기도 전에) 데이터를 일어들이기 위한 이 3단계는 많은 에너지를 소모하게 만든다.</p>
+<p>여하튼 (분석을 하기도 전에) 데이터를 일어들이기 위한 이 3단계는 많은
+에너지를 소모하게 만든다.</p>
 <p><br><br></p>
-<h2 id="readrguess_encoding-함수"><code>readr::guess_encoding()</code> 함수</h2>
-<p>이제 본 글의 주제인 readr package 의 <code>guess_encoding()</code> 함수를 소개한다.<br />
-함수명칭에서 볼 수 있듯이 이 함수의 쓰임은 인코딩형을 추론하는 함수인데<br />
-이를 잘 이용하면 위에서 설명한 번잡한 3단계 스텝을 1스텝으로 점프할 수 있다.</p>
+<h2 id="readrguess_encoding-함수"><code>readr::guess_encoding()</code>
+함수</h2>
+<p>이제 본 글의 주제인 readr package 의 <code>guess_encoding()</code>
+함수를 소개한다.<br />
+함수명칭에서 볼 수 있듯이 이 함수의 쓰임은 인코딩형을 추론하는
+함수인데<br />
+이를 잘 이용하면 위에서 설명한 번잡한 3단계 스텝을 1스텝으로 점프할 수
+있다.</p>
 <p>우선 <code>guess_encoding()</code> 함수를 살펴보자.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr) <span class="co"># for guess_encoding()</span>
-
-<span class="kw">guess_encoding</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr) <span class="co"># for guess_encoding()</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">guess_encoding</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##     encoding confidence
 ##        &lt;chr&gt;      &lt;dbl&gt;
 ## 1     EUC-KR       1.00
 ## 2    GB18030       0.71
 ## 3 ISO-8859-1       0.21</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">guess_encoding</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">guess_encoding</span>(<span class="st">&quot;data/Testdata_UTF-8.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   encoding confidence
 ##      &lt;chr&gt;      &lt;dbl&gt;
 ## 1    UTF-8          1</code></pre>
 <p><code>guess_encoding()</code> 함수사용법은 간단하다.<br />
 외부 텍스트 파일에 대한 경로를 입력하고 실행하면 된다.<br />
-그러면 외부 텍스트파일의 인코딩형이 무엇일지 자동적으로 추론하고 가능성(confidence) 이 높은 순으로 출력된다.<br />
-&quot;EUC-KR&quot; 형 csv 파일을 일어들여 인코딩을 추론한 결과를 보면 &quot;EUC-KR&quot; 형일 가능성이 가장 높고, 그다음 &quot;GB18030&quot;, &quot;ISO-8859-1&quot; 형을 추론하는것을 볼 수 있다.<br />
-위에서 설명한 3단계 스텝에서 첫번째 스텝을 자동적으로 더 정확하게 추론함으로써 수고를 덜어준다.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>, 
-         <span class="dt">fileEncoding =</span> <span class="kw">guess_encoding</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>)[<span class="dv">1</span>, <span class="dv">1</span>] %&gt;%<span class="st"> </span>as.character)</code></pre></div>
+그러면 외부 텍스트파일의 인코딩형이 무엇일지 자동적으로 추론하고
+가능성(confidence) 이 높은 순으로 출력된다.<br />
+“EUC-KR” 형 csv 파일을 일어들여 인코딩을 추론한 결과를 보면 “EUC-KR”
+형일 가능성이 가장 높고, 그다음 “GB18030”, “ISO-8859-1” 형을
+추론하는것을 볼 수 있다.<br />
+위에서 설명한 3단계 스텝에서 첫번째 스텝을 자동적으로 더 정확하게
+추론함으로써 수고를 덜어준다.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">fileEncoding =</span> <span class="fu">guess_encoding</span>(<span class="st">&quot;data/Testdata_EUC-KR.csv&quot;</span>)[<span class="dv">1</span>, <span class="dv">1</span>] <span class="sc">%&gt;%</span> as.character)</span></code></pre></div>
 <pre><code>##   X     이름 점수
 ## 1 1   홍길동   80
 ## 2 2     철수   91
 ## 3 3     영희   99
 ## 4 4    Steve   85</code></pre>
-<p>아예 이런 식으로 내재화시켜버리면 3단계 스텝을 거치지 않고 어떠한 운영체계, 환경이든 융통성 있게 데이터를 잘 읽어 들일 것이다.<br />
-실제로 위 코드는 필자의 Mac 에서 동작했는데도 불구하고 인코딩이슈 없이 한글을 잘 읽어 들인 것을 볼 수 있다.</p>
+<p>아예 이런 식으로 내재화시켜버리면 3단계 스텝을 거치지 않고 어떠한
+운영체계, 환경이든 융통성 있게 데이터를 잘 읽어 들일 것이다.<br />
+실제로 위 코드는 필자의 Mac 에서 동작했는데도 불구하고 인코딩이슈 없이
+한글을 잘 읽어 들인 것을 볼 수 있다.</p>
 <p><br><br></p>
 <h2 id="맺음말">맺음말</h2>
-<p>본 글은 <code>read.csv()</code> 함수에서 예시로 들었지만 외부 텍스트형 데이터를 읽어들이는 방법은 이 함수 말고도 다양하다.<br />
-필자는 csv 포맷 파일을 읽어들일 때 <code>data.table::fread()</code>, <code>readr::read_csv()</code> 등의 함수를 즐겨쓰는 편인데, 이 때도 마찬가지로 <code>guess_encoding()</code> 함수를 이용해 인코딩 형을 신경쓰지 않고 최대한 분석에 집중하고 있다.</p>
+<p>본 글은 <code>read.csv()</code> 함수에서 예시로 들었지만 외부
+텍스트형 데이터를 읽어들이는 방법은 이 함수 말고도 다양하다.<br />
+필자는 csv 포맷 파일을 읽어들일 때 <code>data.table::fread()</code>,
+<code>readr::read_csv()</code> 등의 함수를 즐겨쓰는 편인데, 이 때도
+마찬가지로 <code>guess_encoding()</code> 함수를 이용해 인코딩 형을
+신경쓰지 않고 최대한 분석에 집중하고 있다.</p>
 <p><br><br></p>
 <h2 id="reference">Reference</h2>
 <ul>
-<li><a href="https://statkclee.github.io/ds-authoring/regex-encoding.html">데이터 과학을 위한 저작도구 - R 유니코드, 인코딩</a></li>
+<li><a
+href="https://statkclee.github.io/ds-authoring/regex-encoding.html">데이터
+과학을 위한 저작도구 - R 유니코드, 인코딩</a></li>
 </ul>
 </div>
     <div class="share-page">
@@ -249,7 +293,7 @@ Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 &quot;CP9
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://lovetoken.github.io/r/2017/10/07/guessEncoding.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
+    <div class="fb-share-button" data-href="http://localhost:4000/r/2017/10/07/guessEncoding.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;"></div>
 </div>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -273,7 +317,7 @@ Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 &quot;CP9
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
+                    <a href="http://localhost:4000/r/2022/08/14/installr_on_win.html">installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -290,7 +334,7 @@ Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 &quot;CP9
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
+                    <a href="http://localhost:4000/r/2019/05/11/tidyverse_before_after.html">Tidyverse before & after (Comming Soon)</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -307,7 +351,7 @@ Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 &quot;CP9
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    <a href="http://localhost:4000/r/2019/02/24/dplyr080.html">R에서 dplyr 0.8.0 업데이트에 따른 요인별 집계의 신규 함수 중 group_map() 함수 활용예제 </a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -324,7 +368,24 @@ Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 &quot;CP9
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
+                    <a href="http://localhost:4000/r/2019/01/03/RSQLite.html">로컬상에서 Database를 간접경험해 보기 위한 sqlite DB를 R에서 만들어 보기</a>
+                    
+                        (Categories: <a href="/category/R">R</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/r/2018/11/24/dplyrquery.html">dplyr 문법을 통한 전처리를 SQL 로의 스위칭</a>
                     
                         (Categories: <a href="/category/R">R</a>)
                     
@@ -348,7 +409,7 @@ Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 &quot;CP9
             
                 
                 <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
+                    <a href="http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html">R에서 plot3d()함수를 이용한 3차원 산점도 만들기</a>
                     
                         (Categories: <a href="/category/R">R</a>, <a href="/category/Data_Visualization">Data_Visualization</a>)
                     
@@ -366,16 +427,6 @@ Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 &quot;CP9
     
     
         
-            
-                
-                <li class="relatedPost">
-                    <a href="https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html">R에서 Keras 튜토리얼 돌려보기</a>
-                    
-                        (Categories: <a href="/category/R">R</a>, <a href="/category/MachineLearning">MachineLearning</a>, <a href="/category/Keras">Keras</a>)
-                    
-                </li>
-                
-                
             
         
     
@@ -857,7 +908,7 @@ Windows 환경에선 결과적으로 <code>read.csv()</code> 함수가 &quot;CP9
         /* <![CDATA[ */
 
         var disqus_shortname = "lovetoken";
-        var disqus_identifier = "https://lovetoken.github.io_R에서 readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론";
+        var disqus_identifier = "http://localhost:4000_R에서 readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론";
         var disqus_title = "R에서 readr package 의 guess_encoding() 함수를 이용한 Text 파일의 인코딩 타입 추론";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
