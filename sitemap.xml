@@ -5,9 +5,53 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Aug 2022 23:07:18 +0900</pubDate>
-    <lastBuildDate>Sun, 14 Aug 2022 23:07:18 +0900</lastBuildDate>
+    <pubDate>Mon, 15 Aug 2022 21:49:45 +0900</pubDate>
+    <lastBuildDate>Mon, 15 Aug 2022 21:49:45 +0900</lastBuildDate>
     <generator>Jekyll v3.9.2</generator>
+    
+      <item>
+        <title>Mac 에서 벡틱문자 '`' 을 쓰고싶은데 '₩' 가 써진다면?</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;맥을 일상생활에서 사용했었을 당시 벡틱(Backtick) 문자 를 쓸 때
+불편함이 없었을 정도로 체화되었던 매커니즘이 갑자기 기억나지 않았다.
+그마만큼 최근 맥을 멀리두고 윈도우와 가까워진듯 하다.&lt;/p&gt;
+&lt;p&gt;여튼 본론으로 들어가면 맥(Mac) 에서 벡틱문자 &lt;code&gt;`&lt;/code&gt; 를 쓰는
+방법에 대해 설명한다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;한국-맥북-자판키에서-벡틱문자는-어디에&quot;&gt;한국 맥북 자판키에서
+벡틱문자는 어디에?&lt;/h2&gt;
+&lt;p&gt;아래의 한국 맥북 자판 그림처럼 &lt;code&gt;`&lt;/code&gt; 벡틱문자가 보이지 않아
+입문당시에 당황한 적이 있었다. 벡틱문자를 쓰기 위해선 &lt;kbd&gt;esc&lt;/kbd&gt; 키
+아래에 위치한 검정테두리로 표시한 키를 누르면 된다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/backtick_on_mac_MK2A3KH.jpeg&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3 id=&quot;로-표시된-것-처럼-가-써지는데요&quot;&gt;&lt;code&gt;₩&lt;/code&gt; 로 표시된 것
+처럼 &lt;code&gt;₩&lt;/code&gt; 가 써지는데요?&lt;/h3&gt;
+&lt;p&gt;그렇다🫠 일반적으로 보이는 것 처럼 &lt;code&gt;₩&lt;/code&gt; 가 써지는 것이
+맞다. 하지만 한/영 변환을 통해 입력소스가 영어인 상태에서 다시 누르면
+&lt;code&gt;`&lt;/code&gt; 가 써진다. 즉 입력소스에 따라 다르게 입력되는것이다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;입력소스가 한글인 상황일 때 : &lt;code&gt;₩&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;입력소스가 영어인 상황일 때 : &lt;code&gt;`&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;맥 입문 당시의 잘 받아들이지 못했던 부분이기도 한데, 입력소스에 따라
+다르게 입력될 수 있다는 것 자체를 인지하기 까지 많이 헤매었다.&lt;/p&gt;
+&lt;p&gt;이 문화 충격을 받아들이지 못했었을 때 다른 방법을 이용했었는데 바로
+&lt;kbd&gt;⌥&lt;/kbd&gt; + &lt;kbd&gt;₩&lt;/kbd&gt; 의 입력으로 곧바로 &lt;code&gt;`&lt;/code&gt; 벡틱문자를
+쓰는것이다. 이 방법은 한/영 입력소스와 무관하게 &lt;code&gt;`&lt;/code&gt; 가
+써진다.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 15 Aug 2022 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/r/2022/08/15/backtick_on_mac.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2022/08/15/backtick_on_mac.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</title>

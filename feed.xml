@@ -5,9 +5,53 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Aug 2022 23:07:18 +0900</pubDate>
-    <lastBuildDate>Sun, 14 Aug 2022 23:07:18 +0900</lastBuildDate>
+    <pubDate>Mon, 15 Aug 2022 21:49:45 +0900</pubDate>
+    <lastBuildDate>Mon, 15 Aug 2022 21:49:45 +0900</lastBuildDate>
     <generator>Jekyll v3.9.2</generator>
+    
+      <item>
+        <title>Mac 에서 벡틱문자 '`' 을 쓰고싶은데 '₩' 가 써진다면?</title>
+        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;맥을 일상생활에서 사용했었을 당시 벡틱(Backtick) 문자 를 쓸 때
+불편함이 없었을 정도로 체화되었던 매커니즘이 갑자기 기억나지 않았다.
+그마만큼 최근 맥을 멀리두고 윈도우와 가까워진듯 하다.&lt;/p&gt;
+&lt;p&gt;여튼 본론으로 들어가면 맥(Mac) 에서 벡틱문자 &lt;code&gt;`&lt;/code&gt; 를 쓰는
+방법에 대해 설명한다.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;한국-맥북-자판키에서-벡틱문자는-어디에&quot;&gt;한국 맥북 자판키에서
+벡틱문자는 어디에?&lt;/h2&gt;
+&lt;p&gt;아래의 한국 맥북 자판 그림처럼 &lt;code&gt;`&lt;/code&gt; 벡틱문자가 보이지 않아
+입문당시에 당황한 적이 있었다. 벡틱문자를 쓰기 위해선 &lt;kbd&gt;esc&lt;/kbd&gt; 키
+아래에 위치한 검정테두리로 표시한 키를 누르면 된다.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;img src=&quot;/assets/backtick_on_mac_MK2A3KH.jpeg&quot; /&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h3 id=&quot;로-표시된-것-처럼-가-써지는데요&quot;&gt;&lt;code&gt;₩&lt;/code&gt; 로 표시된 것
+처럼 &lt;code&gt;₩&lt;/code&gt; 가 써지는데요?&lt;/h3&gt;
+&lt;p&gt;그렇다🫠 일반적으로 보이는 것 처럼 &lt;code&gt;₩&lt;/code&gt; 가 써지는 것이
+맞다. 하지만 한/영 변환을 통해 입력소스가 영어인 상태에서 다시 누르면
+&lt;code&gt;`&lt;/code&gt; 가 써진다. 즉 입력소스에 따라 다르게 입력되는것이다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;입력소스가 한글인 상황일 때 : &lt;code&gt;₩&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;입력소스가 영어인 상황일 때 : &lt;code&gt;`&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;맥 입문 당시의 잘 받아들이지 못했던 부분이기도 한데, 입력소스에 따라
+다르게 입력될 수 있다는 것 자체를 인지하기 까지 많이 헤매었다.&lt;/p&gt;
+&lt;p&gt;이 문화 충격을 받아들이지 못했었을 때 다른 방법을 이용했었는데 바로
+&lt;kbd&gt;⌥&lt;/kbd&gt; + &lt;kbd&gt;₩&lt;/kbd&gt; 의 입력으로 곧바로 &lt;code&gt;`&lt;/code&gt; 벡틱문자를
+쓰는것이다. 이 방법은 한/영 입력소스와 무관하게 &lt;code&gt;`&lt;/code&gt; 가
+써진다.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 15 Aug 2022 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/r/2022/08/15/backtick_on_mac.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2022/08/15/backtick_on_mac.html</guid>
+        
+        
+        <category>R</category>
+        
+      </item>
     
       <item>
         <title>installr 패키지를 이용한 R 패키지 업데이트 및 R 업그레이드</title>
@@ -1699,174 +1743,6 @@ href=&quot;http://ffmpeg.org/documentation.html&quot;&gt;ffmpeg&lt;/a&gt; 를 �
         <category>R</category>
         
         <category>Data_Visualization</category>
-        
-      </item>
-    
-      <item>
-        <title>Docker 를 통해 Cloudera Manager 띄워보기</title>
-        <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a
-href=&quot;http://kr.cloudera.com/products/product-components/cloudera-manager.html&quot;&gt;Cloudera
-Manager&lt;/a&gt;(이하 CM) 실습환경을 구성하기 위해 &lt;a
-href=&quot;https://www.virtualbox.org/&quot;&gt;Virtual Box&lt;/a&gt; 로 CentOS 설치 및
-환경설정 구성을 수차례 반복하여 힘겹게 성공 후&lt;br /&gt;
-이 성공을 쉽게 재활용하기 위해 스냅샷을 저장했던 어느 날 내 맥북의
-물리적 용량이 바닥이 나버렸다..&lt;br /&gt;
-물리적 용량도 용량이지만 가상머신 3대를 켜 놓고 소프트웨어를 배포하는
-과정 중에서 내 맥북은 한계에 도달했는지 자주 멈추어 버렸다.&lt;br /&gt;
-결국은 Docker를 이용하겠어! 라는 결심과 동시에 행동으로 옮겼다.&lt;br /&gt;
-약 30분&lt;a href=&quot;#fn1&quot; class=&quot;footnote-ref&quot; id=&quot;fnref1&quot;
-role=&quot;doc-noteref&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;만에 Docker 를 통해 Cloudera Manager
-을 실행시키는 데 성공했다.&lt;br /&gt;
-Virtual Box 로 교재에 똑같이 따라 해서 띄우는 데는 순수하게 10시간
-정도의 시행착오를 겪은 것 에 비하면 정말 순식간이었다. (물론 이런 삽질이
-있었기에 Docker 에서 30분밖에 안 걸린 것일 수 있다
-&lt;i class=&quot;fa fa-meh-o&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;;)&lt;/p&gt;
-&lt;p&gt;필자와 같이 실습을 진행하는 분께도 온전히 30 분만에 CM 환경구성을 할
-수 있도록 본 글을 통해 정리하고자 한다.&lt;br /&gt;
-또한 내용들의 대부분은 “cloudera manager on docker” 라는 검색어로 구글에
-검색된 글들에 기반함을 밝힌다.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;(단 Datanode 를 늘리는 확장성을 고려한 실습은 이 글에서는
-논외이다. 오직 CM 를 띄우고 이를 통해 할 수 있는 것들이 무엇이 있는지,
-인터페이스는 어떠한지 입문자용으로써 공부를 위한 환경구성이 목적이기에
-Datanode 의 선형확장까지를 고려한 실습이라면 내생각엔 Cloudera
-QuickStart 컨테이너를 이용한 본 글보단 VM 을 통해 실제로 Datanode 로
-할당할 서버를 만들어 실습하는 것이 손에 더 잘 잡히고 직관적이며,
-선형확장을 하기위한 원리와 과정 자체를 익힐 필요가 있다고
-생각한다)&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;필요-요건&quot;&gt;필요 요건&lt;/h2&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;Docker 설치가 되어있어야 한다.&lt;/li&gt;
-&lt;li&gt;online 상태이어야 한다. (인터넷이 되어야 한다)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;분의-과정&quot;&gt;30분의 과정&lt;/h2&gt;
-&lt;p&gt;Cloudera 에서는 docker container 를 통해 CM 을 띄우기 위한 &lt;a
-href=&quot;https://www.cloudera.com/documentation/enterprise/5-6-x/topics/quickstart_docker_container.html&quot;&gt;Cloudera
-QuickStart 문서&lt;/a&gt;를 제공해 주고 있다.&lt;br /&gt;
-그대로 따라해 본 걸 한글화 시킨 것으로 이글을 봐도 무방하겠다.&lt;/p&gt;
-&lt;h3 id=&quot;첫-번째로-터미널을-킨-후&quot;&gt;첫 번째로 터미널을 킨 후&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;docker pull cloudera/quickstart:latest&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;를 통해 Cloudera QuickStart 도커이미지 최신버전을 다운로드
-한다.&lt;br /&gt;
-필자의 환경에선 수십분의 시간이 걸렸으니 차분히 기다린다.&lt;br /&gt;
-완료가 되었다면&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker images&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;를 실행해 Cloudera QuickStart docker image 가 준비되었는지 한번
-확인해 본다.&lt;/p&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;script src=&quot;https://asciinema.org/a/177648.js&quot; id=&quot;asciicast-177648&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;cloudera/quickstart 이미지의 ID 는 4239cd2958c6, 이미지 용량은 6.34Gb
-임을 확인할 수 있다.&lt;/p&gt;
-&lt;h3 id=&quot;두-번째로-컨테이너를-실행한다&quot;&gt;두 번째로 컨테이너를
-실행한다&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;docker run --hostname=quickstart.cloudera --privileged=true -t -i [OPTIONS] [IMAGE] /usr/bin/docker-quickstart&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;에서 &lt;code&gt;[OPTIONS]&lt;/code&gt; 부분은
-&lt;code&gt;-p 80:80 -p 7180:7180 -p 8888:8888&lt;/code&gt; 로 입력해 호스트간의
-포트번호 80, 7180, 8888 을 열어 놓는다.&lt;br /&gt;
-&lt;code&gt;[IMAGE]&lt;/code&gt; 부분은 이미지 ID 인 &lt;code&gt;4239cd2958c6&lt;/code&gt; 를
-입력한다. 즉&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker run --hostname=quickstart.cloudera --privileged=true -t -i -p 80:80 -p 7180:7180 -p 8888:8888 4239cd2958c6 /usr/bin/docker-quickstart&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;를 터미널에서 실행한다.&lt;/p&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;script src=&quot;https://asciinema.org/a/177651.js&quot; id=&quot;asciicast-177651&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;이후 localhost 의 80번 포트로 접속&lt;a href=&quot;#fn2&quot; class=&quot;footnote-ref&quot;
-id=&quot;fnref2&quot; role=&quot;doc-noteref&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;을 웹브라우저에서 해보면
-“Welcome to Your Cloudera QuickStart VM!” page 가 반기게 되며, 8888번
-포트로는 Hue가 뜨는것을 볼 수 있다.&lt;/p&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/docker_cm05.png&quot;&gt;
-&lt;/center&gt;
-&lt;br&gt; &lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/docker_cm06.png&quot;&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;그런데 그것보단 내 관심사는 7180번 포트인데 CM 이 디폴트로 사용하는
-포트번호이다.&lt;br /&gt;
-하지만 접속을 해보면 이렇게 뜬다.&lt;/p&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/docker_cm01.png&quot;&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;clouder quickstart 컨테이너는 기본적으로 CM 을 같이 실행하지 않는다고
-한다. 따라서&lt;/p&gt;
-&lt;h2
-id=&quot;세-번째로-clouder-quickstart-컨테이너상에서-homeclouderacloudera-manager---express-명령을-입력하여-cm-을-실행시킨다&quot;&gt;세
-번째로 clouder quickstart 컨테이너상에서
-&lt;code&gt;/home/cloudera/cloudera-manager --express&lt;/code&gt; 명령을 입력하여
-CM 을 실행시킨다&lt;/h2&gt;
-&lt;p&gt;Cloudera QuickStart 컨테이너의 bash 에서 아직 빠져나오지 않았다면
-&lt;code&gt;/home/cloudera/cloudera-manager --express&lt;/code&gt; 를 그대로
-실행시키면 되고&lt;/p&gt;
-&lt;p&gt;컨테이너 밖으로 빠져나온 호스트 상의 상태라면 &lt;code&gt;docker ps&lt;/code&gt;
-를 통해 실행되고 있는 clouder quickstart 컨테이너 ID 를 알아낸 후 docker
-의 exec 명령을 이처럼 이용해도 된다.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;docker exec [CONTAINER_ID] /home/cloudera/cloudera-manager --express&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;[CONTAINER_ID]&lt;/code&gt; 이 부분을 clouder quickstart 컨테이너 ID
-를 입력하면 된다.&lt;br /&gt;
-여하튼 그 결과는 아래와 같이 진행된다.&lt;/p&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;script src=&quot;https://asciinema.org/a/177654.js&quot; id=&quot;asciicast-177654&quot; async&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;약간의 시간이 걸린다.&lt;br /&gt;
-접속 계정과 비밀번호는 cloudera 이다라는 문구가 뜨면 로컬호스트의 7180
-포트로 접속시 CM 로그인 화면을 볼 수 있게 된다.&lt;/p&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/docker_cm02.png&quot;&gt;
-&lt;/center&gt;
-&lt;br&gt; &lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/docker_cm03.png&quot;&gt;
-&lt;/center&gt;
-&lt;br&gt; &lt;br&gt;
-&lt;center&gt;
-&lt;img src=&quot;/assets/docker_cm04.png&quot;&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://youtu.be/elXTmZbNNmE&quot;&gt;Cloudera QuickStart -
-Installation Using Docker Container on Ubuntu - Part 1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://youtu.be/mqFizIPJl1c&quot;&gt;Cloudera QuickStart -
-Starting Cloudera Manager on already running Docker Container - Part
-2&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;section id=&quot;footnotes&quot; class=&quot;footnotes footnotes-end-of-document&quot;
-role=&quot;doc-endnotes&quot;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;이 30분 중에서도 docker image 를 pull(다운로드) 하는
-데에 20분 정도가 걸렸으므로 10분의 고민만 필요했다고 볼 수 있다&lt;a
-href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;&lt;code&gt;http://127.0.0.1:80/&lt;/code&gt; 주소로 접속&lt;a
-href=&quot;#fnref2&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/section&gt;
-</description>
-        <pubDate>Sun, 22 Apr 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/docker/mac/opensource_tool/2018/04/22/docker_CM.html</link>
-        <guid isPermaLink="true">http://localhost:4000/docker/mac/opensource_tool/2018/04/22/docker_CM.html</guid>
-        
-        
-        <category>Docker</category>
-        
-        <category>Mac</category>
-        
-        <category>OpenSource_Tool</category>
         
       </item>
     
