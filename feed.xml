@@ -3,10 +3,10 @@
   <channel>
     <title></title>
     <description></description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 15 Aug 2022 22:19:26 +0900</pubDate>
-    <lastBuildDate>Mon, 15 Aug 2022 22:19:26 +0900</lastBuildDate>
+    <link>http://localhost:4000https://lovetoken.github.io/</link>
+    <atom:link href="http://localhost:4000https://lovetoken.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 15 Aug 2022 22:23:10 +0900</pubDate>
+    <lastBuildDate>Mon, 15 Aug 2022 22:23:10 +0900</lastBuildDate>
     <generator>Jekyll v3.9.2</generator>
     
       <item>
@@ -45,8 +45,8 @@
 써진다.&lt;/p&gt;
 </description>
         <pubDate>Mon, 15 Aug 2022 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/r/2022/08/15/backtick_on_mac.html</link>
-        <guid isPermaLink="true">http://localhost:4000/r/2022/08/15/backtick_on_mac.html</guid>
+        <link>http://localhost:4000https://lovetoken.github.io/r/2022/08/15/backtick_on_mac.html</link>
+        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2022/08/15/backtick_on_mac.html</guid>
         
         
         <category>R</category>
@@ -249,8 +249,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 14 Aug 2022 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/r/2022/08/14/installr_on_win.html</link>
-        <guid isPermaLink="true">http://localhost:4000/r/2022/08/14/installr_on_win.html</guid>
+        <link>http://localhost:4000https://lovetoken.github.io/r/2022/08/14/installr_on_win.html</link>
+        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2022/08/14/installr_on_win.html</guid>
         
         
         <category>R</category>
@@ -275,8 +275,8 @@ href=&quot;https://github.com/lovetoken/Tidyverse-before-after&quot;&gt;하고�
 &lt;/center&gt;
 </description>
         <pubDate>Sat, 11 May 2019 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/r/2019/05/11/tidyverse_before_after.html</link>
-        <guid isPermaLink="true">http://localhost:4000/r/2019/05/11/tidyverse_before_after.html</guid>
+        <link>http://localhost:4000https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html</link>
+        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html</guid>
         
         
         <category>R</category>
@@ -504,8 +504,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 24 Feb 2019 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/r/2019/02/24/dplyr080.html</link>
-        <guid isPermaLink="true">http://localhost:4000/r/2019/02/24/dplyr080.html</guid>
+        <link>http://localhost:4000https://lovetoken.github.io/r/2019/02/24/dplyr080.html</link>
+        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2019/02/24/dplyr080.html</guid>
         
         
         <category>R</category>
@@ -725,8 +725,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Thu, 03 Jan 2019 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/r/2019/01/03/RSQLite.html</link>
-        <guid isPermaLink="true">http://localhost:4000/r/2019/01/03/RSQLite.html</guid>
+        <link>http://localhost:4000https://lovetoken.github.io/r/2019/01/03/RSQLite.html</link>
+        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2019/01/03/RSQLite.html</guid>
         
         
         <category>R</category>
@@ -1022,8 +1022,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Sat, 24 Nov 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/r/2018/11/24/dplyrquery.html</link>
-        <guid isPermaLink="true">http://localhost:4000/r/2018/11/24/dplyrquery.html</guid>
+        <link>http://localhost:4000https://lovetoken.github.io/r/2018/11/24/dplyrquery.html</link>
+        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2018/11/24/dplyrquery.html</guid>
         
         
         <category>R</category>
@@ -1341,8 +1341,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Wed, 19 Sep 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/machinelearning/2018/09/19/posco_ai.html</link>
-        <guid isPermaLink="true">http://localhost:4000/machinelearning/2018/09/19/posco_ai.html</guid>
+        <link>http://localhost:4000https://lovetoken.github.io/machinelearning/2018/09/19/posco_ai.html</link>
+        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/machinelearning/2018/09/19/posco_ai.html</guid>
         
         
         <category>MachineLearning</category>
@@ -1401,8 +1401,8 @@ rgl package 의 &lt;code&gt;plot3d()&lt;/code&gt; 함수를 소개해 본다.&lt
 또한 휠을 움직이면 줌인과 줌아웃도 된다.&lt;/p&gt;
 </description>
         <pubDate>Thu, 02 Aug 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html</link>
-        <guid isPermaLink="true">http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html</guid>
+        <link>http://localhost:4000https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html</link>
+        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html</guid>
         
         
         <category>R</category>
@@ -1591,8 +1591,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Sat, 02 Jun 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/r/machinelearning/keras/2018/06/02/keras_tutorial.html</link>
-        <guid isPermaLink="true">http://localhost:4000/r/machinelearning/keras/2018/06/02/keras_tutorial.html</guid>
+        <link>http://localhost:4000https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html</link>
+        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html</guid>
         
         
         <category>R</category>
@@ -1736,8 +1736,8 @@ href=&quot;http://ffmpeg.org/documentation.html&quot;&gt;ffmpeg&lt;/a&gt; 를 �
 옵션들을 부여할 수 있음을 확인할 수 있을것이다.&lt;/p&gt;
 </description>
         <pubDate>Tue, 24 Apr 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000/r/data_visualization/2018/04/24/netwon_raphson_method.html</link>
-        <guid isPermaLink="true">http://localhost:4000/r/data_visualization/2018/04/24/netwon_raphson_method.html</guid>
+        <link>http://localhost:4000https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html</link>
+        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html</guid>
         
         
         <category>R</category>
