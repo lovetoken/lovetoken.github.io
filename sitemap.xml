@@ -3,10 +3,10 @@
   <channel>
     <title></title>
     <description></description>
-    <link>http://localhost:4000https://lovetoken.github.io/</link>
-    <atom:link href="http://localhost:4000https://lovetoken.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 15 Aug 2022 22:23:10 +0900</pubDate>
-    <lastBuildDate>Mon, 15 Aug 2022 22:23:10 +0900</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/sitemap.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 15 Aug 2022 22:36:18 +0900</pubDate>
+    <lastBuildDate>Mon, 15 Aug 2022 22:36:18 +0900</lastBuildDate>
     <generator>Jekyll v3.9.2</generator>
     
       <item>
@@ -45,8 +45,8 @@
 써진다.&lt;/p&gt;
 </description>
         <pubDate>Mon, 15 Aug 2022 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2022/08/15/backtick_on_mac.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2022/08/15/backtick_on_mac.html</guid>
+        <link>http://localhost:4000/r/2022/08/15/backtick_on_mac.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2022/08/15/backtick_on_mac.html</guid>
         
         
         <category>R</category>
@@ -249,8 +249,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 14 Aug 2022 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2022/08/14/installr_on_win.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2022/08/14/installr_on_win.html</guid>
+        <link>http://localhost:4000/r/2022/08/14/installr_on_win.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2022/08/14/installr_on_win.html</guid>
         
         
         <category>R</category>
@@ -275,8 +275,8 @@ href=&quot;https://github.com/lovetoken/Tidyverse-before-after&quot;&gt;하고�
 &lt;/center&gt;
 </description>
         <pubDate>Sat, 11 May 2019 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2019/05/11/tidyverse_before_after.html</guid>
+        <link>http://localhost:4000/r/2019/05/11/tidyverse_before_after.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2019/05/11/tidyverse_before_after.html</guid>
         
         
         <category>R</category>
@@ -504,8 +504,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 24 Feb 2019 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2019/02/24/dplyr080.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2019/02/24/dplyr080.html</guid>
+        <link>http://localhost:4000/r/2019/02/24/dplyr080.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2019/02/24/dplyr080.html</guid>
         
         
         <category>R</category>
@@ -725,8 +725,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Thu, 03 Jan 2019 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2019/01/03/RSQLite.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2019/01/03/RSQLite.html</guid>
+        <link>http://localhost:4000/r/2019/01/03/RSQLite.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2019/01/03/RSQLite.html</guid>
         
         
         <category>R</category>
@@ -1022,8 +1022,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Sat, 24 Nov 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2018/11/24/dplyrquery.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2018/11/24/dplyrquery.html</guid>
+        <link>http://localhost:4000/r/2018/11/24/dplyrquery.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2018/11/24/dplyrquery.html</guid>
         
         
         <category>R</category>
@@ -1341,8 +1341,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Wed, 19 Sep 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/machinelearning/2018/09/19/posco_ai.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/machinelearning/2018/09/19/posco_ai.html</guid>
+        <link>http://localhost:4000/machinelearning/2018/09/19/posco_ai.html</link>
+        <guid isPermaLink="true">http://localhost:4000/machinelearning/2018/09/19/posco_ai.html</guid>
         
         
         <category>MachineLearning</category>
@@ -1401,8 +1401,8 @@ rgl package 의 &lt;code&gt;plot3d()&lt;/code&gt; 함수를 소개해 본다.&lt
 또한 휠을 움직이면 줌인과 줌아웃도 된다.&lt;/p&gt;
 </description>
         <pubDate>Thu, 02 Aug 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/data_visualization/2018/08/02/plot3d.html</guid>
+        <link>http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/data_visualization/2018/08/02/plot3d.html</guid>
         
         
         <category>R</category>
@@ -1591,8 +1591,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Sat, 02 Jun 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/machinelearning/keras/2018/06/02/keras_tutorial.html</guid>
+        <link>http://localhost:4000/r/machinelearning/keras/2018/06/02/keras_tutorial.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/machinelearning/keras/2018/06/02/keras_tutorial.html</guid>
         
         
         <category>R</category>
@@ -1736,8 +1736,8 @@ href=&quot;http://ffmpeg.org/documentation.html&quot;&gt;ffmpeg&lt;/a&gt; 를 �
 옵션들을 부여할 수 있음을 확인할 수 있을것이다.&lt;/p&gt;
 </description>
         <pubDate>Tue, 24 Apr 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/data_visualization/2018/04/24/netwon_raphson_method.html</guid>
+        <link>http://localhost:4000/r/data_visualization/2018/04/24/netwon_raphson_method.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/data_visualization/2018/04/24/netwon_raphson_method.html</guid>
         
         
         <category>R</category>
@@ -1902,8 +1902,8 @@ href=&quot;#fnref2&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 22 Apr 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/docker/mac/opensource_tool/2018/04/22/docker_CM.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/docker/mac/opensource_tool/2018/04/22/docker_CM.html</guid>
+        <link>http://localhost:4000/docker/mac/opensource_tool/2018/04/22/docker_CM.html</link>
+        <guid isPermaLink="true">http://localhost:4000/docker/mac/opensource_tool/2018/04/22/docker_CM.html</guid>
         
         
         <category>Docker</category>
@@ -1952,8 +1952,8 @@ class=&quot;footnote-back&quot; role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt
 &lt;/section&gt;
 </description>
         <pubDate>Wed, 18 Apr 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/mac/2018/04/18/mac_hosts.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/mac/2018/04/18/mac_hosts.html</guid>
+        <link>http://localhost:4000/mac/2018/04/18/mac_hosts.html</link>
+        <guid isPermaLink="true">http://localhost:4000/mac/2018/04/18/mac_hosts.html</guid>
         
         
         <category>Mac</category>
@@ -2263,8 +2263,8 @@ class=&quot;footnote-back&quot; role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 15 Apr 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/data_visualization/2018/04/15/sp_proj4string_spTransform.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/data_visualization/2018/04/15/sp_proj4string_spTransform.html</guid>
+        <link>http://localhost:4000/r/data_visualization/2018/04/15/sp_proj4string_spTransform.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/data_visualization/2018/04/15/sp_proj4string_spTransform.html</guid>
         
         
         <category>R</category>
@@ -2376,8 +2376,8 @@ Wickham&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Sat, 07 Apr 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2018/04/07/Rpackage.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2018/04/07/Rpackage.html</guid>
+        <link>http://localhost:4000/r/2018/04/07/Rpackage.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2018/04/07/Rpackage.html</guid>
         
         
         <category>R</category>
@@ -2438,8 +2438,8 @@ package 에서의 &lt;code&gt;faect_wrap()&lt;/code&gt;, &lt;code&gt;faect_grid(
 작성해 이용하면 되겠다.&lt;/p&gt;
 </description>
         <pubDate>Mon, 02 Apr 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/data_visualization/2018/04/02/coplot.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/data_visualization/2018/04/02/coplot.html</guid>
+        <link>http://localhost:4000/r/data_visualization/2018/04/02/coplot.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/data_visualization/2018/04/02/coplot.html</guid>
         
         
         <category>R</category>
@@ -2491,8 +2491,8 @@ href=&quot;https://raw.githubusercontent.com/lovetoken/flexdashboard_example/mas
 링크&lt;/a&gt;인 Github 저장소를 통해 확인하거나 다운로드 할 수 있다.&lt;/p&gt;
 </description>
         <pubDate>Mon, 19 Mar 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2018/03/19/flexdashboard.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2018/03/19/flexdashboard.html</guid>
+        <link>http://localhost:4000/r/2018/03/19/flexdashboard.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2018/03/19/flexdashboard.html</guid>
         
         
         <category>R</category>
@@ -2636,8 +2636,8 @@ fst package 가 혹 &lt;code&gt;save()&lt;/code&gt;, &lt;code&gt;saveRDS()&lt;/c
 데이터프레임 형을 저장하는데 특화된 것이 특징이라면 특징이겠다.&lt;/p&gt;
 </description>
         <pubDate>Thu, 01 Mar 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2018/03/01/fstPackage.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2018/03/01/fstPackage.html</guid>
+        <link>http://localhost:4000/r/2018/03/01/fstPackage.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2018/03/01/fstPackage.html</guid>
         
         
         <category>R</category>
@@ -2828,8 +2828,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Mon, 22 Jan 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2018/01/22/DEA.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2018/01/22/DEA.html</guid>
+        <link>http://localhost:4000/r/2018/01/22/DEA.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2018/01/22/DEA.html</guid>
         
         
         <category>R</category>
@@ -2911,8 +2911,8 @@ RSD)라고도 부른다.&lt;/p&gt;
 크다는 결론을 낼 수 있다.&lt;/p&gt;
 </description>
         <pubDate>Sun, 14 Jan 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2018/01/14/CV.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2018/01/14/CV.html</guid>
+        <link>http://localhost:4000/r/2018/01/14/CV.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2018/01/14/CV.html</guid>
         
         
         <category>R</category>
@@ -2937,8 +2937,8 @@ RSD)라고도 부른다.&lt;/p&gt;
 있다.&lt;/p&gt;
 </description>
         <pubDate>Sat, 13 Jan 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/etc/2018/01/13/raspberrypi_rootpasswd.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/etc/2018/01/13/raspberrypi_rootpasswd.html</guid>
+        <link>http://localhost:4000/etc/2018/01/13/raspberrypi_rootpasswd.html</link>
+        <guid isPermaLink="true">http://localhost:4000/etc/2018/01/13/raspberrypi_rootpasswd.html</guid>
         
         
         <category>etc</category>
@@ -3109,8 +3109,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Tue, 02 Jan 2018 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2018/01/02/allequal.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2018/01/02/allequal.html</guid>
+        <link>http://localhost:4000/r/2018/01/02/allequal.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2018/01/02/allequal.html</guid>
         
         
         <category>R</category>
@@ -3243,8 +3243,8 @@ class=&quot;footnote-back&quot; role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 22 Oct 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/python/2017/10/22/python3_install_on_CentOS_manually.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/python/2017/10/22/python3_install_on_CentOS_manually.html</guid>
+        <link>http://localhost:4000/python/2017/10/22/python3_install_on_CentOS_manually.html</link>
+        <guid isPermaLink="true">http://localhost:4000/python/2017/10/22/python3_install_on_CentOS_manually.html</guid>
         
         
         <category>Python</category>
@@ -3400,8 +3400,8 @@ href=&quot;https://statkclee.github.io/ds-authoring/regex-encoding.html&quot;&gt
 &lt;/ul&gt;
 </description>
         <pubDate>Sat, 07 Oct 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2017/10/07/guessEncoding.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2017/10/07/guessEncoding.html</guid>
+        <link>http://localhost:4000/r/2017/10/07/guessEncoding.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2017/10/07/guessEncoding.html</guid>
         
         
         <category>R</category>
@@ -3566,8 +3566,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Fri, 16 Jun 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/data_visualization/2017/06/16/plotFunction.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/data_visualization/2017/06/16/plotFunction.html</guid>
+        <link>http://localhost:4000/r/data_visualization/2017/06/16/plotFunction.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/data_visualization/2017/06/16/plotFunction.html</guid>
         
         
         <category>R</category>
@@ -3797,8 +3797,8 @@ class=&quot;sourceCode scala&quot;&gt;&lt;code class=&quot;sourceCode scala&quot
 &lt;/center&gt;
 </description>
         <pubDate>Tue, 06 Jun 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/scala/2017/06/06/HelloScala.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/scala/2017/06/06/HelloScala.html</guid>
+        <link>http://localhost:4000/scala/2017/06/06/HelloScala.html</link>
+        <guid isPermaLink="true">http://localhost:4000/scala/2017/06/06/HelloScala.html</guid>
         
         
         <category>Scala</category>
@@ -3909,8 +3909,8 @@ Attached Storage)&lt;/a&gt;처럼 일정 비용과 구축준비가 필요한 방
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 01 Jun 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/etc/2017/06/01/Continuous_Integrations.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/etc/2017/06/01/Continuous_Integrations.html</guid>
+        <link>http://localhost:4000/etc/2017/06/01/Continuous_Integrations.html</link>
+        <guid isPermaLink="true">http://localhost:4000/etc/2017/06/01/Continuous_Integrations.html</guid>
         
         
         <category>etc</category>
@@ -4055,8 +4055,8 @@ R에서 크로네커 곱셈을 수행하는 함수는 &lt;code&gt;kronecker()&lt
 class=&quot;math inline&quot;&gt;&lt;em&gt;A&lt;/em&gt; ⊗ &lt;em&gt;B&lt;/em&gt;&lt;/span&gt; 를 연산해준다.&lt;/p&gt;
 </description>
         <pubDate>Tue, 30 May 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2017/05/30/MatrixProduct.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2017/05/30/MatrixProduct.html</guid>
+        <link>http://localhost:4000/r/2017/05/30/MatrixProduct.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2017/05/30/MatrixProduct.html</guid>
         
         
         <category>R</category>
@@ -4250,8 +4250,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Thu, 04 May 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/etc/2017/05/04/Typeform.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/etc/2017/05/04/Typeform.html</guid>
+        <link>http://localhost:4000/etc/2017/05/04/Typeform.html</link>
+        <guid isPermaLink="true">http://localhost:4000/etc/2017/05/04/Typeform.html</guid>
         
         
         <category>etc</category>
@@ -4798,8 +4798,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 23 Apr 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/machinelearning/2017/04/23/caret_package.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/machinelearning/2017/04/23/caret_package.html</guid>
+        <link>http://localhost:4000/r/machinelearning/2017/04/23/caret_package.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/machinelearning/2017/04/23/caret_package.html</guid>
         
         
         <category>R</category>
@@ -4961,8 +4961,8 @@ R에서 &lt;code&gt;vif()&lt;/code&gt; 함수를 이용하여 찾아보겠다.&l
 있겠다.&lt;/p&gt;
 </description>
         <pubDate>Sun, 16 Apr 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2017/04/16/vif.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2017/04/16/vif.html</guid>
+        <link>http://localhost:4000/r/2017/04/16/vif.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2017/04/16/vif.html</guid>
         
         
         <category>R</category>
@@ -5185,8 +5185,8 @@ class=&quot;footnote-back&quot; role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt
 &lt;/section&gt;
 </description>
         <pubDate>Tue, 21 Mar 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/docker/2017/03/21/RImpala_package.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/docker/2017/03/21/RImpala_package.html</guid>
+        <link>http://localhost:4000/r/docker/2017/03/21/RImpala_package.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/docker/2017/03/21/RImpala_package.html</guid>
         
         
         <category>R</category>
@@ -5284,8 +5284,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 05 Mar 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2017/03/05/Rpackage_install_manually.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2017/03/05/Rpackage_install_manually.html</guid>
+        <link>http://localhost:4000/r/2017/03/05/Rpackage_install_manually.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2017/03/05/Rpackage_install_manually.html</guid>
         
         
         <category>R</category>
@@ -5531,8 +5531,8 @@ href=&quot;#fnref3&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Wed, 22 Feb 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2017/02/22/Profiling.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2017/02/22/Profiling.html</guid>
+        <link>http://localhost:4000/r/2017/02/22/Profiling.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2017/02/22/Profiling.html</guid>
         
         
         <category>R</category>
@@ -5823,8 +5823,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Sat, 28 Jan 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/docker/2017/01/28/Docker_Rstudio_server.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/docker/2017/01/28/Docker_Rstudio_server.html</guid>
+        <link>http://localhost:4000/r/docker/2017/01/28/Docker_Rstudio_server.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/docker/2017/01/28/Docker_Rstudio_server.html</guid>
         
         
         <category>R</category>
@@ -5904,8 +5904,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Thu, 12 Jan 2017 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2017/01/12/multiple_load_packages.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2017/01/12/multiple_load_packages.html</guid>
+        <link>http://localhost:4000/r/2017/01/12/multiple_load_packages.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2017/01/12/multiple_load_packages.html</guid>
         
         
         <category>R</category>
@@ -5998,8 +5998,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Tue, 20 Dec 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/12/20/RStartup_Option.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/12/20/RStartup_Option.html</guid>
+        <link>http://localhost:4000/r/2016/12/20/RStartup_Option.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/12/20/RStartup_Option.html</guid>
         
         
         <category>R</category>
@@ -6042,8 +6042,8 @@ Style Guide&lt;/a&gt;&lt;/p&gt;
 점이다.&lt;/p&gt;
 </description>
         <pubDate>Sun, 18 Dec 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/12/18/R_Code_Convention.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/12/18/R_Code_Convention.html</guid>
+        <link>http://localhost:4000/r/2016/12/18/R_Code_Convention.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/12/18/R_Code_Convention.html</guid>
         
         
         <category>R</category>
@@ -6341,8 +6341,8 @@ class=&quot;footnote-back&quot; role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 11 Dec 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/etc/2016/12/11/StackOverflow.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/etc/2016/12/11/StackOverflow.html</guid>
+        <link>http://localhost:4000/etc/2016/12/11/StackOverflow.html</link>
+        <guid isPermaLink="true">http://localhost:4000/etc/2016/12/11/StackOverflow.html</guid>
         
         
         <category>etc</category>
@@ -6589,8 +6589,8 @@ class=&quot;footnote-back&quot; role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt
 것이다.&lt;/p&gt;
 </description>
         <pubDate>Tue, 06 Dec 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/12/06/formula_usage.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/12/06/formula_usage.html</guid>
+        <link>http://localhost:4000/r/2016/12/06/formula_usage.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/12/06/formula_usage.html</guid>
         
         
         <category>R</category>
@@ -6876,8 +6876,8 @@ class=&quot;footnote-back&quot; role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 13 Nov 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/11/13/forcats_package.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/11/13/forcats_package.html</guid>
+        <link>http://localhost:4000/r/2016/11/13/forcats_package.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/11/13/forcats_package.html</guid>
         
         
         <category>R</category>
@@ -6963,8 +6963,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Sun, 23 Oct 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/mac/2016/10/23/Alfred_SearchQuery.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/mac/2016/10/23/Alfred_SearchQuery.html</guid>
+        <link>http://localhost:4000/mac/2016/10/23/Alfred_SearchQuery.html</link>
+        <guid isPermaLink="true">http://localhost:4000/mac/2016/10/23/Alfred_SearchQuery.html</guid>
         
         
         <category>Mac</category>
@@ -7190,8 +7190,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Tue, 18 Oct 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/data_visualization/2016/10/18/ggmap.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/data_visualization/2016/10/18/ggmap.html</guid>
+        <link>http://localhost:4000/r/data_visualization/2016/10/18/ggmap.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/data_visualization/2016/10/18/ggmap.html</guid>
         
         
         <category>R</category>
@@ -7365,8 +7365,8 @@ choropleth map 이라고 할 수 없는 상태이다.&lt;br /&gt;
 위의 결과물과 맨 첫 번째 소개했던 결과물이 같은 것을 확인할 수 있다.&lt;/p&gt;
 </description>
         <pubDate>Fri, 14 Oct 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/data_visualization/2016/10/14/Choropleth_map_basic.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/data_visualization/2016/10/14/Choropleth_map_basic.html</guid>
+        <link>http://localhost:4000/r/data_visualization/2016/10/14/Choropleth_map_basic.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/data_visualization/2016/10/14/Choropleth_map_basic.html</guid>
         
         
         <category>R</category>
@@ -7922,8 +7922,8 @@ more with dates and times in R with lubridate 1.3.0&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Sun, 18 Sep 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/09/18/lubridate_package.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/09/18/lubridate_package.html</guid>
+        <link>http://localhost:4000/r/2016/09/18/lubridate_package.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/09/18/lubridate_package.html</guid>
         
         
         <category>R</category>
@@ -7983,8 +7983,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Fri, 16 Sep 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/data_visualization/2016/09/16/Anscombe_dataset.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/data_visualization/2016/09/16/Anscombe_dataset.html</guid>
+        <link>http://localhost:4000/r/data_visualization/2016/09/16/Anscombe_dataset.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/data_visualization/2016/09/16/Anscombe_dataset.html</guid>
         
         
         <category>R</category>
@@ -8065,8 +8065,8 @@ href=&quot;https://drive.google.com/previewtemplate?id=1pHBvXN7nmGkiG8uQSUB82eNl
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 15 Aug 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/opensource_tool/2016/08/15/Itinerary_Japan.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/opensource_tool/2016/08/15/Itinerary_Japan.html</guid>
+        <link>http://localhost:4000/opensource_tool/2016/08/15/Itinerary_Japan.html</link>
+        <guid isPermaLink="true">http://localhost:4000/opensource_tool/2016/08/15/Itinerary_Japan.html</guid>
         
         
         <category>OpenSource_Tool</category>
@@ -8125,8 +8125,8 @@ href=&quot;http://cafe.naver.com/lovetokens&quot;&gt;통계 R 프로그래밍 �
 꾀하고자 한다.&lt;/p&gt;
 </description>
         <pubDate>Sat, 23 Jul 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/diary/opensource_tool/2016/07/23/Welcome_to_Jekyll.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/diary/opensource_tool/2016/07/23/Welcome_to_Jekyll.html</guid>
+        <link>http://localhost:4000/diary/opensource_tool/2016/07/23/Welcome_to_Jekyll.html</link>
+        <guid isPermaLink="true">http://localhost:4000/diary/opensource_tool/2016/07/23/Welcome_to_Jekyll.html</guid>
         
         
         <category>Diary</category>
@@ -8272,8 +8272,8 @@ href=&quot;https://www.google.co.kr/search?biw=1436&amp;amp;bih=782&amp;amp;tbm=
 &lt;p&gt;&lt;img src=&quot;/assets/Crawling_1.png&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 23 Jul 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/07/23/Crawling_image.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/07/23/Crawling_image.html</guid>
+        <link>http://localhost:4000/r/2016/07/23/Crawling_image.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/07/23/Crawling_image.html</guid>
         
         
         <category>R</category>
@@ -8344,8 +8344,8 @@ R에 대해 아직 만족스러울 정도로 배운것이 아닌 당시 저의 �
 &lt;p&gt;&lt;em&gt;2017-06-06 : 문어체에서 구어체로 변경&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 01 Jul 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/diary/2016/07/01/Thanks_GS.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/diary/2016/07/01/Thanks_GS.html</guid>
+        <link>http://localhost:4000/diary/2016/07/01/Thanks_GS.html</link>
+        <guid isPermaLink="true">http://localhost:4000/diary/2016/07/01/Thanks_GS.html</guid>
         
         
         <category>Diary</category>
@@ -8475,8 +8475,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Mon, 27 Jun 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/06/27/Benchmarking_DF_vs_DT.html</guid>
+        <link>http://localhost:4000/r/2016/06/27/Benchmarking_DF_vs_DT.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/06/27/Benchmarking_DF_vs_DT.html</guid>
         
         
         <category>R</category>
@@ -8539,8 +8539,8 @@ href=&quot;https://www.safaribooksonline.com/library/view/hands-on-programming-w
 ## [1] &amp;quot;unknown&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 </description>
         <pubDate>Sun, 12 Jun 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/06/12/S3.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/06/12/S3.html</guid>
+        <link>http://localhost:4000/r/2016/06/12/S3.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/06/12/S3.html</guid>
         
         
         <category>R</category>
@@ -8615,8 +8615,8 @@ error” 문구가 출력된 이유가 이것 때문일 것이라 생각한다.&
 넘겨주기만 하면 적분 값을 계산해 준다.&lt;/p&gt;
 </description>
         <pubDate>Mon, 06 Jun 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/06/06/integate_function.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/06/06/integate_function.html</guid>
+        <link>http://localhost:4000/r/2016/06/06/integate_function.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/06/06/integate_function.html</guid>
         
         
         <category>R</category>
@@ -8810,8 +8810,8 @@ animation plot 영상을 인코딩하는 시간 역시 필요하다.&lt;br /&gt;
 그렇지 않으면 많은 인내심이 요구될 수 있다.&lt;/p&gt;
 </description>
         <pubDate>Thu, 26 May 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/data_visualization/2016/05/26/CLT.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/data_visualization/2016/05/26/CLT.html</guid>
+        <link>http://localhost:4000/r/data_visualization/2016/05/26/CLT.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/data_visualization/2016/05/26/CLT.html</guid>
         
         
         <category>R</category>
@@ -9067,8 +9067,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Wed, 18 May 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/05/18/lag_diff_function.html</guid>
+        <link>http://localhost:4000/r/2016/05/18/lag_diff_function.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/05/18/lag_diff_function.html</guid>
         
         
         <category>R</category>
@@ -9151,8 +9151,8 @@ Run 이후 마냥 기다리긴 귀찮고, 딴짓을 하기엔 코드 수행시�
 운영체계별로 사용법이 상이하다.&lt;/p&gt;
 </description>
         <pubDate>Sat, 30 Apr 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/04/30/playsound_in_R.html</guid>
+        <link>http://localhost:4000/r/2016/04/30/playsound_in_R.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/04/30/playsound_in_R.html</guid>
         
         
         <category>R</category>
@@ -9251,8 +9251,8 @@ office Excel 에서 열린 상황의 모습이고,&lt;br /&gt;
 마치 드레그 하는 방식과 같아진다.&lt;/p&gt;
 </description>
         <pubDate>Sat, 16 Apr 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/04/16/using_clipboard.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/04/16/using_clipboard.html</guid>
+        <link>http://localhost:4000/r/2016/04/16/using_clipboard.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/04/16/using_clipboard.html</guid>
         
         
         <category>R</category>
@@ -9320,8 +9320,8 @@ R6 Object 라고 설명되어 있는데, 때문에 다양한 특별기능을 자
 예제코드들을 활용하면 상황에 맞게 커스터마이징도 가능할 듯 싶다.&lt;/p&gt;
 </description>
         <pubDate>Sat, 16 Apr 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/04/16/progressbar.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/04/16/progressbar.html</guid>
+        <link>http://localhost:4000/r/2016/04/16/progressbar.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/04/16/progressbar.html</guid>
         
         
         <category>R</category>
@@ -9427,8 +9427,8 @@ json 형을 인지하기 쉽게 단락을 나누고 indent 를 주어&lt;br /&gt
 &lt;p&gt;첫 서두에 있는 예제 데이터와 똑같이 출력된 것을 볼 수 있다.&lt;/p&gt;
 </description>
         <pubDate>Wed, 02 Mar 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/03/02/rjson_package.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/03/02/rjson_package.html</guid>
+        <link>http://localhost:4000/r/2016/03/02/rjson_package.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/03/02/rjson_package.html</guid>
         
         
         <category>R</category>
@@ -9504,8 +9504,8 @@ json 형을 인지하기 쉽게 단락을 나누고 indent 를 주어&lt;br /&gt
 따라서 코드 길이도 확실히 줄일 수 있게 된다.&lt;/p&gt;
 </description>
         <pubDate>Fri, 19 Feb 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/02/19/replicate_function.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/02/19/replicate_function.html</guid>
+        <link>http://localhost:4000/r/2016/02/19/replicate_function.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/02/19/replicate_function.html</guid>
         
         
         <category>R</category>
@@ -9623,8 +9623,8 @@ id=&quot;두-줄-의-코드를-try-하되-한줄은-정상-한줄은-에러를-�
 정상 실행되어 “I exist!” 를 외치는 걸 볼 수 있다.&lt;/p&gt;
 </description>
         <pubDate>Thu, 11 Feb 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/02/11/tryfunction.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/02/11/tryfunction.html</guid>
+        <link>http://localhost:4000/r/2016/02/11/tryfunction.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/02/11/tryfunction.html</guid>
         
         
         <category>R</category>
@@ -9752,8 +9752,8 @@ Shell 에서 폴더를 만드는 명령어인 &lt;code&gt;mkdir&lt;/code&gt; 과
 함수를 소개한다.&lt;/p&gt;
 </description>
         <pubDate>Mon, 08 Feb 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/02/08/system_function.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/02/08/system_function.html</guid>
+        <link>http://localhost:4000/r/2016/02/08/system_function.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/02/08/system_function.html</guid>
         
         
         <category>R</category>
@@ -9942,8 +9942,8 @@ class=&quot;math inline&quot;&gt;64 &amp;lt; &lt;em&gt;G&lt;/em&gt;&lt;em&gt
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 25 Jan 2016 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2016/01/25/Step_function_modeling.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2016/01/25/Step_function_modeling.html</guid>
+        <link>http://localhost:4000/r/2016/01/25/Step_function_modeling.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2016/01/25/Step_function_modeling.html</guid>
         
         
         <category>R</category>
@@ -10045,8 +10045,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Mon, 07 Dec 2015 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/diary/2015/12/07/Imitation_game.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/diary/2015/12/07/Imitation_game.html</guid>
+        <link>http://localhost:4000/diary/2015/12/07/Imitation_game.html</link>
+        <guid isPermaLink="true">http://localhost:4000/diary/2015/12/07/Imitation_game.html</guid>
         
         
         <category>Diary</category>
@@ -10205,8 +10205,8 @@ role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/section&gt;
 </description>
         <pubDate>Tue, 08 Sep 2015 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2015/09/08/OperatorR.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2015/09/08/OperatorR.html</guid>
+        <link>http://localhost:4000/r/2015/09/08/OperatorR.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2015/09/08/OperatorR.html</guid>
         
         
         <category>R</category>
@@ -10267,8 +10267,8 @@ href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink
 &lt;/section&gt;
 </description>
         <pubDate>Wed, 25 Mar 2015 00:00:00 +0900</pubDate>
-        <link>http://localhost:4000https://lovetoken.github.io/r/2015/03/25/RstudioServer_using_AWSAMI.html</link>
-        <guid isPermaLink="true">http://localhost:4000https://lovetoken.github.io/r/2015/03/25/RstudioServer_using_AWSAMI.html</guid>
+        <link>http://localhost:4000/r/2015/03/25/RstudioServer_using_AWSAMI.html</link>
+        <guid isPermaLink="true">http://localhost:4000/r/2015/03/25/RstudioServer_using_AWSAMI.html</guid>
         
         
         <category>R</category>
