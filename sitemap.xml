@@ -5,12 +5,12 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 15 Aug 2022 22:36:18 +0900</pubDate>
-    <lastBuildDate>Mon, 15 Aug 2022 22:36:18 +0900</lastBuildDate>
-    <generator>Jekyll v3.9.2</generator>
+    <pubDate>Sun, 24 May 2026 18:48:05 +0900</pubDate>
+    <lastBuildDate>Sun, 24 May 2026 18:48:05 +0900</lastBuildDate>
+    <generator>Jekyll v3.10.0</generator>
     
       <item>
-        <title>Mac 에서 벡틱문자 '`' 을 쓰고싶은데 '₩' 가 써진다면?</title>
+        <title>Mac 에서 벡틱문자 &apos;`&apos; 을 쓰고싶은데 &apos;₩&apos; 가 써진다면?</title>
         <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;맥을 일상생활에서 사용했었을 당시 벡틱(Backtick) 문자 를 쓸 때
 불편함이 없었을 정도로 체화되었던 매커니즘이 갑자기 기억나지 않았다.
@@ -1697,8 +1697,8 @@ class=&quot;math inline&quot;&gt;&lt;em&gt;y&lt;/em&gt; = &lt;em&gt;x&lt;/em
 &lt;span id=&quot;cb4-13&quot;&gt;&lt;a href=&quot;#cb4-13&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;p2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;/assets/netwon_raphson_1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;총 12번의 반복을 통해 &lt;span
-class=&quot;math inline&quot;&gt;&lt;em&gt;x&lt;/em&gt; =  − 1.259921&lt;/span&gt; 에 가까워 지는것을
-볼 수 있다.&lt;/p&gt;
+class=&quot;math inline&quot;&gt;&lt;em&gt;x&lt;/em&gt; = −1.259921&lt;/span&gt; 에 가까워 지는것을 볼
+수 있다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2
 id=&quot;ggplot2-에-gganimate-패키지-조합하여-시뮬레이션-시각화-하기&quot;&gt;ggplot2
@@ -2532,7 +2532,7 @@ href=&quot;http://www.fstpackage.org/&quot;&gt;fst package&lt;/a&gt; 를 이용�
 &lt;span id=&quot;cb1-4&quot;&gt;&lt;a href=&quot;#cb1-4&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;nr_of_rows &lt;span class=&quot;ot&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;sc&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;8&lt;/span&gt;&lt;/span&gt;
 &lt;span id=&quot;cb1-5&quot;&gt;&lt;a href=&quot;#cb1-5&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
 &lt;span id=&quot;cb1-6&quot;&gt;&lt;a href=&quot;#cb1-6&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;df &lt;span class=&quot;ot&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;data.frame&lt;/span&gt;(&lt;span class=&quot;at&quot;&gt;Logical =&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;fu&quot;&gt;c&lt;/span&gt;(T, F, &lt;span class=&quot;cn&quot;&gt;NA&lt;/span&gt;), &lt;span class=&quot;at&quot;&gt;prob =&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;c&lt;/span&gt;(.&lt;span class=&quot;dv&quot;&gt;85&lt;/span&gt;, .&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, .&lt;span class=&quot;dv&quot;&gt;05&lt;/span&gt;), nr_of_rows, &lt;span class=&quot;at&quot;&gt;replace =&lt;/span&gt; T), &lt;/span&gt;
-&lt;span id=&quot;cb1-7&quot;&gt;&lt;a href=&quot;#cb1-7&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;                 &lt;span class=&quot;at&quot;&gt;Integer =&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;sample&lt;/span&gt;(1L&lt;span class=&quot;sc&quot;&gt;:&lt;/span&gt;100L, nr_of_rows, &lt;span class=&quot;at&quot;&gt;replace =&lt;/span&gt; T), &lt;/span&gt;
+&lt;span id=&quot;cb1-7&quot;&gt;&lt;a href=&quot;#cb1-7&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;                 &lt;span class=&quot;at&quot;&gt;Integer =&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;dt&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;sc&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;dt&quot;&gt;L&lt;/span&gt;, nr_of_rows, &lt;span class=&quot;at&quot;&gt;replace =&lt;/span&gt; T), &lt;/span&gt;
 &lt;span id=&quot;cb1-8&quot;&gt;&lt;a href=&quot;#cb1-8&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;                 &lt;span class=&quot;at&quot;&gt;Real =&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;fu&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;sc&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;10000&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;20&lt;/span&gt;) &lt;span class=&quot;sc&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;100&lt;/span&gt;, nr_of_rows, &lt;span class=&quot;at&quot;&gt;replace =&lt;/span&gt; T),&lt;/span&gt;
 &lt;span id=&quot;cb1-9&quot;&gt;&lt;a href=&quot;#cb1-9&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;                 &lt;span class=&quot;at&quot;&gt;Factor =&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;as.factor&lt;/span&gt;(&lt;span class=&quot;fu&quot;&gt;sample&lt;/span&gt;(&lt;span class=&quot;fu&quot;&gt;labels&lt;/span&gt;(UScitiesD), nr_of_rows, &lt;span class=&quot;at&quot;&gt;replace =&lt;/span&gt; T))) &lt;span class=&quot;sc&quot;&gt;%&amp;gt;%&lt;/span&gt; tbl_df&lt;/span&gt;
 &lt;span id=&quot;cb1-10&quot;&gt;&lt;a href=&quot;#cb1-10&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;&lt;/span&gt;
@@ -2647,10 +2647,9 @@ fst package 가 혹 &lt;code&gt;save()&lt;/code&gt;, &lt;code&gt;saveRDS()&lt;/c
       <item>
         <title>R에서 Benchmarking 패키지를 이용한 자료포락분석(Data Envelopment Analysis) 이용하기</title>
         <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;약 5년전 컨설팅 인턴 일을 하면서 자료포락분석&lt;a href=&quot;#fn1&quot;
-class=&quot;footnote-ref&quot; id=&quot;fnref1&quot;
-role=&quot;doc-noteref&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;(Data envelopment analysis 이하
-DEA)이 필요했던 시점이 있다.&lt;br /&gt;
+&lt;p&gt;약 5년전 컨설팅 인턴 일을 하면서 자료포락분석^&lt;a
+href=&quot;Data%20envelopment%20analysis%20이하%20DEA&quot;&gt;자료포괄분석 으로도
+불리는데 무엇이 맞는지는 모르겠다&lt;/a&gt;이 필요했던 시점이 있다.&lt;br /&gt;
 그때 당시 실제로 분석을 하기 위하여 컴퓨터 프로그램을 이용할 필요가
 있었고&lt;br /&gt;
 &lt;a href=&quot;http://expertchoice.co.kr/expert_choice.html&quot;&gt;Export choice&lt;/a&gt;
@@ -2708,8 +2707,8 @@ Making Unit. DMU로 줄여 표현한다) 별 efficiencies 값들을 구해낼 �
 ## # ... with 1 more variables: name &amp;lt;fctr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;data 를 불러온 후&lt;br /&gt;
 설명의 편의상 tibble type 으로 &lt;code&gt;charnes1981&lt;/code&gt; 형을 변환 및
-20개의 샘플링을 하였다. &lt;a href=&quot;#fn2&quot; class=&quot;footnote-ref&quot; id=&quot;fnref2&quot;
-role=&quot;doc-noteref&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;br /&gt;
+20개의 샘플링을 하였다. &lt;a href=&quot;#fn1&quot; class=&quot;footnote-ref&quot; id=&quot;fnref1&quot;
+role=&quot;doc-noteref&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;br /&gt;
 각 변수들에 대한 설명은 다음과 같다.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;code&gt;firm&lt;/code&gt; : 학교별 ID&lt;/p&gt;&lt;/li&gt;
@@ -2819,10 +2818,8 @@ href=&quot;http://book.naver.com/bookdb/book_detail.nhn?bid=6874299&quot;&gt;책
 role=&quot;doc-endnotes&quot;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
-&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;자료포괄분석 으로도 불리는데 무엇이 맞는지는 모르겠다&lt;a
-href=&quot;#fnref1&quot; class=&quot;footnote-back&quot; role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;원 데이터의 개수는 70개이며 이중 20개의 랜덤샘플링을
-의미함&lt;a href=&quot;#fnref2&quot; class=&quot;footnote-back&quot;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;원 데이터의 개수는 70개이며 이중 20개의 랜덤샘플링을
+의미함&lt;a href=&quot;#fnref1&quot; class=&quot;footnote-back&quot;
 role=&quot;doc-backlink&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/section&gt;
@@ -6143,127 +6140,127 @@ Xie 의 Profile 을 예로 들어보았다)&lt;/p&gt;
 &lt;col style=&quot;width: 92%&quot; /&gt;
 &lt;/colgroup&gt;
 &lt;thead&gt;
-&lt;tr class=&quot;header&quot;&gt;
+&lt;tr&gt;
 &lt;th&gt;명성도&lt;/th&gt;
 &lt;th&gt;특권내용&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;25,000&lt;/td&gt;
 &lt;td&gt;스택오버플로우 사이트의 내부분석을 위한 Google analytics 접근이
 가능&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;20,000&lt;/td&gt;
 &lt;td&gt;신뢰할 수 있는 사용자로 판단되어 스택오버플로우의 모든 질문글에 대해
 편집, 삭제 권한이 부여됨&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;15,000&lt;/td&gt;
 &lt;td&gt;보호된 질문을 사용할 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;10,000&lt;/td&gt;
 &lt;td&gt;access to moderator tools : Access reports, delete questions, review
 reviews&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;5,000&lt;/td&gt;
 &lt;td&gt;모든 글에 대해 태그를 수정할 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;3,000&lt;/td&gt;
 &lt;td&gt;cast close and reopen votes : Help decide whether posts are
 off-topic or duplicates&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;2,500&lt;/td&gt;
 &lt;td&gt;어떤 태그가 다른것과 동일한 의미를 가지는지 결정할 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;2,000&lt;/td&gt;
 &lt;td&gt;이미 올려진 질문, 질문에 대한 답변을 즉시 편집할 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;1,500&lt;/td&gt;
 &lt;td&gt;새로운 태그를 만들 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;1,000&lt;/td&gt;
 &lt;td&gt;established user : You’ve been around for a while; see vote
 counts&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;1,000&lt;/td&gt;
 &lt;td&gt;특정한 사람들과 대화할 수 있는 대화방을 만들 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;500&lt;/td&gt;
 &lt;td&gt;access review queues : Access first posts and late answers review
 queues&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;250&lt;/td&gt;
 &lt;td&gt;자신의 질문글에 대한 투표를 종료할 수 있고, 이후에 종료된 것을 다시
 열 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;200&lt;/td&gt;
 &lt;td&gt;광고를 줄일 수 있는 옵션을 사용할 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;125&lt;/td&gt;
 &lt;td&gt;질문과 질문의 답변글에 대해 upvote 외에도 downvote 를 할 수
 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;100&lt;/td&gt;
 &lt;td&gt;위키 커뮤니티에 협업할 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;100&lt;/td&gt;
 &lt;td&gt;대화방을 만들 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;100&lt;/td&gt;
 &lt;td&gt;문서에 대하여 제안된 변경사항에 대하여 승인 및 거부할 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;75&lt;/td&gt;
 &lt;td&gt;자신의 명성을 보상으로 걸 수 있는 질문을 할 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;50&lt;/td&gt;
 &lt;td&gt;다른 사람의 게시물에 댓글을 달 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;20&lt;/td&gt;
 &lt;td&gt;대화방에 참석이 가능&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;15&lt;/td&gt;
 &lt;td&gt;신고기능(Flag)을 이용할 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;15&lt;/td&gt;
 &lt;td&gt;답변글에 대해 투표가 가능, 단 upvote 만 할 수 있음&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;10&lt;/td&gt;
 &lt;td&gt;신규유저에 대한 제한처리 기능 해제&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;10&lt;/td&gt;
 &lt;td&gt;create wiki posts : Create answers that can be easily edited by most
 users&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;5&lt;/td&gt;
 &lt;td&gt;participate in meta : Discuss the site itself: bugs, feedback, and
 governance&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;1&lt;/td&gt;
 &lt;td&gt;질문 혹은 답변글을 작성할 수 있음&lt;/td&gt;
 &lt;/tr&gt;
@@ -6642,85 +6639,85 @@ id=&quot;fnref1&quot; role=&quot;doc-noteref&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&l
 &lt;col style=&quot;width: 89%&quot; /&gt;
 &lt;/colgroup&gt;
 &lt;thead&gt;
-&lt;tr class=&quot;header&quot;&gt;
+&lt;tr&gt;
 &lt;th&gt;함수명칭&lt;/th&gt;
 &lt;th&gt;내용&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_anon&lt;/td&gt;
 &lt;td&gt;Anonymise factor levels&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_c&lt;/td&gt;
 &lt;td&gt;Concatenate factors, unioning levels.&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_collapse&lt;/td&gt;
 &lt;td&gt;Collapse factors into groups.&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_count&lt;/td&gt;
 &lt;td&gt;Count entries in a factor&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_drop&lt;/td&gt;
 &lt;td&gt;Drop unnused levels&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_expand&lt;/td&gt;
 &lt;td&gt;Add additional levels to a factor&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_explicit_na&lt;/td&gt;
 &lt;td&gt;Make missing values explicit&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_infreq&lt;/td&gt;
 &lt;td&gt;Reorders levels in order of first appearance or frequency.&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_inorder&lt;/td&gt;
 &lt;td&gt;Reorders levels in order of first appearance or frequency.&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_lump&lt;/td&gt;
 &lt;td&gt;Lump together least/most common levels into “other”.&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_recode&lt;/td&gt;
 &lt;td&gt;Change the levels of a factor&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_relevel&lt;/td&gt;
 &lt;td&gt;Change the order of levels in a factor&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_reorder&lt;/td&gt;
 &lt;td&gt;Reorder the levels of a function according to another variable&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_reorder2&lt;/td&gt;
 &lt;td&gt;Reorder the levels of a function according to another variable&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_rev&lt;/td&gt;
 &lt;td&gt;Reverse the levels of a factor&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_shift&lt;/td&gt;
 &lt;td&gt;Shift the order of levels of a factor&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_shuffle&lt;/td&gt;
 &lt;td&gt;Randomly permute the levels of a factor&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_unify&lt;/td&gt;
 &lt;td&gt;Unify the levels in a list of factors&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&quot;odd&quot;&gt;
+&lt;tr&gt;
 &lt;td&gt;fct_unique&lt;/td&gt;
 &lt;td&gt;Unique values of a factor&lt;/td&gt;
 &lt;/tr&gt;
@@ -8418,7 +8415,7 @@ data.frame, data.table 객체 만들기&lt;/h2&gt;
 가진 데이터셋을 서로 join 하기 위해 (의미가 별로 없는) 데이터프레임
 &lt;code&gt;df&lt;/code&gt;, &lt;code&gt;df2&lt;/code&gt; 객체를 만드는 코드이다.&lt;br /&gt;
 join 으로 붙여져야 하는 대상은 “Var3” 으로 명칭된 변수 &lt;span
-class=&quot;math inline&quot;&gt; − 10&lt;/span&gt; 을 평균으로 하는 정규분포 난수이다.&lt;/p&gt;
+class=&quot;math inline&quot;&gt;−10&lt;/span&gt; 을 평균으로 하는 정규분포 난수이다.&lt;/p&gt;
 &lt;p&gt;이후 class 만 data.table 로 바꾼 &lt;code&gt;dt&lt;/code&gt;, &lt;code&gt;dt2&lt;/code&gt;
 동일내용의 객체를 준비했다.&lt;br /&gt;
 data.table 에선 key variable 를 사전에 지정할 수 있는데 바로 data.table
@@ -8657,7 +8654,7 @@ error” 문구가 출력된 이유가 이것 때문일 것이라 생각한다.&
 &lt;p&gt;우선 현 시뮬레이션에선&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;특정분포를 포아송분포 &lt;span
-class=&quot;math inline&quot;&gt;&lt;em&gt;X&lt;/em&gt; ∼ &lt;em&gt;P&lt;/em&gt;&lt;em&gt;o&lt;/em&gt;&lt;em&gt;i&lt;/em&gt;&lt;em&gt;s&lt;/em&gt;&lt;em&gt;s&lt;/em&gt;&lt;em&gt;o&lt;/em&gt;&lt;em&gt;n&lt;/em&gt;(&lt;em&gt;λ&lt;/em&gt;=10)&lt;/span&gt;
+class=&quot;math inline&quot;&gt;&lt;em&gt;X&lt;/em&gt; ∼ &lt;em&gt;P&lt;/em&gt;&lt;em&gt;o&lt;/em&gt;&lt;em&gt;i&lt;/em&gt;&lt;em&gt;s&lt;/em&gt;&lt;em&gt;s&lt;/em&gt;&lt;em&gt;o&lt;/em&gt;&lt;em&gt;n&lt;/em&gt;(&lt;em&gt;λ&lt;/em&gt; = 10)&lt;/span&gt;
 으로&lt;/li&gt;
 &lt;li&gt;표본개수는 n=500 으로 통일하고&lt;/li&gt;
 &lt;li&gt;표본평균들을 1,000개 준비하기 위해 위 과정을 1000번 반복&lt;/li&gt;
@@ -9885,9 +9882,9 @@ class=&quot;math display&quot;&gt;&lt;em&gt;A&lt;/em&gt;&lt;em&gt;p&lt;/em&gt;&l
 그리고 위에서 출력된 &lt;code&gt;summary(stepFit)&lt;/code&gt; 의 결과물을 이용해
 종속변수 &lt;code&gt;Apps&lt;/code&gt; 의 모델 방정식을 표현하면 아래와 같다.&lt;/p&gt;
 &lt;p&gt;&lt;span
-class=&quot;math display&quot;&gt;&lt;em&gt;A&lt;/em&gt;&lt;em&gt;p&lt;/em&gt;&lt;em&gt;p&lt;/em&gt;&lt;em&gt;s&lt;/em&gt; = 2494.0 + 969.1 × &lt;em&gt;c&lt;/em&gt;&lt;em&gt;u&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;(&lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt;,2)(64, 118]&lt;/span&gt;&lt;/p&gt;
+class=&quot;math display&quot;&gt;&lt;em&gt;A&lt;/em&gt;&lt;em&gt;p&lt;/em&gt;&lt;em&gt;p&lt;/em&gt;&lt;em&gt;s&lt;/em&gt; = 2494.0 + 969.1 × &lt;em&gt;c&lt;/em&gt;&lt;em&gt;u&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;(&lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt;, 2)(64, 118]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;단 위에서 &lt;span
-class=&quot;math inline&quot;&gt;&lt;em&gt;c&lt;/em&gt;&lt;em&gt;u&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;(&lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt;,2)(64, 118]&lt;/span&gt;
+class=&quot;math inline&quot;&gt;&lt;em&gt;c&lt;/em&gt;&lt;em&gt;u&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;(&lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt;, 2)(64, 118]&lt;/span&gt;
 의 값은 &lt;code&gt;Grad.Rate&lt;/code&gt; 값이 &lt;span
 class=&quot;math inline&quot;&gt;64 &amp;lt; &lt;em&gt;G&lt;/em&gt;&lt;em&gt;r&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;d&lt;/em&gt;.&lt;em&gt;R&lt;/em&gt;&lt;em&gt;a&lt;/em&gt;&lt;em&gt;t&lt;/em&gt;&lt;em&gt;e&lt;/em&gt; ≤ 118&lt;/span&gt;
 일 때 1, 아니면 0의 의미이다.&lt;/p&gt;
@@ -10029,7 +10026,8 @@ working example 에 대한 구현의 트레이닝으로 얼마든지 해결할 �
 &lt;li&gt;주변의 연륜이 있는 지인분왈, 결국 자네가 마지막에 찾게될 Key는
 ‘사람’과 ’인문학적 소양’ 이라고 하시더라.&lt;br /&gt;
 &lt;/li&gt;
-&lt;li&gt;마지막으로 알면 알수록 부족한 것을 뼈저리~~ 느끼게 되더라.&lt;/li&gt;
+&lt;li&gt;마지막으로 알면 알수록 부족한 것을 뼈저리&lt;sub&gt;&lt;/sub&gt; 느끼게
+되더라.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;section id=&quot;footnotes&quot; class=&quot;footnotes footnotes-end-of-document&quot;
 role=&quot;doc-endnotes&quot;&gt;

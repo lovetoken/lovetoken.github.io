@@ -5,12 +5,12 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 15 Aug 2022 22:36:18 +0900</pubDate>
-    <lastBuildDate>Mon, 15 Aug 2022 22:36:18 +0900</lastBuildDate>
-    <generator>Jekyll v3.9.2</generator>
+    <pubDate>Sun, 24 May 2026 18:48:05 +0900</pubDate>
+    <lastBuildDate>Sun, 24 May 2026 18:48:05 +0900</lastBuildDate>
+    <generator>Jekyll v3.10.0</generator>
     
       <item>
-        <title>Mac 에서 벡틱문자 '`' 을 쓰고싶은데 '₩' 가 써진다면?</title>
+        <title>Mac 에서 벡틱문자 &apos;`&apos; 을 쓰고싶은데 &apos;₩&apos; 가 써진다면?</title>
         <description>&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;맥을 일상생활에서 사용했었을 당시 벡틱(Backtick) 문자 를 쓸 때
 불편함이 없었을 정도로 체화되었던 매커니즘이 갑자기 기억나지 않았다.
@@ -1697,8 +1697,8 @@ class=&quot;math inline&quot;&gt;&lt;em&gt;y&lt;/em&gt; = &lt;em&gt;x&lt;/em
 &lt;span id=&quot;cb4-13&quot;&gt;&lt;a href=&quot;#cb4-13&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;&lt;/a&gt;p2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;/assets/netwon_raphson_1.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;총 12번의 반복을 통해 &lt;span
-class=&quot;math inline&quot;&gt;&lt;em&gt;x&lt;/em&gt; =  − 1.259921&lt;/span&gt; 에 가까워 지는것을
-볼 수 있다.&lt;/p&gt;
+class=&quot;math inline&quot;&gt;&lt;em&gt;x&lt;/em&gt; = −1.259921&lt;/span&gt; 에 가까워 지는것을 볼
+수 있다.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2
 id=&quot;ggplot2-에-gganimate-패키지-조합하여-시뮬레이션-시각화-하기&quot;&gt;ggplot2
